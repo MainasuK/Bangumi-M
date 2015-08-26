@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="15A243d" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Subject" representedClassName="Subject" syncable="YES">
+        <attribute name="airDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="airWeekday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="collectionCollect" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="collectionDoing" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="collectionDropped" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="collectionOnHold" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="collectionWish" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eps" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageLargeUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nameCN" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Subject" positionX="-63" positionY="-18" width="128" height="270"/>
+    </elements>
+</model>

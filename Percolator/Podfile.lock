@@ -1,0 +1,29 @@
+PODS:
+  - Cosmos (1.0.15)
+  - HanekeSwift (0.9.1)
+  - MJRefresh (2.4.4)
+  - TagWriteView (1.1.3)
+
+DEPENDENCIES:
+  - Cosmos (from `https://github.com/exchangegroup/Cosmos.git`, branch `swift-1`)
+  - HanekeSwift
+  - MJRefresh
+  - TagWriteView
+
+EXTERNAL SOURCES:
+  Cosmos:
+    :branch: swift-1
+    :git: https://github.com/exchangegroup/Cosmos.git
+
+CHECKOUT OPTIONS:
+  Cosmos:
+    :commit: 03c9116ff3a053a1a87746f23d0211b5582f4b19
+    :git: https://github.com/exchangegroup/Cosmos.git
+
+SPEC CHECKSUMS:
+  Cosmos: 6bd7b9a959c42660b485296b56e37487d28f7e19
+  HanekeSwift: 50d37bfbc4432edc649167e538c259feccb4a2bb
+  MJRefresh: cacdfe7844f1368c2e7f168e1cd345efd279fc24
+  TagWriteView: 07e6d74544c7d47dcd69a5edb5d19ed434302da3
+
+COCOAPODS: 0.38.2
