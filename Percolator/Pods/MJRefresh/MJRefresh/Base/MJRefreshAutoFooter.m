@@ -19,12 +19,16 @@
     [super willMoveToSuperview:newSuperview];
     
     if (newSuperview) { // 新的父控件
-        self.scrollView.mj_insetB += self.mj_h;
+        if (self.hidden == NO) {
+            self.scrollView.mj_insetB += self.mj_h;
+        }
         
-        // 重新调整frame
-        [self scrollViewContentSizeDidChange:nil];
+        // 设置位置
+        self.mj_y = _scrollView.mj_contentH;
     } else { // 被移除了
-        self.scrollView.mj_insetB -= self.mj_h;
+        if (self.hidden == NO) {
+            self.scrollView.mj_insetB -= self.mj_h;
+        }
     }
 }
 
@@ -106,11 +110,13 @@
     
     if (!lastHidden && hidden) {
         self.state = MJRefreshStateIdle;
-        _scrollView.mj_insetB -= self.mj_h;
-    } else if (lastHidden && !hidden) {
-        _scrollView.mj_insetB += self.mj_h;
         
-        [self scrollViewContentSizeDidChange:nil];
+        self.scrollView.mj_insetB -= self.mj_h;
+    } else if (lastHidden && !hidden) {
+        self.scrollView.mj_insetB += self.mj_h;
+        
+        // 设置位置
+        self.mj_y = _scrollView.mj_contentH;
     }
 }
 @end
