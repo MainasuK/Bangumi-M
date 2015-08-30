@@ -18,8 +18,8 @@ Bangumi M is released under the [MIT License](./LICENSE).
 - [HKKTagWriteView](https://github.com/fullc0de/HKKTagWriteView)
 
 ----------
-<img src="./screenshot/6_final/iPhone6/list.PNG" width = "320" alt="list" align=center />
-<img src="./screenshot/6_final/iPhone6/detail.PNG" width = "320" alt="detail" align=center />
+<img src="./screenshot/6_Final/iPhone6/list.png" width = "320" alt="list" align=center />
+<img src="./screenshot/6_Final/iPhone6/detail.png" width = "320" alt="detail" align=center />
 
 ### 购买
 [<img src="./screenshot/Badge_CN/Download_on_the_App_Store_Badge_CN_135x40.png" alt="detail" align=center />](https://itunes.apple.com/cn/app/bangumi-m/id1029813683?l=en&mt=8)
