@@ -180,14 +180,13 @@ class DetailViewController: UITableViewController, UIScrollViewDelegate, UIColle
             NSLog("offsetY --> \(offSetY)")
             
             var gradientLayer = CAGradientLayer()
-            gradientLayer.frame = CGRectMake(0, 0, 320, 64)
-        
+            gradientLayer.frame = CGRectMake(0, 0, UIApplication.sharedApplication().statusBarFrame.width, UIApplication.sharedApplication().statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 44))
             
             // FIXME: If someone want to change the UI, KEEP IN MIND IT, It's awesome, but made you mad
-            if (offSetY > -350 && offSetY < 0) {    // some thing always is a trick
+            if (offSetY >= -350 && offSetY < 0) {    // some thing always is a trick
                 let alpha: CGFloat = min(shadowMinAlpha, -offSetY / kTableHeaderHeight)
                 NSLog("alpha --> \(alpha)")
-                gradientLayer.colors = [UIColor(white: 0, alpha: alpha).CGColor, UIColor(white: 0, alpha: 0).CGColor]
+                gradientLayer.colors = [UIColor(white: 0, alpha: alpha).CGColor, UIColor.clearColor().CGColor]
                 
                 if let backgroundShadowImage = UIImage.imageFromLayer(gradientLayer) {
                     NSLog("---> Set shadow image under navigation bar success")
@@ -199,7 +198,7 @@ class DetailViewController: UITableViewController, UIScrollViewDelegate, UIColle
             } else if (offSetY < changeShadowPoint) {
                 let alpha: CGFloat = max(0, shadowMinAlpha - (changeShadowPoint - offSetY) / (-offSetY))
                 NSLog("alpha --> \(alpha)")
-                gradientLayer.colors = [UIColor(white: 0, alpha: alpha).CGColor, UIColor(white: 0, alpha: 0).CGColor]
+                gradientLayer.colors = [UIColor(white: 0, alpha: alpha).CGColor, UIColor.clearColor().CGColor]
                 
                 if let backgroundShadowImage = UIImage.imageFromLayer(gradientLayer) {
                     NSLog("---> Set shadow image under navigation bar success")
