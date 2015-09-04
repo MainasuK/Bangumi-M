@@ -159,6 +159,8 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
             self.view.addSubview(spinner)
             self.view.userInteractionEnabled = false
             
+            NSLog("Remove JSON cache")
+            Shared.JSONCache.removeAll()    // remove cache when we lost userdata
             
             request.userLogin(email, password: pass, handler: { (userData) -> Void in
                 
@@ -174,6 +176,7 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
                     self.isFirstLoad = false
                 } else {
                     // FIXME: User auth failed
+                    debugPrintln("@ AnimeListTableVC: User auth failed")
                     //                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     //
                     //                        self.performSegueWithIdentifier(StoryboardKey.showLoginVC, sender: self)
