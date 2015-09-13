@@ -12,7 +12,7 @@ import Haneke
 let reuseTableViewCellIdentifier = "TableViewCell"
 let reuseCollectionViewCellIdentifier = "CollectionViewCell"
 
-class DetailViewController: UITableViewController, UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, MGSwipeTableCellDelegate {
+class DetailViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate, MGSwipeTableCellDelegate {
     
     private let kTableHeaderHeight: CGFloat = 300.0 - 36.0
     private let kTableHeaderCutAway: CGFloat = 50.0
@@ -179,7 +179,7 @@ class DetailViewController: UITableViewController, UIScrollViewDelegate, UIColle
             let offSetY = scrollView.contentOffset.y
             NSLog("offsetY --> \(offSetY)")
             
-            var gradientLayer = CAGradientLayer()
+            let gradientLayer = CAGradientLayer()
             gradientLayer.frame = CGRectMake(0, 0, UIApplication.sharedApplication().statusBarFrame.width, UIApplication.sharedApplication().statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 44))
             
             // FIXME: If someone want to change the UI, KEEP IN MIND IT, It's awesome, but made you mad
@@ -342,7 +342,7 @@ class DetailViewController: UITableViewController, UIScrollViewDelegate, UIColle
                         cell.indicatorView.hidden = false
                         cell.indicatorView.backgroundColor = UIColor.myDropColor()
                     default:
-                        debugPrintln("^ Not marked ep")
+                        debugPrint("^ Not marked ep")
                     }
                 }
                 
@@ -390,7 +390,7 @@ class DetailViewController: UITableViewController, UIScrollViewDelegate, UIColle
 
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! CMKEPTableViewCell
             let epID = cell.id
-            var url = "http://bangumi.tv/m/topic/ep/\(epID)"
+            let url = "http://bangumi.tv/m/topic/ep/\(epID)"
             UIApplication.sharedApplication().openURL(NSURL(string: url)!)
         }
     }
@@ -590,11 +590,11 @@ class DetailViewController: UITableViewController, UIScrollViewDelegate, UIColle
         // TODO: add spinner ? It's speed is enough, I think.
         
         // Task 1
-        debugPrintln("@ DetailViewController: initnVC, step 1…")
+        debugPrint("@ DetailViewController: initnVC, step 1…")
         request.getSubjectDetailLarge(subject.id) { (animeDetailLarge) -> Void in
 
             if let _animeDetail = animeDetailLarge {
-                debugPrintln("@ DetailViewController: step 1 success")
+                debugPrint("@ DetailViewController: step 1 success")
                 animeDetail = _animeDetail
                 ++flag
                 
@@ -610,9 +610,9 @@ class DetailViewController: UITableViewController, UIScrollViewDelegate, UIColle
         }
         
         // Task 2
-        debugPrintln("@ DetailViewController: initnVC, step 2…")
+        debugPrint("@ DetailViewController: initnVC, step 2…")
         request.getSubjectStatus(subject.id) { (subjectItemStatus) -> Void in
-            debugPrintln("@ DetailViewController: step 2 success")
+            debugPrint("@ DetailViewController: step 2 success")
             subjectStatus = subjectItemStatus
             ++flag
             

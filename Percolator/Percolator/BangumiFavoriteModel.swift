@@ -44,7 +44,7 @@ public class BangumiFavoriteModel {
     }
     
     func getFavoriteModel(handler: (Bool) -> Void) {
-        debugPrintln("$ BangumiFavoriteModel: Start model fetch method")
+        debugPrint("$ BangumiFavoriteModel: Start model fetch method")
         
         getRecordsFromCloud { (success) -> Void in
             handler(success)
@@ -138,23 +138,28 @@ public class BangumiFavoriteModel {
         // Fetch data using Convenience API
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: "Subject", predicate: predicate)
-        debugPrintln("$ BangumiFavoriteModel: Perforem Query to fetch Subject from cloud")
+        debugPrint("$ BangumiFavoriteModel: Perforem Query to fetch Subject from cloud")
         privateDatabase.performQuery(query, inZoneWithID: nil, completionHandler: { results, error in
             
             NSNotificationCenter.defaultCenter().postNotificationName("setCloudStatus", object: error?.code)
             if error == nil {
+                
+                guard let _results = results else {
+                    handler(false)
+                    return
+                }
+                
                 // success
-                debugPrintln("$ BangumiFavoriteModel: Completed the download of Subject data…")
-                debugPrintln("$ BangumiFavoriteModel: Fetch \(results.count) record(s)")
-                self.favoriteList = self.getAnimeSubjectFromRecord(results as! [CKRecord])
-                self.favoriteCKRecordList = results as! [CKRecord]
+                debugPrint("$ BangumiFavoriteModel: Completed the download of Subject data…")
+                debugPrint("$ BangumiFavoriteModel: Fetch \(_results.count) record(s)")
+                self.favoriteList = self.getAnimeSubjectFromRecord(_results)
+                self.favoriteCKRecordList = _results
                 self.isModelUpToDate = true
                 
                 handler(true)
             } else {
-                debugPrintln("$ BangumiFavoriteModel: Fetch Subject Records failed…")
-                debugPrintln(error)
-                
+                debugPrint("$ BangumiFavoriteModel: Fetch Subject Records failed…")
+                debugPrint(error)
                 
                 handler(false)
             }
@@ -164,7 +169,7 @@ public class BangumiFavoriteModel {
     private func deleteRecordFromCloud(selectedRecordID: CKRecordID, handler: (Bool) -> Void) {
         privateDatabase.deleteRecordWithID(selectedRecordID, completionHandler: { (recordID, error) -> Void in
             if error != nil {
-                debugPrintln(error)
+                debugPrint(error)
                 handler(false)
             } else {
                 handler(true)
@@ -211,18 +216,18 @@ public class BangumiFavoriteModel {
                     
         let predicate = NSPredicate(format: "id = %d", subjectID)
         let query = CKQuery(recordType: "Subject", predicate: predicate)
-        debugPrintln("$ BangumiFavoriteModel: Search record in Cloud")
+        debugPrint("$ BangumiFavoriteModel: Search record in Cloud")
         privateDatabase.performQuery(query, inZoneWithID: nil) { (results, error) -> Void in
             if error != nil {
                 // TODO: disable like button and try again
-                debugPrintln("$ BangumiFavoriteModel: Search record in cloud failed…")
-                debugPrintln(error.localizedDescription)
+                debugPrint("$ BangumiFavoriteModel: Search record in cloud failed…")
+                debugPrint(error!.localizedDescription)
                 handler(nil)
-            } else if results.count > 0 {
-                debugPrintln("$ BangumiFavoriteModel: Search record in cloud success")
+            } else if results!.count > 0 {
+                debugPrint("$ BangumiFavoriteModel: Search record in cloud success")
                 handler(results)
             } else {
-                debugPrintln("$ BangumiFavoriteModel: Search record in cloud success, and no data exist")
+                debugPrint("$ BangumiFavoriteModel: Search record in cloud success, and no data exist")
                 handler(nil)
             }
             
@@ -232,15 +237,15 @@ public class BangumiFavoriteModel {
     // Save record
     private func saveRecordToCloud(record: CKRecord, handler: (Bool) -> Void) {
         
-        debugPrintln("$ BangumiFavoriteModel: Save record to cloud…")
+        debugPrint("$ BangumiFavoriteModel: Save record to cloud…")
         privateDatabase.saveRecord(record) { (record, error) -> Void in
             
             if error != nil {
-                debugPrintln("$ BangumiFavoriteModel: Save record to cloud failed…")
-                debugPrintln(error.localizedDescription)
+                debugPrint("$ BangumiFavoriteModel: Save record to cloud failed…")
+                debugPrint(error!.localizedDescription)
                 handler(false)
             } else {
-                debugPrintln("$ BangumiFavoriteModel: Save record to cloud success")
+                debugPrint("$ BangumiFavoriteModel: Save record to cloud success")
                 handler(true)
             }
         }

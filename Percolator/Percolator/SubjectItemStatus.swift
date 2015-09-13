@@ -23,7 +23,7 @@ public struct SubjectItemStatus {
         
         var index = 0
         
-        var epsArr = subjectStatusDict[BangumiKey.eps] as! [NSDictionary]
+        let epsArr = subjectStatusDict[BangumiKey.eps] as! [NSDictionary]
         for ep in epsArr {
             if let id = ep[BangumiKey.id] as? Int {
                 if let statusDict = ep[BangumiKey.statusDict] as? NSDictionary {

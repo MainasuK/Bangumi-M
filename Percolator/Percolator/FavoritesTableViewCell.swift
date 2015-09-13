@@ -33,7 +33,7 @@ class FavoritesTableViewCell: UITableViewCell {
     }
     
     @IBAction func moreButtonPressed(sender: AnyObject) {
-        debugPrintln("$ SearchTableViewCell: Clip Tapped")
+        debugPrint("$ SearchTableViewCell: Clip Tapped")
         delegate?.deleteFavoriteButtonPressed(self.cardView)
 
     }
@@ -47,7 +47,7 @@ class FavoritesTableViewCell: UITableViewCell {
     
     internal func initCell() {
         
-        debugPrintln("$ SearchTableViewCell init -> \(animeItem.name)")
+        debugPrint("$ SearchTableViewCell init -> \(animeItem.name)")
         nameLabel.text = animeItem.name
         nameCNLabel.text = animeItem.nameCN
         let doingType = ["在看", "在读", "在看", "在听", "在玩", "在看", "在看"]

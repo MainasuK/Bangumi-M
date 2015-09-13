@@ -29,7 +29,7 @@ public struct GridStatus {
             case EpisodeType.sp: spTable.append(epStatus)
             case EpisodeType.op: opTable.append(epStatus)
             case EpisodeType.ed: edTable.append(epStatus)
-            default: println("^ GridStatus: Unknown type")
+            default: print("^ GridStatus: Unknown type")
             }
         }
         

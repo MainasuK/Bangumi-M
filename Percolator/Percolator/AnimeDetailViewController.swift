@@ -173,7 +173,7 @@ class AnimeDetailViewController: UIViewController, SlidingContainerViewControlle
         self.request.getItemLargeDetail(animeItem.subject.id) { (animeDetailLargeData) -> Void in
             
             if let detailData = animeDetailLargeData {
-                println("@ AnimeDetailVC: Get anime deatil data")
+                print("@ AnimeDetailVC: Get anime deatil data")
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
     
@@ -181,7 +181,7 @@ class AnimeDetailViewController: UIViewController, SlidingContainerViewControlle
                     handle(detailData)
                 })
             } else {
-                println("@ AnimeDetailVC: Fail to get anime deatil data")
+                print("@ AnimeDetailVC: Fail to get anime deatil data")
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
                     self.fetchingSpinner.stopAnimating()

@@ -82,7 +82,7 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
                 let allViewControllers = self.navigationController!.viewControllers
                 for vc in allViewControllers {
                     if vc.isKindOfClass(AnimeListTableViewController) {
-                        self.navigationController?.popToViewController(vc as! UIViewController, animated: true)
+                        self.navigationController?.popToViewController(vc, animated: true)
                         return
                     }
                 }
@@ -90,9 +90,9 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
                 self.navigationController?.popViewControllerAnimated(true)
                 
             case .failed:
-                debugPrintln("$ AnimeCollectTableVC: Mark eps failed")
+                print("$ AnimeCollectTableVC: Mark eps failed")
             case .timeout:
-                debugPrintln("$ AnimeCollectTableVC: Mark eps timeout")
+                print("$ AnimeCollectTableVC: Mark eps timeout")
             }
             
         }   // BangumiAnimeModel…
@@ -237,7 +237,7 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
                     self.collectInfo = info
                     self.saveButtonItem.enabled = true
                     self.collectSegment.enabled = true
-                    debugPrint("@ AnimeListTableVC: Get eps info success")
+                    debugPrint("@ AnimeListTableVC: Get eps info success", terminator: "")
                     
                     switch self.collectInfo!.status.type {
                     case .doing:
@@ -251,11 +251,11 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
                     case .collect:
                         self.collectSegment.selectedSegmentIndex = 1
                     default:
-                        debugPrint("$ AnimeCollectTableVC: collect status is unknown type -> \(self.collectInfo!.status.type.rawValue)")
+                        debugPrint("$ AnimeCollectTableVC: collect status is unknown type -> \(self.collectInfo!.status.type.rawValue)", terminator: "")
                     }   // switch …
                     
                     let infoRating = self.collectInfo?.rating ?? 0
-                    debugPrintln(infoRating)
+                    debugPrint(infoRating)
                     if infoRating != 0 {
                         self.ratingLabel.text = "我的评价：\(infoRating) 星"
                     }
@@ -278,7 +278,7 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
                     self.saveButtonItem.enabled = true
                     self.collectSegment.enabled = true
                     self.tagsWriteView.maxTagLength = 20
-                    debugPrint("@ AnimeListTableVC: Get eps info failed")
+                    debugPrint("@ AnimeListTableVC: Get eps info failed", terminator: "")
                     
                 case .timeout:
                     self.navigationItem.title = "请返回重试"
@@ -287,7 +287,7 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
                     self.cosmosRatingView.userInteractionEnabled = false
                     
                     self.noticeInfo("请求超时", autoClear: true, autoClearTime: 5)
-                    debugPrint("@ AnimeListTableVC: Get eps info timeout")
+                    debugPrint("@ AnimeListTableVC: Get eps info timeout", terminator: "")
                 }   // switch status …
             }   // dispatch_async(…)
         }   // BangumiRequest.shared.getEpcollectInfo(…)
@@ -400,7 +400,7 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
     }
     
     private func touchedTheStar(rating: Double) {
-        debugPrintln(rating)
+        debugPrint(rating)
         ratingLabel.text = (rating != 0) ? "我的评价：\((Int)(rating/1.0)) 星" : "不评价"
     }
 }

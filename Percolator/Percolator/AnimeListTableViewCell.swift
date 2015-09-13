@@ -60,7 +60,7 @@ class AnimeListTableViewCell: UITableViewCell {
     
     // MARK: Button pressed method
     @IBAction func watchedButtonPressed(sender: UIButton) {
-        debugPrintln("$ AnimeTableList_Cell: Mark Button Pressed -> \(animeItem.name)")
+        debugPrint("$ AnimeTableList_Cell: Mark Button Pressed -> \(animeItem.name)")
         
         if postMark {
             return
@@ -68,7 +68,7 @@ class AnimeListTableViewCell: UITableViewCell {
         
         switch mark {
         case Marker.ep:
-            debugPrintln("$ AnimeTableList_Cell: Mark ep")
+            debugPrint("$ AnimeTableList_Cell: Mark ep")
             isPosting = true
             animeModel.markEpWatched(request, animeItem: animeItem, markEp: nextMarkEp!, { (status) -> Void in
                 
@@ -82,11 +82,11 @@ class AnimeListTableViewCell: UITableViewCell {
             })
             
         case Marker.eps:
-            debugPrintln("$ AnimeTableList_Cell: Mark eps")
+            debugPrint("$ AnimeTableList_Cell: Mark eps")
             delegate?.pushAnimeCollectionVC(self.animeItem)
 
         default:
-            debugPrintln("$ AnimeTableList_Cell: Unmarkable")
+            debugPrint("$ AnimeTableList_Cell: Unmarkable")
         }   // switch mark …
     }
     
@@ -172,9 +172,9 @@ class AnimeListTableViewCell: UITableViewCell {
         lastTouchEpSort = lastTouchEp?.sort ?? 0
         nextMarkEp = animeModel.animeGridStatusList[animeItem.subject.id]?.nextMarkEP(lastTouchEpSort)
         
-        debugPrintln("$ AnimeTableList_Cell: init -> \(animeItem.name)")
-        debugPrintln("$ AnimeTableList_Cell: lastTouchEp -> \(lastTouchEp?.id)")
-        debugPrintln("$ AnimeTableList_Cell: nextMarkEp -> \(nextMarkEp?.id)")
+        debugPrint("$ AnimeTableList_Cell: init -> \(animeItem.name)")
+        debugPrint("$ AnimeTableList_Cell: lastTouchEp -> \(lastTouchEp?.id)")
+        debugPrint("$ AnimeTableList_Cell: nextMarkEp -> \(nextMarkEp?.id)")
         nameLabel.text = animeItem.name    // anime name of cell
         doingLabel.text = "\(animeItem.subject.collection.doing) 人在看"    // num of watching
         
