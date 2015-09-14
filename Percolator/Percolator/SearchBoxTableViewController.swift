@@ -89,7 +89,7 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         
-        debugPrintln("----> search text: \(searchBar.text)")
+        debugPrint("----> search text: \(searchBar.text)")
         if searchBar.text == "搜索盒子" || searchBar.text == "" {
             isSearching = false
             fetchLocalData()
@@ -100,7 +100,7 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
     
     func loadMoreData(searchBar: UISearchBar) {
         
-        let searchText = searchBar.text
+        let searchText = searchBar.text ?? ""
         searchController.searchBar.resignFirstResponder()
         searchButton.enabled = false
         
@@ -124,16 +124,16 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
                     if error?.code == 1 {
                         // No more data
                         self.tableView.footer.noticeNoMoreData()
-                        debugPrintln("@ SearchTableViewController: No more data")
+                        debugPrint("@ SearchTableViewController: No more data")
                     } else {
                         // No result
-                        debugPrintln("@ SearchTableViewController: No result")
+                        debugPrint("@ SearchTableViewController: No result")
                         self.noticeInfo("无结果", autoClear: true, autoClearTime: 5)
                     }
                     
                 } else {
                     // success
-                    debugPrintln("@ SearchTableViewController: Fetch data success")
+                    debugPrint("@ SearchTableViewController: Fetch data success")
                     self.tableView.reloadData()
                 }
             }
@@ -284,7 +284,7 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
         swipeSettings.transition = MGSwipeTransition.Border
         expansionSettings.buttonIndex = 0
         
-        var me = self
+        let me = self
         
         if direction == .LeftToRight {
             expansionSettings.fillOnTrigger = true
@@ -459,7 +459,7 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
     
     private func fetchLocalData() {
         NSLog("@ SearchBoxTableViewController: Fetcho local data")
-        var fetchRequest = NSFetchRequest(entityName: "Subject")
+        let fetchRequest = NSFetchRequest(entityName: "Subject")
         let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         

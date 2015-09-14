@@ -20,12 +20,12 @@ class AnimeDetailTableViewController: UITableViewController {
     @IBAction func refresh(sender: UIRefreshControl?) {
         refreshControl?.beginRefreshing()
         let item = animeItem
-        println("getDetail start")
+        print("getDetail start")
         
             self.request.getItemLargeDetail(item.subject.id) { (animeDetailLargeData) -> Void in
                 
                 if let detailData = animeDetailLargeData {
-                    println("@ AnimeDetailTableVC: Get anime deatil data")
+                    print("@ AnimeDetailTableVC: Get anime deatil data")
                     self.animeDetailLarge = detailData
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -34,7 +34,7 @@ class AnimeDetailTableViewController: UITableViewController {
                         self.tableView.reloadData()
                     })
                 } else {
-                    println("@ AnimeDetailTableVC: Fail to get anime deatil data")
+                    print("@ AnimeDetailTableVC: Fail to get anime deatil data")
                     self.refreshControl?.endRefreshing()
                 }
             }

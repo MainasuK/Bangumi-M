@@ -55,7 +55,7 @@ public class BangumiAnimeModel {
     // MARK: Model fetch method
     public func fetchAnimeListTabelVCModel(request: BangumiRequest, handler: (Bool) -> Void) {
         completedTasksCount = 0
-        debugPrintln(className + "Fetch method called")
+        debugPrint(className + "Fetch method called", terminator: "")
         
         if let user = request.userData {
             // Task 1: fetch user watching list
@@ -63,7 +63,7 @@ public class BangumiAnimeModel {
                 if (animeArr != nil) {
                     self.animeList = animeArr!
                     self.completedTasksCount++
-                    debugPrintln(self.className + "animeList get")
+                    debugPrint(self.className + "animeList get")
                     self.fetchAnimeDetailList(request, handler)
                 } else {
                     // Failed
@@ -75,7 +75,7 @@ public class BangumiAnimeModel {
             request.getSubjectStatus(user.id, authEncode: user.authEncode) { (statusDict) -> Void in
                 self.subjectAllStatusList = statusDict
                 self.completedTasksCount++
-                debugPrintln(self.className + "subjectAllStatusList get")
+                debugPrint(self.className + "subjectAllStatusList get")
                 self.fetchAnimeDetailList(request, handler)
             }
         }   // if let user = request.userData
@@ -104,7 +104,7 @@ public class BangumiAnimeModel {
             
             NSNotificationCenter.defaultCenter().postNotificationName("setProgress", object: nil)
             var index = Float(0.0)
-            var count = Float(self.animeList.count)
+            let count = Float(self.animeList.count)
             for anime in self.animeList {
                 
                 request.getSubjectDetailLarge(anime.subject.id) { (animeDetailLargeData) -> Void in

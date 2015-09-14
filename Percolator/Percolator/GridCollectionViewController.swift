@@ -79,7 +79,7 @@ class GridCollectionViewController: UICollectionViewController, UICollectionView
 
         cell.GridNumberLabel.text = "\(epSort)"
         
-        println("id:\(epID), sort:\(epSort), type:\(epType), bool:\(subjectStatusDict.subjectStatus[epID])")
+        print("id:\(epID), sort:\(epSort), type:\(epType), bool:\(subjectStatusDict.subjectStatus[epID])")
         
         if let epStatusType = subjectStatusDict.subjectStatus[epID] {
             switch (epType, epStatusType) {
@@ -94,7 +94,7 @@ class GridCollectionViewController: UICollectionViewController, UICollectionView
             case (EpisodeType.sp, _):     cell.GridNumberLabel.backgroundColor = UIColor.greenColor()
             case (EpisodeType.ed, _):     cell.GridNumberLabel.backgroundColor = UIColor.redColor()
                 
-            default: println("Unknown type")
+            default: print("Unknown type")
             }
             cell.GridNumberLabel.textColor = UIColor.whiteColor()
         } else {

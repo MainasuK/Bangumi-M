@@ -12,8 +12,8 @@ import UIKit
 extension UIImage {
     class func imageFromLayer(layer: CALayer) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, UIScreen.mainScreen().scale)
-        layer.renderInContext(UIGraphicsGetCurrentContext())
-        var outputImage = UIGraphicsGetImageFromCurrentImageContext()
+        layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let outputImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
     
         return outputImage

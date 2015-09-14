@@ -23,7 +23,7 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
     }
     var canRefresh: Bool = true {
         didSet {
-            debugPrintln("@ AnimeListTableVC: now canRefresh is \(canRefresh)")
+            debugPrint("@ AnimeListTableVC: now canRefresh is \(canRefresh)")
         }
     }
     var messageLabel = UILabel()
@@ -51,7 +51,7 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
             return
         }
         
-        debugPrintln("@ AnimeListTableVC: Anime list start refresh")
+        debugPrint("@ AnimeListTableVC: Anime list start refresh")
         if let user = request.userData {
             isFetchingData = true
             isFirstFailed = true
@@ -61,7 +61,7 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
                 self.isFetchingData = false
                 
                 if isFetchSuccess {
-                    debugPrintln("@ AnimeListTableVC: Handler get true and refresh success")
+                    debugPrint("@ AnimeListTableVC: Handler get true and refresh success")
                     dispatch_async(dispatch_get_main_queue()) {
                         
                         self.tableView.header.endRefreshing()
@@ -70,7 +70,7 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
                     }   // dispatch_async(…)
                     
                 } else {
-                    debugPrintln("@ AnimeListTableVC: Handler get flase and refresh failed")
+                    debugPrint("@ AnimeListTableVC: Handler get flase and refresh failed")
                     dispatch_async(dispatch_get_main_queue()) {
                         self.clearAllNotice()
                         if self.isFirstFailed {
@@ -85,7 +85,7 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
             }   // animeModel.fetchAnimeListTabelVCModel(…)
             
         } else {
-            debugPrintln("@ AnimeListTableVC: Failed to get user info to fresh")
+            debugPrint("@ AnimeListTableVC: Failed to get user info to fresh")
             self.noticeError("请重新登录", autoClear: true, autoClearTime: 5)
             self.tableView.header.endRefreshing()
         }   // if let user = request.userData…
@@ -118,7 +118,7 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
         progressView.tintColor = UIColor.myProgressBarColor()
         progressView.frame = CGRectMake(pSetX, pSetY, pSetWidth, pSetHeight)
         self.navigationController!.navigationBar.addSubview(progressView)
-        progressView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.hidden = true
         progressView.setProgress(0.0, animated: false)
 
@@ -167,16 +167,16 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
                 spinner.stopAnimating()
                 self.view.userInteractionEnabled = true
                 if let user = userData {
-                    debugPrintln("@ AnimeListTableVC: User data get")
-                    debugPrintln("@ AnimeListTableVC: User ID is \(user.id)")
-                    debugPrintln("@ AnimeListTableVC: User nickname is \(user.nickName)")
+                    debugPrint("@ AnimeListTableVC: User data get")
+                    debugPrint("@ AnimeListTableVC: User ID is \(user.id)")
+                    debugPrint("@ AnimeListTableVC: User nickname is \(user.nickName)")
                     
                     self.request.userData = user
                     self.tableView.header.beginRefreshing()
                     self.isFirstLoad = false
                 } else {
                     // FIXME: User auth failed
-                    debugPrintln("@ AnimeListTableVC: User auth failed")
+                    debugPrint("@ AnimeListTableVC: User auth failed")
                     //                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     //
                     //                        self.performSegueWithIdentifier(StoryboardKey.showLoginVC, sender: self)

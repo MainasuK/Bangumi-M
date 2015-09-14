@@ -82,7 +82,7 @@ public class BangumiSearchModel {
                 self.startIndex += subjectListData!.count
                 self.lastSearchText = searchText
                 for subject in subjectListData! {
-                    if find(self.subjectIDList, subject.id) == nil {
+                    if self.subjectIDList.indexOf(subject.id) == nil {
                         self.subjectIDList.append(subject.id)
                         self.subjectsList[subject.id] = subject
                     }
