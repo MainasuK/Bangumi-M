@@ -1294,7 +1294,7 @@
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Ygg-Kl-A6c">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ygg-Kl-A6c" id="Xcx-53-4fC">
+                                        <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ygg-Kl-A6c" id="Xcx-53-4fC">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -1317,6 +1317,7 @@
                                                 </button>
                                             </subviews>
                                             <animations/>
+                                            <color key="backgroundColor" red="0.94117647059999998" green="0.94901960780000005" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="mV4-lY-X7q" secondAttribute="bottom" id="JhR-e4-5dL"/>
                                                 <constraint firstItem="mV4-lY-X7q" firstAttribute="trailing" secondItem="Xcx-53-4fC" secondAttribute="trailingMargin" id="KcP-kt-bPm"/>
@@ -1353,6 +1354,7 @@
                                                 </button>
                                             </subviews>
                                             <animations/>
+                                            <color key="backgroundColor" red="0.94117647059999998" green="0.94901960780000005" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="6FL-6J-Hjc" firstAttribute="trailing" secondItem="4hF-fu-Ml9" secondAttribute="trailingMargin" id="0wI-Fn-KTb"/>
                                                 <constraint firstAttribute="bottom" secondItem="6FL-6J-Hjc" secondAttribute="bottom" id="Tv8-Jf-T9J"/>
@@ -1366,7 +1368,7 @@
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="err-JW-b4e">
                                         <rect key="frame" x="0.0" y="88" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="err-JW-b4e" id="a2Z-Ua-0Ee">
+                                        <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="err-JW-b4e" id="a2Z-Ua-0Ee">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -1390,6 +1392,7 @@
                                                 </button>
                                             </subviews>
                                             <animations/>
+                                            <color key="backgroundColor" red="0.94117647059999998" green="0.94901960780000005" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="a6N-Ft-Q81" firstAttribute="trailing" secondItem="a2Z-Ua-0Ee" secondAttribute="trailingMargin" id="dtj-6j-Wcg"/>
                                                 <constraint firstItem="a6N-Ft-Q81" firstAttribute="leading" secondItem="a2Z-Ua-0Ee" secondAttribute="leadingMargin" constant="10" id="sgP-u3-42f"/>
@@ -1403,7 +1406,7 @@
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="3NF-yt-Kkd">
                                         <rect key="frame" x="0.0" y="132" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3NF-yt-Kkd" id="JYl-bJ-V8x">
+                                        <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3NF-yt-Kkd" id="JYl-bJ-V8x">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -1428,6 +1431,7 @@
                                                 </button>
                                             </subviews>
                                             <animations/>
+                                            <color key="backgroundColor" red="0.94117647059999998" green="0.94901960780000005" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="Wgf-C3-9KY" secondAttribute="bottom" id="JLB-ic-HFY"/>
                                                 <constraint firstItem="Wgf-C3-9KY" firstAttribute="leading" secondItem="JYl-bJ-V8x" secondAttribute="leadingMargin" constant="10" id="TCB-wp-qN8"/>

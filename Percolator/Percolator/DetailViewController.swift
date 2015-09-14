@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import SafariServices
 import Haneke
 
 let reuseTableViewCellIdentifier = "TableViewCell"
 let reuseCollectionViewCellIdentifier = "CollectionViewCell"
 
-class DetailViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate, MGSwipeTableCellDelegate {
+class DetailViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate, SFSafariViewControllerDelegate, MGSwipeTableCellDelegate {
     
     private let kTableHeaderHeight: CGFloat = 300.0 - 36.0
     private let kTableHeaderCutAway: CGFloat = 50.0
@@ -133,7 +134,6 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
-//        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
         if isFirstLoaded {
             let indexSet = NSIndexSet(index: 0)
             tableView.reloadSections(indexSet, withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -155,6 +155,15 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         self.navigationController?.navigationBar.lt_reset()
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        coordinator.animateAlongsideTransition(nil) { (UIViewControllerTransitionCoordinatorContext) -> Void in
+            self.updateHeaderView()
+            self.tableView.reloadData()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -381,7 +390,17 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
             let urlSplice = desktopUrl.componentsSeparatedByString("/")
             if let id = urlSplice.last {
                 url = "http://bangumi.tv/m/topic/subject/\(id)"
-                UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+                
+                if #available(iOS 9.0, *) {
+                    let svc = SFSafariViewController(URL: NSURL(string: url)!)
+                    svc.delegate = self
+                    UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+                    self.presentViewController(svc, animated: true, completion: nil)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+                }
+
             }
         }
         
@@ -391,7 +410,16 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! CMKEPTableViewCell
             let epID = cell.id
             let url = "http://bangumi.tv/m/topic/ep/\(epID)"
-            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+            
+            if #available(iOS 9.0, *) {
+                let svc = SFSafariViewController(URL: NSURL(string: url)!)
+                svc.delegate = self
+                UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+                self.presentViewController(svc, animated: true, completion: nil)
+            } else {
+                // Fallback on earlier versions
+                UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+            }
         }
     }
     
@@ -437,7 +465,16 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
                 return
             }
             
-            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+            if #available(iOS 9.0, *) {
+                let svc = SFSafariViewController(URL: NSURL(string: url)!)
+                svc.delegate = self
+                UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+                self.presentViewController(svc, animated: true, completion: nil)
+            } else {
+                // Fallback on earlier versions
+                UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+            }
+            
         }
         
 //        if UIDevice.currentDevice().systemVersion >= "8.0" {
@@ -626,6 +663,15 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
             }
             
         }
+        
+    }
+    
+    // MARK: - SFSafariViewControllerDelegate
+    
+    @available(iOS 9.0, *)
+    func safariViewControllerDidFinish(controller: SFSafariViewController) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         
     }
 }
