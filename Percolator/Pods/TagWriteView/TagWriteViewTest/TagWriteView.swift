@@ -92,8 +92,8 @@ public class TagWriteView : UIView
     
     
     // MARK: Initializers
-    required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
     }
     
     override init(frame: CGRect) {
@@ -147,7 +147,7 @@ public class TagWriteView : UIView
     public func removeTags(tags: [String]) {
         var pickedIndexes = [Int]()
         for tag in tags {
-            for (idx, value) in enumerate(tagsMade) {
+            for (idx, value) in tagsMade.enumerate() {
                 if value == tag {
                     pickedIndexes.append(idx)
                 }
@@ -162,7 +162,7 @@ public class TagWriteView : UIView
     }
     
     public func addTagToLast(tag: String, animated: Bool) {
-        var newTag = tag.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        let newTag = tag.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         for t in tagsMade {
             if newTag == t {
                 NSLog("DUPLICATED!")
@@ -180,9 +180,9 @@ public class TagWriteView : UIView
 
     public func removeTag(tag: String, animated: Bool) {
         var foundIndex = -1
-        for (idx, value) in enumerate(tagsMade) {
+        for (idx, value) in tagsMade.enumerate() {
             if tag == value {
-                debugPrint("Removed")   // MARK: Replace the "FOUND" with "Removed" - by @cirno.mainasuk@gmail.com
+                debugPrint("Removed", terminator: "")   // MARK: Replace the "FOUND" with "Removed" - by @cirno.mainasuk@gmail.com
                 foundIndex = idx
             }
         }
@@ -243,7 +243,7 @@ public class TagWriteView : UIView
         scrollView.backgroundColor = UIColor.clearColor();
         scrollView.scrollsToTop = false;
         scrollView.showsVerticalScrollIndicator = false;
-        scrollView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        scrollView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         addSubview(scrollView)
         scrollView.applyMarginConstraint(margin: UIEdgeInsetsZero)
         
@@ -268,7 +268,7 @@ public class TagWriteView : UIView
     }
     
     private func addTagViewToLast(newTag: String, animated: Bool) {
-        var posX = posXForObjectNextToLastTagView()
+        let posX = posXForObjectNextToLastTagView()
         let tagBtn = createTagButton(tagName: newTag, positionX: posX)
         tagBtn.tag = tagViews.count
         tagViews.append(tagBtn)
@@ -285,7 +285,7 @@ public class TagWriteView : UIView
         var newTagButtons: [UIButton] = Array()
         
         newTagButtons.reserveCapacity(tagsMade.count)
-        for (index, tag) in enumerate(tagsMade) {
+        for (index, tag) in tagsMade.enumerate() {
             let tagButton = self.createTagButton(tagName: tag, positionX: accumX)
             newTagButtons.append(tagButton)
             tagButton.tag = index
@@ -325,7 +325,7 @@ public class TagWriteView : UIView
 
     private func deleteBackspace() {
         let text: String = tagInputView.text
-        if count(text) == 0 {
+        if text.characters.count == 0 {
             if readyToDelete {
                 if tagsMade.count > 0 {
                     let deletedTag = tagsMade[tagsMade.endIndex - 1]
@@ -362,7 +362,7 @@ public class TagWriteView : UIView
         tagInputView.backgroundColor = UIColor.clearColor()
         tagInputView.textColor = tagBackgroundColor
         
-        var accumX = posXForObjectNextToLastTagView()
+        let accumX = posXForObjectNextToLastTagView()
         var inputRect = inputBaseView.frame
         inputRect.origin.x = accumX
         inputRect.origin.y = verticalInsetForTag.top
@@ -397,7 +397,7 @@ public class TagWriteView : UIView
         
         func layout() {
             var posX: CGFloat = tagGap
-            for (idx, view) in enumerate(tagViews) {
+            for (idx, view) in tagViews.enumerate() {
                 var viewFrame = view.frame
                 viewFrame.origin.x = posX
                 view.frame = viewFrame
@@ -425,8 +425,8 @@ public class TagWriteView : UIView
     }
     
     private func setScrollOffsetToMakeInputViewVisible() {
-        var inputRect = inputBaseView.frame
-        var scrollingDelta = (inputRect.origin.x + inputRect.size.width) - (scrollView.contentOffset.x + scrollView.frame.size.width)
+        let inputRect = inputBaseView.frame
+        let scrollingDelta = (inputRect.origin.x + inputRect.size.width) - (scrollView.contentOffset.x + scrollView.frame.size.width)
         if scrollingDelta > 0 {
             var scrollOffset = scrollView.contentOffset
             scrollOffset.x += scrollingDelta + 40.0
@@ -442,13 +442,13 @@ public class TagWriteView : UIView
     // MARK: UITextViewDelegate
 }
 
-extension TagWriteView: UITextViewDelegate {
+extension TagWriteView {
     public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         let piece: String = text
         let t: String = textView.text
         
-        let pieceCount = count(piece)
-        let textCount = count(t)
+        let pieceCount = piece.characters.count
+        let textCount = t.characters.count
         
         if isFinishLetter(piece) {
             if textCount > 0 {
@@ -485,7 +485,7 @@ extension TagWriteView: UITextViewDelegate {
         inputRect.size.width = newWidth
         inputBaseView.frame = inputRect
         
-        var widthDelta = newWidth - currentWidth
+        let widthDelta = newWidth - currentWidth
         var contentSize = scrollView.contentSize
         contentSize.width += widthDelta
         scrollView.contentSize = contentSize
@@ -519,17 +519,17 @@ extension TagWriteView: UITextViewDelegate {
 
 
 extension UIView {
-    func applyMarginConstraint(#margin: UIEdgeInsets) {
+    func applyMarginConstraint(margin margin: UIEdgeInsets) {
         if self.superview == nil {
             return
         }
         
-        self.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.translatesAutoresizingMaskIntoConstraints = false
         
         let view = ["view":self]
         let metrics = ["left":margin.left, "right":margin.right,"top":margin.top, "bottom":margin.bottom]
-        self.superview!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-left-[view]-right-|", options: nil, metrics: metrics, views: view))
-        self.superview!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-top-[view]-bottom-|", options: nil, metrics: metrics, views: view))
+        self.superview!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-left-[view]-right-|", options: [], metrics: metrics, views: view))
+        self.superview!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-top-[view]-bottom-|", options: [], metrics: metrics, views: view))
     }
 }
 
@@ -544,8 +544,8 @@ extension UIView {
 extension String {
     subscript (r: Range<Int>) -> String {
         get {
-            let startIndex = advance(self.startIndex, r.startIndex)
-            let endIndex = advance(startIndex, r.endIndex - r.startIndex)
+            let startIndex = self.startIndex.advancedBy(r.startIndex)
+            let endIndex = startIndex.advancedBy(r.endIndex - r.startIndex)
             
             return self[Range(start: startIndex, end: endIndex)]
         }

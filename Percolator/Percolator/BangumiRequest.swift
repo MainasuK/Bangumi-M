@@ -37,7 +37,7 @@ public class BangumiRequest {
         var postBody = String(format: "auth=%@&status=%@", authEncode, method.rawValue)
         postBody += (rating != nil) ? "&rating=\(rating!)" : ""
         postBody += (comment != nil) ? "&comment=\(comment!)" : ""
-        if tags != nil { postBody += "&tags=" + join(" ", tags!) }
+        if tags != nil { postBody += "&tags=" + (tags!).joinWithSeparator(" ") }
         
         let urlPath = String(format: BangumiApiKey.UpdateSubjectStatus, animeItem.subject.id, BangumiApiKey.Percolator)
         
@@ -86,7 +86,7 @@ public class BangumiRequest {
             let count = json["results"] as? Int,
             let list = json["list"] as? [NSDictionary] {
                 if count == 1 {
-                    handler(nil, count: 0, NSError())
+                    handler(nil, count: 0, NSError(domain: "", code: 0, userInfo: nil))
                     return
                 }
                 
@@ -97,7 +97,7 @@ public class BangumiRequest {
                 
                 handler(animeSubjectList, count: count-1, nil)
             } else {
-                handler(nil, count: 0, NSError())
+                handler(nil, count: 0, NSError(domain: "", code: 0, userInfo: nil))
             }
         }
     }
@@ -128,7 +128,7 @@ public class BangumiRequest {
         let authEncode = userData!.authEncode
         let uid = userData!.id
         
-        var urlPath = String(format: BangumiApiKey.UserSubject, uid, subjectID, BangumiApiKey.Percolator, authEncode)
+        let urlPath = String(format: BangumiApiKey.UserSubject, uid, subjectID, BangumiApiKey.Percolator, authEncode)
         var subjectStatus = SubjectItemStatus()
         
         getJsonFrom(urlPath) { (jsonData) -> Void in
@@ -145,7 +145,7 @@ public class BangumiRequest {
     
     // GET
     public func getSubjectStatus(uid: Int, authEncode: String, handler: ([Int: SubjectItemStatus]) -> Void) {
-        var urlPath = String(format: BangumiApiKey.UserSubjectAll, uid, BangumiApiKey.Percolator, authEncode)
+        let urlPath = String(format: BangumiApiKey.UserSubjectAll, uid, BangumiApiKey.Percolator, authEncode)
         var subjectAllStatus = [Int: SubjectItemStatus]()
         
         getJsonFrom(urlPath) { (jsonData) -> Void in
@@ -166,7 +166,7 @@ public class BangumiRequest {
     }
     
     public func getItemLargeDetail(id: Int, handler: (AnimeDetailLarge?) -> Void) {
-        var urlPath = String(format: BangumiApiKey.ItemDetailLarge, id)
+        let urlPath = String(format: BangumiApiKey.ItemDetailLarge, id)
         
         getJsonFrom(urlPath){ (jsonData) -> Void in
             
@@ -188,10 +188,10 @@ public class BangumiRequest {
         let cache = Shared.JSONCache
         let URL = NSURL(string: urlPath)!
         
-        debugPrintln("---> cache.fetch Start")
+        debugPrint("---> cache.fetch Start")
         cache.fetch(URL: URL, failure: { (error) -> () in
             if error != nil {
-                debugPrintln("---> cache.fetch failed")
+                print("---> cache.fetch failed")
                 NSLog("Haneke fetch JSON failed, try to fetch via NSURLSession")
                 self.getJsonFrom(urlPath) { (jsonData) -> Void in
                     
@@ -206,30 +206,30 @@ public class BangumiRequest {
                     }
                 }
             } else {
-                debugPrintln("---> cache.fetch failure block : error is nil, so -->> success")
+                print("---> cache.fetch failure block : error is nil, so -->> success")
             }
         }, success: { JSON in
             if self.isJsonDataAvailable(JSON as? AnyObject) {
                 
                 let jsonData = JSON.dictionary
                 handler(AnimeDetailLarge(json: jsonData))
-                debugPrintln("---> cache.fetch from cache success")
+                print("---> cache.fetch from cache success")
                 
             } else {
-                debugPrintln("---> cache.fetch from cache but failed, try to fetch via NSURLSession…")
+                print("---> cache.fetch from cache but failed, try to fetch via NSURLSession…")
                 self.getJsonFrom(urlPath) { (jsonData) -> Void in
-                    debugPrintln("---> cache.fetch via NSURLSession…")
+                    print("---> cache.fetch via NSURLSession…")
                     if jsonData != nil {
                 
                         if let jsonDict = jsonData as? NSDictionary {
-                            debugPrintln("---> return and success")
+                            print("---> return and success")
                             handler(AnimeDetailLarge(json: jsonDict))
                         } else {
-                            debugPrintln("---> return but failed")
+                            print("---> return but failed")
                             handler(nil)
                         }
                     } else {
-                        debugPrintln("---> return nil")
+                        print("---> return nil")
                         handler(nil)
                     }
                 }
@@ -255,23 +255,23 @@ public class BangumiRequest {
     // MARK: Collection: get user watching anime
     public func getUserWatching(userID: Int, handler: ([Anime]?) -> Void) {
         
-        var urlPath = String(format: BangumiApiKey.UserWatching, userID)
+        let urlPath = String(format: BangumiApiKey.UserWatching, userID)
         
         getJsonFrom(urlPath) { (jsonData) -> Void in
             
             if jsonData != nil {
                 var animeArr = [Anime]()
                 let json = jsonData as! [NSDictionary]
-                println("$ Bangumi_Request: Get anime item")
+                print("$ Bangumi_Request: Get anime item")
                 for animeDict in json {
                     let anime = Anime(json: animeDict)
-                    println("\(anime.subject.id): \(anime.name) ep_status: \(anime.epStatus)")
+                    print("\(anime.subject.id): \(anime.name) ep_status: \(anime.epStatus)")
                     animeArr.append(anime)
                 }
-                println("$ Bangumi_Request: Pass anime list to VC")
+                print("$ Bangumi_Request: Pass anime list to VC")
                 handler(animeArr)
             } else {
-                println("$ Bangumi_Request: Fail to get anime list, pass nil to handler")
+                print("$ Bangumi_Request: Fail to get anime list, pass nil to handler")
                 handler(nil)
             }
         }
@@ -280,10 +280,10 @@ public class BangumiRequest {
     // MARK: Login
     public func userLogin(email: String, password pass: String, handler: (User?) -> Void) {
         
-        var postBody = String(format: "username=%@&password=%@", email, pass)
-        var urlPath = String(format: BangumiApiKey.Auth, BangumiApiKey.Percolator)
+        let postBody = String(format: "username=%@&password=%@", email, pass)
+        let urlPath = String(format: BangumiApiKey.Auth, BangumiApiKey.Percolator)
         
-        debugPrintln("$ Bangumi_Request: Fetch user auth json")
+        debugPrint("$ Bangumi_Request: Fetch user auth json")
         getJsonFrom(urlPath, post: postBody) { (jsonData) -> Void in
             
             if jsonData != nil {
@@ -299,9 +299,9 @@ public class BangumiRequest {
     // MARK: Async methods
     // MARK: GET
     private func getJsonFrom(urlPath: String, handler: (AnyObject?) -> Void) {
-        debugPrintln("$ Bangumi_Request: fetch JSON from urlPath: \(urlPath)")
+        debugPrint("$ Bangumi_Request: fetch JSON from urlPath: \(urlPath)")
         
-        var request = NSMutableURLRequest(URL: NSURL(string: urlPath)!, cachePolicy: .ReloadRevalidatingCacheData, timeoutInterval: 15)
+        let request = NSMutableURLRequest(URL: NSURL(string: urlPath)!, cachePolicy: .ReloadRevalidatingCacheData, timeoutInterval: 15)
         request.HTTPMethod = "GET"
         request.HTTPShouldHandleCookies = false
         
@@ -310,9 +310,9 @@ public class BangumiRequest {
     
     // MARK: POST
     private func getJsonFrom(urlPath: String, post postBody: String, handler: (AnyObject?) -> Void) {
-        debugPrintln("$ Bangumi_Request: fetch JSON urlPath: \(urlPath)")
+        debugPrint("$ Bangumi_Request: fetch JSON urlPath: \(urlPath)")
         
-        var request = NSMutableURLRequest(URL: NSURL(string: urlPath)!, cachePolicy: .ReloadRevalidatingCacheData, timeoutInterval: 15)
+        let request = NSMutableURLRequest(URL: NSURL(string: urlPath)!, cachePolicy: .ReloadRevalidatingCacheData, timeoutInterval: 15)
         request.HTTPMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = postBody.dataUsingEncoding(NSUTF8StringEncoding)
@@ -331,11 +331,11 @@ public class BangumiRequest {
             
             // Parse JSON data
             if error != nil {
-                println("$ Bangumi_Request: fetchJsonData...")
-                println(error.localizedDescription)
+                print("$ Bangumi_Request: fetchJsonData...")
+                print(error!.localizedDescription)
                 handler(nil)
             } else {
-                if var json: AnyObject = self.parseJsonData(data) {
+                if var json: AnyObject = self.parseJsonData(data!) {
                     handler(json)
                 } else {
                     handler(nil)
@@ -353,11 +353,19 @@ public class BangumiRequest {
     private func parseJsonData(data: NSData) -> AnyObject? {
         
         var error: NSError?
-        var jsonResult: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &error)
+        var jsonResult: AnyObject?
+        
+        // FIXME: Swift 2.0
+        do {
+            jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
+        } catch let error1 as NSError {
+            error = error1
+            jsonResult = nil
+        }
         
         if error != nil {
-            println("$ Bangumi_Request: parseJsonData...")
-            println(error?.localizedDescription)
+            print("$ Bangumi_Request: parseJsonData...")
+            print(error?.localizedDescription)
             return nil
         }
         
@@ -371,36 +379,33 @@ public class BangumiRequest {
     private func isJsonDataAvailable(json: AnyObject?) -> Bool {
         
         if json != nil {
-            if let dict = json as? NSDictionary {
-                var error = ""
-                if let error = dict["error"] as? String {
-                    println("$ Bangumi_Request: isJsonDataAvailable...")
-                    println("Fetch JSON failed, with error: " + error)
-                }
-                
-                if let code = dict["code"] as? Int {
-                    NSLog("HTTP request error: request: %@, error: %@, code: %d", dict["request"] as? String ?? "", error, code)
-                    switch code {
-                    case 200:
-                        println("That is available update post, get relax")
-                        return true
-                    case 400:   // Nothing found with that ID
-                        SwiftNotice.noticeOnSatusBar("未标记条目", autoClear: true, autoClearTime: 3)
-                        return false
-                    case 401:   // Unauthorized
-                        SwiftNotice.noticeOnSatusBar("验证信息过期，请重新登录", autoClear: true, autoClearTime: 10)
-                        return false
-                    case 404: fallthrough
-                    case 405: fallthrough
-                    case 413: fallthrough
-                        
-                    default: return false
-                    }
-                }
+            if let dict = json as? NSDictionary,
+            let code = dict["code"] as? Int,
+            let error = dict["error"] as? String {
+                print("$ Bangumi_Request: isJsonDataAvailable...")
+                print("Fetch JSON failed, with error: " + error)
+
+                NSLog("HTTP request error: request: %@, error: %@, code: %d", dict["request"] as? String ?? "", error, code)
+                switch code {
+                case 200:
+                    print("That is available update post, get relax")
+                    return true
+                case 400:   // Nothing found with that ID
+                    SwiftNotice.noticeOnSatusBar("未标记条目", autoClear: true, autoClearTime: 3)
+                    return false
+                case 401:   // Unauthorized
+                    SwiftNotice.noticeOnSatusBar("验证信息过期，请重新登录", autoClear: true, autoClearTime: 10)
+                    return false
+                case 404: fallthrough
+                case 405: fallthrough
+                case 413: fallthrough
+                    
+                default: return false
+                }   // switch code { … }
             }
         }
         
-        println("$ Bangumi_Request: Fetch JSON successful")
+        print("$ Bangumi_Request: Fetch JSON successful")
         return true
     }
 }

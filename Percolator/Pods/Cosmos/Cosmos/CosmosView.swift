@@ -53,18 +53,35 @@ Shows: ★★★★☆ (132)
     update()
   }
   
-  convenience init() {
+  
+  /**
+
+  Initializes and returns a newly allocated cosmos view object.
+  
+  */
+  convenience public init() {
     self.init(frame: CGRect())
+    improveDrawingPerformace()
   }
   
-  override init(frame: CGRect) {
+  /**
+
+  Initializes and returns a newly allocated cosmos view object with the specified frame rectangle.
+
+  - parameter frame: The frame rectangle for the view.
+  
+  */
+  override public init(frame: CGRect) {
     super.init(frame: frame)
     update()
     self.frame.size = intrinsicContentSize()
+    improveDrawingPerformace()
   }
   
-  required public init(coder aDecoder: NSCoder) {
+  /// Initializes and returns a newly allocated cosmos view object.
+  required public init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
+    improveDrawingPerformace()
   }
   
   /**
@@ -92,6 +109,21 @@ Shows: ★★★★☆ (132)
     // ------------
 
     updateSize(layers)
+    
+    // Update accesibility
+    // ------------
+
+    updateAccessibility()
+  }
+  
+  /**
+  
+  Set shouldRasterize to true. This will ask the layer to be rendered to a bitmap and using this bitmap as a cache when displaying the view instead re-rendering the complex stars each frame.
+  
+  */
+  private func improveDrawingPerformace() {
+    layer.shouldRasterize = true
+    layer.rasterizationScale = UIScreen.mainScreen().scale
   }
   
   /**
@@ -134,6 +166,25 @@ Shows: ★★★★☆ (132)
     return viewSize
   }
   
+  // MARK: - Accessibility
+  
+  private func updateAccessibility() {
+    CosmosAccessibility.update(self, rating: rating, text: text, settings: settings)
+  }
+  
+  /// Called by the system in accessibility voice-over mode when the value is incremented by the user.
+  public override func accessibilityIncrement() {
+    super.accessibilityIncrement()
+    
+    rating += CosmosAccessibility.accessibilityIncrement(rating, settings: settings)
+  }
+  
+  /// Called by the system in accessibility voice-over mode when the value is decremented by the user.
+  public override func accessibilityDecrement() {
+    super.accessibilityDecrement()
+    
+    rating -= CosmosAccessibility.accessibilityDecrement(rating, settings: settings)
+  }
   
   // MARK: - Touch recognition
   
@@ -141,20 +192,20 @@ Shows: ★★★★☆ (132)
   public var didTouchCosmos: ((Double)->())?
   
   /// Overriding the function to detect the first touch gesture.
-  public override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent?) {
-    super.touchesBegan(touches, withEvent: event!)
+  public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    super.touchesBegan(touches, withEvent: event)
     
-    if let touch = touches.first as? UITouch {
+    if let touch = touches.first {
       let location = touch.locationInView(self).x
       onDidTouch(location, starsWidth: widthOfStars)
     }
   }
   
   /// Overriding the function to detect touch move.
-  public override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent?) {
-    super.touchesMoved(touches, withEvent: event!)
+  public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    super.touchesMoved(touches, withEvent: event)
     
-    if let touch = touches.first as? UITouch {
+    if let touch = touches.first {
       let location = touch.locationInView(self).x
       onDidTouch(location, starsWidth: widthOfStars)
     }
@@ -177,14 +228,22 @@ Shows: ★★★★☆ (132)
       rating = calculatedTouchRating
     }
     
+    if calculatedTouchRating == previousRatingForDidTouchCallback {
+      // Do not call didTouchCosmos if rating has not changed
+      return
+    }
+    
     didTouchCosmos?(calculatedTouchRating)
+    previousRatingForDidTouchCallback = calculatedTouchRating
   }
+  
+  private var previousRatingForDidTouchCallback: Double = -123.192
   
   
   /// Width of the stars (excluding the text). Used for calculating touch location.
   var widthOfStars: CGFloat {
     if let sublayers = self.layer.sublayers where settings.totalStars <= sublayers.count {
-      let starLayers = Array(sublayers[0..<settings.totalStars]) as! [CALayer]
+      let starLayers = Array(sublayers[0..<settings.totalStars])
       return CosmosSize.calculateSizeToFitLayers(starLayers).width
     }
     

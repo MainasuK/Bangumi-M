@@ -14,12 +14,7 @@ class FavoritesTableViewController: UITableViewController, SWRevealViewControlle
     
     var isFirstLoad = true
     
-    let favoriteModel = BangumiFavoriteModel.shared
-    
-//    @IBAction func menuButtonPressed(sender: AnyObject) {
-//        self.revealViewController().revealToggle(nil)
-//    }
-    
+    let favoriteModel = BangumiFavoriteModel.shared    
     
     // MARK: - Fetch method
     
@@ -75,7 +70,7 @@ class FavoritesTableViewController: UITableViewController, SWRevealViewControlle
         
         // Set Refresh hander
         let header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: "refresh:")
-        header.lastUpdatedTimeLabel.hidden = true
+        header.lastUpdatedTimeLabel?.hidden = true
         header.setTitle("获取我保存的搜索中…", forState: MJRefreshStateRefreshing)
         self.tableView.header = header
         

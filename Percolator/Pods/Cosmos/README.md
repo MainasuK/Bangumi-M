@@ -9,12 +9,13 @@
 
 <img src='https://raw.githubusercontent.com/exchangegroup/Cosmos/master/graphics/Screenshots/star_screenshot_dark.png' alt='Cosmos, star rating control for iOS / Swift' width='300'>
 
-This is a UI control for iOS written in Swift 2.0. It shows a star rating and takes rating input from the user. Cosmos is a subclass of a UIView that will allow your users post those inescapable 1-star reviews!
+This is a UI control for iOS written in Swift. It shows a star rating and takes rating input from the user. Cosmos is a subclass of a UIView that will allow your users post those inescapable 1-star reviews!
 
 * Shows star rating with an optional text label.
 * Can be used as a rating input control.
 * Cosmos view can be customized in the Storyboard without writing code.
 * Includes different star filling modes: full, half-filled and precise.
+* Cosmos is accessible and works with voice-over.
 
 
 <img src='https://raw.githubusercontent.com/exchangegroup/Cosmos/master/graphics/Drawings/1280px-Sirius_A_and_B_artwork.jpg'
@@ -42,10 +43,9 @@ If you are using CocoaPods add this text to your Podfile and run `pod install`.
     use_frameworks!
     pod 'Cosmos', '~> 1.0'
 
-
 **Setup in Xcode 6 / Swift 1.2 project**
 
-Cosmos is written in Swift 2.0 and requires Xcode 7. Use the [previous version of the library](https://github.com/exchangegroup/Cosmos/wiki/Swift-1.2-setup) in Xcode 6 projects.
+Cosmos is written in Swift 2.0 and requires Xcode 7. Use the [previous version of the library](https://github.com/exchangegroup/Cosmos/wiki/Swift-1.2-setup) in Xcode 6 projects. Thanks to [nickhart](https://github.com/nickhart) for making the Xcode 6 version.
 
 ## Usage
 
@@ -62,7 +62,7 @@ Cosmos is written in Swift 2.0 and requires Xcode 7. Use the [previous version o
 <img src='https://raw.githubusercontent.com/exchangegroup/Cosmos/master/graphics/Screenshots/cosmos_storyboard_class_3.png' width='259' alt='Add Cosmos rating view to the storyboard'>
 
 
-3) Customize the Cosmos view appearance in the *Attributes Inspector*.
+3) Customize the Cosmos view appearance in the *Attributes Inspector*. If storyboard does not show the stars click **Refresh All Views** from the **Editor** menu.
 
 
 <img src='https://raw.githubusercontent.com/exchangegroup/Cosmos/master/graphics/Screenshots/cosmos_customize_in_storyboard.png' width='480' alt='Customize cosmos appearance in the attributes inspector in Xcode.'>
@@ -130,6 +130,7 @@ Here are some other star rating controls for iOS:
 * [hugocampossousa/HCSStarRatingView](https://github.com/hugocampossousa/HCSStarRatingView)
 * [strekfus/FloatRatingView](https://github.com/strekfus/FloatRatingView)
 * [yanguango/ASStarRatingView](https://github.com/yanguango/ASStarRatingView)
+
 
 ## License
 

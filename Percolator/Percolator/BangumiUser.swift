@@ -47,8 +47,8 @@ public class User {
         id = NSUserDefaults.standardUserDefaults().valueForKey(UserDefaultsKey.userID) as? Int ?? 0
     }
     
-    func saveUserInfo(email: String, pass: String, userData: User) {
-        println("$ Bangumi_User: Save user data to NSUserDeaults and KeychainWrapper")
+    func saveUserInfo(email: String, password pass: String, userData: User) {
+        print("$ Bangumi_User: Save user data to NSUserDeaults and KeychainWrapper")
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
             let myKeyChainWrapper = KeychainWrapper()
@@ -66,20 +66,20 @@ public class User {
     }
     
     class func isUserLogin() -> Bool {
-        println("$ Bangumi_User: is user login?")
+        print("$ Bangumi_User: is user login?")
         let hasLoginKey = NSUserDefaults.standardUserDefaults().boolForKey("hasLoginKey")
         
         if hasLoginKey {
-            println("Yes")
+            print("Yes")
             return true
         }
-        println("No")
+        print("No")
         deleteUserInfo()
         return false
     }
     
     class func deleteUserInfo() {
-        println("$ Bangumi_User: user is log out status. Clean usre data")
+        print("$ Bangumi_User: user is log out status. Clean usre data")
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
             let myKeyChainWrapper = KeychainWrapper()
@@ -98,7 +98,7 @@ public class User {
     
     // FIXME: Something is wrong
     class func refetchUserAuth() {
-        println("$ Bangumi_User: Refetch user auth")
+        print("$ Bangumi_User: Refetch user auth")
         let myKeyChainWrapper = KeychainWrapper()
         let request = BangumiRequest.shared
 
@@ -106,14 +106,14 @@ public class User {
         if User.isUserLogin() {
             let email = NSUserDefaults.standardUserDefaults().valueForKey(UserDefaultsKey.userEmail) as? String
             let pass = myKeyChainWrapper.myObjectForKey(kSecValueData) as? String
-            println("$ Bangumi_User: Try to prase user json")
+            print("$ Bangumi_User: Try to prase user json")
             
             if email != nil && pass != nil {
                 request.userLogin(email!, password: pass!) { (userData) -> Void in
 
                     if let user = userData {
-                        debugPrintln("$ Bangumi_User: User auth up to date: \(user.auth), save it in NSUserDefaults")
-                        debugPrintln("$ Bangumi_User: request userData up to date")
+                        debugPrint("$ Bangumi_User: User auth up to date: \(user.auth), save it in NSUserDefaults")
+                        debugPrint("$ Bangumi_User: request userData up to date")
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             
                             NSUserDefaults.standardUserDefaults().setValue(user.auth, forKey: UserDefaultsKey.userAuth)

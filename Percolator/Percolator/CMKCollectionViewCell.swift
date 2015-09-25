@@ -46,7 +46,7 @@ class CMKCollectionTableViewCell: UITableViewCell {
 //        self.layoutMargins = UIEdgeInsetsMake(10, 0, 10, 0)
 //    }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 

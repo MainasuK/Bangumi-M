@@ -15,50 +15,57 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     let myKeyChainWrapper = KeychainWrapper()
     
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var EmailLabel: UITextField!
-    @IBOutlet weak var PasswordLabel: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     
-    @IBAction func LoginButtonPressed(sender: AnyObject) {
-        debugPrintln("@ LoginVC: Login Button Pressed")
+    @IBAction func loginButtonPressed(sender: AnyObject) {
+        
+        guard let email = emailTextField.text where email != "" else {
+            self.clearAllNotice()
+            self.noticeInfo("请输入邮件", autoClear: true, autoClearTime: 2)
+            return
+        }
+        
+        guard let pass = passwordTextField.text where pass != "" else {
+            self.clearAllNotice()
+            self.noticeInfo("请输入密码", autoClear: true, autoClearTime: 2)
+            return
+        }
         
         let button = sender as? UIButton
+        button?.enabled = false
+        self.pleaseWait()
         
-        if EmailLabel.text != "" && PasswordLabel.text != "" {
-            debugPrintln("@ LoginVC: UserLogin request sended")
-            self.pleaseWait()
-            button?.enabled = false
+        request.userLogin(email, password: pass) { (userData) -> Void in
             
-            request.userLogin(EmailLabel.text, password: PasswordLabel.text) { (userData) -> Void in
-                
-                self.clearAllNotice()
+            self.clearAllNotice()
+            
+            defer {
                 button?.enabled = true
+            }
+            
+            guard let user = userData else {
+                self.noticeInfo("密码错误", autoClear: true, autoClearTime: 3)
+                print("@ LoginVC: Fail to get userData")
+                return
+            }
+            
+            print("@ LoginVC: User data get")
+            print("@ LoginVC: User ID is \(user.id)")
+            print("@ LoginVC: User nickname is \(user.nickName)")
+            self.request.userData = user
+            self.request.userData?.saveUserInfo(email, password: pass, userData: self.request.userData!)
+            
+            dispatch_async(dispatch_get_main_queue()) {
                 
-                if let user = userData {
-                    debugPrintln("@ LoginVC: User data get")
-                    debugPrintln("@ LoginVC: User ID is \(user.id)")
-                    debugPrintln("@ LoginVC: User nickname is \(user.nickName)")
-                    self.request.userData = user
-                    self.request.userData?.saveUserInfo(self.EmailLabel.text, pass: self.PasswordLabel.text, userData: self.request.userData!)
-                    
-                    dispatch_async(dispatch_get_main_queue()) {
-                        
-                        NSUserDefaults.standardUserDefaults().setValue(self.request.userData?.id, forKey: UserDefaultsKey.userID)
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                        self.delegate?.dismissLoginVC()
-                    }
-        
-                } else {
-                    self.noticeInfo("密码错误", autoClear: true, autoClearTime: 3)
-                    println("@ LoginVC: Fail to get userData")
-                }   // if let user = userData … else …
-            }   // request.userLogin(…) { … }
-        } else {
-            self.noticeInfo("格式不正确", autoClear: true, autoClearTime: 2)
-        }   // if EmailLabel.text … else …
-    }
+                NSUserDefaults.standardUserDefaults().setValue(self.request.userData?.id, forKey: UserDefaultsKey.userID)
+                self.dismissViewControllerAnimated(true, completion: nil)
+                self.delegate?.dismissLoginVC()
+            }
+        }
+    }   // loginButtonPressed(sender: …)
     
-    // MARK: -
-    // MARK: View lifecycle
+    // MARK: - View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,16 +87,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField == EmailLabel {
-            self.PasswordLabel.becomeFirstResponder()
+        if textField == emailTextField {
+            self.passwordTextField.becomeFirstResponder()
         }
         
-        if textField == PasswordLabel {
-            self.LoginButtonPressed(loginButton)
+        if textField == passwordTextField {
+            self.loginButtonPressed(loginButton)
         }
         
         return true
     }
-
 }
 

@@ -1,28 +1,28 @@
 PODS:
-  - Cosmos (1.0.15)
-  - HanekeSwift (0.9.1)
+  - Cosmos (1.0.22)
+  - HanekeSwift (0.10.0)
   - MJRefresh (2.4.7)
   - TagWriteView (1.1.3)
 
 DEPENDENCIES:
-  - Cosmos (from `https://github.com/exchangegroup/Cosmos.git`, branch `swift-1`)
-  - HanekeSwift
+  - Cosmos
+  - HanekeSwift (from `https://github.com/meteochu/HanekeSwift.git`, branch `master`)
   - MJRefresh
   - TagWriteView
 
 EXTERNAL SOURCES:
-  Cosmos:
-    :branch: swift-1
-    :git: https://github.com/exchangegroup/Cosmos.git
+  HanekeSwift:
+    :branch: master
+    :git: https://github.com/meteochu/HanekeSwift.git
 
 CHECKOUT OPTIONS:
-  Cosmos:
-    :commit: 03c9116ff3a053a1a87746f23d0211b5582f4b19
-    :git: https://github.com/exchangegroup/Cosmos.git
+  HanekeSwift:
+    :commit: b227e3854c6f5d1e83226a3ee9e0dfcc5560618c
+    :git: https://github.com/meteochu/HanekeSwift.git
 
 SPEC CHECKSUMS:
-  Cosmos: 6bd7b9a959c42660b485296b56e37487d28f7e19
-  HanekeSwift: 50d37bfbc4432edc649167e538c259feccb4a2bb
+  Cosmos: 85d6e39fbc7930d9d857e5c2460aad966d7c732c
+  HanekeSwift: d6f5bdf9dbdbbc09d59623b2c1d533e46463dd4d
   MJRefresh: 6eb2f61338f89f64fd628fd43debcf479381ff59
   TagWriteView: 07e6d74544c7d47dcd69a5edb5d19ed434302da3
 

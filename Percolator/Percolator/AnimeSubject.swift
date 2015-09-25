@@ -74,7 +74,7 @@ extension AnimeSubject {
     }
     
     func toCKRecord() -> CKRecord {
-        var record = CKRecord(recordType: "Subject")
+        let record = CKRecord(recordType: "Subject")
         record.setValue(self.id, forKey: "id")
         record.setValue(self.url, forKey: "url")
         record.setValue(self.type, forKey: "type")
@@ -97,15 +97,15 @@ extension AnimeSubject {
 
 extension AnimeSubject {
     init(subject: Subject) {
-        id      = subject.id.toInt()!
+        id      = Int(subject.id)!
         url     = subject.url
-        type    = subject.type.toInt()!
+        type    = Int(subject.type)!
         name    = subject.name
         nameCN  = subject.nameCN
         summary = subject.summary
-        eps     = subject.eps.toInt()!
+        eps     = Int(subject.eps)!
         airDate = subject.airDate
-        airWeekday = subject.airWeekday.toInt()!
+        airWeekday = Int(subject.airWeekday)!
         
         images.commonUrl    = subject.imageLargeUrl
         images.gridUrl      = subject.imageLargeUrl
@@ -113,11 +113,11 @@ extension AnimeSubject {
         images.mediumUrl    = subject.imageLargeUrl
         images.gridUrl      = subject.imageLargeUrl
         
-        collection.collect  = subject.collectionCollect.toInt()!
-        collection.doing    = subject.collectionDoing.toInt()!
-        collection.dropped  = subject.collectionDropped.toInt()!
-        collection.onHold   = subject.collectionOnHold.toInt()!
-        collection.wish     = subject.collectionWish.toInt()!
+        collection.collect  = Int(subject.collectionCollect)!
+        collection.doing    = Int(subject.collectionDoing)!
+        collection.dropped  = Int(subject.collectionDropped)!
+        collection.onHold   = Int(subject.collectionOnHold)!
+        collection.wish     = Int(subject.collectionWish)!
 
     }
 }
@@ -141,102 +141,115 @@ class Subject: NSManagedObject {
     @NSManaged var url: String!
 
     
+    // FIXME: Swift2.0 error handle need here (throws)
     class func saveAnimeSubject(animeSubject: AnimeSubject, _ handler: (Bool) -> Void) {
-        if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext,
-        var subject = NSEntityDescription.insertNewObjectForEntityForName("Subject", inManagedObjectContext: managedObjectContext) as? Subject {
+        guard let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext,
+        let subject = NSEntityDescription.insertNewObjectForEntityForName("Subject", inManagedObjectContext: managedObjectContext) as? Subject else {
             
-            subject.airDate = animeSubject.airDate
-            subject.airWeekday = "\(animeSubject.airWeekday)"
-            subject.collectionCollect = "\(animeSubject.collection.collect)"
-            subject.collectionDoing = "\(animeSubject.collection.doing)"
-            subject.collectionDropped = "\(animeSubject.collection.dropped)"
-            subject.collectionOnHold = "\(animeSubject.collection.onHold)"
-            subject.collectionWish = "\(animeSubject.collection.wish)"
-            subject.eps = "\(animeSubject.eps)"
-            subject.id = "\(animeSubject.id)"
-            subject.imageLargeUrl = animeSubject.images.largeUrl
-            subject.name = animeSubject.name
-            subject.nameCN = animeSubject.nameCN
-            subject.summary = animeSubject.summary
-            subject.type = "\(animeSubject.type)"
-            subject.url = animeSubject.url
-            
-            var error: NSError?
-            if managedObjectContext.save(&error) != true {
-                NSLog("% Subject: Insert error: \(error!.localizedDescription)")
-                handler(false)
-                return
-            }
-            
-            handler(true)
-        }   // if let …, var …
+            handler(false)
+            return
+        }
+        
+        subject.airDate = animeSubject.airDate
+        subject.airWeekday = "\(animeSubject.airWeekday)"
+        subject.collectionCollect = "\(animeSubject.collection.collect)"
+        subject.collectionDoing = "\(animeSubject.collection.doing)"
+        subject.collectionDropped = "\(animeSubject.collection.dropped)"
+        subject.collectionOnHold = "\(animeSubject.collection.onHold)"
+        subject.collectionWish = "\(animeSubject.collection.wish)"
+        subject.eps = "\(animeSubject.eps)"
+        subject.id = "\(animeSubject.id)"
+        subject.imageLargeUrl = animeSubject.images.largeUrl
+        subject.name = animeSubject.name
+        subject.nameCN = animeSubject.nameCN
+        subject.summary = animeSubject.summary
+        subject.type = "\(animeSubject.type)"
+        subject.url = animeSubject.url
+        
+        do {
+            try managedObjectContext.save()
+        } catch let error as NSError {
+            NSLog("% Subject: Insert error: \(error.localizedDescription)")
+            handler(false)
+            return
+        }
+        
+        handler(true)
+        
     }   // class func saveAnimeSubject(…)
     
+    // FIXME: Siwft2.0 error handle need here (throws)
     class func deleteSubject(subjectToDelete: AnimeSubject, _ handler: (Bool) -> Void) {
 
-        var error: NSError?
-        var fetchRequest = NSFetchRequest(entityName: "Subject")
+        let fetchRequest = NSFetchRequest(entityName: "Subject")
         fetchRequest.predicate = NSPredicate(format: "id == %@", "\(subjectToDelete.id)")
         
-        if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext,
-        let subjects = managedObjectContext.executeFetchRequest(fetchRequest, error: &error) as? [Subject],
-        let subject = subjects.first {
-            
-            var e: NSError?
-            managedObjectContext.deleteObject(subject)
-            if managedObjectContext.save(&e) != true {
-                NSLog("% Subject: Delete error: \(error!.localizedDescription)")
-            }
-            
-            handler(true)
-            return
-        } else {
+        guard let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext,
+        let subjects = try! managedObjectContext.executeFetchRequest(fetchRequest) as? [Subject],
+        let subject = subjects.first else {
+        
             handler(false)
+            return
         }
+        
+        do {
+            managedObjectContext.deleteObject(subject)
+            try managedObjectContext.save()
+        } catch let error as NSError {
+            NSLog("% Subject: Delete error: \(error.localizedDescription)")
+            handler(false)
+            return
+        }
+        
+        handler(true)
     }
     
+    // FIXME: Swift2.0 error handle need here (throws)
     class func fetchSubject(handler: ([AnimeSubject]?) -> Void) {
-        if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
-            let fetchRequest = NSFetchRequest(entityName: "Subject")
+        guard let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext else {
             
-            var subjects = [Subject]()
-            var animeSubjects = [AnimeSubject]()
-            var error: NSError?
-            subjects = managedObjectContext.executeFetchRequest(fetchRequest, error: &error) as! [Subject]
+            handler(nil)
+            return
+        }
+        
+        let fetchRequest = NSFetchRequest(entityName: "Subject")
+        var subjects = [Subject]()
+        var animeSubjects = [AnimeSubject]()
+        
+        do {
+            subjects = (try managedObjectContext.executeFetchRequest(fetchRequest)) as! [Subject]
             for subject in subjects {
                 animeSubjects.append(AnimeSubject(subject: subject))
             }
-            
-            if error != nil {
-                NSLog("% Subject: Failed to retrieve record: \(error?.localizedDescription)")
-            }
-            
-            handler(animeSubjects)
-        } else {
+        } catch let error as NSError {
+            NSLog("% Subject: Failed to retrieve record: \(error.localizedDescription)")
             handler(nil)
+            return
         }
+        
+        handler(animeSubjects)
     }
     
     class func searchSubjectInLocal(subjectID: Int) -> Bool {
         
-        var error: NSError?
-        var fetchRequest = NSFetchRequest(entityName: "Subject")
+        let fetchRequest = NSFetchRequest(entityName: "Subject")
         fetchRequest.predicate = NSPredicate(format: "id == %@", "\(subjectID)")
         
-        if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext,
-            let subjects = managedObjectContext.executeFetchRequest(fetchRequest, error: &error) as? [Subject],
-            let subject = subjects.first {
+        guard let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext,
+            let subjects = try! managedObjectContext.executeFetchRequest(fetchRequest) as? [Subject],
+            let _  = subjects.first else {
                 
-                var e: NSError?
-                if managedObjectContext.save(&e) != true {
-                    NSLog("% Subject: Delete error: \(error!.localizedDescription)")
-                    return false
-                }
-                
-                return true
-        } else {
+                return false
+        }
+        
+        do {
+            try managedObjectContext.save()
+        } catch let error as NSError {
+            NSLog("% Subject: Delete error: \(error.localizedDescription)")
             return false
         }
+        
+        return true
     }
 }
 

@@ -30,7 +30,7 @@ public struct AnimeEps {
                 case EpisodeType.sp.rawValue: spCount++
                 case EpisodeType.op.rawValue: opCount++
                 case EpisodeType.ed.rawValue: edCount++
-                default: println("^ AnimeEpsUndefined ep type \(type)")
+                default: print("^ AnimeEpsUndefined ep type \(type)")
                 }
             }
         }

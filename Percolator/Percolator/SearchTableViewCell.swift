@@ -61,11 +61,11 @@ class SearchTableViewCell: UITableViewCell {
     
         if favoriteButton.titleLabel?.text == "保存" {
 
-            debugPrintln("@SearchTableViewCell: Save subject to cloud start…")
+            debugPrint("@SearchTableViewCell: Save subject to cloud start…")
             isSending = true
             favoriteModel.saveSubjectToCloud(self.animeItem) { (success) -> Void in
                 
-                debugPrintln("@SearchTableViewCell: Save subject to cloud is \(success)")
+                debugPrint("@SearchTableViewCell: Save subject to cloud is \(success)")
                 let typeArr = ["Zero", "书籍", "动画", "音乐", "游戏", "Five", "三次元"]       // FIXME: It appaare more than once in file
                 
                 dispatch_async(dispatch_get_main_queue()) { () -> Void in
@@ -88,7 +88,7 @@ class SearchTableViewCell: UITableViewCell {
     
     internal func initCell() {
                 
-        debugPrintln("$ SearchTableViewCell init -> \(animeItem.name)")
+        debugPrint("$ SearchTableViewCell init -> \(animeItem.name)")
         nameLabel.text = animeItem.name
         nameCNLabel.text = animeItem.nameCN
         let doingType = ["在看", "在读", "在看", "在听", "在玩", "在看", "在看"]
@@ -114,10 +114,10 @@ class SearchTableViewCell: UITableViewCell {
         isFirstInit = false
         self.favoriteButton.setTitle("加载中…", forState: .Normal)
 
-        debugPrintln("@ SearchTabelViewCell: Init button method start")
+        debugPrint("@ SearchTabelViewCell: Init button method start")
         favoriteModel.isRecordExistInCloud(animeItem.id) { (isExist) -> Void in
             
-            debugPrintln("@ SearchTabelViewCell: Init button method end")
+            debugPrint("@ SearchTabelViewCell: Init button method end")
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
                 self.favoriteButton.setTitle( (isExist == true) ? "保存" : "已保存", forState: .Normal)
             }
