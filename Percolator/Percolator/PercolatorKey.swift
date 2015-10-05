@@ -30,18 +30,16 @@ public struct StoryboardKey {
     static let showAnimeListVC                  = "showAnimeListVC"
     static let showAnimeDetailVC                = "showDetailVC"
     static let showLoginVC                      = "showLoginVC"
+    static let showSearchVC                     = "showSearch"
     
     static let animeDetailTitleCell             = "animeDetailTitleCell"
     static let animeDetailSummayTableViewCell   = "animeDetailSummayCell"
     
     static let loginVC                          = "LoginVC"
     static let animeTableViewVC                 = "AnimeListTableVC"
-    static let animeDetailVC                    = "AnimeDetailView"
     static let DetialVC                         = "DetailViewController"
-    static let AnimeDetailTableVC               = "AnimeDetailTableVC"
     static let searchTabelVC                    = "SearchTableVC"
-    static let favoritesTableVC                 = "FavoritesTableVC"
-    static let GridCollectionVC                 = "GridCollectionVC"
+//    static let GridCollectionVC                 = "GridCollectionVC"
     static let AnimeCollectVC                   = "AnimeCollectVC"
 }
 

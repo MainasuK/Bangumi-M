@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		6446967769ADC51067454314 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B901E96A6ABBA0173A0560 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		DB08F63F1BBC28F8005DBC6B /* Bangumi_MUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB08F63E1BBC28F8005DBC6B /* Bangumi_MUITests.swift */; };
 		DB18C8B01B0A2ABD00A0BA11 /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DB18C8AF1B0A2ABD00A0BA11 /* KeychainWrapper.m */; };
 		DB33F10F1B8A97A800976CD6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB33F10E1B8A97A800976CD6 /* AboutViewController.swift */; };
-		DB43BD931B0E17DD003477C7 /* AnimeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB43BD921B0E17DD003477C7 /* AnimeDetailViewController.swift */; };
 		DB43BD981B0E33ED003477C7 /* AnimeDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB43BD961B0E33ED003477C7 /* AnimeDetailTableViewCell.swift */; };
 		DB4C765D1B7DF0FA00B5E921 /* FavoritesTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4C765C1B7DF0FA00B5E921 /* FavoritesTableViewCellDelegate.swift */; };
 		DB4C765F1B7E24B400B5E921 /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4C765E1B7E24B400B5E921 /* SwiftNotice.swift */; };
@@ -34,13 +34,9 @@
 		DB5B04441B85F7660074C80E /* CMKTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B04431B85F7660074C80E /* CMKTableViewCell.swift */; };
 		DB64E6C51B7B5B1C001B819D /* BangumiSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB64E6C41B7B5B1C001B819D /* BangumiSearchModel.swift */; };
 		DB64E6C81B7B6221001B819D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB64E6C71B7B6221001B819D /* CloudKit.framework */; };
-		DB64E6CA1B7B9180001B819D /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB64E6C91B7B9180001B819D /* SearchTableViewController.swift */; };
 		DB64E6CC1B7BA706001B819D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB64E6CB1B7BA706001B819D /* SearchTableViewCell.swift */; };
 		DB6820011B7C92A0001ED454 /* BangumiFavoriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6820001B7C92A0001ED454 /* BangumiFavoriteModel.swift */; };
-		DB6820021B7CD5EC001ED454 /* FavoritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB30A0FE1B7B3B17008F2448 /* FavoritesTableViewController.swift */; };
 		DB6820041B7D0177001ED454 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6820031B7D0177001ED454 /* FavoritesTableViewCell.swift */; };
-		DB76FA691B0E174300CC9C3A /* SlidingContainerSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB76FA671B0E174300CC9C3A /* SlidingContainerSliderView.swift */; };
-		DB76FA6A1B0E174300CC9C3A /* SlidingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB76FA681B0E174300CC9C3A /* SlidingContainerViewController.swift */; };
 		DB7E938E1B82C4CA003C419B /* MenuTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E938D1B82C4CA003C419B /* MenuTransitionDelegate.swift */; };
 		DB82E7781B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB82E7771B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift */; };
 		DB83E2741B0F8362007BE039 /* GridCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB83E2731B0F8362007BE039 /* GridCollectionViewController.swift */; };
@@ -78,10 +74,16 @@
 		DBFC3ABD1B7A18B400F406FF /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFC3ABC1B7A18B400F406FF /* SWRevealViewController.m */; };
 		DBFC3AC11B7A3D6600F406FF /* BangumiAnimeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFC3AC01B7A3D6600F406FF /* BangumiAnimeModel.swift */; };
 		DBFC3AC31B7A3DD000F406FF /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFC3AC21B7A3DD000F406FF /* MenuTableViewController.swift */; };
-		DBFD11EE1B0721B100510DA9 /* AnimeDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFD11ED1B0721B100510DA9 /* AnimeDetailTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		DB08F6411BBC28F8005DBC6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DBBA47BA1B060DEA0004BBA2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DBBA47C11B060DEA0004BBA2;
+			remoteInfo = "Bangumi M";
+		};
 		DBBA47D81B060DEA0004BBA2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DBBA47BA1B060DEA0004BBA2 /* Project object */;
@@ -95,12 +97,13 @@
 		3D1E58D1FF129BDF6841C36C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		66B901E96A6ABBA0173A0560 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F1BC0167136CE2E75161D7 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		DB08F63C1BBC28F8005DBC6B /* Bangumi MUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bangumi MUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB08F63E1BBC28F8005DBC6B /* Bangumi_MUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bangumi_MUITests.swift; sourceTree = "<group>"; };
+		DB08F6401BBC28F8005DBC6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB18C8AD1B0A2ABC00A0BA11 /* Percolator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Percolator-Bridging-Header.h"; sourceTree = "<group>"; };
 		DB18C8AE1B0A2ABD00A0BA11 /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
 		DB18C8AF1B0A2ABD00A0BA11 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
-		DB30A0FE1B7B3B17008F2448 /* FavoritesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewController.swift; sourceTree = "<group>"; };
 		DB33F10E1B8A97A800976CD6 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		DB43BD921B0E17DD003477C7 /* AnimeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetailViewController.swift; sourceTree = "<group>"; };
 		DB43BD961B0E33ED003477C7 /* AnimeDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetailTableViewCell.swift; sourceTree = "<group>"; };
 		DB4C765C1B7DF0FA00B5E921 /* FavoritesTableViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCellDelegate.swift; sourceTree = "<group>"; };
 		DB4C765E1B7E24B400B5E921 /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
@@ -126,12 +129,9 @@
 		DB64E6C41B7B5B1C001B819D /* BangumiSearchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiSearchModel.swift; sourceTree = "<group>"; };
 		DB64E6C61B7B6153001B819D /* Percolator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Percolator.entitlements; sourceTree = "<group>"; };
 		DB64E6C71B7B6221001B819D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		DB64E6C91B7B9180001B819D /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		DB64E6CB1B7BA706001B819D /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		DB6820001B7C92A0001ED454 /* BangumiFavoriteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiFavoriteModel.swift; sourceTree = "<group>"; };
 		DB6820031B7D0177001ED454 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
-		DB76FA671B0E174300CC9C3A /* SlidingContainerSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingContainerSliderView.swift; sourceTree = "<group>"; };
-		DB76FA681B0E174300CC9C3A /* SlidingContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingContainerViewController.swift; sourceTree = "<group>"; };
 		DB7E938D1B82C4CA003C419B /* MenuTransitionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTransitionDelegate.swift; sourceTree = "<group>"; };
 		DB82E7771B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetailSummayTableViewCell.swift; sourceTree = "<group>"; };
 		DB83E2731B0F8362007BE039 /* GridCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewController.swift; sourceTree = "<group>"; };
@@ -176,10 +176,16 @@
 		DBFC3ABC1B7A18B400F406FF /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		DBFC3AC01B7A3D6600F406FF /* BangumiAnimeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiAnimeModel.swift; sourceTree = "<group>"; };
 		DBFC3AC21B7A3DD000F406FF /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
-		DBFD11ED1B0721B100510DA9 /* AnimeDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetailTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DB08F6391BBC28F8005DBC6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DBBA47BF1B060DEA0004BBA2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -206,6 +212,15 @@
 				66B901E96A6ABBA0173A0560 /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB08F63D1BBC28F8005DBC6B /* Bangumi MUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DB08F63E1BBC28F8005DBC6B /* Bangumi_MUITests.swift */,
+				DB08F6401BBC28F8005DBC6B /* Info.plist */,
+			);
+			path = "Bangumi MUITests";
 			sourceTree = "<group>";
 		};
 		DB1D11E71B5229450067A060 /* Struct */ = {
@@ -282,20 +297,12 @@
 			path = SlidingContainerViewController;
 			sourceTree = "<group>";
 		};
-		DB76FA661B0E174300CC9C3A /* SlidingContainerViewController */ = {
-			isa = PBXGroup;
-			children = (
-				DB76FA671B0E174300CC9C3A /* SlidingContainerSliderView.swift */,
-				DB76FA681B0E174300CC9C3A /* SlidingContainerViewController.swift */,
-			);
-			path = SlidingContainerViewController;
-			sourceTree = "<group>";
-		};
 		DBBA47B91B060DEA0004BBA2 = {
 			isa = PBXGroup;
 			children = (
 				DBBA47C41B060DEA0004BBA2 /* Percolator */,
 				DBBA47DA1B060DEA0004BBA2 /* PercolatorTests */,
+				DB08F63D1BBC28F8005DBC6B /* Bangumi MUITests */,
 				DBBA47C31B060DEA0004BBA2 /* Products */,
 				EE215595AABB263B8F0A4760 /* Pods */,
 				22FAE04FF2793B9654AE8062 /* Frameworks */,
@@ -307,6 +314,7 @@
 			children = (
 				DBBA47C21B060DEA0004BBA2 /* Bangumi M.app */,
 				DBBA47D71B060DEA0004BBA2 /* Bangumi MTests.xctest */,
+				DB08F63C1BBC28F8005DBC6B /* Bangumi MUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -329,7 +337,6 @@
 			children = (
 				DBD2D5701B841D2400EED59A /* MGSwipeTableCell */,
 				DBFC3ABA1B7A18B400F406FF /* SWRevealViewController */,
-				DB76FA661B0E174300CC9C3A /* SlidingContainerViewController */,
 				DB5B043C1B85E7200074C80E /*  LTNavigationBar */,
 				DBFC3AB71B79FA1E00F406FF /* KeychainWrapper */,
 				DB18C8AD1B0A2ABC00A0BA11 /* Percolator-Bridging-Header.h */,
@@ -404,12 +411,8 @@
 				DBBA47E71B0617020004BBA2 /* AnimeListTableViewController.swift */,
 				DBD2D57D1B84CE7000EED59A /* DetailViewController.swift */,
 				DBFBCB821B633376001F3CD1 /* AnimeCollectTableViewController.swift */,
-				DB43BD921B0E17DD003477C7 /* AnimeDetailViewController.swift */,
-				DBFD11ED1B0721B100510DA9 /* AnimeDetailTableViewController.swift */,
 				DB83E2731B0F8362007BE039 /* GridCollectionViewController.swift */,
-				DB64E6C91B7B9180001B819D /* SearchTableViewController.swift */,
 				DBD2D5771B841DC700EED59A /* SearchBoxTableViewController.swift */,
-				DB30A0FE1B7B3B17008F2448 /* FavoritesTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -454,6 +457,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DB08F63B1BBC28F8005DBC6B /* Bangumi MUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB08F6451BBC28F8005DBC6B /* Build configuration list for PBXNativeTarget "Bangumi MUITests" */;
+			buildPhases = (
+				DB08F6381BBC28F8005DBC6B /* Sources */,
+				DB08F6391BBC28F8005DBC6B /* Frameworks */,
+				DB08F63A1BBC28F8005DBC6B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DB08F6421BBC28F8005DBC6B /* PBXTargetDependency */,
+			);
+			name = "Bangumi MUITests";
+			productName = "Bangumi MUITests";
+			productReference = DB08F63C1BBC28F8005DBC6B /* Bangumi MUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		DBBA47C11B060DEA0004BBA2 /* Bangumi M */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DBBA47E11B060DEA0004BBA2 /* Build configuration list for PBXNativeTarget "Bangumi M" */;
@@ -503,6 +524,10 @@
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Cirno MainasuK";
 				TargetAttributes = {
+					DB08F63B1BBC28F8005DBC6B = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = DBBA47C11B060DEA0004BBA2;
+					};
 					DBBA47C11B060DEA0004BBA2 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = Z68BDSMP42;
@@ -533,11 +558,19 @@
 			targets = (
 				DBBA47C11B060DEA0004BBA2 /* Bangumi M */,
 				DBBA47D61B060DEA0004BBA2 /* Bangumi MTests */,
+				DB08F63B1BBC28F8005DBC6B /* Bangumi MUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		DB08F63A1BBC28F8005DBC6B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DBBA47C01B060DEA0004BBA2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -607,6 +640,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DB08F6381BBC28F8005DBC6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB08F63F1BBC28F8005DBC6B /* Bangumi_MUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DBBA47BE1B060DEA0004BBA2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -619,11 +660,8 @@
 				DB5B042A1B85DBAD0074C80E /* BangumiDetail.swift in Sources */,
 				DB5B04401B85E7BE0074C80E /* SubjectItemStatus.swift in Sources */,
 				DBB2A8E51B08317B00B48C52 /* BangumiJSON.swift in Sources */,
-				DB76FA6A1B0E174300CC9C3A /* SlidingContainerViewController.swift in Sources */,
 				DBD2D5751B841D2400EED59A /* MGSwipeButton.m in Sources */,
-				DB6820021B7CD5EC001ED454 /* FavoritesTableViewController.swift in Sources */,
 				DBA29F531B8B24FC00ADED27 /* UIImage.swift in Sources */,
-				DB64E6CA1B7B9180001B819D /* SearchTableViewController.swift in Sources */,
 				DBFBCB831B633376001F3CD1 /* AnimeCollectTableViewController.swift in Sources */,
 				DBBA47F31B064CF00004BBA2 /* AnimeListTableViewCell.swift in Sources */,
 				DBD2D5761B841D2400EED59A /* MGSwipeTableCell.m in Sources */,
@@ -636,7 +674,6 @@
 				DB83E2741B0F8362007BE039 /* GridCollectionViewController.swift in Sources */,
 				DBD2D5781B841DC700EED59A /* SearchBoxTableViewController.swift in Sources */,
 				DB64E6CC1B7BA706001B819D /* SearchTableViewCell.swift in Sources */,
-				DBFD11EE1B0721B100510DA9 /* AnimeDetailTableViewController.swift in Sources */,
 				DB5B04341B85E6310074C80E /* AnimeEps.swift in Sources */,
 				DB83E2781B0F854D007BE039 /* PercolatorKey.swift in Sources */,
 				DB4C765D1B7DF0FA00B5E921 /* FavoritesTableViewCellDelegate.swift in Sources */,
@@ -668,8 +705,6 @@
 				DBB3FCD11B86F21000FFF8DE /* Staff.swift in Sources */,
 				DB51B94F1B7DC90F007B06BC /* BangumiTableViewDelegate.swift in Sources */,
 				DB83E2761B0F83C3007BE039 /* GridCollectionViewCell.swift in Sources */,
-				DB76FA691B0E174300CC9C3A /* SlidingContainerSliderView.swift in Sources */,
-				DB43BD931B0E17DD003477C7 /* AnimeDetailViewController.swift in Sources */,
 				DB5B04301B85E5E70074C80E /* AnimeImages.swift in Sources */,
 				DBBA47EB1B0619DE0004BBA2 /* BangumiRequest.swift in Sources */,
 				DB82E7781B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift in Sources */,
@@ -690,6 +725,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		DB08F6421BBC28F8005DBC6B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DBBA47C11B060DEA0004BBA2 /* Bangumi M */;
+			targetProxy = DB08F6411BBC28F8005DBC6B /* PBXContainerItemProxy */;
+		};
 		DBBA47D91B060DEA0004BBA2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DBBA47C11B060DEA0004BBA2 /* Bangumi M */;
@@ -717,6 +757,34 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		DB08F6431BBC28F8005DBC6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				INFOPLIST_FILE = "Bangumi MUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.Bangumi-MUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Bangumi M";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		DB08F6441BBC28F8005DBC6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Bangumi MUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.Bangumi-MUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Bangumi M";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
 		DBBA47DF1B060DEA0004BBA2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -878,6 +946,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DB08F6451BBC28F8005DBC6B /* Build configuration list for PBXNativeTarget "Bangumi MUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB08F6431BBC28F8005DBC6B /* Debug */,
+				DB08F6441BBC28F8005DBC6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		DBBA47BD1B060DEA0004BBA2 /* Build configuration list for PBXProject "Percolator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
