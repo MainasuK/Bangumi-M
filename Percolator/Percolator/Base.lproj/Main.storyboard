@@ -1103,7 +1103,15 @@
                                 <action selector="menuButtonPressed:" destination="Z6Y-dd-BMH" id="gcx-Ks-GOY"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="反馈" id="gBF-kg-jb0">
+                            <connections>
+                                <action selector="sendFeedbackButttonPressed:" destination="Z6Y-dd-BMH" id="0ke-iT-vnc"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="sendFeedbackButton" destination="gBF-kg-jb0" id="iGC-Zh-JTr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xDq-QV-7Ns" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

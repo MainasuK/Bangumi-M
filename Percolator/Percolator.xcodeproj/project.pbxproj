@@ -11,6 +11,7 @@
 		DB08F63F1BBC28F8005DBC6B /* Bangumi_MUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB08F63E1BBC28F8005DBC6B /* Bangumi_MUITests.swift */; };
 		DB18C8B01B0A2ABD00A0BA11 /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DB18C8AF1B0A2ABD00A0BA11 /* KeychainWrapper.m */; };
 		DB33F10F1B8A97A800976CD6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB33F10E1B8A97A800976CD6 /* AboutViewController.swift */; };
+		DB3C7F141C44B52E0092FD82 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3C7F131C44B52E0092FD82 /* UIDevice.swift */; };
 		DB43BD981B0E33ED003477C7 /* AnimeDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB43BD961B0E33ED003477C7 /* AnimeDetailTableViewCell.swift */; };
 		DB4C765D1B7DF0FA00B5E921 /* FavoritesTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4C765C1B7DF0FA00B5E921 /* FavoritesTableViewCellDelegate.swift */; };
 		DB4C765F1B7E24B400B5E921 /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4C765E1B7E24B400B5E921 /* SwiftNotice.swift */; };
@@ -104,6 +105,7 @@
 		DB18C8AE1B0A2ABD00A0BA11 /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
 		DB18C8AF1B0A2ABD00A0BA11 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		DB33F10E1B8A97A800976CD6 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		DB3C7F131C44B52E0092FD82 /* UIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		DB43BD961B0E33ED003477C7 /* AnimeDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetailTableViewCell.swift; sourceTree = "<group>"; };
 		DB4C765C1B7DF0FA00B5E921 /* FavoritesTableViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCellDelegate.swift; sourceTree = "<group>"; };
 		DB4C765E1B7E24B400B5E921 /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				DB4C765E1B7E24B400B5E921 /* SwiftNotice.swift */,
 				DB9965C31B89A11E001314A0 /* UINavigationBar.swift */,
 				DB4C76601B7E3A8A00B5E921 /* UIApplication.swift */,
+				DB3C7F131C44B52E0092FD82 /* UIDevice.swift */,
 				DBBA47C71B060DEA0004BBA2 /* AppDelegate.swift */,
 				DBA29F521B8B24FC00ADED27 /* UIImage.swift */,
 				DBFBCB801B63157E001F3CD1 /* Color.swift */,
@@ -406,6 +409,7 @@
 		DBFC3AB81B79FA4600F406FF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DB33F10E1B8A97A800976CD6 /* AboutViewController.swift */,
 				DBBA47C91B060DEA0004BBA2 /* LoginViewController.swift */,
 				DBFC3AC21B7A3DD000F406FF /* MenuTableViewController.swift */,
 				DBBA47E71B0617020004BBA2 /* AnimeListTableViewController.swift */,
@@ -420,7 +424,6 @@
 		DBFC3AB91B79FA8B00F406FF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DB33F10E1B8A97A800976CD6 /* AboutViewController.swift */,
 				DB9965C11B88970F001314A0 /* CMKEPTableViewCell.swift */,
 				DB59EC641B873DF8000AFA7A /* CMKTopicTableViewCell.swift */,
 				DB5B04431B85F7660074C80E /* CMKTableViewCell.swift */,
@@ -707,6 +710,7 @@
 				DB83E2761B0F83C3007BE039 /* GridCollectionViewCell.swift in Sources */,
 				DB5B04301B85E5E70074C80E /* AnimeImages.swift in Sources */,
 				DBBA47EB1B0619DE0004BBA2 /* BangumiRequest.swift in Sources */,
+				DB3C7F141C44B52E0092FD82 /* UIDevice.swift in Sources */,
 				DB82E7781B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift in Sources */,
 				DB9965C41B89A11E001314A0 /* UINavigationBar.swift in Sources */,
 				DB5B04241B85D9C40074C80E /* UINavigationBar+Awesome.m in Sources */,
@@ -953,6 +957,7 @@
 				DB08F6441BBC28F8005DBC6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DBBA47BD1B060DEA0004BBA2 /* Build configuration list for PBXProject "Percolator" */ = {
 			isa = XCConfigurationList;
