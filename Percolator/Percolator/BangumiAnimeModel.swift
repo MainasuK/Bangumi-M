@@ -30,8 +30,6 @@ public class BangumiAnimeModel {
     private let className = "$ BangumiAnimeModel: "
     
     // MARK: -
-    
-    
     // MARK: Singleton
     private static let instance = BangumiAnimeModel()
     
@@ -57,28 +55,32 @@ public class BangumiAnimeModel {
         completedTasksCount = 0
         debugPrint(className + "Fetch method called", terminator: "")
         
-        if let user = request.userData {
-            // Task 1: fetch user watching list
-            request.getUserWatching(user.id) { (animeArr) -> Void in
-                if (animeArr != nil) {
-                    self.animeList = animeArr!
-                    self.completedTasksCount++
-                    debugPrint(self.className + "animeList get")
-                    self.fetchAnimeDetailList(request, handler)
-                } else {
-                    // Failed
-                    handler(false)
-                }
-            }
-            
-            // Task 2: fetch user watching status
-            request.getSubjectStatus(user.id, authEncode: user.authEncode) { (statusDict) -> Void in
-                self.subjectAllStatusList = statusDict
+        guard let user = request.userData else {
+            handler(false)
+            return
+        }
+
+        // Task 1: fetch user watching list
+        request.getUserWatching(user.id) { (animeArr) -> Void in
+            if (animeArr != nil) {
+                self.animeList = animeArr!
                 self.completedTasksCount++
-                debugPrint(self.className + "subjectAllStatusList get")
+                debugPrint(self.className + "animeList get")
                 self.fetchAnimeDetailList(request, handler)
+            } else {
+                // Failed
+                handler(false)
             }
-        }   // if let user = request.userData
+        }
+        
+        // Task 2: fetch user watching status
+        request.getSubjectStatus(user.id, authEncode: user.authEncode) { (statusDict) -> Void in
+            self.subjectAllStatusList = statusDict
+            self.completedTasksCount++
+            debugPrint(self.className + "subjectAllStatusList get")
+            self.fetchAnimeDetailList(request, handler)
+        }
+
         
     }
     
@@ -86,7 +88,7 @@ public class BangumiAnimeModel {
         return (completedTasksCount == 2) ? true : false
     }
     
-    // Task 3: fetch all user watching anime detail info 
+    // Task 3: fetch all user watching anime detail info
     // and gridStatus info
     private func fetchAnimeDetailList(request: BangumiRequest, _ handler: (Bool) -> Void) {
         
@@ -99,8 +101,6 @@ public class BangumiAnimeModel {
             tempAnimeDetailList.removeAll()
             tempAnimeGridStatusList.removeAll()
             tempAnimePostingStatusList.removeAll()
-            
-            let user = request.userData!
             
             NSNotificationCenter.defaultCenter().postNotificationName("setProgress", object: nil)
             var index = Float(0.0)
@@ -177,7 +177,6 @@ public class BangumiAnimeModel {
                 }
                 self.subjectAllStatusList[subjectID]!.subjectId = subjectID
                 self.subjectAllStatusList[subjectID]!.subjectStatus[epID] = .watched
-//                self.subjectAllStatusList[subjectID]!.count += 1
                 
                 handler(true)
                 

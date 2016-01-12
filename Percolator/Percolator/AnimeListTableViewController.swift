@@ -42,6 +42,7 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
         if request.userData != nil {
             pushSearchTableViewController()
         } else {
+            self.clearAllNotice()
             self.noticeInfo("请先登录", autoClear: true, autoClearTime: 5)
         }
     }
@@ -370,7 +371,7 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
     
     func pushSearchTableViewController() {
         // FIXME: Key is OK, but not right
-        let searchVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.favoritesTableVC) as! FavoritesTableViewController
+        let searchVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.searchTabelVC) as! SearchBoxTableViewController
         
         self.navigationController?.pushViewController(searchVC, animated: true)
     }
@@ -384,19 +385,6 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
             let loginVC = segue.destinationViewController as! LoginViewController
             loginVC.delegate = self
         }
-        
-//        if segue.identifier == StoryboardKey.showAnimeDetailVC {
-//            let naviVC = segue.destinationViewController as! UINavigationController
-//            let animeDetailVC = naviVC.childViewControllers.first as! AnimeDetailViewController
-//            if let indexPath = self.tableView.indexPathForSelectedRow() {
-//
-//                let item = animeModel.animeList[indexPath.row]
-//                animeDetailVC.navigationItem.title = item.name
-//                animeDetailVC.animeItem = item
-//                animeDetailVC.subjectAllStatus = animeModel.subjectAllStatusList
-//                animeDetailVC.animeDetailLarge = animeModel.animeDetailList[item.subject.id]!
-//            }
-//        }
     }
     
 

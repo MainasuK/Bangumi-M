@@ -390,7 +390,7 @@ public class BangumiRequest {
                 case 200:
                     print("That is available update post, get relax")
                     return true
-                case 400:   // Nothing found with that ID
+                case 400:   // FIXME: Nothing found with that ID, need decoupling...
                     SwiftNotice.noticeOnSatusBar("未标记条目", autoClear: true, autoClearTime: 3)
                     return false
                 case 401:   // Unauthorized
