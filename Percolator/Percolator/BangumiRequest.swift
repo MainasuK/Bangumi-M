@@ -16,6 +16,8 @@ public class BangumiRequest {
     // but I'm not sure
     public var userData = User?()
     
+    private let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.ephemeralSessionConfiguration())
+    
 
     // MARK: - Singleton
     private static let instance = BangumiRequest()
@@ -76,8 +78,8 @@ public class BangumiRequest {
     // MARK: - GET
     public func getSearchWith(text: String, startIndex: Int, resultLimit: Int, _ handler: ([AnimeSubject]?, count: Int, NSError?) -> Void) {
         
-        let urlPath = String(format: BangumiApiKey.SearchDetail, text.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!, resultLimit, startIndex)
-        
+        let urlPath = String(format: BangumiApiKey.SearchDetail, text.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!, resultLimit, startIndex, BangumiApiKey.Percolator)
+    
         getJsonFrom(urlPath) { (jsonData) -> Void in
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -303,7 +305,8 @@ public class BangumiRequest {
         
         let request = NSMutableURLRequest(URL: NSURL(string: urlPath)!, cachePolicy: .ReloadRevalidatingCacheData, timeoutInterval: 15)
         request.HTTPMethod = "GET"
-        request.HTTPShouldHandleCookies = false
+        request.setValue("application/json;charest=utf-8", forHTTPHeaderField: "Content-Type")
+        request.HTTPShouldHandleCookies = true
         
         fetchJsonData(request, handler: handler)
     }
@@ -316,7 +319,7 @@ public class BangumiRequest {
         request.HTTPMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = postBody.dataUsingEncoding(NSUTF8StringEncoding)
-        request.HTTPShouldHandleCookies = false
+        request.HTTPShouldHandleCookies = true
         
         fetchJsonData(request, handler: handler)
     }
@@ -324,8 +327,13 @@ public class BangumiRequest {
     // MARK: JSON
     private func fetchJsonData(request: NSMutableURLRequest, handler: (AnyObject?) -> Void) {
     
-        let urlSession = NSURLSession(configuration: .ephemeralSessionConfiguration(), delegate: nil, delegateQueue: NSOperationQueue.mainQueue())
-//        let urlSession = NSURLSession(configuration: .ephemeralSessionConfiguration())
+//        let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+//        config.HTTPCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+//        config.HTTPCookieAcceptPolicy = .Always
+//        config.HTTPShouldSetCookies = true
+
+//        let urlSession = NSURLSession(configuration: config, delegate: nil, delegateQueue: NSOperationQueue.mainQueue())
+
         let task = urlSession.dataTaskWithRequest(request, completionHandler: {
             (data, response, error) -> Void in
             
@@ -335,14 +343,14 @@ public class BangumiRequest {
                 print(error!.localizedDescription)
                 handler(nil)
             } else {
-                if var json: AnyObject = self.parseJsonData(data!) {
+                if let json: AnyObject = self.parseJsonData(data!) {
                     handler(json)
                 } else {
                     handler(nil)
                 }
             }
             
-            NSURLCache.setSharedURLCache(NSURLCache(memoryCapacity: 1024, diskCapacity: 0, diskPath: nil))
+//            NSURLCache.setSharedURLCache(NSURLCache(memoryCapacity: 1024, diskCapacity: 0, diskPath: nil))
         })
         
 
@@ -359,6 +367,7 @@ public class BangumiRequest {
         do {
             jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
         } catch let error1 as NSError {
+            print(data)
             error = error1
             jsonResult = nil
         }
