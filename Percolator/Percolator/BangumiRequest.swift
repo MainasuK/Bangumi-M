@@ -16,6 +16,8 @@ public class BangumiRequest {
     // but I'm not sure
     public var userData = User?()
     
+    private let urlSession = NSURLSession(configuration: .ephemeralSessionConfiguration(), delegate: nil, delegateQueue: NSOperationQueue.mainQueue())
+    
 
     // MARK: - Singleton
     private static let instance = BangumiRequest()
@@ -75,8 +77,8 @@ public class BangumiRequest {
     
     // MARK: - GET
     public func getSearchWith(text: String, startIndex: Int, resultLimit: Int, _ handler: ([AnimeSubject]?, count: Int, NSError?) -> Void) {
-        
-        let urlPath = String(format: BangumiApiKey.SearchDetail, text.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!, resultLimit, startIndex)
+        let authEncode = userData!.authEncode
+        let urlPath = String(format: BangumiApiKey.SearchDetail, text.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!, resultLimit, startIndex, BangumiApiKey.Percolator, authEncode)
         
         getJsonFrom(urlPath) { (jsonData) -> Void in
             
@@ -303,7 +305,6 @@ public class BangumiRequest {
         
         let request = NSMutableURLRequest(URL: NSURL(string: urlPath)!, cachePolicy: .ReloadRevalidatingCacheData, timeoutInterval: 15)
         request.HTTPMethod = "GET"
-        request.HTTPShouldHandleCookies = false
         
         fetchJsonData(request, handler: handler)
     }
@@ -316,7 +317,6 @@ public class BangumiRequest {
         request.HTTPMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = postBody.dataUsingEncoding(NSUTF8StringEncoding)
-        request.HTTPShouldHandleCookies = false
         
         fetchJsonData(request, handler: handler)
     }
@@ -324,8 +324,7 @@ public class BangumiRequest {
     // MARK: JSON
     private func fetchJsonData(request: NSMutableURLRequest, handler: (AnyObject?) -> Void) {
     
-        let urlSession = NSURLSession(configuration: .ephemeralSessionConfiguration(), delegate: nil, delegateQueue: NSOperationQueue.mainQueue())
-//        let urlSession = NSURLSession(configuration: .ephemeralSessionConfiguration())
+
         let task = urlSession.dataTaskWithRequest(request, completionHandler: {
             (data, response, error) -> Void in
             
@@ -342,7 +341,7 @@ public class BangumiRequest {
                 }
             }
             
-            NSURLCache.setSharedURLCache(NSURLCache(memoryCapacity: 1024, diskCapacity: 0, diskPath: nil))
+//            NSURLCache.setSharedURLCache(NSURLCache(memoryCapacity: 1024, diskCapacity: 0, diskPath: nil))
         })
         
 
