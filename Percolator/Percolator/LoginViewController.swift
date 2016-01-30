@@ -22,7 +22,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         guard let email = emailTextField.text where email != "" else {
             self.clearAllNotice()
-            self.noticeInfo("请输入邮件", autoClear: true, autoClearTime: 2)
+            self.noticeInfo("请输入邮箱", autoClear: true, autoClearTime: 2)
             return
         }
         
