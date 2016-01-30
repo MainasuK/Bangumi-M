@@ -16,7 +16,7 @@ public class BangumiRequest {
     // but I'm not sure
     public var userData = User?()
     
-    private let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.ephemeralSessionConfiguration())
+    private let urlSession = NSURLSession(configuration: .ephemeralSessionConfiguration(), delegate: nil, delegateQueue: NSOperationQueue.mainQueue())
     
 
     // MARK: - Singleton
@@ -77,9 +77,9 @@ public class BangumiRequest {
     
     // MARK: - GET
     public func getSearchWith(text: String, startIndex: Int, resultLimit: Int, _ handler: ([AnimeSubject]?, count: Int, NSError?) -> Void) {
+        let authEncode = userData!.authEncode
+        let urlPath = String(format: BangumiApiKey.SearchDetail, text.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!, resultLimit, startIndex, BangumiApiKey.Percolator, authEncode)
         
-        let urlPath = String(format: BangumiApiKey.SearchDetail, text.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!, resultLimit, startIndex, BangumiApiKey.Percolator)
-    
         getJsonFrom(urlPath) { (jsonData) -> Void in
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -326,13 +326,6 @@ public class BangumiRequest {
     
     // MARK: JSON
     private func fetchJsonData(request: NSMutableURLRequest, handler: (AnyObject?) -> Void) {
-    
-//        let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
-//        config.HTTPCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-//        config.HTTPCookieAcceptPolicy = .Always
-//        config.HTTPShouldSetCookies = true
-
-//        let urlSession = NSURLSession(configuration: config, delegate: nil, delegateQueue: NSOperationQueue.mainQueue())
 
         let task = urlSession.dataTaskWithRequest(request, completionHandler: {
             (data, response, error) -> Void in
@@ -367,7 +360,6 @@ public class BangumiRequest {
         do {
             jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
         } catch let error1 as NSError {
-            print(data)
             error = error1
             jsonResult = nil
         }
