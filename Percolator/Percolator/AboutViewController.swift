@@ -70,7 +70,7 @@ class AboutViewController: UIViewController, SWRevealViewControllerDelegate, MFM
                    "Device: \(UIDevice.currentDevice().deviceType) (\(UIDevice.currentDevice().systemVersion))\n" +
                    "Locale: \(NSLocale.preferredLanguages().first ?? "NA")_\((NSLocale.currentLocale().objectForKey(NSLocaleCountryCode) as? String) ?? "NA")"
         
-        mailCompseVC.setToRecipients(["a.new.player@icloud.com"])
+        mailCompseVC.setToRecipients(["cirno.percolator@gmail.com"])
         mailCompseVC.setSubject(subject)
         mailCompseVC.setMessageBody(body, isHTML: false)
         
