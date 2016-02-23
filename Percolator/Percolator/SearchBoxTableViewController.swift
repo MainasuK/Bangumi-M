@@ -62,9 +62,8 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
        if searchController.searchBar.text == "搜索盒子" {
             isSearching = false
             fetchLocalData()
-        } else if searchController.searchBar.text != "" {
-            isSearching = true
         }
+        
         self.tableView.reloadData()
         self.tableView.footer.resetNoMoreData()
     }
