@@ -79,14 +79,6 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
                 self.noticeSuccess("保存成功", autoClear: true, autoClearTime: 3)
                 
                 // Pop view back
-                let allViewControllers = self.navigationController!.viewControllers
-                for vc in allViewControllers {
-                    if vc.isKindOfClass(AnimeListTableViewController) {
-                        self.navigationController?.popToViewController(vc, animated: true)
-                        return
-                    }
-                }
-
                 self.navigationController?.popViewControllerAnimated(true)
                 
             case .failed:
