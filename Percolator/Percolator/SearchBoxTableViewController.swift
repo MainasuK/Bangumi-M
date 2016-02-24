@@ -62,8 +62,6 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
         if searchController.searchBar.text == "搜索盒子" {
             isSearching = false
             fetchLocalData()
-        } else {
-            isSearching = true
         }
         
         self.tableView.reloadData()
@@ -79,6 +77,7 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
             fetchLocalData()
             self.navigationItem.title = "搜索盒子"
         } else {
+            isSearching = true
             searchModel.dropModel()
             loadMoreData(searchBar)
             self.navigationItem.title = searchBar.text

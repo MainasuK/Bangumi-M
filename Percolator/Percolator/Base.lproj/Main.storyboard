@@ -1661,6 +1661,7 @@
                     <size key="freeformSize" width="600" height="1000"/>
                     <connections>
                         <outlet property="AnimeSubjectImageView" destination="Gxg-Vt-I3r" id="ncJ-fn-Ia3"/>
+                        <outlet property="detailTableView" destination="Zat-aX-11H" id="AOY-3S-lMo"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fn-GZ-YFx" userLabel="First Responder" sceneMemberID="firstResponder"/>
