@@ -173,37 +173,11 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         self.updateHeaderView()
         
-        
         if scrollView.isKindOfClass(UITableView) {
             
             let color = UIColor.myNavigationBarColor()
             let offSetY = scrollView.contentOffset.y
             
-            let gradientLayer = CAGradientLayer()
-            gradientLayer.frame = CGRectMake(0, 0, UIApplication.sharedApplication().statusBarFrame.width, UIApplication.sharedApplication().statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 44))
-            
-            // FIXME:
-//            if (offSetY >= -350 && offSetY < 0) {    // some thing always is a trick
-//                let alpha: CGFloat = min(shadowMinAlpha, -offSetY / kTableHeaderHeight)
-//                gradientLayer.colors = [UIColor(white: 0, alpha: alpha).CGColor, UIColor.clearColor().CGColor]
-//                
-//                if let backgroundShadowImage = UIImage.imageFromLayer(gradientLayer) {
-//                    self.navigationController?.navigationBar.setBackgroundImage(backgroundShadowImage, forBarMetrics: .Default)
-//                }
-//
-//            } else if (offSetY < changeShadowPoint) {
-//                let alpha: CGFloat = max(0, shadowMinAlpha - (changeShadowPoint - offSetY) / (-offSetY))
-//                gradientLayer.colors = [UIColor(white: 0, alpha: alpha).CGColor, UIColor.clearColor().CGColor]
-//                
-//                if let backgroundShadowImage = UIImage.imageFromLayer(gradientLayer) {
-//                    self.navigationController?.navigationBar.setBackgroundImage(backgroundShadowImage, forBarMetrics: .Default)
-//                }
-//
-//            } else {    // offSetY > 0
-//                self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-//            }
-//            
-//            
             if (offSetY > changePoint) {
                 let alpha: CGFloat = min(1, 1 - ( (changePoint + 64 - offSetY) / 64 ))
                 self.navigationController?.navigationBar.lt_setBackgroundColor(color.colorWithAlphaComponent(alpha))

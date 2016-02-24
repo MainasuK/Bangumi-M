@@ -9,13 +9,14 @@
 import Foundation
 import UIKit
 
-extension UIImage {
-    class func imageFromLayer(layer: CALayer) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, UIScreen.mainScreen().scale)
-        layer.renderInContext(UIGraphicsGetCurrentContext()!)
-        let outputImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-    
-        return outputImage
-    }
-}
+// (deprecated)
+//extension UIImage {
+//    class func imageFromLayer(layer: CALayer) -> UIImage? {
+//        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, UIScreen.mainScreen().scale)
+//        layer.renderInContext(UIGraphicsGetCurrentContext()!)
+//        let outputImage = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//    
+//        return outputImage
+//    }
+//}
