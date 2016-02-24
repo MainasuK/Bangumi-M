@@ -72,6 +72,13 @@ public struct BangumiDetailSource {
     }
 }
 
+extension BangumiDetailSource {
+    public mutating func appendArray(items: [Item], name: String) {
+        sourceNameList.append(name)
+        sourceArr.append(items)
+    }
+}
+
 public struct Item {
     // Crt & Staff
     var title = ""

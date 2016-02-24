@@ -404,9 +404,6 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
         detailVC.animeItem = Anime(subject: subject)
         detailVC.animeSubject = subject
         detailVC.detailSource = BangumiDetailSource()
-//        detailVC.detailSource.animeDetailLarge = subjectLarge
-//        detailVC.detailSource.gridStatusTable = animeModel.animeGridStatusList[id]
-//        detailVC.detailSource.subjectStatusDict = animeModel.subjectAllStatusList[id]
         
         self.navigationController?.navigationBar.lt_setTranslationY(0.0)
 

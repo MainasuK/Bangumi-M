@@ -9,6 +9,7 @@
 import UIKit
 import SafariServices
 import Haneke
+import Kanna
 
 let reuseTableViewCellIdentifier = "TableViewCell"
 let reuseCollectionViewCellIdentifier = "CollectionViewCell"
@@ -48,14 +49,6 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
     var animeItem: Anime!
     var animeSubject: AnimeSubject!
     
-    
-    // TODO: (Discard)
-//    @IBAction func segmentValueChanged(sender: AnyObject) {
-//        if let segment = sender as? UISegmentedControl {
-//            debugPrintln("\(segment.selectedSegmentIndex)")
-//        }
-//    }
-    
     @IBAction func collectionButtonPressed(sender: UIBarButtonItem) {
         let collectVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.AnimeCollectVC) as! AnimeCollectTableViewController
         collectVC.animeItem = animeItem
@@ -76,30 +69,17 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
         
         // Fix the separator display when 0 rows in table
         tableView.tableFooterView = UIView()
-        
-        // Do any additional setup after loading the view, typically from a nib.
         tableView.estimatedRowHeight = 72.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-//        self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(0.5))
         headerView = self.tableView.tableHeaderView
         self.tableView.tableHeaderView = nil
         self.tableView.addSubview(headerView)
         self.tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 0, right: 0)
         self.tableView.contentOffset = CGPoint(x: 0.0, y: -kTableHeaderHeight)
         
-        //        headerMaskLayer = CAShapeLayer()
-        //        headerMaskLayer.fillColor = UIColor.blackColor().CGColor
-        
-//        headerView.layer.mask = headerMaskLayer
         updateHeaderView()
-        
-        // FIXME: It's looks like App Store segment control which float under navigation bar,
-        // but… tableview's offinset get it not work!
-//        sectionHeaderView = self.tableView.tableFooterView
-//        self.tableView.tableFooterView = nil
-        // Then, sectionHeaderView in tableview delegate
-        // (Discard)
+        fetchRelatedSubject(BangumiRequest.shared, subject: animeSubject)
         
         // Configure the tabel view
         AnimeSubjectImageView.hnk_setImageFromURL(NSURL(string: animeSubject.images.largeUrl)!, placeholder: UIImage(named: "404_landscape"))
@@ -241,22 +221,7 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
             headerRect.size.height = -tableView.contentOffset.y
         }
         
-        // Something MAGIC!!!
-        // But we should take care of it
-        
-        //        let path = UIBezierPath()
-        //        path.moveToPoint(CGPoint(x: 0.0, y: 0.0))
-        //        path.addLineToPoint(CGPoint(x: headerRect.width, y: 0))
-        //        path.addLineToPoint(CGPoint(x: headerRect.width, y: headerRect.height - kTableHeaderCutAway))
-        //        path.addLineToPoint(CGPoint(x: headerRect.width/2, y: headerRect.height - kTableHeaderCutAway))
-        //        path.addLineToPoint(CGPoint(x: headerRect.width/2 * 0.8, y: headerRect.height))
-        //        path.addLineToPoint(CGPoint(x: 0, y: headerRect.height))
-        //
-        //        headerMaskLayer?.path = path.CGPath
-        
         headerView.frame = headerRect
-        
-        //        println("headerView.frame -> \(headerView.frame), contentOffset.y -> \(tableView.contentOffset.y)")
     }
     
     // MARK: - Table view data source
@@ -266,7 +231,7 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
         return 7
         // No.1 --> First cell
         // No.2 --> Topic cell
-        // No.3 --> crt & staff
+        // No.3 --> crt & staff & related
         // No.4/5/6 --> eps(ep/sp/ep/op)
     }
     
@@ -275,7 +240,7 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
         switch section {
         case 0: return 1                                            // first cell
         case 1: return detailSource.sourceList.count                // topic
-        case 2: return detailSource.sourceArr.count                 // crt & staff
+        case 2: return detailSource.sourceArr.count                 // crt & staff & ralated
             
         case 3: return detailSource.gridStatusTable?.normalTable.count ?? 0
         case 4: return detailSource.gridStatusTable?.spTable.count ?? 0
@@ -447,6 +412,12 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
         cell.animeImageView.layer.masksToBounds = true
         cell.animeImageView.hnk_setImageFromURL(NSURL(string: item.img)!, placeholder: UIImage(named: "404"))
         
+        if cell.subtitleLabel.text == "" {
+            cell.titleLabel.numberOfLines = 0
+        } else {
+            cell.titleLabel.numberOfLines = 1
+        }
+        
         return cell
     }
     
@@ -458,6 +429,10 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
             switch detailSource.sourceNameList[collectionView.tag] {
             case "出场人物": url = "http://bangumi.tv/m/topic/crt/" + id
             case "制作人员": url = "http://bangumi.tv/m/topic/prsn/" + id
+            case let tag where tag != "":
+                pushToNewDetailViewController(id)
+                return
+                
             default:
                 
                 // url wrong
@@ -676,4 +651,100 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
     }
 }
 
+// MARK: Related subject fetch & display
+extension DetailViewController {
+    private func fetchRelatedSubject(request: BangumiRequest, subject: AnimeSubject) {
 
+        request.getSubjectHTML(subjectID: subject.id) { (html: String?) -> Void in
+
+            guard let html = html else {
+                return
+            }
+            
+            if let doc = Kanna.HTML(html: html, encoding: NSUTF8StringEncoding),
+            let bodyNode = doc.body,
+            let section = bodyNode.at_xpath("//div[@class='content_inner']") {
+                
+                var sub = ""
+                var items: [Item] = []
+
+                for node in section.css("li") {
+                    
+                    let currentSub = node.css("span[class]").first?.text ?? ""
+                    if currentSub != "" {
+                        if !items.isEmpty {
+                            self.detailSource.appendArray(items, name: sub)
+                            items.removeAll()
+                        }
+                        sub = currentSub
+                    }
+                    
+                    guard let firstHrefNode = node.css("a[href]").first,
+                    let secondHrefNode = node.css("a[href]").last,
+                    let lastSpanNode = node.css("span[class]").last,
+                    let secondHref = secondHrefNode["href"],
+                    let secondTitle = secondHrefNode.text,
+                    let style = lastSpanNode["style"] else {
+                        continue
+                    }
+                    
+                    let firstTitle = firstHrefNode["title"] ?? ""
+                    let urlPath = "http://bgm.tv" + secondHref
+                    
+                    var imgUrlPath = "http:"
+                    
+                    for substring in style.componentsSeparatedByString("('") {
+                        if substring.hasSuffix("')") {
+                            imgUrlPath += substring.componentsSeparatedByString("')").first!
+                        }
+                    }
+                    
+                    let item = Item(title: secondTitle, subtitle: firstTitle, url: urlPath, img: imgUrlPath)
+                    items.append(item)
+
+                    print(style)
+                    
+                    
+//                    print(node.toHTML)
+                }   // for node in section.css(…)
+                
+                self.detailSource.appendArray(items, name: sub)
+                self.tableView.reloadData()
+            }   // if let section …
+        }   // request.getSubjectHTML() { … }
+    }
+    
+    private func pushToNewDetailViewController(id: String) {
+        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.DetialVC) as! DetailViewController
+        let request = BangumiRequest.shared
+        
+        self.tableView.userInteractionEnabled = false
+        self.pleaseWait()
+        
+        request.getSubjectDetailLarge(Int(id) ?? 0) { (detail: AnimeDetailLarge?) -> Void in
+            
+            self.clearAllNotice()
+            self.tableView.userInteractionEnabled = true
+            
+            guard let detail = detail else {
+                self.noticeInfo("Error 53", autoClear: true, autoClearTime: 3)
+                return
+            }
+            
+            let subject = AnimeSubject(animeDetailLarge: detail)
+            detailVC.animeItem = Anime(subject: subject)
+            detailVC.animeSubject = subject
+            detailVC.detailSource = BangumiDetailSource()
+            
+            self.navigationController?.navigationBar.lt_setTranslationY(0.0)
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.navigationController?.pushViewController(detailVC, animated: true)
+                detailVC.initFromSearchBox(request, subject)
+            })
+
+            
+            
+        }
+    }
+}

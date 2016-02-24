@@ -46,6 +46,22 @@ public struct AnimeSubject {
         airDate = animeSubjectDict[BangumiKey.airDate] as! String
         airWeekday = animeSubjectDict[BangumiKey.airWeekday] as! Int
     }
+    
+    init(animeDetailLarge detail: AnimeDetailLarge) {
+        id = detail.id
+        url = detail.url
+        type = detail.type
+        name = detail.name
+        nameCN = detail.nameCN
+        summary = detail.summary
+        eps = detail.eps.count
+        airDate = detail.airDate
+        airWeekday = detail.airWeekday
+        
+        images = detail.images
+        collection = detail.collection
+    }
+    
 }
 
 extension AnimeSubject {
