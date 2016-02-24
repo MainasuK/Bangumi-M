@@ -30,6 +30,7 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
 
     
     var isFirstLoaded = true
+    var isPushing = false
     var isSending = false {
         willSet {
             if newValue {
@@ -122,19 +123,18 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        UIView.animateWithDuration(0.35, delay: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-            self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(0))
-        }) { (isFinish: Bool) -> Void in
-            self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(0))
-            self.isFirstLoaded = false
+        if isFirstLoaded {
+            UIView.animateWithDuration(0.35, delay: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(0))
+            }) { (isFinish: Bool) -> Void in
+                self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(0))
+            }
         }
     }
     
     override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewDidAppear(animated)
         
-        updateHeaderView()
-
         if isFirstLoaded {
             let indexSet = NSIndexSet(index: 0)
             tableView.reloadSections(indexSet, withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -146,14 +146,22 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
                 let indexSetTwo = NSIndexSet(index: 1)
                 tableView.reloadSections(indexSetTwo, withRowAnimation: UITableViewRowAnimation.None)
             }
+
+            self.isFirstLoaded = false
         }
+        
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
     }
     
     override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.lt_reset()
+        isPushing = true
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        isPushing = false
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -178,10 +186,10 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
             let color = UIColor.myNavigationBarColor()
             let offSetY = scrollView.contentOffset.y
             
-            if (offSetY > changePoint) {
+            if (offSetY > changePoint) && !isPushing {
                 let alpha: CGFloat = min(1, 1 - ( (changePoint + 64 - offSetY) / 64 ))
                 self.navigationController?.navigationBar.lt_setBackgroundColor(color.colorWithAlphaComponent(alpha))
-            } else if !isFirstLoaded {
+            } else if !isFirstLoaded && !isPushing {
                 self.navigationController?.navigationBar.lt_setBackgroundColor(color.colorWithAlphaComponent(0))
             }
             
@@ -623,7 +631,6 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
     func safariViewControllerDidFinish(controller: SFSafariViewController) {
         controller.dismissViewControllerAnimated(true, completion: nil)
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-        
     }
 }
 
@@ -763,11 +770,9 @@ extension DetailViewController {
             detailVC.animeSubject = subject
             detailVC.detailSource = BangumiDetailSource()
             
-            self.navigationController?.navigationBar.lt_setTranslationY(0.0)
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
-                self.navigationController?.navigationBar.lt_setTranslationY(0.0)
                 self.navigationController?.pushViewController(detailVC, animated: true)
                 // The cache will handle the duple request, hopefully
                 detailVC.initFromSearchBox(request, subject)

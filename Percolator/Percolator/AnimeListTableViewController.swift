@@ -131,18 +131,25 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
     }
     
     override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         NSLog("AnimeListTableViewController did disappear")
         
         self.tableView.header.endRefreshing()
         self.clearAllNotice()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.lt_reset()
+    }
+    
     override func viewDidAppear(animated: Bool) {
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        
         // Login Logic
         NSLog("AnimeListViewController did appear")
         
-        self.navigationController?.navigationBar.lt_reset()
         let hasLoginKey = NSUserDefaults.standardUserDefaults().boolForKey(UserDefaultsKey.hasLoginKey)
         
         if hasLoginKey == false {   // FIXME:

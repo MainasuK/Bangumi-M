@@ -63,6 +63,11 @@ class MenuTableViewController: UITableViewController, MenuTransitionDelegate, SF
         NSLog("MenuTableViewController did load")
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
         NSLog("MenueTableViewController will disappear")

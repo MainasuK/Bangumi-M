@@ -197,11 +197,16 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
         self.tableView.rowHeight = UITableViewAutomaticDimension;
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.lt_reset()
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
         self.tableView.reloadData()
-        self.navigationController?.navigationBar.lt_reset()
         self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
     }
     
