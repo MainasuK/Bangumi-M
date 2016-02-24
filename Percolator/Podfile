@@ -6,3 +6,5 @@ pod 'HanekeSwift', :git => 'https://github.com/meteochu/HanekeSwift.git', :branc
 pod 'TagWriteView'
 pod 'MJRefresh'
 pod 'Cosmos'
+pod 'Kanna', '~> 1.0.0'
+pod 'ReachabilitySwift'
