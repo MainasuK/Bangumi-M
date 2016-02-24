@@ -56,6 +56,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Pods/Haneke.framework'
   install_framework 'Pods/Kanna.framework'
   install_framework 'Pods/MJRefresh.framework'
+  install_framework 'Pods/ReachabilitySwift.framework'
   install_framework 'Pods/TagWriteView.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -63,5 +64,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Pods/Haneke.framework'
   install_framework 'Pods/Kanna.framework'
   install_framework 'Pods/MJRefresh.framework'
+  install_framework 'Pods/ReachabilitySwift.framework'
   install_framework 'Pods/TagWriteView.framework'
 fi
