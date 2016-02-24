@@ -106,13 +106,29 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
         super.viewWillAppear(true)
         
 //        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "naviBarbackground"), forBarMetrics: UIBarMetrics.Default)
-//        self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(0))
         self.navigationController?.navigationBar.shadowImage = UIImage()
         
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
+        
+        // Sometimes you need make navigation bar background manually. Especially push from a Detail VC
+        if isFirstLoaded {
+            updateHeaderView()
+            self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(0))
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.frame = CGRectMake(0, 0, UIApplication.sharedApplication().statusBarFrame.width, UIApplication.sharedApplication().statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 44))
+            gradientLayer.colors = [UIColor(white: 0, alpha: 1).CGColor, UIColor.clearColor().CGColor]
+            
+            if let backgroundShadowImage = UIImage.imageFromLayer(gradientLayer) {
+                NSLog("---> Set shadow image under navigation bar success")
+                self.navigationController?.navigationBar.setBackgroundImage(backgroundShadowImage, forBarMetrics: .Default)
+            } else {
+                NSLog("---> Set shadow image under navigation bar fail")
+            }
+        }
+
         
         if isFirstLoaded {
             let indexSet = NSIndexSet(index: 0)
@@ -166,7 +182,7 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
             
             let color = UIColor.myNavigationBarColor()
             let offSetY = scrollView.contentOffset.y
-            NSLog("offsetY --> \(offSetY)")
+//            NSLog("offsetY --> \(offSetY)")
             
             let gradientLayer = CAGradientLayer()
             gradientLayer.frame = CGRectMake(0, 0, UIApplication.sharedApplication().statusBarFrame.width, UIApplication.sharedApplication().statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 44))
@@ -611,7 +627,7 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
                 ++flag
                 
                 if flag == 2 {
-                    self.detailSource = BangumiDetailSource(subject: animeDetail)
+                    self.detailSource.appendSubject(animeDetail)
                     self.detailSource.gridStatusTable = GridStatus(epsDict: animeDetail.eps.eps)
                     self.detailSource.animeDetailLarge = animeDetail
                     self.detailSource.subjectStatusDict = subjectStatus
@@ -657,61 +673,99 @@ extension DetailViewController {
 
         request.getSubjectHTML(subjectID: subject.id) { (html: String?) -> Void in
 
-            guard let html = html else {
+            guard let html = html,
+            let doc = Kanna.HTML(html: html, encoding: NSUTF8StringEncoding),
+            let bodyNode = doc.body else {
                 return
             }
             
-            if let doc = Kanna.HTML(html: html, encoding: NSUTF8StringEncoding),
-            let bodyNode = doc.body,
-            let section = bodyNode.at_xpath("//div[@class='content_inner']") {
+            self.parseBook(bodyNode)
+            self.parseOther(bodyNode)
+            
+        }   // request.getSubjectHTML() { … }
+    }
+    
+    private func parseBook(bodyNode: XMLElement) {
+        if let section = bodyNode.at_xpath("//ul[@class='browserCoverSmall clearit']") {
+            let sub = "单行本"
+            var items: [Item] = []
+            
+            for node in section.css("li") {
                 
-                var sub = ""
-                var items: [Item] = []
-
-                for node in section.css("li") {
-                    
-                    let currentSub = node.css("span[class]").first?.text ?? ""
-                    if currentSub != "" {
-                        if !items.isEmpty {
-                            self.detailSource.appendArray(items, name: sub)
-                            items.removeAll()
-                        }
-                        sub = currentSub
+                guard let hrefNode = node.css("a[href]").first,
+                    let lastSpanNode = node.css("span[class]").last,
+                    let href = hrefNode["href"],
+                    let title = hrefNode["title"],
+                    let style = lastSpanNode["style"] else {
+                        continue
+                }
+                
+                let urlPath = "http://bgm.tv" + href
+                
+                var imgUrlPath = "http:"
+                
+                for substring in style.componentsSeparatedByString("('") {
+                    if substring.hasSuffix("')") {
+                        imgUrlPath += substring.componentsSeparatedByString("')").first!
                     }
-                    
-                    guard let firstHrefNode = node.css("a[href]").first,
+                }
+                
+                let item = Item(title: title, subtitle: "", url: urlPath, img: imgUrlPath)
+                items.append(item)
+                
+                // print(section.toHTML)
+            }
+            self.detailSource.appendArray(items, name: sub)
+            self.tableView.reloadData()
+        }
+    }
+    
+    private func parseOther(bodyNode: XMLElement) {
+        if let section = bodyNode.at_xpath("//div[@class='content_inner']") {
+            
+            var sub = ""
+            var items: [Item] = []
+            
+            for node in section.css("li") {
+                
+                let currentSub = node.css("span[class]").first?.text ?? ""
+                if currentSub != "" {
+                    if !items.isEmpty {
+                        self.detailSource.appendArray(items, name: sub)
+                        items.removeAll()
+                    }
+                    sub = currentSub
+                }
+                
+                guard let firstHrefNode = node.css("a[href]").first,
                     let secondHrefNode = node.css("a[href]").last,
                     let lastSpanNode = node.css("span[class]").last,
                     let secondHref = secondHrefNode["href"],
                     let secondTitle = secondHrefNode.text,
                     let style = lastSpanNode["style"] else {
                         continue
-                    }
-                    
-                    let firstTitle = firstHrefNode["title"] ?? ""
-                    let urlPath = "http://bgm.tv" + secondHref
-                    
-                    var imgUrlPath = "http:"
-                    
-                    for substring in style.componentsSeparatedByString("('") {
-                        if substring.hasSuffix("')") {
-                            imgUrlPath += substring.componentsSeparatedByString("')").first!
-                        }
-                    }
-                    
-                    let item = Item(title: secondTitle, subtitle: firstTitle, url: urlPath, img: imgUrlPath)
-                    items.append(item)
-
-                    print(style)
-                    
-                    
-//                    print(node.toHTML)
-                }   // for node in section.css(…)
+                }
                 
-                self.detailSource.appendArray(items, name: sub)
-                self.tableView.reloadData()
-            }   // if let section …
-        }   // request.getSubjectHTML() { … }
+                let firstTitle = firstHrefNode["title"] ?? ""
+                let urlPath = "http://bgm.tv" + secondHref
+                
+                var imgUrlPath = "http:"
+                
+                for substring in style.componentsSeparatedByString("('") {
+                    if substring.hasSuffix("')") {
+                        imgUrlPath += substring.componentsSeparatedByString("')").first!
+                    }
+                }
+                
+                let item = Item(title: secondTitle, subtitle: firstTitle, url: urlPath, img: imgUrlPath)
+                items.append(item)
+                
+                // print(node.toHTML)
+            }   // for node in section.css(…)
+            
+            self.detailSource.appendArray(items, name: sub)
+            self.tableView.reloadData()
+        }   // if let section …
     }
     
     private func pushToNewDetailViewController(id: String) {
@@ -739,12 +793,12 @@ extension DetailViewController {
             self.navigationController?.navigationBar.lt_setTranslationY(0.0)
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                self.navigationController?.navigationBar.lt_setTranslationY(0.0)
                 self.navigationController?.pushViewController(detailVC, animated: true)
+                // The cache will handle the duple request, hopefully
                 detailVC.initFromSearchBox(request, subject)
             })
-
-            
-            
         }
     }
 }

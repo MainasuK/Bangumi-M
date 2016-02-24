@@ -77,6 +77,38 @@ extension BangumiDetailSource {
         sourceNameList.append(name)
         sourceArr.append(items)
     }
+    
+    public mutating func appendSubject(_ subject: AnimeDetailLarge) {
+        
+        if let topicTable = subject.topicTable {
+            var topicItems = [Item]()
+            for topic in topicTable.topics {
+                // TODO: time
+                topicItems.append(Item(title: topic.title, subtitle: topic.nickname, url: topic.url, img: topic.avatar.largeUrl, reply: topic.replies))
+            }
+            sourceList = topicItems
+        }
+        
+        if let crtTabel = subject.crtTable {
+            var crtItems = [Item]()
+            for crt in crtTabel.crts {
+                let title = (crt.name == "") ? crt.nameCN : crt.name
+                crtItems.append(Item(title: title, subtitle: crt.actors.valueAtKey(0)?.name ?? "", url: crt.url, img: crt.images.gridUrl))
+            }
+            sourceArr.append(crtItems)
+            sourceNameList.append("出场人物")
+        }
+        
+        if let staffTable = subject.staffTable {
+            var staffItems = [Item]()
+            for staff in staffTable.staffs {
+                let title = (staff.name == "") ? staff.nameCN : staff.name
+                staffItems.append(Item(title: title, subtitle: staff.jobs.firstJob, url: staff.url, img: staff.images.gridUrl))
+            }
+            sourceArr.append(staffItems)
+            sourceNameList.append("制作人员")
+        }
+    }
 }
 
 public struct Item {

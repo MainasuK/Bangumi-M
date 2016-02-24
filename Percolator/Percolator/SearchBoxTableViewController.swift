@@ -59,9 +59,11 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
     
     // MARK: Search Controller Delegate
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-       if searchController.searchBar.text == "搜索盒子" {
+        if searchController.searchBar.text == "搜索盒子" {
             isSearching = false
             fetchLocalData()
+        } else {
+            isSearching = true
         }
         
         self.tableView.reloadData()
