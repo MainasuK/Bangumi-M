@@ -174,8 +174,14 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
 
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.lt_reset()
+    }
+    
     override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewDidAppear(animated)
         
         if isSearchTabelControllerFirstDisplay && searchModel.subjectLocalList.isEmpty {
             searchButtonClicked(nil)
@@ -405,10 +411,9 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
         detailVC.animeItem = Anime(subject: subject)
         detailVC.animeSubject = subject
         detailVC.detailSource = BangumiDetailSource()
-        
-        self.navigationController?.navigationBar.lt_setTranslationY(0.0)
 
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(1))
             self.navigationController?.pushViewController(detailVC, animated: true)
             detailVC.initFromSearchBox(request, subject)
         })
