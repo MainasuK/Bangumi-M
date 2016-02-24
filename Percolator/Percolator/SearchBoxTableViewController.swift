@@ -59,7 +59,7 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
     
     // MARK: Search Controller Delegate
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-       if searchController.searchBar.text == "搜索盒子" {
+        if searchController.searchBar.text == "搜索盒子" {
             isSearching = false
             fetchLocalData()
         }
@@ -77,6 +77,7 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
             fetchLocalData()
             self.navigationItem.title = "搜索盒子"
         } else {
+            isSearching = true
             searchModel.dropModel()
             loadMoreData(searchBar)
             self.navigationItem.title = searchBar.text
@@ -404,9 +405,6 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
         detailVC.animeItem = Anime(subject: subject)
         detailVC.animeSubject = subject
         detailVC.detailSource = BangumiDetailSource()
-//        detailVC.detailSource.animeDetailLarge = subjectLarge
-//        detailVC.detailSource.gridStatusTable = animeModel.animeGridStatusList[id]
-//        detailVC.detailSource.subjectStatusDict = animeModel.subjectAllStatusList[id]
         
         self.navigationController?.navigationBar.lt_setTranslationY(0.0)
 

@@ -357,8 +357,8 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
         detailVC.detailSource.animeDetailLarge = subjectLarge
         detailVC.detailSource.gridStatusTable = animeModel.animeGridStatusList[id]
         detailVC.detailSource.subjectStatusDict = animeModel.subjectAllStatusList[id]
-        
-        self.navigationController?.navigationBar.lt_setTranslationY(0.0)
+
+        self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(1))
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
     

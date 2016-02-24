@@ -238,20 +238,6 @@ public class BangumiRequest {
                 
             }
         })  // cache.fetch(…) { … } { … }
-        
-//        ---- None cache method ----
-//        getJsonFrom(urlPath) { (jsonData) -> Void in
-//            
-//            if jsonData != nil {
-//                if let jsonDict = jsonData as? NSDictionary {
-//                    handler(AnimeDetailLarge(json: jsonDict))
-//                } else {
-//                    handler(nil)
-//                }
-//            } else {
-//                handler(nil)
-//            }
-//        }
     }
     
     // MARK: Collection: get user watching anime
@@ -409,6 +395,43 @@ public class BangumiRequest {
         print("$ Bangumi_Request: Fetch JSON successful")
         return true
     }
+}
+
+extension BangumiRequest {
+    public func getSubjectHTML(subjectID ID: Int, handler: (String?) -> Void) {
+        let urlPath = String(format: "http://bgm.tv/subject/%d", ID)
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: urlPath)!, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 15)
+        request.HTTPMethod = "GET"
+        request.HTTPShouldHandleCookies = true
+        
+        fetchHTMLData(request) { (html) -> Void in
+            handler(html)
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        }
+    }
+    
+    private func fetchHTMLData(request: NSMutableURLRequest, handler: (String?) -> Void) {
+        
+        let task = urlSession.dataTaskWithRequest(request, completionHandler: {
+            (data, response, error) -> Void in
+            
+            guard let data = data,
+                let html = String(data: data, encoding: NSUTF8StringEncoding)
+                where error == nil else {
+                    print(error!.localizedDescription)
+                    handler(nil)
+                    return
+            }
+            
+            handler(html)
+        })
+        
+        
+        task.resume()
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    }
+
 }
 
 public enum SendRequestStatus {

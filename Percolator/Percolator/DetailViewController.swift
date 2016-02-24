@@ -9,6 +9,8 @@
 import UIKit
 import SafariServices
 import Haneke
+import Kanna
+import ReachabilitySwift
 
 let reuseTableViewCellIdentifier = "TableViewCell"
 let reuseCollectionViewCellIdentifier = "CollectionViewCell"
@@ -20,9 +22,12 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
     private let changePoint: CGFloat = -20
     private let changeShadowPoint: CGFloat = -350.0
     private let shadowMinAlpha: CGFloat = 1
+    private let shadowView = UIView()
     
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var AnimeSubjectImageView: UIImageView!
+    @IBOutlet weak var detailTableView: UITableView!
+
     
     var isFirstLoaded = true
     var isSending = false {
@@ -48,14 +53,6 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
     var animeItem: Anime!
     var animeSubject: AnimeSubject!
     
-    
-    // TODO: (Discard)
-//    @IBAction func segmentValueChanged(sender: AnyObject) {
-//        if let segment = sender as? UISegmentedControl {
-//            debugPrintln("\(segment.selectedSegmentIndex)")
-//        }
-//    }
-    
     @IBAction func collectionButtonPressed(sender: UIBarButtonItem) {
         let collectVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.AnimeCollectVC) as! AnimeCollectTableViewController
         collectVC.animeItem = animeItem
@@ -76,33 +73,33 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
         
         // Fix the separator display when 0 rows in table
         tableView.tableFooterView = UIView()
-        
-        // Do any additional setup after loading the view, typically from a nib.
         tableView.estimatedRowHeight = 72.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-//        self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(0.5))
         headerView = self.tableView.tableHeaderView
         self.tableView.tableHeaderView = nil
         self.tableView.addSubview(headerView)
         self.tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 0, right: 0)
         self.tableView.contentOffset = CGPoint(x: 0.0, y: -kTableHeaderHeight)
         
-        //        headerMaskLayer = CAShapeLayer()
-        //        headerMaskLayer.fillColor = UIColor.blackColor().CGColor
-        
-//        headerView.layer.mask = headerMaskLayer
+        let height = UIApplication.sharedApplication().statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 44)
         updateHeaderView()
+        shadowView.frame = headerView.bounds
+        shadowView.frame.size.height = height
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = shadowView.bounds
+        gradientLayer.colors = [UIColor.blackColor().CGColor, UIColor.clearColor()]
+        shadowView.layer.insertSublayer(gradientLayer, atIndex: 0)
+        headerView.addSubview(shadowView)
         
-        // FIXME: It's looks like App Store segment control which float under navigation bar,
-        // but… tableview's offinset get it not work!
-//        sectionHeaderView = self.tableView.tableFooterView
-//        self.tableView.tableFooterView = nil
-        // Then, sectionHeaderView in tableview delegate
-        // (Discard)
+        fetchRelatedSubject(BangumiRequest.shared, subject: animeSubject)
         
         // Configure the tabel view
         AnimeSubjectImageView.hnk_setImageFromURL(NSURL(string: animeSubject.images.largeUrl)!, placeholder: UIImage(named: "404_landscape"))
+        
+        // Remove the hair line
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        headerView.bringSubviewToFront(shadowView)
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -125,15 +122,19 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-//        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "naviBarbackground"), forBarMetrics: UIBarMetrics.Default)
-//        self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(0))
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        
+        UIView.animateWithDuration(0.35, delay: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(0))
+        }) { (isFinish: Bool) -> Void in
+            self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(0))
+            self.isFirstLoaded = false
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
+        updateHeaderView()
+
         if isFirstLoaded {
             let indexSet = NSIndexSet(index: 0)
             tableView.reloadSections(indexSet, withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -145,8 +146,6 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
                 let indexSetTwo = NSIndexSet(index: 1)
                 tableView.reloadSections(indexSetTwo, withRowAnimation: UITableViewRowAnimation.None)
             }
-            
-            isFirstLoaded = false
         }
     }
     
@@ -160,10 +159,10 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         
-        coordinator.animateAlongsideTransition(nil) { (UIViewControllerTransitionCoordinatorContext) -> Void in
+        coordinator.animateAlongsideTransition({ (context: UIViewControllerTransitionCoordinatorContext) -> Void in
             self.updateHeaderView()
-            self.tableView.reloadData()
-        }
+            self.shadowView.layer.frame = self.shadowView.bounds
+        }, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -172,60 +171,17 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.updateHeaderView()
-        })
+        self.updateHeaderView()
         
-        if scrollView.isKindOfClass(UICollectionView) {
-            // FIXME:
-            let horizontalOffset: CGFloat = scrollView.contentOffset.x
-            let collectionView: UICollectionView = scrollView as! UICollectionView
-            self.contentOffsetDictionary.setValue(horizontalOffset, forKey: collectionView.tag.description)
-            
-        } else if scrollView.isKindOfClass(UITableView) {
+        if scrollView.isKindOfClass(UITableView) {
             
             let color = UIColor.myNavigationBarColor()
             let offSetY = scrollView.contentOffset.y
-            NSLog("offsetY --> \(offSetY)")
-            
-            let gradientLayer = CAGradientLayer()
-            gradientLayer.frame = CGRectMake(0, 0, UIApplication.sharedApplication().statusBarFrame.width, UIApplication.sharedApplication().statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 44))
-            
-            // FIXME: If someone want to change the UI, KEEP IN MIND IT, It's awesome, but made you mad
-            if (offSetY >= -350 && offSetY < 0) {    // some thing always is a trick
-                let alpha: CGFloat = min(shadowMinAlpha, -offSetY / kTableHeaderHeight)
-                NSLog("alpha --> \(alpha)")
-                gradientLayer.colors = [UIColor(white: 0, alpha: alpha).CGColor, UIColor.clearColor().CGColor]
-                
-                if let backgroundShadowImage = UIImage.imageFromLayer(gradientLayer) {
-                    NSLog("---> Set shadow image under navigation bar success")
-                    self.navigationController?.navigationBar.setBackgroundImage(backgroundShadowImage, forBarMetrics: .Default)
-                } else {
-                    NSLog("---> Set shadow image under navigation bar fail")
-                }
-
-            } else if (offSetY < changeShadowPoint) {
-                let alpha: CGFloat = max(0, shadowMinAlpha - (changeShadowPoint - offSetY) / (-offSetY))
-                NSLog("alpha --> \(alpha)")
-                gradientLayer.colors = [UIColor(white: 0, alpha: alpha).CGColor, UIColor.clearColor().CGColor]
-                
-                if let backgroundShadowImage = UIImage.imageFromLayer(gradientLayer) {
-                    NSLog("---> Set shadow image under navigation bar success")
-                    self.navigationController?.navigationBar.setBackgroundImage(backgroundShadowImage, forBarMetrics: .Default)
-                } else {
-                    NSLog("---> Set shadow image under navigation bar fail")
-                }
-
-
-            } else {    // offSetY > 0
-                self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-            }
-            
             
             if (offSetY > changePoint) {
                 let alpha: CGFloat = min(1, 1 - ( (changePoint + 64 - offSetY) / 64 ))
                 self.navigationController?.navigationBar.lt_setBackgroundColor(color.colorWithAlphaComponent(alpha))
-            } else {
+            } else if !isFirstLoaded {
                 self.navigationController?.navigationBar.lt_setBackgroundColor(color.colorWithAlphaComponent(0))
             }
             
@@ -241,22 +197,7 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
             headerRect.size.height = -tableView.contentOffset.y
         }
         
-        // Something MAGIC!!!
-        // But we should take care of it
-        
-        //        let path = UIBezierPath()
-        //        path.moveToPoint(CGPoint(x: 0.0, y: 0.0))
-        //        path.addLineToPoint(CGPoint(x: headerRect.width, y: 0))
-        //        path.addLineToPoint(CGPoint(x: headerRect.width, y: headerRect.height - kTableHeaderCutAway))
-        //        path.addLineToPoint(CGPoint(x: headerRect.width/2, y: headerRect.height - kTableHeaderCutAway))
-        //        path.addLineToPoint(CGPoint(x: headerRect.width/2 * 0.8, y: headerRect.height))
-        //        path.addLineToPoint(CGPoint(x: 0, y: headerRect.height))
-        //
-        //        headerMaskLayer?.path = path.CGPath
-        
         headerView.frame = headerRect
-        
-        //        println("headerView.frame -> \(headerView.frame), contentOffset.y -> \(tableView.contentOffset.y)")
     }
     
     // MARK: - Table view data source
@@ -266,7 +207,7 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
         return 7
         // No.1 --> First cell
         // No.2 --> Topic cell
-        // No.3 --> crt & staff
+        // No.3 --> crt & staff & related
         // No.4/5/6 --> eps(ep/sp/ep/op)
     }
     
@@ -275,7 +216,7 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
         switch section {
         case 0: return 1                                            // first cell
         case 1: return detailSource.sourceList.count                // topic
-        case 2: return detailSource.sourceArr.count                 // crt & staff
+        case 2: return detailSource.sourceArr.count                 // crt & staff & ralated
             
         case 3: return detailSource.gridStatusTable?.normalTable.count ?? 0
         case 4: return detailSource.gridStatusTable?.spTable.count ?? 0
@@ -321,7 +262,7 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
             
             return cell
             
-        } else if  indexPath.section == 2 {
+        } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier(reuseTableViewCellIdentifier) as! CMKCollectionTableViewCell
             cell.HeadlineLabel.text = detailSource.sourceNameList[indexPath.row]
             
@@ -447,6 +388,12 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
         cell.animeImageView.layer.masksToBounds = true
         cell.animeImageView.hnk_setImageFromURL(NSURL(string: item.img)!, placeholder: UIImage(named: "404"))
         
+        if cell.subtitleLabel.text == "" {
+            cell.titleLabel.numberOfLines = 0
+        } else {
+            cell.titleLabel.numberOfLines = 1
+        }
+        
         return cell
     }
     
@@ -458,6 +405,10 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
             switch detailSource.sourceNameList[collectionView.tag] {
             case "出场人物": url = "http://bangumi.tv/m/topic/crt/" + id
             case "制作人员": url = "http://bangumi.tv/m/topic/prsn/" + id
+            case let tag where tag != "":
+                pushToNewDetailViewController(id)
+                return
+                
             default:
                 
                 // url wrong
@@ -636,7 +587,7 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
                 ++flag
                 
                 if flag == 2 {
-                    self.detailSource = BangumiDetailSource(subject: animeDetail)
+                    self.detailSource.appendSubject(animeDetail)
                     self.detailSource.gridStatusTable = GridStatus(epsDict: animeDetail.eps.eps)
                     self.detailSource.animeDetailLarge = animeDetail
                     self.detailSource.subjectStatusDict = subjectStatus
@@ -676,4 +627,151 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
     }
 }
 
+// MARK: Related subject fetch & display
+extension DetailViewController {
+    private func fetchRelatedSubject(request: BangumiRequest, subject: AnimeSubject) {
+        NSLog("Detect network using")
+        let reachability: Reachability
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            NSLog("Unable to create Reachability")
+            return
+        }
+        
+        guard reachability.isReachableViaWiFi() else {
+            NSLog("User not use Wi-Fi")
+            return
+        }
+        NSLog("User use Wi-Fi")
+        request.getSubjectHTML(subjectID: subject.id) { (html: String?) -> Void in
 
+            guard let html = html,
+            let doc = Kanna.HTML(html: html, encoding: NSUTF8StringEncoding),
+            let bodyNode = doc.body else {
+                return
+            }
+            
+            self.parseBook(bodyNode)
+            self.parseOther(bodyNode)
+            
+        }   // request.getSubjectHTML() { … }
+    }
+    
+    private func parseBook(bodyNode: XMLElement) {
+        if let section = bodyNode.at_xpath("//ul[@class='browserCoverSmall clearit']") {
+            let sub = "单行本"
+            var items: [Item] = []
+            
+            for node in section.css("li") {
+                
+                guard let hrefNode = node.css("a[href]").first,
+                    let lastSpanNode = node.css("span[class]").last,
+                    let href = hrefNode["href"],
+                    let title = hrefNode["title"],
+                    let style = lastSpanNode["style"] else {
+                        continue
+                }
+                
+                let urlPath = "http://bgm.tv" + href
+                
+                var imgUrlPath = "http:"
+                
+                for substring in style.componentsSeparatedByString("('") {
+                    if substring.hasSuffix("')") {
+                        imgUrlPath += substring.componentsSeparatedByString("')").first!
+                    }
+                }
+                
+                let item = Item(title: title, subtitle: "", url: urlPath, img: imgUrlPath)
+                items.append(item)
+                
+                // print(section.toHTML)
+            }
+            self.detailSource.appendArray(items, name: sub)
+            self.tableView.reloadData()
+        }
+    }
+    
+    private func parseOther(bodyNode: XMLElement) {
+        if let section = bodyNode.at_xpath("//div[@class='content_inner']") {
+            
+            var sub = ""
+            var items: [Item] = []
+            
+            for node in section.css("li") {
+                
+                let currentSub = node.css("span[class]").first?.text ?? ""
+                if currentSub != "" {
+                    if !items.isEmpty {
+                        self.detailSource.appendArray(items, name: sub)
+                        items.removeAll()
+                    }
+                    sub = currentSub
+                }
+                
+                guard let firstHrefNode = node.css("a[href]").first,
+                    let secondHrefNode = node.css("a[href]").last,
+                    let lastSpanNode = node.css("span[class]").last,
+                    let secondHref = secondHrefNode["href"],
+                    let secondTitle = secondHrefNode.text,
+                    let style = lastSpanNode["style"] else {
+                        continue
+                }
+                
+                let firstTitle = firstHrefNode["title"] ?? ""
+                let urlPath = "http://bgm.tv" + secondHref
+                
+                var imgUrlPath = "http:"
+                
+                for substring in style.componentsSeparatedByString("('") {
+                    if substring.hasSuffix("')") {
+                        imgUrlPath += substring.componentsSeparatedByString("')").first!
+                    }
+                }
+                
+                let item = Item(title: secondTitle, subtitle: firstTitle, url: urlPath, img: imgUrlPath)
+                items.append(item)
+                
+                // print(node.toHTML)
+            }   // for node in section.css(…)
+            
+            self.detailSource.appendArray(items, name: sub)
+            self.tableView.reloadData()
+        }   // if let section …
+    }
+    
+    private func pushToNewDetailViewController(id: String) {
+        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.DetialVC) as! DetailViewController
+        let request = BangumiRequest.shared
+        
+        self.tableView.userInteractionEnabled = false
+        self.pleaseWait()
+        
+        request.getSubjectDetailLarge(Int(id) ?? 0) { (detail: AnimeDetailLarge?) -> Void in
+            
+            self.clearAllNotice()
+            self.tableView.userInteractionEnabled = true
+            
+            guard let detail = detail else {
+                self.noticeInfo("Error 53", autoClear: true, autoClearTime: 3)
+                return
+            }
+            
+            let subject = AnimeSubject(animeDetailLarge: detail)
+            detailVC.animeItem = Anime(subject: subject)
+            detailVC.animeSubject = subject
+            detailVC.detailSource = BangumiDetailSource()
+            
+            self.navigationController?.navigationBar.lt_setTranslationY(0.0)
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                self.navigationController?.navigationBar.lt_setTranslationY(0.0)
+                self.navigationController?.pushViewController(detailVC, animated: true)
+                // The cache will handle the duple request, hopefully
+                detailVC.initFromSearchBox(request, subject)
+            })
+        }
+    }
+}
