@@ -578,6 +578,9 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
 
     
     // Model build method
+    // FIXME: If view controller push from a detail view controller,
+    // the animeDetail is not need to fetch (again).
+    // I think the cache will handle it. Maybe fix it is better…
     func initFromSearchBox(request: BangumiRequest, _ subject: AnimeSubject) {
         var flag = 0
         var animeDetail = AnimeDetailLarge()
@@ -613,7 +616,7 @@ class DetailViewController: UITableViewController, UICollectionViewDataSource, U
             ++flag
             
             if flag == 2 {
-                self.detailSource = BangumiDetailSource(subject: animeDetail)
+                self.detailSource.appendSubject(animeDetail)
                 self.detailSource.gridStatusTable = GridStatus(epsDict: animeDetail.eps.eps)
                 self.detailSource.animeDetailLarge = animeDetail
                 self.detailSource.subjectStatusDict = subjectStatus
