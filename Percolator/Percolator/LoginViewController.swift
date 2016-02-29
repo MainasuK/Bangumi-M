@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
     
     let myKeyChainWrapper = KeychainWrapper()
     var delegate: MenuTransitionDelegate?
