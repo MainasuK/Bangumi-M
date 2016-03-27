@@ -378,9 +378,10 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
     
     func pushSearchTableViewController() {
         // FIXME: Key is OK, but not right
-        let searchVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.searchTabelVC) as! SearchBoxTableViewController
+        let searchVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.searchTabelNaviVC) as! UINavigationController
         
-        self.navigationController?.pushViewController(searchVC, animated: true)
+        self.presentViewController(searchVC, animated: true, completion: nil)
+//        self.navigationController?.pushViewController(searchVC, animated: true)
     }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

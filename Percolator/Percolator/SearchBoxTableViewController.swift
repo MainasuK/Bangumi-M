@@ -54,6 +54,7 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
         // Present the view controller.
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.presentViewController(self.searchController, animated: true, completion: nil)
+            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
         })
     }
     
@@ -84,6 +85,7 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
         }
         
         searchController.dismissViewControllerAnimated(true, completion: nil)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         self.tableView.reloadData()
     }
     
@@ -95,6 +97,7 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
             fetchLocalData()
         }
         self.navigationItem.title = (searchBar.text != "") ? searchBar.text : "搜索盒子"
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
         self.tableView.reloadData()
     }
     
