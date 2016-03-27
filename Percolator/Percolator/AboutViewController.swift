@@ -9,9 +9,11 @@
 import UIKit
 import MessageUI
 
-class AboutViewController: UIViewController, SWRevealViewControllerDelegate, MFMailComposeViewControllerDelegate {
+final class AboutViewController: UIViewController {
     
-    var mailComposeViewController: MFMailComposeViewController!
+    lazy var mailComposeViewController: MFMailComposeViewController = {
+        return self.configuredMailComposeViewController()
+    }()
 
     @IBOutlet weak var sendFeedbackButton: UIBarButtonItem!
     
@@ -22,20 +24,15 @@ class AboutViewController: UIViewController, SWRevealViewControllerDelegate, MFM
             self.presentViewController(mailComposeViewController, animated: true, completion: {
                 UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
             })
+            
         } else {
             self.showSendMailErrorAlert()
         }
-    }
-    
-    @IBAction func menuButtonPressed(sender: AnyObject) {
-        self.revealViewController().revealToggle(nil)
     }
 
     //  MARK: View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        mailComposeViewController = configuredMailComposeViewController()
 
         if !MFMailComposeViewController.canSendMail() {
             sendFeedbackButton.enabled = false
@@ -47,19 +44,32 @@ class AboutViewController: UIViewController, SWRevealViewControllerDelegate, MFM
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
+
+// MARK: - SWRevealViewControllerDelegate
+extension AboutViewController: SWRevealViewControllerDelegate {
     
-    //  MARK: MFMailComposeViewControllerDelegate
+    @IBAction func menuButtonPressed(sender: AnyObject) {
+        self.revealViewController().revealToggle(nil)
+    }
+    
+}
+
+// MARK: - MFMailComposeViewControllerDelegate
+extension AboutViewController: MFMailComposeViewControllerDelegate {
+    
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         controller.dismissViewControllerAnimated(true, completion: nil)
+        
+        // Re-init controller for use again.
         self.mailComposeViewController = configuredMailComposeViewController()
         if result == MFMailComposeResultSent {
             SwiftNotice.clear()
             SwiftNotice.showNoticeWithText(NoticeType.success, text: "感谢反馈", autoClear: true, autoClearTime: 3)
         }
     }
-    
-    //  MARK: MFMailComposeViewController configure
-    func configuredMailComposeViewController() -> MFMailComposeViewController {
+
+    private func configuredMailComposeViewController() -> MFMailComposeViewController {
         let mailCompseVC = MFMailComposeViewController()
         mailCompseVC.navigationBar.tintColor = UIColor.whiteColor();
         mailCompseVC.mailComposeDelegate = self
@@ -77,20 +87,9 @@ class AboutViewController: UIViewController, SWRevealViewControllerDelegate, MFM
         return mailCompseVC
     }
     
-    func showSendMailErrorAlert() {
+    private func showSendMailErrorAlert() {
         let sendMailErrorAlert = UIAlertView(title: "Could not send E-mail", message: "Your device could not send E-mail. Please check E-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
         sendMailErrorAlert.show()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

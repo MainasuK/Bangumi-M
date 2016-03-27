@@ -39,6 +39,7 @@ public struct StoryboardKey {
     static let animeTableViewVC                 = "AnimeListTableVC"
     static let DetialVC                         = "DetailViewController"
     static let searchTabelVC                    = "SearchTableVC"
+    static let searchTabelNaviVC                = "SearchTableNaviVC"
 //    static let GridCollectionVC                 = "GridCollectionVC"
     static let AnimeCollectVC                   = "AnimeCollectVC"
 }

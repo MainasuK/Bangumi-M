@@ -8,11 +8,11 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
-
+final class LoginViewController: UIViewController {
+    
+    let myKeyChainWrapper = KeychainWrapper()
     var delegate: MenuTransitionDelegate?
     var request = BangumiRequest.shared
-    let myKeyChainWrapper = KeychainWrapper()
     
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
@@ -46,13 +46,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             guard let user = userData else {
                 self.noticeInfo("密码错误", autoClear: true, autoClearTime: 3)
-                print("@ LoginVC: Fail to get userData")
                 return
             }
             
-            print("@ LoginVC: User data get")
-            print("@ LoginVC: User ID is \(user.id)")
-            print("@ LoginVC: User nickname is \(user.nickName)")
             self.request.userData = user
             self.request.userData?.saveUserInfo(email, password: pass, userData: self.request.userData!)
             
@@ -70,7 +66,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view, typically from a nib.
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
     }
     
@@ -85,7 +80,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - UITextFieldDelegate
+}
+
+// MARK: - UITextFieldDelegate
+extension LoginViewController: UITextFieldDelegate {
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField == emailTextField {
             self.passwordTextField.becomeFirstResponder()
@@ -97,5 +96,5 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         return true
     }
+    
 }
-
