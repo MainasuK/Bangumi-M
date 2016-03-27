@@ -398,7 +398,7 @@
                             <tableViewCell alpha="0.94999998807907104" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="animeCell" rowHeight="161" id="0rS-Kv-YqE" customClass="AnimeListTableViewCell" customModule="Bangumi_M" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="66" width="600" height="161"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="0rS-Kv-YqE" id="kZ8-DW-I1s">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0rS-Kv-YqE" id="kZ8-DW-I1s">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="160"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -457,7 +457,7 @@
                                                                 <action selector="watchedButtonPressed:" destination="0rS-Kv-YqE" eventType="touchUpInside" id="QQS-ir-5Wi"/>
                                                             </connections>
                                                         </button>
-                                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Uju-za-CdK" userLabel="Watched Activity Indicator">
+                                                        <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Uju-za-CdK" userLabel="Watched Activity Indicator">
                                                             <rect key="frame" x="281" y="7" width="20" height="20"/>
                                                             <color key="tintColor" red="0.92941176469999998" green="0.58823529409999997" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <color key="color" red="0.92941176469999998" green="0.58823529409999997" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
