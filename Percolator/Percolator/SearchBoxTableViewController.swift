@@ -11,7 +11,7 @@ import CoreData
 import Haneke
 import MJRefresh
 
-class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate, MGSwipeTableCellDelegate {
+final class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdating, MGSwipeTableCellDelegate {
 
     var isSearching = false {
         willSet {
@@ -58,48 +58,6 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
         })
     }
     
-    // MARK: Search Controller Delegate
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        if searchController.searchBar.text == "搜索盒子" {
-            isSearching = false
-            fetchLocalData()
-        }
-        
-        self.tableView.reloadData()
-        self.tableView.footer.resetNoMoreData()
-    }
-    
-    // MARK: Search Bar Delegate
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-
-        if searchBar.text == "" || searchBar.text == "搜索盒子" {
-            isSearching = false
-            fetchLocalData()
-            self.navigationItem.title = "搜索盒子"
-        } else {
-            isSearching = true
-            searchModel.dropModel()
-            loadMoreData(searchBar)
-            self.navigationItem.title = searchBar.text
-        }
-        
-        searchController.dismissViewControllerAnimated(true, completion: nil)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-        self.tableView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        
-        debugPrint("----> search text: \(searchBar.text)")
-        if searchBar.text == "搜索盒子" || searchBar.text == "" {
-            isSearching = false
-            fetchLocalData()
-        }
-        self.navigationItem.title = (searchBar.text != "") ? searchBar.text : "搜索盒子"
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
-        self.tableView.reloadData()
-    }
     
     func loadMoreData(searchBar: UISearchBar) {
         
@@ -479,4 +437,56 @@ class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdati
         }
     }
 
+}
+
+// MARK: - UISearchBarDelegate
+extension SearchBoxTableViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        
+        if searchBar.text == "" || searchBar.text == "搜索盒子" {
+            isSearching = false
+            fetchLocalData()
+            self.navigationItem.title = "搜索盒子"
+        } else {
+            isSearching = true
+            searchModel.dropModel()
+            loadMoreData(searchBar)
+            self.navigationItem.title = searchBar.text
+        }
+        
+        searchController.dismissViewControllerAnimated(true, completion: nil)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
+        self.tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        
+        debugPrint("----> search text: \(searchBar.text)")
+        if searchBar.text == "搜索盒子" || searchBar.text == "" {
+            isSearching = false
+            fetchLocalData()
+        }
+        self.navigationItem.title = (searchBar.text != "") ? searchBar.text : "搜索盒子"
+        self.tableView.reloadData()
+    }
+
+}
+
+// MARK: - UISearchControllerDelegate
+extension SearchBoxTableViewController: UISearchControllerDelegate {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        
+        if searchController.searchBar.text == "搜索盒子" {
+            isSearching = false
+            fetchLocalData()
+        }
+        
+        self.tableView.reloadData()
+        self.tableView.footer.resetNoMoreData()
+    }
+    
+    func didDismissSearchController(searchController: UISearchController) {
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
+    }
 }
