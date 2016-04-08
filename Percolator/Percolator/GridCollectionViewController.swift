@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 Cirno MainasuK. All rights reserved.
 //
 
+/*
 import UIKit
 
 let reuseIdentifier = "Cell"
@@ -149,3 +150,5 @@ class GridCollectionViewController: UICollectionViewController, UICollectionView
     }
 
 }
+
+ */

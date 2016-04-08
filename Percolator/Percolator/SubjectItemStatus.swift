@@ -33,7 +33,7 @@ public struct SubjectItemStatus {
                 }
             }
             
-            index++
+            index += 1
         }
         
         self.count = index

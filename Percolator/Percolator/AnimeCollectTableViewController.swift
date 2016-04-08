@@ -14,7 +14,11 @@ protocol AnimeCollectionViewControllerDelegate {
     func pushAnimeCollectionVC(animeItem: Anime)
 }
 
-class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate {
+class AnimeCollectTableViewController: UITableViewController {
+    
+    var needComment = false
+    var animeItem = Anime()
+    var collectInfo: EpsCollectInfo?
     
     @IBOutlet weak var saveButtonItem: UIBarButtonItem!
     @IBOutlet weak var animeImageView: UIImageView!
@@ -36,16 +40,11 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
     @IBOutlet weak var cosmosRatingView: CosmosView!
 //    @IBOutlet weak var animeImageViewHeight: NSLayoutConstraint!
     
-    var needComment = false
-    var animeItem = Anime()
-    var collectInfo: EpsCollectInfo?
-//    var pushFromSearchTabelViewControllerFlag = false
     
     @IBAction func segmentSelected(sender: AnyObject) {
         saveButtonItem.enabled = true
     }
-    
-    // MARK: - Mark eps method
+    // Mark eps method
     @IBAction func saveButtonItemPressed(sender: UIBarButtonItem) {
         
         sender.enabled = false
@@ -90,131 +89,6 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
         }   // BangumiAnimeModel…
     }
 
-    // MARK: - View lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        self.navigationController?.title = "少女祈祷中…"
-        let type = animeItem.subject.type
-        let airDateList = ["日期", "发售日", "放送日期", "发售日期", "发行日期", "日期", "放送日期"]
-        let airDateInfo = (animeItem.subject.airDate == "0000-00-00" || animeItem.subject.airDate == "") ? "未收录" : animeItem.subject.airDate
-        
-        
-        nameLabel.text = animeItem.name
-        nameCNLabel.text = animeItem.subject.nameCN
-        airDate.text = "\(airDateList[type])：\(airDateInfo)"
-        let weekArr: [String] = ["不确定", "每周一", "每周二", "每周三", "每周四", "每周五", "每周六", "每周日"]
-        if type == 2 {
-            airWeekday.text = "放送时间：\(weekArr[animeItem.subject.airWeekday])"
-        } else {
-            airWeekday.text = ""
-        }
-        let eps = (animeItem.subject.eps != 0) ? "\(animeItem.subject.eps)" : "??"
-        epsStatus.text = "完成度：\(BangumiAnimeModel.shared.subjectAllStatusList[animeItem.subject.id]?.count ?? 0)" + "/" + eps
-        saveButtonItem.title = "保存"
-        tagsLabel.text = "标签（按空格创建，至多十个）："
-        commentLabel.text = "我的吐槽（至多 200 字）："
-        
-//        let typeArr = ["Zero", "书籍", "动画", "音乐", "游戏", "Five", "三次元"]
-        switch type {
-        case 0: break
-        case 1:         // Book
-            collectSegment.setTitle("想读", forSegmentAtIndex: 0)
-            collectSegment.setTitle("读过", forSegmentAtIndex: 1)
-            collectSegment.setTitle("在读", forSegmentAtIndex: 2)
-        case 2:         // Anime
-            break
-        case 3:         // Music
-            collectSegment.setTitle("想听", forSegmentAtIndex: 0)
-            collectSegment.setTitle("听过", forSegmentAtIndex: 1)
-            collectSegment.setTitle("在听", forSegmentAtIndex: 2)
-        case 4:         // Game
-            collectSegment.setTitle("想玩", forSegmentAtIndex: 0)
-            collectSegment.setTitle("玩过", forSegmentAtIndex: 1)
-            collectSegment.setTitle("在玩", forSegmentAtIndex: 2)
-        case 5:
-            break
-        case 6:         // Oh…
-            break
-        default:
-            break
-        }
-        
-        collectSegment.enabled = false
-        saveButtonItem.enabled = false
-        tagsWriteView.maxTagLength = 0
-        
-        ratingLabel.text = "我的评价："
-        cosmosRatingView.userInteractionEnabled = false
-        cosmosRatingView.settings.fillMode = .Full
-        cosmosRatingView.settings.updateOnTouch = true
-        cosmosRatingView.settings.minTouchRating = 0.0
-        cosmosRatingView.didTouchCosmos = touchedTheStar
-
-        animeImageView.hnk_setImageFromURL(NSURL(string: animeItem.subject.images.largeUrl)!, placeholder: UIImage(named: "404"))
-//        animeImageView.hnk_setImageFromURL(NSURL(string: animeItem.subject.images.largeUrl)!, placeholder: UIImage(named: "404"), format: nil, failure: { (error) -> () in
-//            if error != nil {
-//                    self.noticeInfo("图片加载失败", autoClear: true, autoClearTime: 4)
-//            }
-//        }, success: { (image) -> () in
-//            self.animeImageView.image = image
-//            
-//        })
-    
-        // fetch collect info
-        getEpsCollectInfo()
-        
-        
-        // configure cells appearance
-        tagsWriteView.layer.backgroundColor = UIColor.clearColor().CGColor
-        tagsWriteView.backgroundColorForDeleteButton = UIColor.clearColor()
-        tagsWriteView.setDeleteButtonBackgroundImage(UIImage(named: "btn_tag_delete"), state: .Normal)
-        tagsWriteView.verticalInsetForTag = UIEdgeInsetsMake(6.0, 8.0, 4.0, 0.0)
-        tagsWriteView.sizeForDeleteButton = CGRectMake(0.0, 0.0, 17.0, 17.0)
-        tagsWriteView.tagBackgroundColor = UIColor.grayColor()
-        tagsWriteView.allowToUseSingleSpace = false
-
-        
-        commentTextView.autoresizingMask = UIViewAutoresizing.FlexibleBottomMargin
-        commentTextView.layer.borderColor = UIColor.myGrayColor().CGColor
-        commentTextView.layer.borderWidth = 1
-        commentTextView.layer.cornerRadius = 5
-        commentTextView.clipsToBounds = true
-        
-//        animeImageView.layer.cornerRadius   = 5
-        animeImageView.layer.shadowOffset   = CGSizeMake(0, 0)
-        animeImageView.layer.shadowRadius   = 4
-        animeImageView.layer.shadowOpacity  = 0.3
-        
-        // Self Sizing Cells
-        self.tableView.estimatedRowHeight = 170;
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBar.lt_reset()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
-        
-        self.tableView.reloadData()
-        self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
-    }
-    
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // MARK: - Eps info fetch method
     private func getEpsCollectInfo() {
@@ -290,92 +164,149 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
         }   // BangumiRequest.shared.getEpcollectInfo(…)
     }   // getEpsCollectInfo(…)
 
-    // MARK: - TableViewDataSource
+
+
+    private class func formatValue(value: Double) -> String {
+        return String(format: "%.2f", value)
+    }
+    
+    private func touchedTheStar(rating: Double) {
+        debugPrint(rating)
+        ratingLabel.text = (rating != 0) ? "我的评价：\((Int)(rating/1.0)) 星" : "不评价"
+    }
+}
+
+// MARK: - View Life Cycle
+extension AnimeCollectTableViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+        
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        self.navigationController?.title = "少女祈祷中…"
+        let type = animeItem.subject.type
+        let airDateList = ["日期", "发售日", "放送日期", "发售日期", "发行日期", "日期", "放送日期"]
+        let airDateInfo = (animeItem.subject.airDate == "0000-00-00" || animeItem.subject.airDate == "") ? "未收录" : animeItem.subject.airDate
+        
+        
+        nameLabel.text = animeItem.name
+        nameCNLabel.text = animeItem.subject.nameCN
+        airDate.text = "\(airDateList[type])：\(airDateInfo)"
+        let weekArr: [String] = ["不确定", "每周一", "每周二", "每周三", "每周四", "每周五", "每周六", "每周日"]
+        if type == 2 {
+            airWeekday.text = "放送时间：\(weekArr[animeItem.subject.airWeekday])"
+        } else {
+            airWeekday.text = ""
+        }
+        let eps = (animeItem.subject.eps != 0) ? "\(animeItem.subject.eps)" : "??"
+        epsStatus.text = "完成度：\(BangumiAnimeModel.shared.subjectAllStatusList[animeItem.subject.id]?.count ?? 0)" + "/" + eps
+        saveButtonItem.title = "保存"
+        tagsLabel.text = "标签（按空格创建，至多十个）："
+        commentLabel.text = "我的吐槽（至多 200 字）："
+        
+        //        let typeArr = ["Zero", "书籍", "动画", "音乐", "游戏", "Five", "三次元"]
+        switch type {
+        case 0: break
+        case 1:         // Book
+            collectSegment.setTitle("想读", forSegmentAtIndex: 0)
+            collectSegment.setTitle("读过", forSegmentAtIndex: 1)
+            collectSegment.setTitle("在读", forSegmentAtIndex: 2)
+        case 2:         // Anime
+            break
+        case 3:         // Music
+            collectSegment.setTitle("想听", forSegmentAtIndex: 0)
+            collectSegment.setTitle("听过", forSegmentAtIndex: 1)
+            collectSegment.setTitle("在听", forSegmentAtIndex: 2)
+        case 4:         // Game
+            collectSegment.setTitle("想玩", forSegmentAtIndex: 0)
+            collectSegment.setTitle("玩过", forSegmentAtIndex: 1)
+            collectSegment.setTitle("在玩", forSegmentAtIndex: 2)
+        case 5:
+            break
+        case 6:         // Oh…
+            break
+        default:
+            break
+        }
+        
+        collectSegment.enabled = false
+        saveButtonItem.enabled = false
+        tagsWriteView.maxTagLength = 0
+        
+        ratingLabel.text = "我的评价："
+        cosmosRatingView.userInteractionEnabled = false
+        cosmosRatingView.settings.fillMode = .Full
+        cosmosRatingView.settings.updateOnTouch = true
+        cosmosRatingView.settings.minTouchRating = 0.0
+        cosmosRatingView.didTouchCosmos = touchedTheStar
+        
+        animeImageView.hnk_setImageFromURL(NSURL(string: animeItem.subject.images.largeUrl)!, placeholder: UIImage(named: "404"))
+        
+        // fetch collect info
+        getEpsCollectInfo()
+        
+        
+        // configure cells appearance
+        tagsWriteView.layer.backgroundColor = UIColor.clearColor().CGColor
+        tagsWriteView.backgroundColorForDeleteButton = UIColor.clearColor()
+        tagsWriteView.setDeleteButtonBackgroundImage(UIImage(named: "btn_tag_delete"), state: .Normal)
+        tagsWriteView.verticalInsetForTag = UIEdgeInsetsMake(6.0, 8.0, 4.0, 0.0)
+        tagsWriteView.sizeForDeleteButton = CGRectMake(0.0, 0.0, 17.0, 17.0)
+        tagsWriteView.tagBackgroundColor = UIColor.grayColor()
+        tagsWriteView.allowToUseSingleSpace = false
+        
+        
+        commentTextView.autoresizingMask = UIViewAutoresizing.FlexibleBottomMargin
+        commentTextView.layer.borderColor = UIColor.myGrayColor().CGColor
+        commentTextView.layer.borderWidth = 1
+        commentTextView.layer.cornerRadius = 5
+        commentTextView.clipsToBounds = true
+        
+        //        animeImageView.layer.cornerRadius   = 5
+        animeImageView.layer.shadowOffset   = CGSizeMake(0, 0)
+        animeImageView.layer.shadowRadius   = 4
+        animeImageView.layer.shadowOpacity  = 0.3
+        
+        // Self Sizing Cells
+        self.tableView.estimatedRowHeight = 170;
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.lt_reset()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.tableView.reloadData()
+//        self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
+    }
+    
+}
+
+// MARK: UITableViewDataSource
+extension AnimeCollectTableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         return 4
     }
-
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
     
+}
 
-    // MARK: - Text Field Delegate
-    
-//    func textFieldShouldReturn(textField: UITextField) -> Bool {
-//        
-//        textField.resignFirstResponder()
-//        return true
-//    }
-//    
-//    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-//        if range.location >= 200 {
-//            return false
-//        }
-//        
-//        return true
-//    }
-        
+// MARK: - UITextViewDelegate
+extension AnimeCollectTableViewController: UITextViewDelegate {
     // MARK: Text View delegate
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
@@ -391,13 +322,5 @@ class AnimeCollectTableViewController: UITableViewController, UITextViewDelegate
         
         return true
     }
-    
-    private class func formatValue(value: Double) -> String {
-        return String(format: "%.2f", value)
-    }
-    
-    private func touchedTheStar(rating: Double) {
-        debugPrint(rating)
-        ratingLabel.text = (rating != 0) ? "我的评价：\((Int)(rating/1.0)) 星" : "不评价"
-    }
+
 }
