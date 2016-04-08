@@ -29,6 +29,9 @@ final class AboutViewController: UIViewController {
             self.showSendMailErrorAlert()
         }
     }
+    @IBAction func menuButtonPressed(sender: AnyObject) {
+        self.revealViewController().revealToggle(nil)
+    }
 
     //  MARK: View life cycle
     override func viewDidLoad() {
@@ -44,14 +47,11 @@ final class AboutViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 }
 
 // MARK: - SWRevealViewControllerDelegate
 extension AboutViewController: SWRevealViewControllerDelegate {
-    
-    @IBAction func menuButtonPressed(sender: AnyObject) {
-        self.revealViewController().revealToggle(nil)
-    }
     
 }
 

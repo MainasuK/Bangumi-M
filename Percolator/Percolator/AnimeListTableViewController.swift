@@ -11,7 +11,12 @@ import UIKit
 import Haneke
 import MJRefresh
 
-class AnimeListTableViewController: UITableViewController, MenuTransitionDelegate, AnimeCollectionViewControllerDelegate, SWRevealViewControllerDelegate {
+final class AnimeListTableViewController: UITableViewController, SWRevealViewControllerDelegate {
+    
+    let myKeyChainWrapper = KeychainWrapper()
+    let request = BangumiRequest.shared
+    let animeModel = BangumiAnimeModel.shared
+    let searchModel = BangumiSearchModel.shared
     
     var isFirstFailed = true
     var isFirstLoad = true
@@ -28,11 +33,6 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
     }
     var messageLabel = UILabel()
     
-    let myKeyChainWrapper = KeychainWrapper()
-    let request = BangumiRequest.shared
-    let animeModel = BangumiAnimeModel.shared
-    let searchModel = BangumiSearchModel.shared
-    
     @IBOutlet weak var progressView: UIProgressView!
     
     @IBAction func menuButtonPressed(sender: AnyObject) {
@@ -47,12 +47,12 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
         }
     }
     @IBAction func refresh(sender: UIRefreshControl?) {
+        
         if !canRefresh || isFetchingData {
             self.tableView.header.endRefreshing()
             return
         }
         
-        debugPrint("@ AnimeListTableVC: Anime list start refresh")
         if let user = request.userData {
             isFetchingData = true
             isFirstFailed = true
@@ -89,12 +89,67 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
             debugPrint("@ AnimeListTableVC: Failed to get user info to fresh")
             self.noticeError("请重新登录", autoClear: true, autoClearTime: 5)
             self.tableView.header.endRefreshing()
-        }   // if let user = request.userData…
-    }   // refresh(sender: …) { … }
+        }   // end if let user = request.userData…
+    }   // end func refresh(sender: …) { … }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+
     
-    // MARK: - View Controller Lifecycle
+    func pushSearchTableViewController() {
+        let searchVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.searchTabelNaviVC) as! UINavigationController
+        self.presentViewController(searchVC, animated: true, completion: nil)
+    }
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using [segue destinationViewController].
+        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == StoryboardKey.showLoginVC {
+            let loginVC = segue.destinationViewController as! LoginViewController
+            loginVC.delegate = self
+        }
+    }
     
+
+    @IBAction func unwind(segue: UIStoryboardSegue) {
+        
+    }
+    
+    private struct Storyboard {
+        static let animeCellIdentifier = "animeCell"
+        static let showAnimeDetail = "showAnimeDetail"
+    }
+    
+    // MARK: - Broadcast receive method
+    
+    func setRefreshMark(notification: NSNotification) {
+        canRefresh = notification.object as! Bool
+    }
+    
+    func setProgress(notification: NSNotification) {
+
+        if let progress = notification.object as? Float where isFirstFailed == true {
+            progressView.hidden = (progress == 1.0) ? true : false
+            progressView.setProgress(progress, animated: true)
+        } else {
+            progressView.hidden = true
+            progressView.setProgress(0.0, animated: false)
+        }
+    }
+
+    func userLogout(notification: NSNotification) {
+        tableView.reloadData()
+        isFirstLoad = true
+    }
+    
+}
+
+// MARK: - View Life Cycle
+extension AnimeListTableViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
         NSLog("AnimeListViewController did load")
@@ -122,7 +177,7 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
         progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.hidden = true
         progressView.setProgress(0.0, animated: false)
-
+        
         // Configure tableView
         self.tableView.rowHeight = 151      // A magic number make people sad. = =
         self.tableView.separatorColor = UIColor.clearColor()
@@ -145,7 +200,7 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
     }
     
     override func viewDidAppear(animated: Bool) {
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: animated)
         
         // Login Logic
         NSLog("AnimeListViewController did appear")
@@ -207,37 +262,15 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
         progressView.hidden = true
     }
     
-    deinit {
-        NSLog("AnimeListTableViewController is being deallocated");
-    }
+}
 
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
-    
-//     MARK: SWRevealViewControllerDelegate
-//    func revealController(revealController: SWRevealViewController!, didMoveToPosition position: FrontViewPosition) {
-//    
-//        self.tableView.userInteractionEnabled = (revealController.frontViewPosition == FrontViewPosition.Right) ? false : true
-//        self.navigationController?.view.userInteractionEnabled = true
-//        self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
-//        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-//        println("didMoveToPosition: \(self.tableView.userInteractionEnabled)")
-//    }
-
-    
-    // MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
+extension AnimeListTableViewController {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // Return the number of sections.
         if !animeModel.animeList.isEmpty || isFetchingData {
-//            self.tableView.backgroundView = nil
+            //            self.tableView.backgroundView = nil
             messageLabel.hidden = true
             return 1
         } else {
@@ -246,25 +279,25 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
             if isFetchingData {
                 messageLabel.hidden = true
             } else {
-//                messageLabel = UILabel(frame: CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, self.tableView.bounds.size.height))
-//                messageLabel.text = "没有在看的番组？\n搜索添加一个吧"
-//                messageLabel.textColor = UIColor.darkGrayColor()
-//                messageLabel.numberOfLines = 2
-//                messageLabel.textAlignment = NSTextAlignment.Center
-//                messageLabel.font = UIFont(name: "system", size: 20)
-//                messageLabel.sizeToFit()
-//                messageLabel.center = self.tableView.center
-//                self.tableView.addSubview(messageLabel)
+                //                messageLabel = UILabel(frame: CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, self.tableView.bounds.size.height))
+                //                messageLabel.text = "没有在看的番组？\n搜索添加一个吧"
+                //                messageLabel.textColor = UIColor.darkGrayColor()
+                //                messageLabel.numberOfLines = 2
+                //                messageLabel.textAlignment = NSTextAlignment.Center
+                //                messageLabel.font = UIFont(name: "system", size: 20)
+                //                messageLabel.sizeToFit()
+                //                messageLabel.center = self.tableView.center
+                //                self.tableView.addSubview(messageLabel)
             }
-//
-//            self.tableView.backgroundView = messageLabel
-//            self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+            //
+            //            self.tableView.backgroundView = messageLabel
+            //            self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
             
             
             return 0
         }
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
         if animeModel.animeDetailList.count == animeModel.animeList.count {
@@ -291,14 +324,14 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
             cell.animeItem = animeItem
             cell.postMark = isFetchingData
             cell.initCell()
-        
+            
             // Configure the appearance of the cell
             cell.animeImageView.layer.cornerRadius = 5
-//            cell.animeImageView.layer.masksToBounds = true
-    
+            //            cell.animeImageView.layer.masksToBounds = true
+            
             cell.cardView.frame = CGRectMake(2, 4, cell.frame.width-5, cell.frame.height-4)
             cell.cardView.alpha = 1
-//            cell.cardView.layer.masksToBounds   = true
+            //            cell.cardView.layer.masksToBounds   = true
             cell.cardView.layer.cornerRadius    = 3
             cell.cardView.layer.shadowOffset    = CGSizeMake(-0.2, 0.2)
             cell.cardView.layer.shadowRadius    = 3
@@ -310,44 +343,11 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
         return cell
     }
     
+}
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+// MARK: - UITableViewDelegate
+extension AnimeListTableViewController {
     
-    // MARK: - Navigation
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if isFetchingData || !canRefresh {
             return
@@ -364,10 +364,15 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
         detailVC.detailSource.animeDetailLarge = subjectLarge
         detailVC.detailSource.gridStatusTable = animeModel.animeGridStatusList[id]
         detailVC.detailSource.subjectStatusDict = animeModel.subjectAllStatusList[id]
-
+        
         self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(1))
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
+    
+}
+
+// MARK: - AnimeCollectionViewControllerDelegate
+extension AnimeListTableViewController: AnimeCollectionViewControllerDelegate {
     
     func pushAnimeCollectionVC(animeItem: Anime) {
         let collectVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.AnimeCollectVC) as! AnimeCollectTableViewController
@@ -376,60 +381,13 @@ class AnimeListTableViewController: UITableViewController, MenuTransitionDelegat
         self.navigationController?.pushViewController(collectVC, animated: true)
     }
     
-    func pushSearchTableViewController() {
-        // FIXME: Key is OK, but not right
-        let searchVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.searchTabelNaviVC) as! UINavigationController
-        
-        self.presentViewController(searchVC, animated: true, completion: nil)
-//        self.navigationController?.pushViewController(searchVC, animated: true)
-    }
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-        
-        if segue.identifier == StoryboardKey.showLoginVC {
-            let loginVC = segue.destinationViewController as! LoginViewController
-            loginVC.delegate = self
-        }
-    }
-    
-
-    @IBAction func unwind(segue: UIStoryboardSegue) {
-        
-    }
+// MARK: - MenuTransitionDelegate
+extension AnimeListTableViewController: MenuTransitionDelegate {
     
     func dismissLoginVC() {
         self.tableView.header.beginRefreshing()
     }
     
-    
-    private struct Storyboard {
-        static let animeCellIdentifier = "animeCell"
-        static let showAnimeDetail = "showAnimeDetail"
-    }
-    
-    // MARK: - Broadcast receive method
-    
-    func setRefreshMark(notification: NSNotification) {
-        canRefresh = notification.object as! Bool
-    }
-    
-    func setProgress(notification: NSNotification) {
-
-        if let progress = notification.object as? Float where isFirstFailed == true {
-            progressView.hidden = (progress == 1.0) ? true : false
-            progressView.setProgress(progress, animated: true)
-        } else {
-            progressView.hidden = true
-            progressView.setProgress(0.0, animated: false)
-        }
-    }
-
-    func userLogout(notification: NSNotification) {
-        NSLog("User logout, AnimeListTableViewController reload")
-        self.tableView.reloadData()
-        self.isFirstLoad = true
-    }
 }

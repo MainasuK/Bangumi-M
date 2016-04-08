@@ -11,6 +11,7 @@ import UIKit
 final class LoginViewController: UIViewController {
     
     let myKeyChainWrapper = KeychainWrapper()
+    
     var delegate: MenuTransitionDelegate?
     var request = BangumiRequest.shared
     
@@ -59,7 +60,7 @@ final class LoginViewController: UIViewController {
                 self.delegate?.dismissLoginVC()
             }
         }
-    }   // loginButtonPressed(sender: …)
+    }   // end loginButtonPressed(sender: …)
     
     // MARK: - View lifecycle
     
@@ -70,7 +71,7 @@ final class LoginViewController: UIViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
     }

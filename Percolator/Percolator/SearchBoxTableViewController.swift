@@ -11,8 +11,11 @@ import CoreData
 import Haneke
 import MJRefresh
 
-final class SearchBoxTableViewController: UITableViewController, UISearchResultsUpdating, MGSwipeTableCellDelegate {
+final class SearchBoxTableViewController: UITableViewController {
 
+    let searchModel = BangumiSearchModel.shared
+    let request = BangumiRequest.shared
+    
     var isSearching = false {
         willSet {
             if newValue == true {
@@ -22,17 +25,9 @@ final class SearchBoxTableViewController: UITableViewController, UISearchResults
             }
         }
     }
-    
 //    var fetchResultController = NSFetchedResultsController!
     var searchController: UISearchController!
     var isSearchTabelControllerFirstDisplay = true
-    
-//    var snapshot: UIView!
-//    let blurredView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))   // or .ExtraLight .Dark
-
-
-    let searchModel = BangumiSearchModel.shared
-    let request = BangumiRequest.shared
     
     
     @IBOutlet weak var searchButton: UIBarButtonItem!
@@ -102,7 +97,27 @@ final class SearchBoxTableViewController: UITableViewController, UISearchResults
         
     }
     
-    // MARK: - View life cycle
+    private func fetchLocalData() {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Subject")
+        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
+            
+            Subject.fetchSubject({ (animeSubjectArr) -> Void in
+                
+                if animeSubjectArr != nil {
+                    self.searchModel.subjectLocalList = animeSubjectArr!
+                }
+            })
+        }
+    }
+
+}
+
+// MARK: - View Life Cycle
+extension SearchBoxTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,15 +139,15 @@ final class SearchBoxTableViewController: UITableViewController, UISearchResults
         }
         
         // Self Sizing Cells
-//        self.tableView.estimatedRowHeight = 110;
-//        self.tableView.rowHeight = UITableViewAutomaticDimension;
+        //        self.tableView.estimatedRowHeight = 110;
+        //        self.tableView.rowHeight = UITableViewAutomaticDimension;
         
         // Configure tableView appearance
         
-//        self.tableView.separatorColor = UIColor.clearColor()
+        //        self.tableView.separatorColor = UIColor.clearColor()
         self.tableView.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
-//        self.tableView.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 0.2)
-
+        //        self.tableView.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 0.2)
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -149,21 +164,18 @@ final class SearchBoxTableViewController: UITableViewController, UISearchResults
         }
         isSearchTabelControllerFirstDisplay = false
     }
+    
+}
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
+// MARK: - UITableViewDatasource
+extension SearchBoxTableViewController {
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // Return the number of sections.
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Return the number of rows in the section.
+
         var rows = 0
         if isSearching {
             rows = searchModel.subjectsList.count
@@ -174,13 +186,13 @@ final class SearchBoxTableViewController: UITableViewController, UISearchResults
         
         return rows
     }
-
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! SearchBoxTabelCell
-
+        
         let (subject, isSaved) = searchModel.getSubjectAndSavedInfoToSearchBox(indexPath.row, isSearching)
-        // Configure the cell...
+        
         cell.delegate = self
         cell.subject = subject
         cell.isSaved = (isSearching) ? isSaved : false
@@ -188,57 +200,103 @@ final class SearchBoxTableViewController: UITableViewController, UISearchResults
         
         return cell
     }
+
+}
+
+// MARK: - UITableViewDelegate
+extension SearchBoxTableViewController {
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.DetialVC) as! DetailViewController
+        
+        let request = BangumiRequest.shared
+        let (subject, isSaved) = searchModel.getSubjectAndSavedInfoToSearchBox(indexPath.row, isSearching)
+        
+        detailVC.animeItem = Anime(subject: subject)
+        detailVC.animeSubject = subject
+        detailVC.detailSource = BangumiDetailSource()
+        
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(1))
+            self.navigationController?.pushViewController(detailVC, animated: true)
+            detailVC.initFromSearchBox(request, subject)
+        })
+    }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
+        
         return 110
     }
-
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
-    // MARK: - Swipe Delegate
+}
+
+// MARK: - UISearchBarDelegate
+extension SearchBoxTableViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        
+        if searchBar.text == "" || searchBar.text == "搜索盒子" {
+            isSearching = false
+            fetchLocalData()
+            self.navigationItem.title = "搜索盒子"
+        } else {
+            isSearching = true
+            searchModel.dropModel()
+            loadMoreData(searchBar)
+            self.navigationItem.title = searchBar.text
+        }
+        
+        searchController.dismissViewControllerAnimated(true, completion: nil)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
+        self.tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        
+        if searchBar.text == "搜索盒子" || searchBar.text == "" {
+            isSearching = false
+            fetchLocalData()
+        }
+        self.navigationItem.title = (searchBar.text != "") ? searchBar.text : "搜索盒子"
+        self.tableView.reloadData()
+    }
+
+}
+
+// MARK: - UISearchResultsUpdating
+extension SearchBoxTableViewController: UISearchResultsUpdating {
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        
+        if searchController.searchBar.text == "搜索盒子" {
+            isSearching = false
+            fetchLocalData()
+        }
+        
+        self.tableView.reloadData()
+        self.tableView.footer.resetNoMoreData()
+    }
+    
+}
+
+// MARK: - UISearchControllerDelegate
+extension SearchBoxTableViewController: UISearchControllerDelegate {
+    
+    func didDismissSearchController(searchController: UISearchController) {
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
+    }
+}
+
+// MARK: - MGSwipeTableCellDelegate
+extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
     
     func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
-//        if let _cell = cell as? SearchBoxTabelCell {
-//            if searchModel.isLocalSaved(_cell.subject.id) {
-//                return false
-//            }
-//        }
-//        
+        //        if let _cell = cell as? SearchBoxTabelCell {
+        //            if searchModel.isLocalSaved(_cell.subject.id) {
+        //                return false
+        //            }
+        //        }
+        //
         if isSearching {
             return (direction == .LeftToRight) ? true : false
         } else {
@@ -266,14 +324,14 @@ final class SearchBoxTableViewController: UITableViewController, UISearchResults
                 
                 let collectVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.AnimeCollectVC) as! AnimeCollectTableViewController
                 collectVC.animeItem = Anime(subject: subject)
-//                self.navigationController?.pushViewController(collectVC, animated: true)
-//                self.searchController.dismissViewControllerAnimated(true, completion: nil)
+                //                self.navigationController?.pushViewController(collectVC, animated: true)
+                //                self.searchController.dismissViewControllerAnimated(true, completion: nil)
                 self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.navigationController?.pushViewController(collectVC, animated: true)
                 })
-
+                
                 return false
             })
             
@@ -296,7 +354,7 @@ final class SearchBoxTableViewController: UITableViewController, UISearchResults
                 
                 return false
             })
-
+            
             if isSearching {
                 if let _cell = cell as? SearchBoxTabelCell {
                     if _cell.isSaved {
@@ -343,9 +401,9 @@ final class SearchBoxTableViewController: UITableViewController, UISearchResults
             }
         }   // if .LeftToRight … else …
         
-//        return nil
+        //        return nil
     }
-
+    
     func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
         
         var str = ""
@@ -362,131 +420,4 @@ final class SearchBoxTableViewController: UITableViewController, UISearchResults
         NSLog("Swipe state: \(str) ::: Gestrue: \(active)")
     }
 
-    // MARK: - Navigation
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.DetialVC) as! DetailViewController
-
-        let request = BangumiRequest.shared
-        let (subject, isSaved) = searchModel.getSubjectAndSavedInfoToSearchBox(indexPath.row, isSearching)
-        
-        detailVC.animeItem = Anime(subject: subject)
-        detailVC.animeSubject = subject
-        detailVC.detailSource = BangumiDetailSource()
-
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(1))
-            self.navigationController?.pushViewController(detailVC, animated: true)
-            detailVC.initFromSearchBox(request, subject)
-        })
-    }
-
-    
-    private func popDeleteMeue(indexPath: NSIndexPath, _ subjectToDelete: AnimeSubject) {
-//        let name = favoriteModel.favoriteList[indexPath.row].name
-//        let message = name ?? "移除"
-//        
-//        let deleteMenu = UIAlertController(title: nil, message: message, preferredStyle: .ActionSheet)
-//        
-//        let deleteAction = UIAlertAction(title: "移除", style: .Destructive) { (action) -> Void in
-//            
-//            self.navigationItem.title = "移除中…"
-//            self.tableView.userInteractionEnabled = false
-//            self.pleaseWait()
-//            
-//            self.favoriteModel.deleteSubjectInCloud(indexPath.row) { (success) -> Void in
-//                
-//                self.clearAllNotice()
-//                if success {
-//                    // success
-//                    self.noticeSuccess("移除成功", autoClear: true, autoClearTime: 3)
-//                } else {
-//                    self.noticeError("移除失败", autoClear: true, autoClearTime: 5)
-//                }
-//                
-//                NSOperationQueue.mainQueue().addOperationWithBlock({
-//                    
-//                    self.navigationItem.title = "条目搜索"
-//                    self.tableView.reloadData()
-//                    self.tableView.userInteractionEnabled = true
-//                })
-//                
-//            }   // self.favoriteModel.deleteSubjectInCloud()…
-//        }
-//        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
-//        
-//        deleteMenu.addAction(deleteAction)
-//        deleteMenu.addAction(cancelAction)
-//        
-//        self.presentViewController(deleteMenu, animated: true, completion: nil)
-    }
-    
-    private func fetchLocalData() {
-        NSLog("@ SearchBoxTableViewController: Fetcho local data")
-        let fetchRequest = NSFetchRequest(entityName: "Subject")
-        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
-            
-            Subject.fetchSubject({ (animeSubjectArr) -> Void in
-                
-                if animeSubjectArr != nil {
-                    self.searchModel.subjectLocalList = animeSubjectArr!
-                }
-            })
-        }
-    }
-
-}
-
-// MARK: - UISearchBarDelegate
-extension SearchBoxTableViewController: UISearchBarDelegate {
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        
-        if searchBar.text == "" || searchBar.text == "搜索盒子" {
-            isSearching = false
-            fetchLocalData()
-            self.navigationItem.title = "搜索盒子"
-        } else {
-            isSearching = true
-            searchModel.dropModel()
-            loadMoreData(searchBar)
-            self.navigationItem.title = searchBar.text
-        }
-        
-        searchController.dismissViewControllerAnimated(true, completion: nil)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
-        self.tableView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        
-        debugPrint("----> search text: \(searchBar.text)")
-        if searchBar.text == "搜索盒子" || searchBar.text == "" {
-            isSearching = false
-            fetchLocalData()
-        }
-        self.navigationItem.title = (searchBar.text != "") ? searchBar.text : "搜索盒子"
-        self.tableView.reloadData()
-    }
-
-}
-
-// MARK: - UISearchControllerDelegate
-extension SearchBoxTableViewController: UISearchControllerDelegate {
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
-        if searchController.searchBar.text == "搜索盒子" {
-            isSearching = false
-            fetchLocalData()
-        }
-        
-        self.tableView.reloadData()
-        self.tableView.footer.resetNoMoreData()
-    }
-    
-    func didDismissSearchController(searchController: UISearchController) {
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
-    }
 }
