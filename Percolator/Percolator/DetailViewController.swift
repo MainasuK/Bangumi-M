@@ -620,7 +620,7 @@ extension DetailViewController: UICollectionViewDataSource {
         cell.animeImageView.layer.borderWidth = 1.0
         cell.animeImageView.layer.cornerRadius = 5
         cell.animeImageView.layer.masksToBounds = true
-        cell.animeImageView.hnk_setImageFromURL(NSURL(string: item.img)!, placeholder: UIImage(named: "404"))
+//        cell.animeImageView.hnk_setImageFromURL(NSURL(string: item.img )!, placeholder: UIImage(named: "404"))
         
         if cell.subtitleLabel.text == "" {
             cell.titleLabel.numberOfLines = 0

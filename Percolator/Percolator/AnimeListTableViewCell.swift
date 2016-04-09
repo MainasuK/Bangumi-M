@@ -161,12 +161,8 @@ class AnimeListTableViewCell: UITableViewCell {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnimeListTableViewCell.setPostingMark(_:)), name: "setPostMark", object: nil)
         
-        let subjectAllStatusList = animeModel.subjectAllStatusList
-        let animeGridStatusList = animeModel.animeGridStatusList
-        let postingStatusList = animeModel.animePostingStatusList
-        
-        let gridStatus = animeGridStatusList[animeItem.subject.id]
-        let animeStatus = subjectAllStatusList[animeItem.subject.id] ?? SubjectItemStatus()
+        let gridStatus = animeModel.animeGridStatusList[animeItem.subject.id]
+        let animeStatus = animeModel.subjectAllStatusList[animeItem.subject.id] ?? SubjectItemStatus()
     
         lastTouchEp = gridStatus!.lastTouchEP(animeStatus)
         lastTouchEpSort = lastTouchEp?.sort ?? 0
@@ -193,7 +189,7 @@ class AnimeListTableViewCell: UITableViewCell {
         
         initWatchButtonTitle()
         
-        isPosting = postingStatusList[animeItem.subject.id]!.boolValue
+        isPosting = animeModel.animePostingStatusList[animeItem.subject.id]!.boolValue
     }
     
     private func reloadData(status: ModelModifyStatus) {

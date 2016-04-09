@@ -58,16 +58,13 @@ final class AnimeListTableViewController: UITableViewController, SWRevealViewCon
                 self.isFetchingData = false
                 
                 if isFetchSuccess {
-                    debugPrint("@ AnimeListTableVC: Handler get true and refresh success")
                     dispatch_async(dispatch_get_main_queue()) {
-                        
                         self.tableView.header.endRefreshing()
                         self.tableView.reloadData()
-                        
                     }   // dispatch_async(…)
                     
                 } else {
-                    debugPrint("@ AnimeListTableVC: Handler get flase and refresh failed")
+                    
                     dispatch_async(dispatch_get_main_queue()) {
                         self.clearAllNotice()
                         if self.isFirstFailed {
@@ -82,7 +79,7 @@ final class AnimeListTableViewController: UITableViewController, SWRevealViewCon
             }   // animeModel.fetchAnimeListTabelVCModel(…)
             
         } else {
-            debugPrint("@ AnimeListTableVC: Failed to get user info to fresh")
+            
             self.noticeError("请重新登录", autoClear: true, autoClearTime: 5)
             self.tableView.header.endRefreshing()
         }   // end if let user = request.userData…
@@ -148,7 +145,6 @@ extension AnimeListTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSLog("AnimeListViewController did load")
         self.tableView.reloadData()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnimeListTableViewController.setRefreshMark(_:)), name: "setRefreshMark", object: nil)
@@ -306,12 +302,12 @@ extension AnimeListTableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.animeCellIdentifier, forIndexPath: indexPath) as! AnimeListTableViewCell
         
-        let animeList = animeModel.animeList
-        let animeDetailListCount = animeModel.animeDetailListCount
+        let animeListCount = animeModel.animeList.count
+        let animeDetailListCount = animeModel.animeDetailList.count
         
         // Configure the cell...
-        if animeDetailListCount == animeList.count {
-            let animeItem = animeList[indexPath.row]
+        if animeDetailListCount == animeListCount {
+            let animeItem = animeModel.animeList[indexPath.row]
             
             cell.delegate = self
             cell.animeItem = animeItem
