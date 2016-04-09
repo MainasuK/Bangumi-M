@@ -49,16 +49,6 @@ class CMKCollectionTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
-
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
     
 //    func setCollectionViewDataSourceDelegate(dataSourceDelegate delegate: protocol<UICollectionViewDelegate,UICollectionViewDataSource>, index: NSInteger) {
 //        
@@ -76,4 +66,5 @@ class CMKCollectionTableViewCell: UITableViewCell {
         self.collectionView.tag = indexPath.row
         self.collectionView.reloadData()
     }
+
 }

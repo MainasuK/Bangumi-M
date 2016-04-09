@@ -90,8 +90,11 @@ final class DetailViewController: UITableViewController {
                     self.detailSource.gridStatusTable = GridStatus(epsDict: animeDetail.eps.eps)
                     self.detailSource.animeDetailLarge = animeDetail
                     self.detailSource.subjectStatusDict = subjectStatus
-                    self.tableView.reloadData()
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.tableView.reloadData()
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    })
                 }
             }
         }
@@ -108,8 +111,11 @@ final class DetailViewController: UITableViewController {
                 self.detailSource.gridStatusTable = GridStatus(epsDict: animeDetail.eps.eps)
                 self.detailSource.animeDetailLarge = animeDetail
                 self.detailSource.subjectStatusDict = subjectStatus
-                self.tableView.reloadData()
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableView.reloadData()
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                })
             }
             
         }
@@ -128,7 +134,7 @@ extension DetailViewController: SFSafariViewControllerDelegate {
     }
 }
 
-// MARK: Related subject fetch & display
+// MARK: - Related subject fetch & display
 extension DetailViewController {
     private func fetchRelatedSubject(request: BangumiRequest, subject: AnimeSubject) {
         NSLog("Detect network using")
@@ -189,8 +195,13 @@ extension DetailViewController {
                 
                 // print(section.toHTML)
             }
-            self.detailSource.appendArray(items, name: sub)
-            self.tableView.reloadData()
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.detailSource.appendArray(items, name: sub)
+                let range = NSMakeRange(0, self.tableView.numberOfSections)
+                let sections = NSIndexSet(indexesInRange: range)
+                self.tableView.reloadSections(sections, withRowAnimation: .Automatic)
+            })
         }
     }
     
@@ -237,8 +248,13 @@ extension DetailViewController {
                 // print(node.toHTML)
             }   // for node in section.css(…)
             
-            self.detailSource.appendArray(items, name: sub)
-            self.tableView.reloadData()
+            dispatch_async(dispatch_get_main_queue(), { 
+                let range = NSMakeRange(0, self.tableView.numberOfSections)
+                let sections = NSIndexSet(indexesInRange: range)
+                self.tableView.reloadSections(sections, withRowAnimation: .Automatic)
+                self.detailSource.appendArray(items, name: sub)
+            })
+            
         }   // if let section …
     }
     
@@ -359,28 +375,6 @@ extension DetailViewController {
     
 }
 
-// MARK: - UITableViewDelegate
-extension DetailViewController {
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        if indexPath.section == 2 {
-            return 175.0
-        }
-        
-        if indexPath.section >= 3 {
-            return 45.0
-        }
-        
-        if indexPath.section == 0 && firstCellRightHeight != nil {
-            return firstCellRightHeight!
-        }
-        
-        return UITableViewAutomaticDimension
-    }
-    
-}
-
 // MARK: - UIContentContainer
 extension DetailViewController {
     
@@ -423,12 +417,12 @@ extension DetailViewController {
 extension DetailViewController {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
-        return 7
+
         // No.1 --> First cell
         // No.2 --> Topic cell
         // No.3 --> crt & staff & related
         // No.4/5/6 --> eps(ep/sp/ep/op)
+        return 7
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -437,7 +431,6 @@ extension DetailViewController {
         case 0: return 1                                            // first cell
         case 1: return detailSource.sourceList.count                // topic
         case 2: return detailSource.sourceArr.count                 // crt & staff & ralated
-            
         case 3: return detailSource.gridStatusTable?.normalTable.count ?? 0
         case 4: return detailSource.gridStatusTable?.spTable.count ?? 0
         case 5: return detailSource.gridStatusTable?.opTable.count ?? 0
@@ -449,7 +442,8 @@ extension DetailViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CMKTableViewCell
             if let animeDetail = detailSource.animeDetailLarge {
                 cell.nameLabel.text = (animeDetail.name == "") ? animeDetail.name : animeDetail.nameCN
@@ -463,8 +457,8 @@ extension DetailViewController {
             }
             
             return cell
-            
-        } else if indexPath.section == 1 {
+
+        case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier("topicCell", forIndexPath: indexPath) as! CMKTopicTableViewCell
             
             let topic = detailSource.sourceList[indexPath.row]
@@ -479,19 +473,18 @@ extension DetailViewController {
             cell.animeImageView.layer.masksToBounds = true
             cell.animeImageView.hnk_setImageFromURL(NSURL(string: topic.img)!, placeholder: UIImage(named: "404"))
             
-            
             return cell
             
-        } else if indexPath.section == 2 {
+        case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier(reuseTableViewCellIdentifier) as! CMKCollectionTableViewCell
             cell.HeadlineLabel.text = detailSource.sourceNameList[indexPath.row]
             
             return cell
             
-        } else {
+        case let section where section >= 3 && section <= 6:
             let cell = tableView.dequeueReusableCellWithIdentifier("epCell", forIndexPath: indexPath) as! CMKEPTableViewCell
             cell.indicatorView.backgroundColor = UIColor.myNavigatinBarLooksLikeColor()
-            //            cell.selectionStyle = .Blue
+            // cell.selectionStyle = .Blue
             
             if let ep = detailSource.gridStatusTable?.gridTable[indexPath.section - 3][indexPath.row] {
                 cell.indicatorView.hidden = true
@@ -523,13 +516,34 @@ extension DetailViewController {
             }
             
             return cell
+
+        default:
+            return UITableViewCell()
         }
-    }
+        
+    }   // end switch section { … }
 
 }
 
 // MARK: - UITableViewDelegate
 extension DetailViewController {
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if indexPath.section == 2 {
+            return 175.0
+        }
+        
+        if indexPath.section >= 3 {
+            return 45.0
+        }
+        
+        if indexPath.section == 0 && firstCellRightHeight != nil {
+            return firstCellRightHeight!
+        }
+        
+        return UITableViewAutomaticDimension
+    }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -591,12 +605,8 @@ extension DetailViewController {
 extension DetailViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //        if section == 0 {
-        //            // catch it
-        //        }
         
         let itemArr = self.detailSource.sourceArr[collectionView.tag] as [Item]
-        NSLog("Section \(collectionView.tag): with \(itemArr.count) item(s)")
         return itemArr.count
     }
     

@@ -26,11 +26,7 @@ final class AnimeListTableViewController: UITableViewController, SWRevealViewCon
             NSNotificationCenter.defaultCenter().postNotificationName("setPostMark", object: newValue)
         }
     }
-    var canRefresh: Bool = true {
-        didSet {
-            debugPrint("@ AnimeListTableVC: now canRefresh is \(canRefresh)")
-        }
-    }
+    var canRefresh: Bool = true
     var messageLabel = UILabel()
     
     @IBOutlet weak var progressView: UIProgressView!
@@ -155,13 +151,13 @@ extension AnimeListTableViewController {
         NSLog("AnimeListViewController did load")
         self.tableView.reloadData()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setRefreshMark:", name: "setRefreshMark", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setProgress:", name: "setProgress", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refresh:", name: "reloadModel", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogout:", name: "userLogout", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnimeListTableViewController.setRefreshMark(_:)), name: "setRefreshMark", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnimeListTableViewController.setProgress(_:)), name: "setProgress", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnimeListTableViewController.refresh(_:)), name: "reloadModel", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnimeListTableViewController.userLogout(_:)), name: "userLogout", object: nil)
         
         // Set Refresh hander
-        self.tableView.header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: "refresh:")
+        self.tableView.header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(AnimeListTableViewController.refresh(_:)))
         
         // Set progress view
         let naviBar = self.navigationController?.navigationBar
@@ -311,14 +307,11 @@ extension AnimeListTableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.animeCellIdentifier, forIndexPath: indexPath) as! AnimeListTableViewCell
         
         let animeList = animeModel.animeList
-        let animeDetailList = animeModel.animeDetailList
-        let subjectAllStatusList = animeModel.subjectAllStatusList
-        let animeGridStatusList = animeModel.animeGridStatusList
-        let postingStatusList = animeModel.animePostingStatusList
+        let animeDetailListCount = animeModel.animeDetailListCount
         
         // Configure the cell...
-        if animeDetailList.count == animeList.count {
-            let animeItem   = animeList[indexPath.row]
+        if animeDetailListCount == animeList.count {
+            let animeItem = animeList[indexPath.row]
             
             cell.delegate = self
             cell.animeItem = animeItem
@@ -327,11 +320,11 @@ extension AnimeListTableViewController {
             
             // Configure the appearance of the cell
             cell.animeImageView.layer.cornerRadius = 5
-            //            cell.animeImageView.layer.masksToBounds = true
+            // cell.animeImageView.layer.masksToBounds = true
             
             cell.cardView.frame = CGRectMake(2, 4, cell.frame.width-5, cell.frame.height-4)
             cell.cardView.alpha = 1
-            //            cell.cardView.layer.masksToBounds   = true
+            // cell.cardView.layer.masksToBounds   = true
             cell.cardView.layer.cornerRadius    = 3
             cell.cardView.layer.shadowOffset    = CGSizeMake(-0.2, 0.2)
             cell.cardView.layer.shadowRadius    = 3
@@ -367,6 +360,19 @@ extension AnimeListTableViewController {
         
         self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(1))
         self.navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+}
+
+// MARK: - UIContentContainer
+extension AnimeListTableViewController {
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        coordinator.animateAlongsideTransition({ (context: UIViewControllerTransitionCoordinatorContext) -> Void in
+            
+        },completion: nil)
     }
     
 }

@@ -62,7 +62,10 @@ final class LoginViewController: UIViewController {
         }
     }   // end loginButtonPressed(sender: …)
     
-    // MARK: - View lifecycle
+}
+
+// MARK: - View Life Cycle
+extension LoginViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,14 +76,9 @@ final class LoginViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: animated)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 }
 
 // MARK: - UITextFieldDelegate

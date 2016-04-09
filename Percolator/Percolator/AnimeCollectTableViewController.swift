@@ -108,7 +108,6 @@ class AnimeCollectTableViewController: UITableViewController {
                     self.collectInfo = info
                     self.saveButtonItem.enabled = true
                     self.collectSegment.enabled = true
-                    debugPrint("@ AnimeListTableVC: Get eps info success", terminator: "")
                     
                     switch self.collectInfo!.status.type {
                     case .doing:

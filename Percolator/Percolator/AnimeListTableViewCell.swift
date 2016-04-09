@@ -142,7 +142,7 @@ class AnimeListTableViewCell: UITableViewCell {
     }
     
 
-    // MARK: - View cell lifecycle
+    // MARK: - View Life Cycle
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -159,7 +159,7 @@ class AnimeListTableViewCell: UITableViewCell {
     
     internal func initCell() {
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setPostingMark:", name: "setPostMark", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnimeListTableViewCell.setPostingMark(_:)), name: "setPostMark", object: nil)
         
         let subjectAllStatusList = animeModel.subjectAllStatusList
         let animeGridStatusList = animeModel.animeGridStatusList
@@ -171,10 +171,7 @@ class AnimeListTableViewCell: UITableViewCell {
         lastTouchEp = gridStatus!.lastTouchEP(animeStatus)
         lastTouchEpSort = lastTouchEp?.sort ?? 0
         nextMarkEp = animeModel.animeGridStatusList[animeItem.subject.id]?.nextMarkEP(lastTouchEpSort)
-        
-        debugPrint("$ AnimeTableList_Cell: init -> \(animeItem.name)")
-        debugPrint("$ AnimeTableList_Cell: lastTouchEp -> \(lastTouchEp?.id)")
-        debugPrint("$ AnimeTableList_Cell: nextMarkEp -> \(nextMarkEp?.id)")
+
         nameLabel.text = animeItem.name    // anime name of cell
         doingLabel.text = "\(animeItem.subject.collection.doing) 人在看"    // num of watching
         
@@ -183,7 +180,7 @@ class AnimeListTableViewCell: UITableViewCell {
         animeImageView.hnk_setImageFromURL(NSURL(string: animeItem.subject.images.largeUrl)!, placeholder: UIImage(named: "404"))
         
         if lastTouchEp != nil {
-            watchedToLabel.text = "在看"
+            watchedToLabel.text = "看到"
             if lastTouchEp!.name == "" {     // No ep name, most condition is Movie or OVA
                 watchedLabel.text = "ep.\(lastTouchEpSort) \(animeItem.subject.nameCN)"
             } else {

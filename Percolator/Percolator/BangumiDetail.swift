@@ -61,7 +61,7 @@ public struct BangumiDetailSource {
             switch status {
             case .success:
                 handler(ModelModifyStatus.success)
-                let key = ep.id
+//                let key = ep.id
                 // FIXME: Not Good
                 // Change Model in VC
                 handler(ModelModifyStatus.success)
@@ -78,7 +78,7 @@ extension BangumiDetailSource {
         sourceArr.append(items)
     }
     
-    public mutating func appendSubject(_ subject: AnimeDetailLarge) {
+    public mutating func appendSubject(subject: AnimeDetailLarge) {
         
         if let topicTable = subject.topicTable {
             var topicItems = [Item]()
