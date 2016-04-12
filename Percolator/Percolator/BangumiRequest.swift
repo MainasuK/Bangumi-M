@@ -190,11 +190,8 @@ public class BangumiRequest {
         let cache = Shared.JSONCache
         let URL = NSURL(string: urlPath)!
         
-        debugPrint("---> cache.fetch Start")
         cache.fetch(URL: URL, failure: { (error) -> () in
             if error != nil {
-                print("---> cache.fetch failed")
-                NSLog("Haneke fetch JSON failed, try to fetch via NSURLSession")
                 self.getJsonFrom(urlPath) { (jsonData) -> Void in
                     
                     if jsonData != nil {
@@ -208,30 +205,25 @@ public class BangumiRequest {
                     }
                 }
             } else {
-                print("---> cache.fetch failure block : error is nil, so -->> success")
+                NSLog("---> cache.fetch failure block : error is nil, so -->> success")
             }
         }, success: { JSON in
             if self.isJsonDataAvailable(JSON as? AnyObject) {
                 
                 let jsonData = JSON.dictionary
                 handler(AnimeDetailLarge(json: jsonData))
-                print("---> cache.fetch from cache success")
                 
             } else {
-                print("---> cache.fetch from cache but failed, try to fetch via NSURLSession…")
+                
                 self.getJsonFrom(urlPath) { (jsonData) -> Void in
-                    print("---> cache.fetch via NSURLSession…")
                     if jsonData != nil {
                 
                         if let jsonDict = jsonData as? NSDictionary {
-                            print("---> return and success")
                             handler(AnimeDetailLarge(json: jsonDict))
                         } else {
-                            print("---> return but failed")
                             handler(nil)
                         }
                     } else {
-                        print("---> return nil")
                         handler(nil)
                     }
                 }
@@ -250,16 +242,12 @@ public class BangumiRequest {
             if jsonData != nil {
                 var animeArr = [Anime]()
                 let json = jsonData as! [NSDictionary]
-                print("$ Bangumi_Request: Get anime item")
                 for animeDict in json {
                     let anime = Anime(json: animeDict)
-                    print("\(anime.subject.id): \(anime.name) ep_status: \(anime.epStatus)")
                     animeArr.append(anime)
                 }
-                print("$ Bangumi_Request: Pass anime list to VC")
                 handler(animeArr)
             } else {
-                print("$ Bangumi_Request: Fail to get anime list, pass nil to handler")
                 handler(nil)
             }
         }
@@ -271,7 +259,6 @@ public class BangumiRequest {
         let postBody = String(format: "username=%@&password=%@", email, pass)
         let urlPath = String(format: BangumiApiKey.Auth, BangumiApiKey.Percolator)
         
-        debugPrint("$ Bangumi_Request: Fetch user auth json")
         getJsonFrom(urlPath, post: postBody) { (jsonData) -> Void in
             
             if jsonData != nil {
@@ -287,7 +274,6 @@ public class BangumiRequest {
     // MARK: Async methods
     // MARK: GET
     private func getJsonFrom(urlPath: String, handler: (AnyObject?) -> Void) {
-        debugPrint("$ Bangumi_Request: fetch JSON from urlPath: \(urlPath)")
         
         let request = NSMutableURLRequest(URL: NSURL(string: urlPath)!, cachePolicy: .ReloadRevalidatingCacheData, timeoutInterval: 15)
         request.HTTPMethod = "GET"
@@ -299,7 +285,6 @@ public class BangumiRequest {
     
     // MARK: POST
     private func getJsonFrom(urlPath: String, post postBody: String, handler: (AnyObject?) -> Void) {
-        debugPrint("$ Bangumi_Request: fetch JSON urlPath: \(urlPath)")
         
         let request = NSMutableURLRequest(URL: NSURL(string: urlPath)!, cachePolicy: .ReloadRevalidatingCacheData, timeoutInterval: 15)
         request.HTTPMethod = "POST"
@@ -318,7 +303,6 @@ public class BangumiRequest {
             
             // Parse JSON data
             if error != nil {
-                print("$ Bangumi_Request: fetchJsonData...")
                 print(error!.localizedDescription)
                 handler(nil)
             } else {
@@ -351,7 +335,6 @@ public class BangumiRequest {
         }
         
         if error != nil {
-            print("$ Bangumi_Request: parseJsonData...")
             print(error?.localizedDescription)
             return nil
         }
@@ -369,13 +352,11 @@ public class BangumiRequest {
             if let dict = json as? NSDictionary,
             let code = dict["code"] as? Int,
             let error = dict["error"] as? String {
-                print("$ Bangumi_Request: isJsonDataAvailable...")
-                print("Fetch JSON failed, with error: " + error)
 
                 NSLog("HTTP request error: request: %@, error: %@, code: %d", dict["request"] as? String ?? "", error, code)
                 switch code {
                 case 200:
-                    print("That is available update post, get relax")
+                    // That is available update post, get relax
                     return true
                 case 400:   // FIXME: Nothing found with that ID, need decoupling...
                     SwiftNotice.noticeOnSatusBar("未标记条目", autoClear: true, autoClearTime: 3)
@@ -392,7 +373,6 @@ public class BangumiRequest {
             }
         }
         
-        print("$ Bangumi_Request: Fetch JSON successful")
         return true
     }
 }

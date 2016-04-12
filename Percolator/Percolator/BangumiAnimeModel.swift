@@ -11,16 +11,11 @@ import Haneke
 
 public class BangumiAnimeModel {
     
-    
+    /// [Anime]
     public var animeList = [Anime]()
     
     /// [subjectID: AnimeDetailLarge]
-    public var animeDetailList = [Int: AnimeDetailLarge]() {
-        didSet {
-            animeDetailListCount = animeDetailList.count
-        }
-    }
-    public var animeDetailListCount = 0
+    public var animeDetailList = [Int: AnimeDetailLarge]()
     
     /// [subjectID: SubjectItemSattus]
     public var subjectAllStatusList = [Int: SubjectItemStatus]()

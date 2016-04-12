@@ -12,7 +12,7 @@ import Haneke
 import MJRefresh
 
 final class AnimeListTableViewController: UITableViewController, SWRevealViewControllerDelegate {
-    
+
     let myKeyChainWrapper = KeychainWrapper()
     let request = BangumiRequest.shared
     let animeModel = BangumiAnimeModel.shared
@@ -58,16 +58,13 @@ final class AnimeListTableViewController: UITableViewController, SWRevealViewCon
                 self.isFetchingData = false
                 
                 if isFetchSuccess {
-                    debugPrint("@ AnimeListTableVC: Handler get true and refresh success")
                     dispatch_async(dispatch_get_main_queue()) {
-                        
                         self.tableView.header.endRefreshing()
                         self.tableView.reloadData()
-                        
                     }   // dispatch_async(…)
                     
                 } else {
-                    debugPrint("@ AnimeListTableVC: Handler get flase and refresh failed")
+                    
                     dispatch_async(dispatch_get_main_queue()) {
                         self.clearAllNotice()
                         if self.isFirstFailed {
@@ -82,7 +79,7 @@ final class AnimeListTableViewController: UITableViewController, SWRevealViewCon
             }   // animeModel.fetchAnimeListTabelVCModel(…)
             
         } else {
-            debugPrint("@ AnimeListTableVC: Failed to get user info to fresh")
+            
             self.noticeError("请重新登录", autoClear: true, autoClearTime: 5)
             self.tableView.header.endRefreshing()
         }   // end if let user = request.userData…
@@ -148,8 +145,6 @@ extension AnimeListTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSLog("AnimeListViewController did load")
-        self.tableView.reloadData()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnimeListTableViewController.setRefreshMark(_:)), name: "setRefreshMark", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnimeListTableViewController.setProgress(_:)), name: "setProgress", object: nil)
@@ -197,6 +192,7 @@ extension AnimeListTableViewController {
     
     override func viewDidAppear(animated: Bool) {
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: animated)
+        self.tableView.reloadData()
         
         // Login Logic
         NSLog("AnimeListViewController did appear")
@@ -306,29 +302,23 @@ extension AnimeListTableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.animeCellIdentifier, forIndexPath: indexPath) as! AnimeListTableViewCell
         
-        let animeList = animeModel.animeList
-        let animeDetailListCount = animeModel.animeDetailListCount
+        let animeListCount = animeModel.animeList.count
+        let animeDetailListCount = animeModel.animeDetailList.count
         
         // Configure the cell...
-        if animeDetailListCount == animeList.count {
-            let animeItem = animeList[indexPath.row]
-            
+        if animeDetailListCount == animeListCount {
+            let animeItem = animeModel.animeList[indexPath.row]
+
             cell.delegate = self
             cell.animeItem = animeItem
-            cell.postMark = isFetchingData
+            cell.postMark = self.isFetchingData
+            cell.animeImageView.hnk_setImageFromURL(NSURL(string: animeItem.subject.images.largeUrl)!, placeholder: UIImage(named: "404"))
             cell.initCell()
-            
+
             // Configure the appearance of the cell
             cell.animeImageView.layer.cornerRadius = 5
-            // cell.animeImageView.layer.masksToBounds = true
-            
-            cell.cardView.frame = CGRectMake(2, 4, cell.frame.width-5, cell.frame.height-4)
-            cell.cardView.alpha = 1
-            // cell.cardView.layer.masksToBounds   = true
-            cell.cardView.layer.cornerRadius    = 3
-            cell.cardView.layer.shadowOffset    = CGSizeMake(-0.2, 0.2)
-            cell.cardView.layer.shadowRadius    = 3
-            cell.cardView.layer.shadowOpacity   = 0.2
+            cell.animeImageView.layer.borderColor = UIColor.myGrayColor().CGColor
+            cell.animeImageView.layer.borderWidth = 1.0
         }
         
         cell.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
@@ -340,6 +330,24 @@ extension AnimeListTableViewController {
 
 // MARK: - UITableViewDelegate
 extension AnimeListTableViewController {
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // Configure cell shadow
+        if let cell = cell as? AnimeListTableViewCell {
+            
+            // Make sure the shadow path set to right size
+            cell.cardView.setNeedsLayout()
+            cell.cardView.layoutIfNeeded()
+            
+            cell.cardView.layer.cornerRadius    = 3
+            cell.cardView.layer.shadowColor     = UIColor.blackColor().CGColor
+            cell.cardView.layer.shadowOffset    = CGSizeMake(-0.2, 0.2)
+            cell.cardView.layer.shadowPath      = UIBezierPath(rect: cell.cardView.bounds).CGPath
+            cell.cardView.layer.shadowRadius    = 3
+            cell.cardView.layer.shadowOpacity   = 0.2
+        }
+    }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if isFetchingData || !canRefresh {
@@ -371,7 +379,8 @@ extension AnimeListTableViewController {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         
         coordinator.animateAlongsideTransition({ (context: UIViewControllerTransitionCoordinatorContext) -> Void in
-            
+            // For re-calculate cell shadow path
+            self.tableView.reloadData()
         },completion: nil)
     }
     
