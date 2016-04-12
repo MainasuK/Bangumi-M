@@ -171,10 +171,6 @@ class AnimeListTableViewCell: UITableViewCell {
         nameLabel.text = animeItem.name    // anime name of cell
         doingLabel.text = "\(animeItem.subject.collection.doing) 人在看"    // num of watching
         
-        animeImageView.layer.borderColor = UIColor.myGrayColor().CGColor
-        animeImageView.layer.borderWidth = 1.0
-        animeImageView.hnk_setImageFromURL(NSURL(string: animeItem.subject.images.largeUrl)!, placeholder: UIImage(named: "404"))
-        
         if lastTouchEp != nil {
             watchedToLabel.text = "看到"
             if lastTouchEp!.name == "" {     // No ep name, most condition is Movie or OVA
