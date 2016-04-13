@@ -26,10 +26,10 @@ public struct AnimeEps {
         for ep in self.eps {
             if let type = ep[BangumiKey.type] as? Int {
                 switch type {
-                case EpisodeType.normal.rawValue: normalCount++
-                case EpisodeType.sp.rawValue: spCount++
-                case EpisodeType.op.rawValue: opCount++
-                case EpisodeType.ed.rawValue: edCount++
+                case EpisodeType.normal.rawValue: normalCount += 1
+                case EpisodeType.sp.rawValue: spCount += 1
+                case EpisodeType.op.rawValue: opCount += 1
+                case EpisodeType.ed.rawValue: edCount += 1
                 default: print("^ AnimeEpsUndefined ep type \(type)")
                 }
             }

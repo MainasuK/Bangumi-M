@@ -11,7 +11,7 @@ import Haneke
 
 public class BangumiAnimeModel {
     
-    
+    /// [Anime]
     public var animeList = [Anime]()
     
     /// [subjectID: AnimeDetailLarge]
@@ -64,7 +64,7 @@ public class BangumiAnimeModel {
         request.getUserWatching(user.id) { (animeArr) -> Void in
             if (animeArr != nil) {
                 self.animeList = animeArr!
-                self.completedTasksCount++
+                self.completedTasksCount += 1
                 debugPrint(self.className + "animeList get")
                 self.fetchAnimeDetailList(request, handler)
             } else {
@@ -76,7 +76,7 @@ public class BangumiAnimeModel {
         // Task 2: fetch user watching status
         request.getSubjectStatus(user.id, authEncode: user.authEncode) { (statusDict) -> Void in
             self.subjectAllStatusList = statusDict
-            self.completedTasksCount++
+            self.completedTasksCount += 1
             debugPrint(self.className + "subjectAllStatusList get")
             self.fetchAnimeDetailList(request, handler)
         }
@@ -113,7 +113,8 @@ public class BangumiAnimeModel {
                         tempAnimeDetailList[anime.subject.id] = detailData
                         tempAnimeGridStatusList[anime.subject.id] = GridStatus(epsDict: detailData.eps.eps)
                         tempAnimePostingStatusList[anime.subject.id] = false
-                        NSNotificationCenter.defaultCenter().postNotificationName("setProgress", object: ++index/count)
+                        index += 1
+                        NSNotificationCenter.defaultCenter().postNotificationName("setProgress", object: index/count)
                     } else {
                         // Failed
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false

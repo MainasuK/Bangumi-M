@@ -142,7 +142,7 @@ class AnimeListTableViewCell: UITableViewCell {
     }
     
 
-    // MARK: - View cell lifecycle
+    // MARK: - View Life Cycle
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -159,31 +159,20 @@ class AnimeListTableViewCell: UITableViewCell {
     
     internal func initCell() {
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setPostingMark:", name: "setPostMark", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnimeListTableViewCell.setPostingMark(_:)), name: "setPostMark", object: nil)
         
-        let subjectAllStatusList = animeModel.subjectAllStatusList
-        let animeGridStatusList = animeModel.animeGridStatusList
-        let postingStatusList = animeModel.animePostingStatusList
-        
-        let gridStatus = animeGridStatusList[animeItem.subject.id]
-        let animeStatus = subjectAllStatusList[animeItem.subject.id] ?? SubjectItemStatus()
+        let gridStatus = animeModel.animeGridStatusList[animeItem.subject.id]
+        let animeStatus = animeModel.subjectAllStatusList[animeItem.subject.id] ?? SubjectItemStatus()
     
         lastTouchEp = gridStatus!.lastTouchEP(animeStatus)
         lastTouchEpSort = lastTouchEp?.sort ?? 0
         nextMarkEp = animeModel.animeGridStatusList[animeItem.subject.id]?.nextMarkEP(lastTouchEpSort)
-        
-        debugPrint("$ AnimeTableList_Cell: init -> \(animeItem.name)")
-        debugPrint("$ AnimeTableList_Cell: lastTouchEp -> \(lastTouchEp?.id)")
-        debugPrint("$ AnimeTableList_Cell: nextMarkEp -> \(nextMarkEp?.id)")
+
         nameLabel.text = animeItem.name    // anime name of cell
         doingLabel.text = "\(animeItem.subject.collection.doing) 人在看"    // num of watching
         
-        animeImageView.layer.borderColor = UIColor.myGrayColor().CGColor
-        animeImageView.layer.borderWidth = 1.0
-        animeImageView.hnk_setImageFromURL(NSURL(string: animeItem.subject.images.largeUrl)!, placeholder: UIImage(named: "404"))
-        
         if lastTouchEp != nil {
-            watchedToLabel.text = "在看"
+            watchedToLabel.text = "看到"
             if lastTouchEp!.name == "" {     // No ep name, most condition is Movie or OVA
                 watchedLabel.text = "ep.\(lastTouchEpSort) \(animeItem.subject.nameCN)"
             } else {
@@ -196,7 +185,7 @@ class AnimeListTableViewCell: UITableViewCell {
         
         initWatchButtonTitle()
         
-        isPosting = postingStatusList[animeItem.subject.id]!.boolValue
+        isPosting = animeModel.animePostingStatusList[animeItem.subject.id]!.boolValue
     }
     
     private func reloadData(status: ModelModifyStatus) {

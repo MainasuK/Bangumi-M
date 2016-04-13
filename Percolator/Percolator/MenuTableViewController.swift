@@ -9,11 +9,13 @@
 import UIKit
 import SafariServices
 
-class MenuTableViewController: UITableViewController, MenuTransitionDelegate, SFSafariViewControllerDelegate {
+final class MenuTableViewController: UITableViewController {
     
     @IBAction func superTopicButtonPressed(sender: AnyObject) {
         
         let url = "http://bangumi.tv/m"
+        
+        // Update UI in main thread to eliminate lag
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.revealViewController().revealToggle(nil)
             
@@ -28,13 +30,10 @@ class MenuTableViewController: UITableViewController, MenuTransitionDelegate, SF
             }
         })
     }
-    
     @IBAction func aboutmeButtonPressed(sender: AnyObject) {
-        
     }
-    
     @IBAction func logoutButtonPressed(sender: AnyObject) {
-        debugPrint("User logout")
+        
         User.deleteUserInfo()
         BangumiAnimeModel.shared.dropModel()
         BangumiFavoriteModel.shared.dropModel()
@@ -42,52 +41,52 @@ class MenuTableViewController: UITableViewController, MenuTransitionDelegate, SF
         
         let loginVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.loginVC) as! LoginViewController
         loginVC.delegate = self
+        
         NSNotificationCenter.defaultCenter().postNotificationName("userLogout", object: nil)
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.presentViewController(loginVC, animated: true, completion: nil)
-        })
+        presentViewController(loginVC, animated: true, completion: nil)
     }
     
-    // MARK: - MenuTransitionDelegate
+    deinit {
+        NSLog("MenuTableViewController deinit")
+    }
+}
+
+// MARK: - View Life Cycle
+extension MenuTableViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: animated)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
+}
+
+// MARK: - MenuTransitionDelegate
+extension MenuTableViewController: MenuTransitionDelegate {
+    
     func dismissLoginVC() {
-        let tabVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.animeTableViewVC) as! UINavigationController
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.revealViewController().revealToggle(nil)
         })
     }
     
-    // MARK: - View lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        NSLog("MenuTableViewController did load")
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(true)
-        NSLog("MenueTableViewController will disappear")
-    }
-    
-    deinit {
-        NSLog("MenuTableViewController is being deallocated")
-    }
+}
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - SFSafariViewControllerDelegate
+// MARK: - SFSafariViewControllerDelegate
+extension MenuTableViewController: SFSafariViewControllerDelegate {
     
     @available(iOS 9.0, *)
     func safariViewControllerDidFinish(controller: SFSafariViewController) {
         controller.dismissViewControllerAnimated(true, completion: nil)
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-
     }
+    
 }

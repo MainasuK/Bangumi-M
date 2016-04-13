@@ -40,8 +40,6 @@
 		DB6820041B7D0177001ED454 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6820031B7D0177001ED454 /* FavoritesTableViewCell.swift */; };
 		DB7E938E1B82C4CA003C419B /* MenuTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E938D1B82C4CA003C419B /* MenuTransitionDelegate.swift */; };
 		DB82E7781B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB82E7771B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift */; };
-		DB83E2741B0F8362007BE039 /* GridCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB83E2731B0F8362007BE039 /* GridCollectionViewController.swift */; };
-		DB83E2761B0F83C3007BE039 /* GridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB83E2751B0F83C3007BE039 /* GridCollectionViewCell.swift */; };
 		DB83E2781B0F854D007BE039 /* PercolatorKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB83E2771B0F854D007BE039 /* PercolatorKey.swift */; };
 		DB8DCB661B873EEC00C5F8D1 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8DCB651B873EEC00C5F8D1 /* Topic.swift */; };
 		DB8DCBC81B876E7800C5F8D1 /* Percolator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB8DCBC61B876E7800C5F8D1 /* Percolator.xcdatamodeld */; };
@@ -136,8 +134,6 @@
 		DB6820031B7D0177001ED454 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 		DB7E938D1B82C4CA003C419B /* MenuTransitionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTransitionDelegate.swift; sourceTree = "<group>"; };
 		DB82E7771B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetailSummayTableViewCell.swift; sourceTree = "<group>"; };
-		DB83E2731B0F8362007BE039 /* GridCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewController.swift; sourceTree = "<group>"; };
-		DB83E2751B0F83C3007BE039 /* GridCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewCell.swift; sourceTree = "<group>"; };
 		DB83E2771B0F854D007BE039 /* PercolatorKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PercolatorKey.swift; sourceTree = "<group>"; };
 		DB8DCB651B873EEC00C5F8D1 /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		DB8DCBC71B876E7800C5F8D1 /* Percolator.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Percolator.xcdatamodel; sourceTree = "<group>"; };
@@ -415,7 +411,6 @@
 				DBBA47E71B0617020004BBA2 /* AnimeListTableViewController.swift */,
 				DBD2D57D1B84CE7000EED59A /* DetailViewController.swift */,
 				DBFBCB821B633376001F3CD1 /* AnimeCollectTableViewController.swift */,
-				DB83E2731B0F8362007BE039 /* GridCollectionViewController.swift */,
 				DBD2D5771B841DC700EED59A /* SearchBoxTableViewController.swift */,
 			);
 			name = Controller;
@@ -428,7 +423,6 @@
 				DB59EC641B873DF8000AFA7A /* CMKTopicTableViewCell.swift */,
 				DB5B04431B85F7660074C80E /* CMKTableViewCell.swift */,
 				DB5B04271B85DA7C0074C80E /* CMKCollectionViewCell.swift */,
-				DB83E2751B0F83C3007BE039 /* GridCollectionViewCell.swift */,
 				DBBA47F21B064CF00004BBA2 /* AnimeListTableViewCell.swift */,
 				DB43BD961B0E33ED003477C7 /* AnimeDetailTableViewCell.swift */,
 				DB82E7771B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift */,
@@ -674,7 +668,6 @@
 				DBBA47E81B0617020004BBA2 /* AnimeListTableViewController.swift in Sources */,
 				DB59EC651B873DF8000AFA7A /* CMKTopicTableViewCell.swift in Sources */,
 				DBC3AC8C1B070539001AA9A7 /* BangumiAnimeDetail.swift in Sources */,
-				DB83E2741B0F8362007BE039 /* GridCollectionViewController.swift in Sources */,
 				DBD2D5781B841DC700EED59A /* SearchBoxTableViewController.swift in Sources */,
 				DB64E6CC1B7BA706001B819D /* SearchTableViewCell.swift in Sources */,
 				DB5B04341B85E6310074C80E /* AnimeEps.swift in Sources */,
@@ -707,7 +700,6 @@
 				DB18C8B01B0A2ABD00A0BA11 /* KeychainWrapper.m in Sources */,
 				DBB3FCD11B86F21000FFF8DE /* Staff.swift in Sources */,
 				DB51B94F1B7DC90F007B06BC /* BangumiTableViewDelegate.swift in Sources */,
-				DB83E2761B0F83C3007BE039 /* GridCollectionViewCell.swift in Sources */,
 				DB5B04301B85E5E70074C80E /* AnimeImages.swift in Sources */,
 				DBBA47EB1B0619DE0004BBA2 /* BangumiRequest.swift in Sources */,
 				DB3C7F141C44B52E0092FD82 /* UIDevice.swift in Sources */,
@@ -771,6 +763,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.Bangumi-MUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_TARGET_NAME = "Bangumi M";
 				USES_XCTRUNNER = YES;
 			};
@@ -784,6 +777,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.Bangumi-MUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_TARGET_NAME = "Bangumi M";
 				USES_XCTRUNNER = YES;
 			};
@@ -889,6 +883,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Percolator/Percolator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -911,6 +906,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Percolator/Percolator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -921,10 +917,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -941,10 +934,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PercolatorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";

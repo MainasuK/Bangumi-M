@@ -8,8 +8,7 @@
 
 import Foundation
 
-// MARK: -
-// MARK: UserDefaultsKey
+// MARK: - UserDefaultsKey
 
 public struct UserDefaultsKey {
     static let request              = "request"
@@ -21,7 +20,7 @@ public struct UserDefaultsKey {
     static let userAuthEncode       = "userAuthEncode"
 }
 
-// MARK: StoryboardKey
+// MARK: - StoryboardKey
 
 public struct StoryboardKey {
     
@@ -38,10 +37,11 @@ public struct StoryboardKey {
     static let loginVC                          = "LoginVC"
     static let animeTableViewVC                 = "AnimeListTableVC"
     static let DetialVC                         = "DetailViewController"
+    static let DetailNavigationVC               = "DetailViewControllerNaviVC"
     static let searchTabelVC                    = "SearchTableVC"
     static let searchTabelNaviVC                = "SearchTableNaviVC"
-//    static let GridCollectionVC                 = "GridCollectionVC"
     static let AnimeCollectVC                   = "AnimeCollectVC"
+    static let AnimeCollectNavigationVC          = "AnimeCollectNaviVC"
 }
 
 public struct PercolatorKey {

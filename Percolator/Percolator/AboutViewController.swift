@@ -29,29 +29,28 @@ final class AboutViewController: UIViewController {
             self.showSendMailErrorAlert()
         }
     }
+    @IBAction func menuButtonPressed(sender: AnyObject) {
+        self.revealViewController().revealToggle(nil)
+    }
+    
+}
 
-    //  MARK: View life cycle
+//  MARK: - View Life Cycle
+extension AboutViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         if !MFMailComposeViewController.canSendMail() {
             sendFeedbackButton.enabled = false
             sendFeedbackButton.tintColor = UIColor.clearColor()
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
 }
 
 // MARK: - SWRevealViewControllerDelegate
 extension AboutViewController: SWRevealViewControllerDelegate {
-    
-    @IBAction func menuButtonPressed(sender: AnyObject) {
-        self.revealViewController().revealToggle(nil)
-    }
     
 }
 
