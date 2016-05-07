@@ -76,8 +76,10 @@ final class DetailViewController: UITableViewController {
         
         // TODO: add spinner? It's speed is enough, I think.
         
+        // FIXME: how to make async concurrent possible? GDC or NSOperation?
+        
         // Task 1
-        debugPrint("@ DetailViewController: initnVC, step 1…")
+        print("@ DetailViewController: initnVC, step 1…")
         request.getSubjectDetailLarge(subject.id) { (animeDetailLarge) -> Void in
 
             if let _animeDetail = animeDetailLarge {
@@ -319,8 +321,6 @@ extension DetailViewController {
         shadowView.layer.insertSublayer(gradientLayer, atIndex: 0)
         headerView.addSubview(shadowView)
         
-        fetchRelatedSubject(BangumiRequest.shared, subject: animeSubject)
-        
         // Configure the tabel view
         AnimeSubjectImageView.hnk_setImageFromURL(NSURL(string: animeSubject.images.largeUrl)!, placeholder: UIImage(named: "404_landscape"))
         
@@ -360,6 +360,8 @@ extension DetailViewController {
         }
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        
+        fetchRelatedSubject(BangumiRequest.shared, subject: animeSubject)
     }
     
     override func viewWillDisappear(animated: Bool) {
