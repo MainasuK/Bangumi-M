@@ -94,7 +94,9 @@ final class DetailViewController: UITableViewController {
                     self.detailSource.subjectStatusDict = subjectStatus
                     
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.tableView.reloadData()
+                        let range = NSMakeRange(0, self.tableView.numberOfSections)
+                        let sections = NSIndexSet(indexesInRange: range)
+                        self.tableView.reloadSections(sections, withRowAnimation: .Automatic)
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     })
                 }
@@ -115,7 +117,9 @@ final class DetailViewController: UITableViewController {
                 self.detailSource.subjectStatusDict = subjectStatus
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.tableView.reloadData()
+                    let range = NSMakeRange(0, self.tableView.numberOfSections)
+                    let sections = NSIndexSet(indexesInRange: range)
+                    self.tableView.reloadSections(sections, withRowAnimation: .Automatic)
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 })
             }
@@ -199,7 +203,9 @@ extension DetailViewController {
             }
             
             dispatch_async(dispatch_get_main_queue(), {
-                self.detailSource.appendArray(items, name: sub)
+                if !items.isEmpty {
+                    self.detailSource.appendArray(items, name: sub)
+                }
                 let range = NSMakeRange(0, self.tableView.numberOfSections)
                 let sections = NSIndexSet(indexesInRange: range)
                 self.tableView.reloadSections(sections, withRowAnimation: .Automatic)
@@ -254,7 +260,9 @@ extension DetailViewController {
                 let range = NSMakeRange(0, self.tableView.numberOfSections)
                 let sections = NSIndexSet(indexesInRange: range)
                 self.tableView.reloadSections(sections, withRowAnimation: .Automatic)
-                self.detailSource.appendArray(items, name: sub)
+                if !items.isEmpty {
+                    self.detailSource.appendArray(items, name: sub)
+                }
             })
             
         }   // if let section …
