@@ -364,12 +364,12 @@ extension DetailViewController {
                 tableView.reloadSections(indexSetTwo, withRowAnimation: UITableViewRowAnimation.None)
             }
             
+            fetchRelatedSubject(BangumiRequest.shared, subject: animeSubject)
+            
             self.isFirstLoaded = false
         }
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-        
-        fetchRelatedSubject(BangumiRequest.shared, subject: animeSubject)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -482,6 +482,11 @@ extension DetailViewController {
             cell.animeImageView.layer.cornerRadius = cell.animeImageView.frame.width / 2
             cell.animeImageView.layer.masksToBounds = true
             cell.animeImageView.hnk_setImageFromURL(NSURL(string: topic.img)!, placeholder: UIImage(named: "404"))
+            if indexPath.row != detailSource.sourceList.endIndex - 1  {
+                cell.separatorInset.left = cell.animeImageView.frame.width + 15 + 8     // width + default inset + text inset
+            } else {
+                cell.separatorInset = UITableViewCell().separatorInset
+            }
             
             return cell
             
