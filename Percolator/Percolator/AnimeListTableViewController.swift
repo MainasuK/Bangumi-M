@@ -342,7 +342,7 @@ extension AnimeListTableViewController {
             
             cell.cardView.layer.cornerRadius    = 3
             cell.cardView.layer.shadowColor     = UIColor.blackColor().CGColor
-            cell.cardView.layer.shadowOffset    = CGSizeMake(-0.2, 0.2)
+            cell.cardView.layer.shadowOffset    = CGSizeMake(0, 0)
             cell.cardView.layer.shadowPath      = UIBezierPath(rect: cell.cardView.bounds).CGPath
             cell.cardView.layer.shadowRadius    = 3
             cell.cardView.layer.shadowOpacity   = 0.2
