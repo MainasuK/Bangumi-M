@@ -8,7 +8,27 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Acknowledgements</string>
+			<string>About</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Version</string>
+			<key>Key</key>
+			<string>Percolator.appVersion</string>
+			<key>DefaultValue</key>
+			<string>1.0.0</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Build</string>
+			<key>Key</key>
+			<string>Percolator.appBundle</string>
+			<key>DefaultValue</key>
+			<string>1000</string>
 		</dict>
 		<dict>
 			<key>Type</key>
