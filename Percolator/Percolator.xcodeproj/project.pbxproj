@@ -46,7 +46,6 @@
 		DB9965C21B88970F001314A0 /* CMKEPTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9965C11B88970F001314A0 /* CMKEPTableViewCell.swift */; };
 		DB9965C41B89A11E001314A0 /* UINavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9965C31B89A11E001314A0 /* UINavigationBar.swift */; };
 		DBA29F4E1B8ADCB800ADED27 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DBA29F4D1B8ADCB800ADED27 /* Settings.bundle */; };
-		DBA29F531B8B24FC00ADED27 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA29F521B8B24FC00ADED27 /* UIImage.swift */; };
 		DBABA4041B10118600C8DDB0 /* BangumiGridStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABA4031B10118600C8DDB0 /* BangumiGridStatus.swift */; };
 		DBB2A8E51B08317B00B48C52 /* BangumiJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB2A8E41B08317B00B48C52 /* BangumiJSON.swift */; };
 		DBB3FCD11B86F21000FFF8DE /* Staff.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB3FCD01B86F21000FFF8DE /* Staff.swift */; };
@@ -140,7 +139,6 @@
 		DB9965C11B88970F001314A0 /* CMKEPTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMKEPTableViewCell.swift; sourceTree = "<group>"; };
 		DB9965C31B89A11E001314A0 /* UINavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationBar.swift; sourceTree = "<group>"; };
 		DBA29F4D1B8ADCB800ADED27 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		DBA29F521B8B24FC00ADED27 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		DBABA4031B10118600C8DDB0 /* BangumiGridStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiGridStatus.swift; sourceTree = "<group>"; };
 		DBB2A8E41B08317B00B48C52 /* BangumiJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiJSON.swift; sourceTree = "<group>"; };
 		DBB3FCD01B86F21000FFF8DE /* Staff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Staff.swift; sourceTree = "<group>"; };
@@ -345,7 +343,6 @@
 				DB4C76601B7E3A8A00B5E921 /* UIApplication.swift */,
 				DB3C7F131C44B52E0092FD82 /* UIDevice.swift */,
 				DBBA47C71B060DEA0004BBA2 /* AppDelegate.swift */,
-				DBA29F521B8B24FC00ADED27 /* UIImage.swift */,
 				DBFBCB801B63157E001F3CD1 /* Color.swift */,
 				DBBA47D01B060DEA0004BBA2 /* LaunchScreen.xib */,
 				DBBA47CE1B060DEA0004BBA2 /* Images.xcassets */,
@@ -660,7 +657,6 @@
 				DB5B04401B85E7BE0074C80E /* SubjectItemStatus.swift in Sources */,
 				DBB2A8E51B08317B00B48C52 /* BangumiJSON.swift in Sources */,
 				DBD2D5751B841D2400EED59A /* MGSwipeButton.m in Sources */,
-				DBA29F531B8B24FC00ADED27 /* UIImage.swift in Sources */,
 				DBFBCB831B633376001F3CD1 /* AnimeCollectTableViewController.swift in Sources */,
 				DBBA47F31B064CF00004BBA2 /* AnimeListTableViewCell.swift in Sources */,
 				DBD2D5761B841D2400EED59A /* MGSwipeTableCell.m in Sources */,
