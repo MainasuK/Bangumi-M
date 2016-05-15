@@ -28,9 +28,10 @@ final class DetailViewController: UITableViewController {
     var isFirstLoaded = true
     var isPushing = false
     var isSending = false
+    var isReloadingTableView = false
     
     
-    var firstCellRightHeight: CGFloat?
+//    var firstCellRightHeight: CGFloat?
     var headerView: UIView!
     var headerMaskLayer: CAShapeLayer!
     
@@ -64,6 +65,42 @@ final class DetailViewController: UITableViewController {
         headerView.frame = headerRect
     }
     
+    func updateShadowView() {
+        
+        if let sublayers = shadowView.layer.sublayers {
+            for layer in sublayers {
+                layer.removeFromSuperlayer()
+            }
+        }
+        shadowView.removeFromSuperview()
+        
+        let height = UIApplication.sharedApplication().statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 44)
+        shadowView.frame = headerView.bounds
+        shadowView.frame.size.height = height
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = shadowView.bounds
+        gradientLayer.colors = [UIColor.blackColor().CGColor, UIColor.clearColor()]
+        shadowView.layer.insertSublayer(gradientLayer, atIndex: 0)
+        headerView.addSubview(shadowView)
+    }
+    
+    func reloadDataSourceSection() {
+        isReloadingTableView = true
+        
+        tableView.reloadData()
+        
+        defer {
+            isReloadingTableView = false
+        }
+        
+        
+//        let range = NSMakeRange(1, 2)
+//        let sections = NSIndexSet(indexesInRange: range)
+//        tableView.reloadSections(sections, withRowAnimation: .Automatic)
+        
+    }
+    
     
     // Model build method
     // FIXME: If view controller push from a detail view controller,
@@ -94,9 +131,7 @@ final class DetailViewController: UITableViewController {
                     self.detailSource.subjectStatusDict = subjectStatus
                     
                     dispatch_async(dispatch_get_main_queue(), {
-                        let range = NSMakeRange(0, self.tableView.numberOfSections)
-                        let sections = NSIndexSet(indexesInRange: range)
-                        self.tableView.reloadSections(sections, withRowAnimation: .Automatic)
+                        self.reloadDataSourceSection()
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     })
                 }
@@ -117,9 +152,7 @@ final class DetailViewController: UITableViewController {
                 self.detailSource.subjectStatusDict = subjectStatus
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                    let range = NSMakeRange(0, self.tableView.numberOfSections)
-                    let sections = NSIndexSet(indexesInRange: range)
-                    self.tableView.reloadSections(sections, withRowAnimation: .Automatic)
+                    self.reloadDataSourceSection()
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 })
             }
@@ -206,9 +239,7 @@ extension DetailViewController {
                 if !items.isEmpty {
                     self.detailSource.appendArray(items, name: sub)
                 }
-                let range = NSMakeRange(0, self.tableView.numberOfSections)
-                let sections = NSIndexSet(indexesInRange: range)
-                self.tableView.reloadSections(sections, withRowAnimation: .Automatic)
+                self.reloadDataSourceSection()
             })
         }
     }
@@ -257,9 +288,7 @@ extension DetailViewController {
             }   // for node in section.css(…)
             
             dispatch_async(dispatch_get_main_queue(), { 
-                let range = NSMakeRange(0, self.tableView.numberOfSections)
-                let sections = NSIndexSet(indexesInRange: range)
-                self.tableView.reloadSections(sections, withRowAnimation: .Automatic)
+                self.reloadDataSourceSection()
                 if !items.isEmpty {
                     self.detailSource.appendArray(items, name: sub)
                 }
@@ -310,6 +339,7 @@ extension DetailViewController {
         
         // Fix the separator display when 0 rows in table
         tableView.tableFooterView = UIView()
+        
         tableView.estimatedRowHeight = 72.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
@@ -319,15 +349,8 @@ extension DetailViewController {
         self.tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 0, right: 0)
         self.tableView.contentOffset = CGPoint(x: 0.0, y: -kTableHeaderHeight)
         
-        let height = UIApplication.sharedApplication().statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 44)
         updateHeaderView()
-        shadowView.frame = headerView.bounds
-        shadowView.frame.size.height = height
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = shadowView.bounds
-        gradientLayer.colors = [UIColor.blackColor().CGColor, UIColor.clearColor()]
-        shadowView.layer.insertSublayer(gradientLayer, atIndex: 0)
-        headerView.addSubview(shadowView)
+        updateShadowView()
         
         // Configure the tabel view
         AnimeSubjectImageView.hnk_setImageFromURL(NSURL(string: animeSubject.images.largeUrl)!, placeholder: UIImage(named: "404_landscape"))
@@ -353,16 +376,16 @@ extension DetailViewController {
         super.viewDidAppear(animated)
         
         if isFirstLoaded {
-            let indexSet = NSIndexSet(index: 0)
-            tableView.reloadSections(indexSet, withRowAnimation: UITableViewRowAnimation.Automatic)
-            if let frame = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))?.frame {
-                firstCellRightHeight = frame.height
-            }
+//            let indexSet = NSIndexSet(index: 0)
+//            tableView.reloadSections(indexSet, withRowAnimation: UITableViewRowAnimation.Automatic)
+//            if let frame = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))?.frame {
+//                firstCellRightHeight = frame.height
+//            }
             
-            if !detailSource.sourceList.isEmpty {
-                let indexSetTwo = NSIndexSet(index: 1)
-                tableView.reloadSections(indexSetTwo, withRowAnimation: UITableViewRowAnimation.None)
-            }
+//            if !detailSource.sourceList.isEmpty {
+//                let indexSetTwo = NSIndexSet(index: 1)
+//                tableView.reloadSections(indexSetTwo, withRowAnimation: UITableViewRowAnimation.None)
+//            }
             
             fetchRelatedSubject(BangumiRequest.shared, subject: animeSubject)
             
@@ -393,7 +416,7 @@ extension DetailViewController {
         
         coordinator.animateAlongsideTransition({ (context: UIViewControllerTransitionCoordinatorContext) -> Void in
             self.updateHeaderView()
-            self.shadowView.layer.frame = self.shadowView.bounds
+            self.updateShadowView()
             },completion: nil)
     }
     
@@ -404,9 +427,13 @@ extension DetailViewController {
 extension DetailViewController {
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        self.updateHeaderView()
         
         if scrollView.isKindOfClass(UITableView) {
+            guard !isReloadingTableView else {
+                return
+            }
+            
+            self.updateHeaderView()
             
             let color = UIColor.myNavigationBarColor()
             let offSetY = scrollView.contentOffset.y
@@ -455,6 +482,9 @@ extension DetailViewController {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CMKTableViewCell
+            
+            cell.separatorInset = UITableViewCell().separatorInset
+            
             if let animeDetail = detailSource.animeDetailLarge {
                 cell.nameLabel.text = (animeDetail.name == "") ? animeDetail.name : animeDetail.nameCN
                 cell.summaryLabel.text = (animeDetail.summary == "") ? "无简介" : animeDetail.summary     /// Use if let because it value not return with userCollection JSON but animeDetail JSON. Even more, it return when search API, it's same with userCollection list! Ohoooo.
@@ -494,11 +524,15 @@ extension DetailViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier(reuseTableViewCellIdentifier) as! CMKCollectionTableViewCell
             cell.HeadlineLabel.text = detailSource.sourceNameList[indexPath.row]
             
+            cell.separatorInset = UITableViewCell().separatorInset
+            
             return cell
             
         case let section where section >= 3 && section <= 6:
             let cell = tableView.dequeueReusableCellWithIdentifier("epCell", forIndexPath: indexPath) as! CMKEPTableViewCell
+            
             cell.indicatorView.backgroundColor = UIColor.myNavigatinBarLooksLikeColor()
+            cell.separatorInset = UITableViewCell().separatorInset
             // cell.selectionStyle = .Blue
             
             if let ep = detailSource.gridStatusTable?.gridTable[indexPath.section - 3][indexPath.row] {
@@ -553,9 +587,9 @@ extension DetailViewController {
             return 45.0
         }
         
-        if indexPath.section == 0 && firstCellRightHeight != nil {
-            return firstCellRightHeight!
-        }
+//        if indexPath.section == 0 && firstCellRightHeight != nil {
+//            return firstCellRightHeight!
+//        }
         
         return UITableViewAutomaticDimension
     }
@@ -709,7 +743,8 @@ extension DetailViewController: MGSwipeTableCellDelegate {
             
             let padding = 15
             
-            let watchedButton = MGSwipeButton(title: "看过", backgroundColor: UIColor.myWatchedColor(), padding: padding, callback: { (cell) -> Bool in
+            // The button display color is subtle different with origin setting color. Use looks like color substitute for it.
+            let watchedButton = MGSwipeButton(title: "看过", backgroundColor: UIColor.myNavigatinBarLooksLikeColor(), padding: padding, callback: { (cell) -> Bool in
                 //
                 if let _cell = cell as? CMKEPTableViewCell {
                     self.pleaseWait()
@@ -721,12 +756,12 @@ extension DetailViewController: MGSwipeTableCellDelegate {
                             self.noticeTop("\(_cell.epTitleLabel.text!) 看过", autoClear: true, autoClearTime: 3)
                             _cell.indicatorView.hidden = false
                             _cell.indicatorView.backgroundColor = UIColor.myWatchedColor()
-                            //                            let indexPath = self.tableView.indexPathForCell(cell)!
-                            //                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
+//                            let indexPath = self.tableView.indexPathForCell(cell)!
+//                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
                         } else {
                             self.noticeInfo("标记失败 请重试", autoClear: true, autoClearTime: 5)
-                            //                            let indexPath = self.tableView.indexPathForCell(cell)!
-                            //                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
+//                            let indexPath = self.tableView.indexPathForCell(cell)!
+//                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
                         }
                     })
                 }
@@ -746,12 +781,12 @@ extension DetailViewController: MGSwipeTableCellDelegate {
                             self.noticeTop("撤销成功", autoClear: true, autoClearTime: 3)
                             _cell.indicatorView.hidden = true
                             _cell.indicatorView.backgroundColor = UIColor.myWatchedColor()
-                            //                            let indexPath = self.tableView.indexPathForCell(cell)!
-                            //                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
+//                            let indexPath = self.tableView.indexPathForCell(cell)!
+//                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
                         } else {
                             self.noticeInfo("撤销失败", autoClear: true, autoClearTime: 5)
-                            //                            let indexPath = self.tableView.indexPathForCell(cell)!
-                            //                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
+//                            let indexPath = self.tableView.indexPathForCell(cell)!
+//                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
                         }
                     })
                 }
@@ -817,11 +852,12 @@ extension DetailViewController: MGSwipeTableCellDelegate {
     }
     
     func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
-        if let _cell = cell as? CMKEPTableViewCell {
-            return (direction == MGSwipeDirection.LeftToRight) ? true : false
+        guard (cell != nil) else {
+            return false
         }
         
-        return false
+        return (direction == MGSwipeDirection.LeftToRight) ? true : false
+        
     }
 
 }

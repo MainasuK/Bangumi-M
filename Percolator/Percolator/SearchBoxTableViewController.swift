@@ -130,7 +130,7 @@ extension SearchBoxTableViewController {
         tableView.tableFooterView = UIView()
         
         /// Set Refresh footer
-        self.tableView.footer = MJRefreshBackNormalFooter {
+        self.tableView.footer = MJRefreshAutoNormalFooter {
             if self.isSearching {
                 self.loadMoreData(self.searchController.searchBar)
             } else {
@@ -197,6 +197,13 @@ extension SearchBoxTableViewController {
         cell.subject = subject
         cell.isSaved = (isSearching) ? isSaved : false
         cell.initCell()
+        
+        if indexPath.row == tableView.numberOfRowsInSection(indexPath.section) - 1  {
+            // Prevent app window resize
+            cell.separatorInset.left = CGFloat(999999)
+        } else {
+            cell.separatorInset = UITableViewCell().separatorInset
+        }
         
         return cell
     }
