@@ -206,12 +206,16 @@ extension AnimeListTableViewController {
             let pass = myKeyChainWrapper.myObjectForKey(kSecValueData) as! String
             
             let spinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
-            spinner.center = self.view.center
-            spinner.center.y -= 64  // FIXME: Magic number make so many people sad and me
             spinner.color = UIColor.myPurePinkColor()
             spinner.hidesWhenStopped = true
             spinner.startAnimating()
+
             self.view.addSubview(spinner)
+            let centerX = NSLayoutConstraint(item: spinner, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+            let centerY = NSLayoutConstraint(item: spinner, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: -64)  // move up 64 point
+            spinner.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activateConstraints([centerX, centerY])
+            
             self.view.userInteractionEnabled = false
             
             NSLog("Remove JSON cache")
