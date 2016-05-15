@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="Bangumi MUITests/Info.plist" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3" build-num="7D175"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.0</source>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Percolator/Base.lproj/LaunchScreen.xib" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3" build-num="7D175"/>
+    </header>
+    <body>
+      <trans-unit id="8ie-xW-0ye.text">
+        <source>  Copyright (c) 2015年 Cirno MainasuK. All rights reserved.</source>
+        <note>Class = "UILabel"; text = "  Copyright (c) 2015年 Cirno MainasuK. All rights reserved."; ObjectID = "8ie-xW-0ye";</note>
+      </trans-unit>
+      <trans-unit id="kId-c2-rCX.text">
+        <source>Percolator</source>
+        <note>Class = "UILabel"; text = "Percolator"; ObjectID = "kId-c2-rCX";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Percolator/Base.lproj/Main.storyboard" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3" build-num="7D175"/>
+    </header>
+    <body>
+      <trans-unit id="0PW-Uo-Hpn.text">
+        <source>Comment Label</source>
+        <target>Comment Label</target>
+        <note>Class = "UILabel"; text = "Comment Label"; ObjectID = "0PW-Uo-Hpn";</note>
+      </trans-unit>
+      <trans-unit id="2Gs-Aa-CUk.text">
+        <source>完成度：</source>
+        <target>完成度：</target>
+        <note>Class = "UILabel"; text = "完成度："; ObjectID = "2Gs-Aa-CUk";</note>
+      </trans-unit>
+      <trans-unit id="2OT-ne-Wyf.text">
+        <source>小寒</source>
+        <target>小寒</target>
+        <note>Class = "UILabel"; text = "小寒"; ObjectID = "2OT-ne-Wyf";</note>
+      </trans-unit>
+      <trans-unit id="2Q6-X9-XKk.text">
+        <source>mewing</source>
+        <target>mewing</target>
+        <note>Class = "UILabel"; text = "mewing"; ObjectID = "2Q6-X9-XKk";</note>
+      </trans-unit>
+      <trans-unit id="2SM-JG-VZO.text">
+        <source>2015-05-13</source>
+        <target>2015-05-13</target>
+        <note>Class = "UILabel"; text = "2015-05-13"; ObjectID = "2SM-JG-VZO";</note>
+      </trans-unit>
+      <trans-unit id="2v1-mx-p3x.text">
+        <source>看到：</source>
+        <target>看到：</target>
+        <note>Class = "UILabel"; text = "看到："; ObjectID = "2v1-mx-p3x";</note>
+      </trans-unit>
+      <trans-unit id="3OE-x7-oLJ.text">
+        <source>Summary</source>
+        <target>Summary</target>
+        <note>Class = "UILabel"; text = "Summary"; ObjectID = "3OE-x7-oLJ";</note>
+      </trans-unit>
+      <trans-unit id="4cJ-eJ-HNp.text">
+        <source>(+1)</source>
+        <target>(+1)</target>
+        <note>Class = "UILabel"; text = "(+1)"; ObjectID = "4cJ-eJ-HNp";</note>
+      </trans-unit>
+      <trans-unit id="5Qi-NV-xlu.text">
+        <source>...</source>
+        <target>...</target>
+        <note>Class = "UILabel"; text = "..."; ObjectID = "5Qi-NV-xlu";</note>
+      </trans-unit>
+      <trans-unit id="5ca-A2-8gy.text">
+        <source>Tags Label</source>
+        <target>Tags Label</target>
+        <note>Class = "UILabel"; text = "Tags Label"; ObjectID = "5ca-A2-8gy";</note>
+      </trans-unit>
+      <trans-unit id="5sq-ep-Wfg.title">
+        <source>Bangumi M</source>
+        <target>Bangumi M</target>
+        <note>Class = "UINavigationItem"; title = "Bangumi M"; ObjectID = "5sq-ep-Wfg";</note>
+      </trans-unit>
+      <trans-unit id="6FL-6J-Hjc.normalTitle">
+        <source>超展开</source>
+        <target>超展开</target>
+        <note>Class = "UIButton"; normalTitle = "超展开"; ObjectID = "6FL-6J-Hjc";</note>
+      </trans-unit>
+      <trans-unit id="7Ql-04-Ypv.text">
+        <source>音乐</source>
+        <target>音乐</target>
+        <note>Class = "UILabel"; text = "音乐"; ObjectID = "7Ql-04-Ypv";</note>
+      </trans-unit>
+      <trans-unit id="8gL-vQ-9i5.text">
+        <source>放送时间：</source>
+        <target>放送时间：</target>
+        <note>Class = "UILabel"; text = "放送时间："; ObjectID = "8gL-vQ-9i5";</note>
+      </trans-unit>
+      <trans-unit id="8gx-SI-ZM7.text">
+        <source>5 人在听</source>
+        <target>5 人在听</target>
+        <note>Class = "UILabel"; text = "5 人在听"; ObjectID = "8gx-SI-ZM7";</note>
+      </trans-unit>
+      <trans-unit id="48a-ns-Og4.text">
+        <source>Bangumi M</source>
+        <target>Bangumi M</target>
+        <note>Class = "UILabel"; text = "Bangumi M"; ObjectID = "48a-ns-Og4";</note>
+      </trans-unit>
+      <trans-unit id="C26-Ax-sCD.text">
+        <source>Bangumi</source>
+        <target>Bangumi</target>
+        <note>Class = "UILabel"; text = "Bangumi"; ObjectID = "C26-Ax-sCD";</note>
+      </trans-unit>
+      <trans-unit id="CYf-rF-w3t.text">
+        <source>放送日期：</source>
+        <target>放送日期：</target>
+        <note>Class = "UILabel"; text = "放送日期："; ObjectID = "CYf-rF-w3t";</note>
+      </trans-unit>
+      <trans-unit id="DTA-HF-gat.text">
+        <source>伊原摩耶花</source>
+        <target>伊原摩耶花</target>
+        <note>Class = "UILabel"; text = "伊原摩耶花"; ObjectID = "DTA-HF-gat";</note>
+      </trans-unit>
+      <trans-unit id="Fof-X4-JWY.title">
+        <source>进度管理</source>
+        <target>进度管理</target>
+        <note>Class = "UINavigationItem"; title = "进度管理"; ObjectID = "Fof-X4-JWY";</note>
+      </trans-unit>
+      <trans-unit id="GCj-Si-lCh.text">
+        <source>(+1)</source>
+        <target>(+1)</target>
+        <note>Class = "UILabel"; text = "(+1)"; ObjectID = "GCj-Si-lCh";</note>
+      </trans-unit>
+      <trans-unit id="J9X-ll-IYV.text">
+        <source>NameLabel</source>
+        <target>NameLabel</target>
+        <note>Class = "UILabel"; text = "NameLabel"; ObjectID = "J9X-ll-IYV";</note>
+      </trans-unit>
+      <trans-unit id="KWU-zK-wqN.text">
+        <source>路人女主的养成方法 第三卷 特典 CD</source>
+        <target>路人女主的养成方法 第三卷 特典 CD</target>
+        <note>Class = "UILabel"; text = "路人女主的养成方法 第三卷 特典 CD"; ObjectID = "KWU-zK-wqN";</note>
+      </trans-unit>
+      <trans-unit id="LyM-Ea-X1h.text">
+        <source>冴えない彼女の育てかた 第3巻 特典CD</source>
+        <target>冴えない彼女の育てかた 第3巻 特典CD</target>
+        <note>Class = "UILabel"; text = "冴えない彼女の育てかた 第3巻 特典CD"; ObjectID = "LyM-Ea-X1h";</note>
+      </trans-unit>
+      <trans-unit id="MBo-pc-C0A.text">
+        <source>@yaqink</source>
+        <target>@yaqink</target>
+        <note>Class = "UILabel"; text = "@yaqink"; ObjectID = "MBo-pc-C0A";</note>
+      </trans-unit>
+      <trans-unit id="Mbp-SX-lyx.text">
+        <source>API : </source>
+        <target>API : </target>
+        <note>Class = "UILabel"; text = "API : "; ObjectID = "Mbp-SX-lyx";</note>
+      </trans-unit>
+      <trans-unit id="OcD-UO-M1N.text">
+        <source>@grubstreet </source>
+        <target>@grubstreet </target>
+        <note>Class = "UILabel"; text = "@grubstreet "; ObjectID = "OcD-UO-M1N";</note>
+      </trans-unit>
+      <trans-unit id="Oxa-gs-dhW.text">
+        <source>Rating Label</source>
+        <target>Rating Label</target>
+        <note>Class = "UILabel"; text = "Rating Label"; ObjectID = "Oxa-gs-dhW";</note>
+      </trans-unit>
+      <trans-unit id="PZr-km-z05.text">
+        <source>@howegulf</source>
+        <target>@howegulf</target>
+        <note>Class = "UILabel"; text = "@howegulf"; ObjectID = "PZr-km-z05";</note>
+      </trans-unit>
+      <trans-unit id="REG-WF-9tK.text">
+        <source>@saic </source>
+        <target>@saic </target>
+        <note>Class = "UILabel"; text = "@saic "; ObjectID = "REG-WF-9tK";</note>
+      </trans-unit>
+      <trans-unit id="UJq-z6-22S.text">
+        <source>2012-04-29</source>
+        <target>2012-04-29</target>
+        <note>Class = "UILabel"; text = "2012-04-29"; ObjectID = "UJq-z6-22S";</note>
+      </trans-unit>
+      <trans-unit id="UaC-0J-3WK.text">
+        <source>...</source>
+        <target>...</target>
+        <note>Class = "UILabel"; text = "..."; ObjectID = "UaC-0J-3WK";</note>
+      </trans-unit>
+      <trans-unit id="VEq-Ep-2yd.text">
+        <source>@mewing </source>
+        <target>@mewing </target>
+        <note>Class = "UILabel"; text = "@mewing "; ObjectID = "VEq-Ep-2yd";</note>
+      </trans-unit>
+      <trans-unit id="Wgf-C3-9KY.normalTitle">
+        <source>登出</source>
+        <target>登出</target>
+        <note>Class = "UIButton"; normalTitle = "登出"; ObjectID = "Wgf-C3-9KY";</note>
+      </trans-unit>
+      <trans-unit id="Wzx-Qs-LLS.text">
+        <source>nickname</source>
+        <target>nickname</target>
+        <note>Class = "UILabel"; text = "nickname"; ObjectID = "Wzx-Qs-LLS";</note>
+      </trans-unit>
+      <trans-unit id="YUC-bD-v4r.text">
+        <source>Title</source>
+        <target>Title</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "YUC-bD-v4r";</note>
+      </trans-unit>
+      <trans-unit id="ZDC-C5-ehp.text">
+        <source>CV: 茅野爱衣</source>
+        <target>CV: 茅野爱衣</target>
+        <note>Class = "UILabel"; text = "CV: 茅野爱衣"; ObjectID = "ZDC-C5-ehp";</note>
+      </trans-unit>
+      <trans-unit id="Zcg-PM-0aB.segmentTitles[0]">
+        <source>想看</source>
+        <target>想看</target>
+        <note>Class = "UISegmentedControl"; Zcg-PM-0aB.segmentTitles[0] = "想看"; ObjectID = "Zcg-PM-0aB";</note>
+      </trans-unit>
+      <trans-unit id="Zcg-PM-0aB.segmentTitles[1]">
+        <source>看过</source>
+        <target>看过</target>
+        <note>Class = "UISegmentedControl"; Zcg-PM-0aB.segmentTitles[1] = "看过"; ObjectID = "Zcg-PM-0aB";</note>
+      </trans-unit>
+      <trans-unit id="Zcg-PM-0aB.segmentTitles[2]">
+        <source>在看</source>
+        <target>在看</target>
+        <note>Class = "UISegmentedControl"; Zcg-PM-0aB.segmentTitles[2] = "在看"; ObjectID = "Zcg-PM-0aB";</note>
+      </trans-unit>
+      <trans-unit id="Zcg-PM-0aB.segmentTitles[3]">
+        <source>搁置</source>
+        <target>搁置</target>
+        <note>Class = "UISegmentedControl"; Zcg-PM-0aB.segmentTitles[3] = "搁置"; ObjectID = "Zcg-PM-0aB";</note>
+      </trans-unit>
+      <trans-unit id="Zcg-PM-0aB.segmentTitles[4]">
+        <source>抛弃</source>
+        <target>抛弃</target>
+        <note>Class = "UISegmentedControl"; Zcg-PM-0aB.segmentTitles[4] = "抛弃"; ObjectID = "Zcg-PM-0aB";</note>
+      </trans-unit>
+      <trans-unit id="Zhn-oY-cHk.title">
+        <source>Percolator Menu</source>
+        <target>Percolator Menu</target>
+        <note>Class = "UIViewController"; title = "Percolator Menu"; ObjectID = "Zhn-oY-cHk";</note>
+      </trans-unit>
+      <trans-unit id="a6N-Ft-Q81.normalTitle">
+        <source>About</source>
+        <target>About</target>
+        <note>Class = "UIButton"; normalTitle = "About"; ObjectID = "a6N-Ft-Q81";</note>
+      </trans-unit>
+      <trans-unit id="dKa-uy-jl0.text">
+        <source>Password:</source>
+        <target>Password:</target>
+        <note>Class = "UILabel"; text = "Password:"; ObjectID = "dKa-uy-jl0";</note>
+      </trans-unit>
+      <trans-unit id="fBj-fQ-Yh3.text">
+        <source>airDate</source>
+        <target>airDate</target>
+        <note>Class = "UILabel"; text = "airDate"; ObjectID = "fBj-fQ-Yh3";</note>
+      </trans-unit>
+      <trans-unit id="fP8-wW-H6q.text">
+        <source>开发: </source>
+        <target>开发: </target>
+        <note>Class = "UILabel"; text = "开发: "; ObjectID = "fP8-wW-H6q";</note>
+      </trans-unit>
+      <trans-unit id="fPo-na-UXf.text">
+        <source>name</source>
+        <target>name</target>
+        <note>Class = "UILabel"; text = "name"; ObjectID = "fPo-na-UXf";</note>
+      </trans-unit>
+      <trans-unit id="gBF-kg-jb0.title">
+        <source>反馈</source>
+        <target>反馈</target>
+        <note>Class = "UIBarButtonItem"; title = "反馈"; ObjectID = "gBF-kg-jb0";</note>
+      </trans-unit>
+      <trans-unit id="hhd-w0-aII.text">
+        <source>小笠原 やきん</source>
+        <target>小笠原 やきん</target>
+        <note>Class = "UILabel"; text = "小笠原 やきん"; ObjectID = "hhd-w0-aII";</note>
+      </trans-unit>
+      <trans-unit id="hvI-QS-hxL.text">
+        <source>Sai</source>
+        <target>Sai</target>
+        <note>Class = "UILabel"; text = "Sai"; ObjectID = "hvI-QS-hxL";</note>
+      </trans-unit>
+      <trans-unit id="jvN-YQ-NpF.text">
+        <source>time</source>
+        <target>time</target>
+        <note>Class = "UILabel"; text = "time"; ObjectID = "jvN-YQ-NpF";</note>
+      </trans-unit>
+      <trans-unit id="kWh-Gi-Zzm.title">
+        <source>Item</source>
+        <target>Item</target>
+        <note>Class = "UIBarButtonItem"; title = "Item"; ObjectID = "kWh-Gi-Zzm";</note>
+      </trans-unit>
+      <trans-unit id="kxn-qF-6HQ.text">
+        <source>loading</source>
+        <target>loading</target>
+        <note>Class = "UILabel"; text = "loading"; ObjectID = "kxn-qF-6HQ";</note>
+      </trans-unit>
+      <trans-unit id="ljf-JZ-U65.text">
+        <source>CMK</source>
+        <target>CMK</target>
+        <note>Class = "UILabel"; text = "CMK"; ObjectID = "ljf-JZ-U65";</note>
+      </trans-unit>
+      <trans-unit id="mV4-lY-X7q.normalTitle">
+        <source>进度管理</source>
+        <target>进度管理</target>
+        <note>Class = "UIButton"; normalTitle = "进度管理"; ObjectID = "mV4-lY-X7q";</note>
+      </trans-unit>
+      <trans-unit id="oLs-v5-Wbh.text">
+        <source>测试: </source>
+        <target>测试: </target>
+        <note>Class = "UILabel"; text = "测试: "; ObjectID = "oLs-v5-Wbh";</note>
+      </trans-unit>
+      <trans-unit id="r8T-nb-Bku.text">
+        <source>Email:</source>
+        <target>Email:</target>
+        <note>Class = "UILabel"; text = "Email:"; ObjectID = "r8T-nb-Bku";</note>
+      </trans-unit>
+      <trans-unit id="rCK-5q-Fvm.normalTitle">
+        <source>ep… 看过</source>
+        <target>ep… 看过</target>
+        <note>Class = "UIButton"; normalTitle = "ep… 看过"; ObjectID = "rCK-5q-Fvm";</note>
+      </trans-unit>
+      <trans-unit id="t98-mp-FBR.text">
+        <source>Placeholder</source>
+        <target>Placeholder</target>
+        <note>Class = "UILabel"; text = "Placeholder"; ObjectID = "t98-mp-FBR";</note>
+      </trans-unit>
+      <trans-unit id="uGB-Y6-d7L.title">
+        <source>收藏</source>
+        <target>收藏</target>
+        <note>Class = "UIBarButtonItem"; title = "收藏"; ObjectID = "uGB-Y6-d7L";</note>
+      </trans-unit>
+      <trans-unit id="vXZ-lx-hvc.title">
+        <source>Login</source>
+        <target>Login</target>
+        <note>Class = "UIViewController"; title = "Login"; ObjectID = "vXZ-lx-hvc";</note>
+      </trans-unit>
+      <trans-unit id="wRi-xZ-FJh.text">
+        <source>ep.1 富有传统的古籍社之再生</source>
+        <target>ep.1 富有传统的古籍社之再生</target>
+        <note>Class = "UILabel"; text = "ep.1 富有传统的古籍社之再生"; ObjectID = "wRi-xZ-FJh";</note>
+      </trans-unit>
+      <trans-unit id="wed-Xe-Qhw.text">
+        <source>nameCN</source>
+        <target>nameCN</target>
+        <note>Class = "UILabel"; text = "nameCN"; ObjectID = "wed-Xe-Qhw";</note>
+      </trans-unit>
+      <trans-unit id="za2-ZK-iLR.normalTitle">
+        <source>Login</source>
+        <target>Login</target>
+        <note>Class = "UIButton"; normalTitle = "Login"; ObjectID = "za2-ZK-iLR";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Percolator/Info.plist" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3" build-num="7D175"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.2.7</source>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="PercolatorTests/Info.plist" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.3" build-num="7D175"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.0</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -168,6 +168,8 @@
 		DBD2D5791B843ADE00EED59A /* SearchBoxTabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBoxTabelCell.swift; sourceTree = "<group>"; };
 		DBD2D57B1B84AEB300EED59A /* BangumiAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiAPI.swift; sourceTree = "<group>"; };
 		DBD2D57D1B84CE7000EED59A /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		DBFABCE21CE84BF70056C862 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		DBFABCE31CE84C830056C862 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		DBFBCB801B63157E001F3CD1 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		DBFBCB821B633376001F3CD1 /* AnimeCollectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCollectTableViewController.swift; sourceTree = "<group>"; };
 		DBFC3ABB1B7A18B400F406FF /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -738,6 +740,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				DBBA47CC1B060DEA0004BBA2 /* Base */,
+				DBFABCE21CE84BF70056C862 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -746,6 +749,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				DBBA47D11B060DEA0004BBA2 /* Base */,
+				DBFABCE31CE84C830056C862 /* zh-Hans */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";

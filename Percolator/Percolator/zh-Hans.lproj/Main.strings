@@ -1,0 +1,195 @@
+
+/* Class = "UILabel"; text = "Comment Label"; ObjectID = "0PW-Uo-Hpn"; */
+"0PW-Uo-Hpn.text" = "Comment Label";
+
+/* Class = "UILabel"; text = "完成度："; ObjectID = "2Gs-Aa-CUk"; */
+"2Gs-Aa-CUk.text" = "完成度：";
+
+/* Class = "UILabel"; text = "小寒"; ObjectID = "2OT-ne-Wyf"; */
+"2OT-ne-Wyf.text" = "小寒";
+
+/* Class = "UILabel"; text = "mewing"; ObjectID = "2Q6-X9-XKk"; */
+"2Q6-X9-XKk.text" = "mewing";
+
+/* Class = "UILabel"; text = "2015-05-13"; ObjectID = "2SM-JG-VZO"; */
+"2SM-JG-VZO.text" = "2015-05-13";
+
+/* Class = "UILabel"; text = "看到："; ObjectID = "2v1-mx-p3x"; */
+"2v1-mx-p3x.text" = "看到：";
+
+/* Class = "UILabel"; text = "Summary"; ObjectID = "3OE-x7-oLJ"; */
+"3OE-x7-oLJ.text" = "Summary";
+
+/* Class = "UILabel"; text = "Bangumi M"; ObjectID = "48a-ns-Og4"; */
+"48a-ns-Og4.text" = "Bangumi M";
+
+/* Class = "UILabel"; text = "(+1)"; ObjectID = "4cJ-eJ-HNp"; */
+"4cJ-eJ-HNp.text" = "(+1)";
+
+/* Class = "UILabel"; text = "..."; ObjectID = "5Qi-NV-xlu"; */
+"5Qi-NV-xlu.text" = "...";
+
+/* Class = "UILabel"; text = "Tags Label"; ObjectID = "5ca-A2-8gy"; */
+"5ca-A2-8gy.text" = "Tags Label";
+
+/* Class = "UINavigationItem"; title = "Bangumi M"; ObjectID = "5sq-ep-Wfg"; */
+"5sq-ep-Wfg.title" = "Bangumi M";
+
+/* Class = "UIButton"; normalTitle = "超展开"; ObjectID = "6FL-6J-Hjc"; */
+"6FL-6J-Hjc.normalTitle" = "超展开";
+
+/* Class = "UILabel"; text = "音乐"; ObjectID = "7Ql-04-Ypv"; */
+"7Ql-04-Ypv.text" = "音乐";
+
+/* Class = "UILabel"; text = "放送时间："; ObjectID = "8gL-vQ-9i5"; */
+"8gL-vQ-9i5.text" = "放送时间：";
+
+/* Class = "UILabel"; text = "5 人在听"; ObjectID = "8gx-SI-ZM7"; */
+"8gx-SI-ZM7.text" = "5 人在听";
+
+/* Class = "UILabel"; text = "Bangumi"; ObjectID = "C26-Ax-sCD"; */
+"C26-Ax-sCD.text" = "Bangumi";
+
+/* Class = "UILabel"; text = "放送日期："; ObjectID = "CYf-rF-w3t"; */
+"CYf-rF-w3t.text" = "放送日期：";
+
+/* Class = "UILabel"; text = "伊原摩耶花"; ObjectID = "DTA-HF-gat"; */
+"DTA-HF-gat.text" = "伊原摩耶花";
+
+/* Class = "UINavigationItem"; title = "进度管理"; ObjectID = "Fof-X4-JWY"; */
+"Fof-X4-JWY.title" = "进度管理";
+
+/* Class = "UILabel"; text = "(+1)"; ObjectID = "GCj-Si-lCh"; */
+"GCj-Si-lCh.text" = "(+1)";
+
+/* Class = "UILabel"; text = "NameLabel"; ObjectID = "J9X-ll-IYV"; */
+"J9X-ll-IYV.text" = "NameLabel";
+
+/* Class = "UILabel"; text = "路人女主的养成方法 第三卷 特典 CD"; ObjectID = "KWU-zK-wqN"; */
+"KWU-zK-wqN.text" = "路人女主的养成方法 第三卷 特典 CD";
+
+/* Class = "UILabel"; text = "冴えない彼女の育てかた 第3巻 特典CD"; ObjectID = "LyM-Ea-X1h"; */
+"LyM-Ea-X1h.text" = "冴えない彼女の育てかた 第3巻 特典CD";
+
+/* Class = "UILabel"; text = "@yaqink"; ObjectID = "MBo-pc-C0A"; */
+"MBo-pc-C0A.text" = "@yaqink";
+
+/* Class = "UILabel"; text = "API : "; ObjectID = "Mbp-SX-lyx"; */
+"Mbp-SX-lyx.text" = "API : ";
+
+/* Class = "UILabel"; text = "@grubstreet "; ObjectID = "OcD-UO-M1N"; */
+"OcD-UO-M1N.text" = "@grubstreet ";
+
+/* Class = "UILabel"; text = "Rating Label"; ObjectID = "Oxa-gs-dhW"; */
+"Oxa-gs-dhW.text" = "Rating Label";
+
+/* Class = "UILabel"; text = "@howegulf"; ObjectID = "PZr-km-z05"; */
+"PZr-km-z05.text" = "@howegulf";
+
+/* Class = "UILabel"; text = "@saic "; ObjectID = "REG-WF-9tK"; */
+"REG-WF-9tK.text" = "@saic ";
+
+/* Class = "UILabel"; text = "2012-04-29"; ObjectID = "UJq-z6-22S"; */
+"UJq-z6-22S.text" = "2012-04-29";
+
+/* Class = "UILabel"; text = "..."; ObjectID = "UaC-0J-3WK"; */
+"UaC-0J-3WK.text" = "...";
+
+/* Class = "UILabel"; text = "@mewing "; ObjectID = "VEq-Ep-2yd"; */
+"VEq-Ep-2yd.text" = "@mewing ";
+
+/* Class = "UIButton"; normalTitle = "登出"; ObjectID = "Wgf-C3-9KY"; */
+"Wgf-C3-9KY.normalTitle" = "登出";
+
+/* Class = "UILabel"; text = "nickname"; ObjectID = "Wzx-Qs-LLS"; */
+"Wzx-Qs-LLS.text" = "nickname";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "YUC-bD-v4r"; */
+"YUC-bD-v4r.text" = "Title";
+
+/* Class = "UILabel"; text = "CV: 茅野爱衣"; ObjectID = "ZDC-C5-ehp"; */
+"ZDC-C5-ehp.text" = "CV: 茅野爱衣";
+
+/* Class = "UISegmentedControl"; Zcg-PM-0aB.segmentTitles[0] = "想看"; ObjectID = "Zcg-PM-0aB"; */
+"Zcg-PM-0aB.segmentTitles[0]" = "想看";
+
+/* Class = "UISegmentedControl"; Zcg-PM-0aB.segmentTitles[1] = "看过"; ObjectID = "Zcg-PM-0aB"; */
+"Zcg-PM-0aB.segmentTitles[1]" = "看过";
+
+/* Class = "UISegmentedControl"; Zcg-PM-0aB.segmentTitles[2] = "在看"; ObjectID = "Zcg-PM-0aB"; */
+"Zcg-PM-0aB.segmentTitles[2]" = "在看";
+
+/* Class = "UISegmentedControl"; Zcg-PM-0aB.segmentTitles[3] = "搁置"; ObjectID = "Zcg-PM-0aB"; */
+"Zcg-PM-0aB.segmentTitles[3]" = "搁置";
+
+/* Class = "UISegmentedControl"; Zcg-PM-0aB.segmentTitles[4] = "抛弃"; ObjectID = "Zcg-PM-0aB"; */
+"Zcg-PM-0aB.segmentTitles[4]" = "抛弃";
+
+/* Class = "UIViewController"; title = "Percolator Menu"; ObjectID = "Zhn-oY-cHk"; */
+"Zhn-oY-cHk.title" = "Percolator Menu";
+
+/* Class = "UIButton"; normalTitle = "About"; ObjectID = "a6N-Ft-Q81"; */
+"a6N-Ft-Q81.normalTitle" = "关于";
+
+/* Class = "UILabel"; text = "Password:"; ObjectID = "dKa-uy-jl0"; */
+"dKa-uy-jl0.text" = "密码：";
+
+/* Class = "UILabel"; text = "airDate"; ObjectID = "fBj-fQ-Yh3"; */
+"fBj-fQ-Yh3.text" = "airDate";
+
+/* Class = "UILabel"; text = "开发: "; ObjectID = "fP8-wW-H6q"; */
+"fP8-wW-H6q.text" = "开发: ";
+
+/* Class = "UILabel"; text = "name"; ObjectID = "fPo-na-UXf"; */
+"fPo-na-UXf.text" = "name";
+
+/* Class = "UIBarButtonItem"; title = "反馈"; ObjectID = "gBF-kg-jb0"; */
+"gBF-kg-jb0.title" = "反馈";
+
+/* Class = "UILabel"; text = "小笠原 やきん"; ObjectID = "hhd-w0-aII"; */
+"hhd-w0-aII.text" = "小笠原 やきん";
+
+/* Class = "UILabel"; text = "Sai"; ObjectID = "hvI-QS-hxL"; */
+"hvI-QS-hxL.text" = "Sai";
+
+/* Class = "UILabel"; text = "time"; ObjectID = "jvN-YQ-NpF"; */
+"jvN-YQ-NpF.text" = "time";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "kWh-Gi-Zzm"; */
+"kWh-Gi-Zzm.title" = "Item";
+
+/* Class = "UILabel"; text = "loading"; ObjectID = "kxn-qF-6HQ"; */
+"kxn-qF-6HQ.text" = "loading";
+
+/* Class = "UILabel"; text = "CMK"; ObjectID = "ljf-JZ-U65"; */
+"ljf-JZ-U65.text" = "CMK";
+
+/* Class = "UIButton"; normalTitle = "进度管理"; ObjectID = "mV4-lY-X7q"; */
+"mV4-lY-X7q.normalTitle" = "进度管理";
+
+/* Class = "UILabel"; text = "测试: "; ObjectID = "oLs-v5-Wbh"; */
+"oLs-v5-Wbh.text" = "测试: ";
+
+/* Class = "UILabel"; text = "Email:"; ObjectID = "r8T-nb-Bku"; */
+"r8T-nb-Bku.text" = "邮箱：";
+
+/* Class = "UIButton"; normalTitle = "ep… 看过"; ObjectID = "rCK-5q-Fvm"; */
+"rCK-5q-Fvm.normalTitle" = "ep… 看过";
+
+/* Class = "UILabel"; text = "Placeholder"; ObjectID = "t98-mp-FBR"; */
+"t98-mp-FBR.text" = "Placeholder";
+
+/* Class = "UIBarButtonItem"; title = "收藏"; ObjectID = "uGB-Y6-d7L"; */
+"uGB-Y6-d7L.title" = "收藏";
+
+/* Class = "UIViewController"; title = "Login"; ObjectID = "vXZ-lx-hvc"; */
+"vXZ-lx-hvc.title" = "Login";
+
+/* Class = "UILabel"; text = "ep.1 富有传统的古籍社之再生"; ObjectID = "wRi-xZ-FJh"; */
+"wRi-xZ-FJh.text" = "ep.1 富有传统的古籍社之再生";
+
+/* Class = "UILabel"; text = "nameCN"; ObjectID = "wed-Xe-Qhw"; */
+"wed-Xe-Qhw.text" = "nameCN";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "za2-ZK-iLR"; */
+"za2-ZK-iLR.normalTitle" = "登录";
