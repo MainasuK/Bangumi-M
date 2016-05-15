@@ -16,12 +16,14 @@ Bangumi M is released under the [MIT License](./LICENSE).
 - [SlidingContainerViewController](https://github.com/cemolcay/SlidingContainerViewController)
 - [SWRevealController](https://github.com/John-Lluch/SWRevealViewController)
 - [HKKTagWriteView](https://github.com/fullc0de/HKKTagWriteView)
+- [Kanna](https://github.com/tid-kijyun/Kanna)
+- [ReachabilitySwfit](https://github.com/ashleymills/Reachability.swift)
 
 ----------
 <img src="./screenshot/6_Final/iPhone6/list.png" width = "320" alt="list" align=center />
 <img src="./screenshot/6_Final/iPhone6/detail.png" width = "320" alt="detail" align=center />
 
-### 购买
+### App Store
 [<img src="./screenshot/Badge_CN/Download_on_the_App_Store_Badge_CN_135x40.png" alt="detail" align=center />](https://itunes.apple.com/cn/app/bangumi-m/id1029813683?l=en&mt=8)
 
 ----------

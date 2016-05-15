@@ -26,6 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
 
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        
+        NSUserDefaults.standardUserDefaults().setValue(UIApplication.appVersion(), forKey: "Percolator.appVersion")
+        NSUserDefaults.standardUserDefaults().setValue(UIApplication.appBuild(), forKey: "Percolator.appBundle")
+        NSUserDefaults.standardUserDefaults().synchronize()
 
         return true
     }
