@@ -7,22 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6446967769ADC51067454314 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B901E96A6ABBA0173A0560 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DB08F63F1BBC28F8005DBC6B /* Bangumi_MUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB08F63E1BBC28F8005DBC6B /* Bangumi_MUITests.swift */; };
+		DB0BC8031D1194870091ECE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47C71B060DEA0004BBA2 /* AppDelegate.swift */; };
 		DB18C8B01B0A2ABD00A0BA11 /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DB18C8AF1B0A2ABD00A0BA11 /* KeychainWrapper.m */; };
-		DB33F10F1B8A97A800976CD6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB33F10E1B8A97A800976CD6 /* AboutViewController.swift */; };
-		DB3C7F141C44B52E0092FD82 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3C7F131C44B52E0092FD82 /* UIDevice.swift */; };
-		DB43BD981B0E33ED003477C7 /* AnimeDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB43BD961B0E33ED003477C7 /* AnimeDetailTableViewCell.swift */; };
-		DB4C765D1B7DF0FA00B5E921 /* FavoritesTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4C765C1B7DF0FA00B5E921 /* FavoritesTableViewCellDelegate.swift */; };
-		DB4C765F1B7E24B400B5E921 /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4C765E1B7E24B400B5E921 /* SwiftNotice.swift */; };
-		DB4C76611B7E3A8A00B5E921 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4C76601B7E3A8A00B5E921 /* UIApplication.swift */; };
-		DB51B94F1B7DC90F007B06BC /* BangumiTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB51B94E1B7DC90F007B06BC /* BangumiTableViewDelegate.swift */; };
-		DB59EC651B873DF8000AFA7A /* CMKTopicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB59EC641B873DF8000AFA7A /* CMKTopicTableViewCell.swift */; };
 		DB5B04241B85D9C40074C80E /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = DB5B04231B85D9C40074C80E /* UINavigationBar+Awesome.m */; };
-		DB5B04281B85DA7C0074C80E /* CMKCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B04271B85DA7C0074C80E /* CMKCollectionViewCell.swift */; };
-		DB5B042A1B85DBAD0074C80E /* BangumiDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B04291B85DBAD0074C80E /* BangumiDetail.swift */; };
 		DB5B042C1B85E56F0074C80E /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B042B1B85E56F0074C80E /* Avatar.swift */; };
-		DB5B042E1B85E5A10074C80E /* AnimeSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B042D1B85E5A10074C80E /* AnimeSubject.swift */; };
 		DB5B04301B85E5E70074C80E /* AnimeImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B042F1B85E5E70074C80E /* AnimeImages.swift */; };
 		DB5B04321B85E6150074C80E /* AnimeCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B04311B85E6150074C80E /* AnimeCollection.swift */; };
 		DB5B04341B85E6310074C80E /* AnimeEps.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B04331B85E6310074C80E /* AnimeEps.swift */; };
@@ -32,46 +21,22 @@
 		DB5B043E1B85E7860074C80E /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B043D1B85E7860074C80E /* Actor.swift */; };
 		DB5B04401B85E7BE0074C80E /* SubjectItemStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B043F1B85E7BE0074C80E /* SubjectItemStatus.swift */; };
 		DB5B04421B85E7DD0074C80E /* EpsCollectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B04411B85E7DD0074C80E /* EpsCollectInfo.swift */; };
-		DB5B04441B85F7660074C80E /* CMKTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B04431B85F7660074C80E /* CMKTableViewCell.swift */; };
-		DB64E6C51B7B5B1C001B819D /* BangumiSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB64E6C41B7B5B1C001B819D /* BangumiSearchModel.swift */; };
 		DB64E6C81B7B6221001B819D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB64E6C71B7B6221001B819D /* CloudKit.framework */; };
-		DB64E6CC1B7BA706001B819D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB64E6CB1B7BA706001B819D /* SearchTableViewCell.swift */; };
-		DB6820011B7C92A0001ED454 /* BangumiFavoriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6820001B7C92A0001ED454 /* BangumiFavoriteModel.swift */; };
-		DB6820041B7D0177001ED454 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6820031B7D0177001ED454 /* FavoritesTableViewCell.swift */; };
-		DB7E938E1B82C4CA003C419B /* MenuTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E938D1B82C4CA003C419B /* MenuTransitionDelegate.swift */; };
-		DB82E7781B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB82E7771B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift */; };
 		DB83E2781B0F854D007BE039 /* PercolatorKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB83E2771B0F854D007BE039 /* PercolatorKey.swift */; };
 		DB8DCB661B873EEC00C5F8D1 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8DCB651B873EEC00C5F8D1 /* Topic.swift */; };
 		DB8DCBC81B876E7800C5F8D1 /* Percolator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB8DCBC61B876E7800C5F8D1 /* Percolator.xcdatamodeld */; };
-		DB9965C21B88970F001314A0 /* CMKEPTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9965C11B88970F001314A0 /* CMKEPTableViewCell.swift */; };
-		DB9965C41B89A11E001314A0 /* UINavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9965C31B89A11E001314A0 /* UINavigationBar.swift */; };
 		DBA29F4E1B8ADCB800ADED27 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DBA29F4D1B8ADCB800ADED27 /* Settings.bundle */; };
-		DBABA4041B10118600C8DDB0 /* BangumiGridStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABA4031B10118600C8DDB0 /* BangumiGridStatus.swift */; };
 		DBB2A8E51B08317B00B48C52 /* BangumiJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB2A8E41B08317B00B48C52 /* BangumiJSON.swift */; };
 		DBB3FCD11B86F21000FFF8DE /* Staff.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB3FCD01B86F21000FFF8DE /* Staff.swift */; };
-		DBBA47C81B060DEA0004BBA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47C71B060DEA0004BBA2 /* AppDelegate.swift */; };
-		DBBA47CA1B060DEA0004BBA2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47C91B060DEA0004BBA2 /* LoginViewController.swift */; };
 		DBBA47CD1B060DEA0004BBA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47CB1B060DEA0004BBA2 /* Main.storyboard */; };
 		DBBA47CF1B060DEA0004BBA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47CE1B060DEA0004BBA2 /* Images.xcassets */; };
 		DBBA47D21B060DEA0004BBA2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47D01B060DEA0004BBA2 /* LaunchScreen.xib */; };
 		DBBA47DE1B060DEA0004BBA2 /* PercolatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47DD1B060DEA0004BBA2 /* PercolatorTests.swift */; };
-		DBBA47E81B0617020004BBA2 /* AnimeListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47E71B0617020004BBA2 /* AnimeListTableViewController.swift */; };
-		DBBA47EB1B0619DE0004BBA2 /* BangumiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47EA1B0619DE0004BBA2 /* BangumiRequest.swift */; };
-		DBBA47ED1B061D250004BBA2 /* BangumiUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47EC1B061D250004BBA2 /* BangumiUser.swift */; };
-		DBBA47F31B064CF00004BBA2 /* AnimeListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47F21B064CF00004BBA2 /* AnimeListTableViewCell.swift */; };
-		DBBA47F91B064D580004BBA2 /* BangumiAnime.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47F81B064D580004BBA2 /* BangumiAnime.swift */; };
-		DBC3AC8C1B070539001AA9A7 /* BangumiAnimeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3AC8B1B070539001AA9A7 /* BangumiAnimeDetail.swift */; };
 		DBD2D5751B841D2400EED59A /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D5721B841D2400EED59A /* MGSwipeButton.m */; };
 		DBD2D5761B841D2400EED59A /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D5741B841D2400EED59A /* MGSwipeTableCell.m */; };
-		DBD2D5781B841DC700EED59A /* SearchBoxTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D5771B841DC700EED59A /* SearchBoxTableViewController.swift */; };
-		DBD2D57A1B843ADE00EED59A /* SearchBoxTabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D5791B843ADE00EED59A /* SearchBoxTabelCell.swift */; };
 		DBD2D57C1B84AEB300EED59A /* BangumiAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D57B1B84AEB300EED59A /* BangumiAPI.swift */; };
-		DBD2D57E1B84CE7000EED59A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D57D1B84CE7000EED59A /* DetailViewController.swift */; };
 		DBFBCB811B63157E001F3CD1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBCB801B63157E001F3CD1 /* Color.swift */; };
-		DBFBCB831B633376001F3CD1 /* AnimeCollectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBCB821B633376001F3CD1 /* AnimeCollectTableViewController.swift */; };
 		DBFC3ABD1B7A18B400F406FF /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFC3ABC1B7A18B400F406FF /* SWRevealViewController.m */; };
-		DBFC3AC11B7A3D6600F406FF /* BangumiAnimeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFC3AC01B7A3D6600F406FF /* BangumiAnimeModel.swift */; };
-		DBFC3AC31B7A3DD000F406FF /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFC3AC21B7A3DD000F406FF /* MenuTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,7 +153,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6446967769ADC51067454314 /* Pods.framework in Frameworks */,
 				DB64E6C81B7B6221001B819D /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,12 +439,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DBBA47E11B060DEA0004BBA2 /* Build configuration list for PBXNativeTarget "Bangumi M" */;
 			buildPhases = (
-				BEE8F845515578E7C569AAF5 /* Check Pods Manifest.lock */,
 				DBBA47BE1B060DEA0004BBA2 /* Sources */,
 				DBBA47BF1B060DEA0004BBA2 /* Frameworks */,
 				DBBA47C01B060DEA0004BBA2 /* Resources */,
-				5C5C0AE36DB7610DF27EFB17 /* Embed Pods Frameworks */,
-				4FC16B25B0B20EACB5E09D32 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -517,7 +478,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Cirno MainasuK";
 				TargetAttributes = {
 					DB08F63B1BBC28F8005DBC6B = {
@@ -587,54 +548,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		4FC16B25B0B20EACB5E09D32 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5C5C0AE36DB7610DF27EFB17 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BEE8F845515578E7C569AAF5 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		DB08F6381BBC28F8005DBC6B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -648,63 +561,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBFC3AC11B7A3D6600F406FF /* BangumiAnimeModel.swift in Sources */,
 				DB8DCB661B873EEC00C5F8D1 /* Topic.swift in Sources */,
-				DB7E938E1B82C4CA003C419B /* MenuTransitionDelegate.swift in Sources */,
-				DB5B042E1B85E5A10074C80E /* AnimeSubject.swift in Sources */,
-				DBD2D57A1B843ADE00EED59A /* SearchBoxTabelCell.swift in Sources */,
-				DB5B042A1B85DBAD0074C80E /* BangumiDetail.swift in Sources */,
 				DB5B04401B85E7BE0074C80E /* SubjectItemStatus.swift in Sources */,
 				DBB2A8E51B08317B00B48C52 /* BangumiJSON.swift in Sources */,
 				DBD2D5751B841D2400EED59A /* MGSwipeButton.m in Sources */,
-				DBFBCB831B633376001F3CD1 /* AnimeCollectTableViewController.swift in Sources */,
-				DBBA47F31B064CF00004BBA2 /* AnimeListTableViewCell.swift in Sources */,
 				DBD2D5761B841D2400EED59A /* MGSwipeTableCell.m in Sources */,
-				DBBA47CA1B060DEA0004BBA2 /* LoginViewController.swift in Sources */,
-				DB4C76611B7E3A8A00B5E921 /* UIApplication.swift in Sources */,
 				DB5B043E1B85E7860074C80E /* Actor.swift in Sources */,
-				DBBA47E81B0617020004BBA2 /* AnimeListTableViewController.swift in Sources */,
-				DB59EC651B873DF8000AFA7A /* CMKTopicTableViewCell.swift in Sources */,
-				DBC3AC8C1B070539001AA9A7 /* BangumiAnimeDetail.swift in Sources */,
-				DBD2D5781B841DC700EED59A /* SearchBoxTableViewController.swift in Sources */,
-				DB64E6CC1B7BA706001B819D /* SearchTableViewCell.swift in Sources */,
 				DB5B04341B85E6310074C80E /* AnimeEps.swift in Sources */,
 				DB83E2781B0F854D007BE039 /* PercolatorKey.swift in Sources */,
-				DB4C765D1B7DF0FA00B5E921 /* FavoritesTableViewCellDelegate.swift in Sources */,
-				DB4C765F1B7E24B400B5E921 /* SwiftNotice.swift in Sources */,
 				DBFC3ABD1B7A18B400F406FF /* SWRevealViewController.m in Sources */,
 				DBD2D57C1B84AEB300EED59A /* BangumiAPI.swift in Sources */,
-				DBABA4041B10118600C8DDB0 /* BangumiGridStatus.swift in Sources */,
-				DB6820011B7C92A0001ED454 /* BangumiFavoriteModel.swift in Sources */,
 				DB5B04321B85E6150074C80E /* AnimeCollection.swift in Sources */,
-				DBBA47F91B064D580004BBA2 /* BangumiAnime.swift in Sources */,
 				DB5B04421B85E7DD0074C80E /* EpsCollectInfo.swift in Sources */,
-				DB5B04441B85F7660074C80E /* CMKTableViewCell.swift in Sources */,
-				DBD2D57E1B84CE7000EED59A /* DetailViewController.swift in Sources */,
-				DB9965C21B88970F001314A0 /* CMKEPTableViewCell.swift in Sources */,
-				DB43BD981B0E33ED003477C7 /* AnimeDetailTableViewCell.swift in Sources */,
 				DB5B042C1B85E56F0074C80E /* Avatar.swift in Sources */,
-				DB6820041B7D0177001ED454 /* FavoritesTableViewCell.swift in Sources */,
-				DB64E6C51B7B5B1C001B819D /* BangumiSearchModel.swift in Sources */,
 				DBFBCB811B63157E001F3CD1 /* Color.swift in Sources */,
-				DBBA47ED1B061D250004BBA2 /* BangumiUser.swift in Sources */,
 				DB5B043B1B85E6F40074C80E /* Crt.swift in Sources */,
-				DB33F10F1B8A97A800976CD6 /* AboutViewController.swift in Sources */,
 				DB8DCBC81B876E7800C5F8D1 /* Percolator.xcdatamodeld in Sources */,
-				DB5B04281B85DA7C0074C80E /* CMKCollectionViewCell.swift in Sources */,
-				DBFC3AC31B7A3DD000F406FF /* MenuTableViewController.swift in Sources */,
 				DB5B04361B85E6530074C80E /* AnimeEp.swift in Sources */,
-				DBBA47C81B060DEA0004BBA2 /* AppDelegate.swift in Sources */,
 				DB18C8B01B0A2ABD00A0BA11 /* KeychainWrapper.m in Sources */,
 				DBB3FCD11B86F21000FFF8DE /* Staff.swift in Sources */,
-				DB51B94F1B7DC90F007B06BC /* BangumiTableViewDelegate.swift in Sources */,
 				DB5B04301B85E5E70074C80E /* AnimeImages.swift in Sources */,
-				DBBA47EB1B0619DE0004BBA2 /* BangumiRequest.swift in Sources */,
-				DB3C7F141C44B52E0092FD82 /* UIDevice.swift in Sources */,
-				DB82E7781B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift in Sources */,
-				DB9965C41B89A11E001314A0 /* UINavigationBar.swift in Sources */,
 				DB5B04241B85D9C40074C80E /* UINavigationBar+Awesome.m in Sources */,
 				DB5B04391B85E6B90074C80E /* BangumiKey.swift in Sources */,
+				DB0BC8031D1194870091ECE0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,6 +657,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.Bangumi-MUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TEST_TARGET_NAME = "Bangumi M";
 				USES_XCTRUNNER = YES;
 			};
@@ -787,6 +667,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -820,7 +701,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "";
@@ -834,6 +715,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -860,7 +742,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "";
 				SDKROOT = iphoneos;
@@ -939,6 +821,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bangumi M.app/Bangumi M";
 			};
 			name = Release;

@@ -51,7 +51,7 @@ extension UIColor {
     }
     
     class func myDropColor() -> UIColor {
-        return UIColor.darkGrayColor()
+        return UIColor.darkGray()
     }
     
     class func myWatchedColor() -> UIColor {

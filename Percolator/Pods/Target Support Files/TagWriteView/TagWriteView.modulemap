@@ -1,6 +1,0 @@
-framework module TagWriteView {
-  umbrella header "TagWriteView-umbrella.h"
-
-  export *
-  module * { export * }
-}
