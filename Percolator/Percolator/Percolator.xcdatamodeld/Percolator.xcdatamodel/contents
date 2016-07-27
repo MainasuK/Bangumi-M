@@ -1,23 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="15A243d" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Subject" representedClassName="Subject" syncable="YES">
-        <attribute name="airDate" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="airWeekday" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="collectionCollect" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="collectionDoing" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="collectionDropped" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="collectionOnHold" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="collectionWish" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="eps" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imageLargeUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="nameCN" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11198.3" systemVersion="15F34" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDCollection" representedClassName="CDCollection" syncable="YES" codeGenerationType="class">
+        <attribute name="collect" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="doing" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="dropped" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="onHold" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="wish" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="subject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDSubject" inverseName="collection" inverseEntity="CDSubject" syncable="YES"/>
+    </entity>
+    <entity name="CDImages" representedClassName="CDImages" syncable="YES" codeGenerationType="class">
+        <attribute name="commonUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gridUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="largeUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediumUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="smallUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="subject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDSubject" inverseName="images" inverseEntity="CDSubject" syncable="YES"/>
+    </entity>
+    <entity name="CDRating" representedClassName="CDRating" syncable="YES" codeGenerationType="class">
+        <attribute name="count" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="score" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="total" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="subject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDSubject" inverseName="rating" inverseEntity="CDSubject" syncable="YES"/>
+    </entity>
+    <entity name="CDSubject" representedClassName="CDSubject" syncable="YES" codeGenerationType="class">
+        <attribute name="airDate" attributeType="String" syncable="YES"/>
+        <attribute name="airWeekday" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="eps" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" indexed="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="nameCN" attributeType="String" syncable="YES"/>
+        <attribute name="rank" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="summary" attributeType="String" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="url" attributeType="String" syncable="YES"/>
+        <relationship name="collection" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CDCollection" inverseName="subject" inverseEntity="CDCollection" syncable="YES"/>
+        <relationship name="images" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CDImages" inverseName="subject" inverseEntity="CDImages" syncable="YES"/>
+        <relationship name="rating" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CDRating" inverseName="subject" inverseEntity="CDRating" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Subject" positionX="-63" positionY="-18" width="128" height="270"/>
+        <element name="CDCollection" positionX="16" positionY="-198" width="128" height="135"/>
+        <element name="CDImages" positionX="16" positionY="45" width="128" height="135"/>
+        <element name="CDRating" positionX="16" positionY="-63" width="128" height="105"/>
+        <element name="CDSubject" positionX="-272" positionY="-294" width="128" height="240"/>
     </elements>
 </model>

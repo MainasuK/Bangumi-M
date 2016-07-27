@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 extension UINavigationBar {
+
     class func addMyButtonBackgroundView() {
         let backgroundImage = UIImage(named: "naviBarbackground")!
         self.appearance().setBackgroundImage(backgroundImage, forBarMetrics: UIBarMetrics.Default)
@@ -18,4 +19,5 @@ extension UINavigationBar {
     class func removeMyButtonBackgroundView() {
         self.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
     }
+    
 }

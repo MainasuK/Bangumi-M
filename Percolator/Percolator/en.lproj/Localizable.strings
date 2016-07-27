@@ -1,0 +1,27 @@
+/* 
+  Localizable.strings
+  Percolator
+
+  Created by Cirno MainasuK on 2016-7-14.
+  Copyright © 2016年 Cirno MainasuK. All rights reserved.
+*/
+
+"dismiss" = "Dismiss";
+"cancel" = "Cancel";
+
+"no result" = "No Result";
+"time out" = "Timeout";
+"dns lookup failed" = "DNS Lookup failed";
+"unknown error" = "Unknown Error";
+"not connected to internet" = "Not Connected to Internet";
+
+"success" = "Success";
+
+"no collection" = "No Collection";
+"mark error" = "Mark Process Error";
+"authorize failed" = "Get Authorization Failed";
+"try login again" = "Please log in again";
+"please login" = "Please Login";
+
+"save to search box" = "Save to Search Box";
+"delete from search box" = "Delete from Search Box";

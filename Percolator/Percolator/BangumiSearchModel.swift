@@ -7,97 +7,75 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
 
 public class BangumiSearchModel {
     
-    let limit = 10
+    let request = BangumiRequest.shared
+    let kLimit = 10
     
-    var startIndex = 0
-    var lastSearchText = ""
-    var noMoreData = false
+    // # warning
+    // UITableView and ArrayDataSource reference
+    // Break program immediately if not set in controller
+    var tableView: UITableView!
+    var subjectDataSource: ArrayDataSource<Subject, SearchBoxTableViewCell>!
     
-    var subjectIDList = [Int]()
-    /// subjectID : AnimeSubject
-    var subjectsList = [Int : AnimeSubject]()
-    
-    /// User saved subject ( Core Data )
-    var subjectLocalList = [AnimeSubject]()
+    private var subjectsIDArray = [Int]()
+    private var startIndex = 0
+    private var lastSearchText = ""
+    private var noMoreData = false
 
-    
     // - MARK: Singleton
     private static let instance = BangumiSearchModel()
     
     private init() {
-        
     }
     
     public static var shared: BangumiSearchModel {
         return self.instance
     }
-    
-    public func dropModel() {
-        self.startIndex = 0
-        self.lastSearchText = ""
-        self.noMoreData = false
-        self.subjectIDList = [Int]()
-        self.subjectsList = [Int : AnimeSubject]()
-        self.subjectLocalList = [AnimeSubject]()
-    }
-    
+
     // MARK: - Model method
-    private func getSubjectToSearchBox(index: Int) -> AnimeSubject {
-        return self.subjectsList[self.subjectIDList[index]]!
-    }
-    
-    // FIXME:
-    public func getSubjectAndSavedInfoToSearchBox(index: Int, _ isSearching: Bool) -> (subject: AnimeSubject, isSaved: Bool) {
+    public func dropModel() {
+        startIndex = 0
+        lastSearchText = ""
+        noMoreData = false
+        subjectsIDArray = [Int]()
         
-        if !isSearching {
-            return (subjectLocalList[index], true)
-        } else {
-            let subject = getSubjectToSearchBox(index)
-            let isSaved = Subject.searchSubjectInLocal(subject.id)
-            return (subject, isSaved)
+        self.subjectDataSource.clean()
+        // FIXME: Never ever do this
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.tableView.setContentOffset(CGPoint.zero, animated: false)
         }
     }
     
-    
-    // MARK: - Search method
-    public func sendSearchRequest(request: BangumiRequest, searchText: String, _ handler: (NSError?) -> Void) {
-        
-        if noMoreData {
-            handler(NSError(domain: "sendSearchRequest", code: 1, userInfo: nil))
-            return
-        }
-        
-        request.getSearchWith(searchText, startIndex: startIndex, resultLimit: limit) { (subjectListData, count, error) -> Void in
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            if error != nil {
-                // error
-                handler(error)
-                
-            } else {
-                
-                self.startIndex += subjectListData!.count
-                self.lastSearchText = searchText
-                for subject in subjectListData! {
-                    if self.subjectIDList.indexOf(subject.id) == nil {
-                        self.subjectIDList.append(subject.id)
-                        self.subjectsList[subject.id] = subject
-                    }
-                }
-                
-                if (subjectListData!.count + self.startIndex >= count) {
-                    // No more data
-                    self.noMoreData = true
-                }
-                
-                // success
-                handler(nil)
-            }   // if error != nil … else
-        }
+    public func count() -> Int {
+        return subjectsIDArray.count
     }
 
+//    private func getSubjectToSearchBox(index: Int) -> AnimeSubject {
+//        return self.subjectsList[self.subjectIDList[index]]!
+//    }
+//    
+//    // FIXME:
+//    public func getSubjectAndSavedInfoToSearchBox(index: Int, _ isSearching: Bool) -> (subject: AnimeSubject, isSaved: Bool) {
+//        
+//        if !isSearching {
+//            return (subjectLocalList[index], true)
+//        } else {
+//            let subject = getSubjectToSearchBox(index)
+//            let isSaved = Subject.searchSubjectInLocal(subject.id)
+//            return (subject, isSaved)
+//        }
+//    }
+//    
+//    
     
+
 }
+
+
+
+

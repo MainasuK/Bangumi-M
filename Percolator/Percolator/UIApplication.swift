@@ -6,16 +6,16 @@
 //  Copyright (c) 2015年 Cirno MainasuK. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UIApplication {
 
     class func appVersion() -> String {
-        return NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+        return Bundle.main.objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
     }
     
     class func appBuild() -> String {
-        return NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as! String
+        return Bundle.main.objectForInfoDictionaryKey(kCFBundleVersionKey as String) as! String
     }
     
     class func versionBuild() -> String {
@@ -23,4 +23,5 @@ extension UIApplication {
         
         return version == build ? "v\(version)" : "v\(version)(\(build))"
     }
+    
 }

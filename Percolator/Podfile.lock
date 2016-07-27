@@ -1,0 +1,89 @@
+PODS:
+  - Alamofire (3.4.1)
+  - AlamofireImage (2.4.0):
+    - Alamofire (~> 3.3)
+  - Canvas (0.1.2)
+  - Cosmos (3.0.0)
+  - Kanna (1.0.6)
+  - KeychainAccess (2.3.6)
+  - MJRefresh (3.1.10)
+  - OHHTTPStubs (5.1.0):
+    - OHHTTPStubs/Default (= 5.1.0)
+  - OHHTTPStubs/Core (5.1.0)
+  - OHHTTPStubs/Default (5.1.0):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (5.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (5.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (5.1.0)
+  - SVProgressHUD (2.0.3)
+  - SwiftyJSON (2.3.2)
+  - UITextField+Shake (1.1.2)
+
+DEPENDENCIES:
+  - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift3`)
+  - AlamofireImage (from `https://github.com/Alamofire/AlamofireImage.git`, branch `swift3`)
+  - Canvas
+  - Cosmos (~> 3.0)
+  - Kanna (from `https://github.com/tid-kijyun/Kanna`, branch `swift3.0`)
+  - KeychainAccess (from `https://github.com/kishikawakatsumi/KeychainAccess.git`, branch `swift-3.0`)
+  - MJRefresh
+  - OHHTTPStubs
+  - SVProgressHUD
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `swift3`)
+  - UITextField+Shake (~> 1.1)
+
+EXTERNAL SOURCES:
+  Alamofire:
+    :branch: swift3
+    :git: https://github.com/Alamofire/Alamofire.git
+  AlamofireImage:
+    :branch: swift3
+    :git: https://github.com/Alamofire/AlamofireImage.git
+  Kanna:
+    :branch: swift3.0
+    :git: https://github.com/tid-kijyun/Kanna
+  KeychainAccess:
+    :branch: swift-3.0
+    :git: https://github.com/kishikawakatsumi/KeychainAccess.git
+  SwiftyJSON:
+    :branch: swift3
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+CHECKOUT OPTIONS:
+  Alamofire:
+    :commit: f55bdf7a96fe9a3f30550d79ec972d75f4aa0043
+    :git: https://github.com/Alamofire/Alamofire.git
+  AlamofireImage:
+    :commit: 7452b8758d916964c078c131a386021c27c154e0
+    :git: https://github.com/Alamofire/AlamofireImage.git
+  Kanna:
+    :commit: ecc112494ca81ad1f8bc3ddd136ad78d09dd2e1b
+    :git: https://github.com/tid-kijyun/Kanna
+  KeychainAccess:
+    :commit: ba8d125469d30f57a4d7aa384864a81db5e6adb2
+    :git: https://github.com/kishikawakatsumi/KeychainAccess.git
+  SwiftyJSON:
+    :commit: 1a9755949a652967dc2986cd7f4653496e556715
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+SPEC CHECKSUMS:
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
+  AlamofireImage: 87408b652e0f5ae5fe364035f15aea8b9b24c77e
+  Canvas: eb861e3b555d032648146c8ffda1a5dea40059ca
+  Cosmos: df6d24193f3aa04e42eaf52d943361b778b3ce90
+  Kanna: 9f30945bbd293a609f698ea164687ccc0990ff60
+  KeychainAccess: 7f10e2ef998ddf954a64d5d608be08677774684d
+  MJRefresh: bb72948c985914b0b5cecac573a2c69a8915fb02
+  OHHTTPStubs: 592f74439d2d72615115cf99a954237a3fbe26e5
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  UITextField+Shake: 47cc0429dafb3da580686339ad2da091249a8ea2
+
+PODFILE CHECKSUM: ecb00aa50369e7586a23d39c12a041d3585c74bb
+
+COCOAPODS: 1.0.1

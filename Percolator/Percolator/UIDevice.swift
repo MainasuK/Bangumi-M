@@ -9,6 +9,7 @@
 import Foundation
 
 extension UIDevice {
+    
     var deviceType: String {
         var systemInfo = utsname()
         uname(&systemInfo)
@@ -18,11 +19,12 @@ extension UIDevice {
         var identifier = ""
         
         for child in mirror.children {
-            if let value = child.value as? Int8 where value != 0 {
+            if let value = child.value as? Int8, value != 0 {
                 identifier.append(UnicodeScalar(UInt8(value)))
             }
         }
         
         return identifier
     }
+    
 }

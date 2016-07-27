@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import Haneke
 
 public class BangumiAnimeModel {
+    
+    lazy var coreDataStack = UIApplication.main.coreDataStack
     
     /// [Anime]
     public var animeList = [Anime]()
@@ -27,7 +28,6 @@ public class BangumiAnimeModel {
     public var animePostingStatusList = [Int: Bool]()
     
     private var completedTasksCount: Int = 0
-    private let className = "$ BangumiAnimeModel: "
     
     // MARK: -
     // MARK: Singleton

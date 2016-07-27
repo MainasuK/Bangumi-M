@@ -6,23 +6,21 @@
 //  Copyright (c) 2015年 Cirno MainasuK. All rights reserved.
 //
 
-import Foundation
-
-public struct AnimeCollection {
-    public var wish = 0
-    public var collect = 0
-    public var doing = 0
-    public var onHold = 0
-    public var dropped = 0
-    
-    init() {
-    }
-    
-    init(animeCollectionDict: NSDictionary) {
-        wish = animeCollectionDict[BangumiKey.wish] as! Int
-        collect = animeCollectionDict[BangumiKey.collect] as! Int
-        doing = animeCollectionDict[BangumiKey.doing] as! Int
-        onHold = animeCollectionDict[BangumiKey.onHold] as! Int
-        dropped = animeCollectionDict[BangumiKey.dropped] as! Int
-    }
-}
+//import Foundation
+//import SwiftyJSON
+//
+//public struct AnimeCollection {
+//    public var wish: Int
+//    public var collect: Int
+//    public var doing: Int
+//    public var onHold: Int
+//    public var dropped: Int
+//    
+//    init(json: NSDictionary) {
+//        wish = json[BangumiKey.wish] as! Int
+//        collect = json[BangumiKey.collect] as! Int
+//        doing = json[BangumiKey.doing] as! Int
+//        onHold = json[BangumiKey.onHold] as! Int
+//        dropped = json[BangumiKey.dropped] as! Int
+//    }
+//}

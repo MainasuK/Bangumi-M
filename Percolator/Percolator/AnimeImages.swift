@@ -6,23 +6,21 @@
 //  Copyright (c) 2015年 Cirno MainasuK. All rights reserved.
 //
 
-import Foundation
-
-public struct AnimeImages {
-    public var largeUrl = ""
-    public var commonUrl = ""
-    public var mediumUrl = ""
-    public var smallUrl = ""
-    public var gridUrl = ""
-    
-    init() {
-    }
-    
-    init(animeImagesDict: NSDictionary) {
-        largeUrl = animeImagesDict[BangumiKey.largeUrl] as! String
-        commonUrl = animeImagesDict[BangumiKey.commonUrl] as! String
-        mediumUrl = animeImagesDict[BangumiKey.mediumUrl] as! String
-        smallUrl = animeImagesDict[BangumiKey.smallUrl] as! String
-        gridUrl = animeImagesDict[BangumiKey.gridUrl] as! String
-    }
-}
+//import Foundation
+//import SwiftyJSON
+//
+//public struct AnimeImages {
+//    public let largeUrl: String
+//    public let commonUrl: String
+//    public let mediumUrl: String
+//    public let smallUrl: String
+//    public let gridUrl: String
+//    
+//    init(json: NSDictionary) {
+//        largeUrl = json[BangumiKey.largeUrl] as! String
+//        commonUrl = json[BangumiKey.commonUrl] as! String
+//        mediumUrl = json[BangumiKey.mediumUrl] as! String
+//        smallUrl = json[BangumiKey.smallUrl] as! String
+//        gridUrl = json[BangumiKey.gridUrl] as! String
+//    }
+//}

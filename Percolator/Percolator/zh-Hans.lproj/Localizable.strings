@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  Percolator
+
+  Created by Cirno MainasuK on 2016-7-14.
+  Copyright © 2016年 Cirno MainasuK. All rights reserved.
+*/
+
+"dismiss" = "关闭";
+
+"no result" = "无相关条目";
+"time out" = "请求超时";
+"unknown error" = "未知错误";
+"not internet connected to internet" = "无网络链接";
+
+"success" = "成功";

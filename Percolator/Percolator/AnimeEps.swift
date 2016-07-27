@@ -52,7 +52,7 @@ public struct AnimeEps {
     }
     
     /// FIXME: this method get AnimeEp in self.eps with default order which is from 0 to epsCount but it's not always right (with op/sp/ed or something)
-    public func valueAtKey(key: Int) -> AnimeEp? {
+    public func valueAtKey(_ key: Int) -> AnimeEp? {
         if key <= eps.count && key >= 0 {
             let epDict = eps[key] as NSDictionary
             
@@ -62,7 +62,7 @@ public struct AnimeEps {
         return nil
     }
     
-    public func getEpIDwith(type: Int, sort: Int) -> Int? {
+    public func getEpIDwith(_ type: Int, sort: Int) -> Int? {
         for ep in self.eps {
             if let epType = ep[BangumiKey.type] as? Int,
                 let epSort = ep[BangumiKey.sort] as? Int {
