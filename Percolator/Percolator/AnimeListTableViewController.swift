@@ -266,6 +266,8 @@ extension AnimeListTableViewController {
             
             do {
                 try error?.throwMyself()
+                BangumiRequest.shared.timeoutErrorTimes = 0
+                
             } catch CollectionError.noCollection {
                 let title = NSLocalizedString("no collection", comment: "")
                 let alertController = UIAlertController.simpleErrorAlert(with: title, description: "")
