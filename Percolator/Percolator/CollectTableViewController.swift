@@ -315,7 +315,7 @@ extension CollectTableViewController {
         }   // end switch
         
         cosmosView.rating = (Double)(info.rating)
-        self.tableView.footerView(forSection: 0)?.textLabel?.text = (info.rating != 0) ? "\(info.rating) 星" : "未评价"
+        self.tableView.footerView(forSection: 1)?.textLabel?.text = (info.rating != 0) ? "\(info.rating) 星" : "未评价"
         
         if info.tags != [""] { tagView.addTags(info.tags) }
         commentTextView.text = info.comment
