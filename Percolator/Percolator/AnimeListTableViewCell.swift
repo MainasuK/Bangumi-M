@@ -167,7 +167,7 @@ extension AnimeListTableViewCell {
                     
                 case .notAir:
                     let weekArr: [String] = ["有空", "周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-                    watchedButton.setTitle("ep.\(nextEpisode.sortString) 未放送 \(weekArr[subject.airWeekday])再来吧", for: .normal)
+                    watchedButton.setTitle("EP.\(nextEpisode.sortString) 未放送 \(weekArr[subject.airWeekday])再来吧", for: .normal)
                     indicatorView.backgroundColor = UIColor.myRedColor()
                 
                 case .today:
