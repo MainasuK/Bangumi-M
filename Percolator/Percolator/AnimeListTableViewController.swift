@@ -466,7 +466,7 @@ extension AnimeListTableViewController {
 //        }
 //
         let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialTableViewControllerKey) as! DetailTableViewController
-        let (subject, _) = model.item(at: indexPath)
+        let subject = model.item(at: indexPath).0
         detailTableViewController.subject = subject
         navigationController?.pushViewController(detailTableViewController, animated: true)
 //
