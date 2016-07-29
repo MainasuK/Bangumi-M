@@ -46,15 +46,12 @@ extension TopicTableViewController {
             SVProgressHUD.show()
             model.fetchTopics { (error: ErrorProtocol?) in
                 
-                delay(3.0) {
-                    SVProgressHUD.dismiss()
-                }
-                
                 do {
                     try error?.throwMyself()
                     SVProgressHUD.dismiss()
                     
                 } catch ModelError.parse {
+                    SVProgressHUD.dismiss()
                     let alertController = UIAlertController.simpleErrorAlert(with: "数据解析失败", description: "")
                     self.present(alertController, animated: true, completion: nil)
                     consolePrint("Parse error")
@@ -63,34 +60,40 @@ extension TopicTableViewController {
                     SVProgressHUD.showInfo(withStatus: "无相关话题")
                     
                 } catch UnknownError.API(let error, let code) {
+                    SVProgressHUD.dismiss()
                     let title = NSLocalizedString("server error", comment: "")
                     let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error)", code: code)
                     self.present(alertController, animated: true, completion: nil)
                     consolePrint("API error: \(error), code: \(code)")
                     
                 } catch NetworkError.timeout {
+                    SVProgressHUD.dismiss()
                     let status = NSLocalizedString("time out", comment: "")
                     SVProgressHUD.showInfo(withStatus: status)
                     consolePrint("Timeout")
                     
                 } catch NetworkError.notConnectedToInternet {
+                    SVProgressHUD.dismiss()
                     let title = NSLocalizedString("not connected to internet", comment: "")
                     let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
                     self.present(alertController, animated: true, completion: nil)
                     
                 } catch UnknownError.alamofire(let error) {
+                    SVProgressHUD.dismiss()
                     let title = NSLocalizedString("unknown error", comment: "")
                     let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
                     self.present(alertController, animated: true, completion: nil)
                     consolePrint("Unknow NSError: \(error)")
                     
                 } catch UnknownError.network(let error) {
+                    SVProgressHUD.dismiss()
                     let title = NSLocalizedString("unknown error", comment: "")
                     let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.rawValue)
                     self.present(alertController, animated: true, completion: nil)
                     consolePrint("Unknow NSURLError: \(error)")
                     
                 } catch {
+                    SVProgressHUD.dismiss()
                     let title = NSLocalizedString("unknown error", comment: "")
                     let alertController = UIAlertController.simpleErrorAlert(with: title, description: "", code: -1)
                     self.present(alertController, animated: true, completion: nil)
@@ -101,6 +104,12 @@ extension TopicTableViewController {
             
             isFirstAppear = false
         }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        SVProgressHUD.dismiss()
     }
     
 }
@@ -128,8 +137,8 @@ extension TopicTableViewController {
         tableView.cellLayoutMarginsFollowReadableWidth = true
         
         // Register section header view
-        //        let nib = UINib(nibName: StoryboardKey.TopicTableViewHeaderFooterView, bundle: nil)
-        //        tableView.register(nib, forHeaderFooterViewReuseIdentifier: StoryboardKey.TopicTableViewHeaderFooterView)
+//        let nib = UINib(nibName: StoryboardKey.TopicTableViewHeaderFooterView, bundle: nil)
+//        tableView.register(nib, forHeaderFooterViewReuseIdentifier: StoryboardKey.TopicTableViewHeaderFooterView)
     }
     
 }
