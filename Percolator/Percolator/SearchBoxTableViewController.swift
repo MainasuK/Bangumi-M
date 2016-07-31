@@ -9,6 +9,7 @@
 import UIKit
 import MJRefresh
 import SVProgressHUD
+import MGSwipeTableCell
 
 final class SearchBoxTableViewController: UITableViewController {
     
@@ -207,23 +208,14 @@ extension SearchBoxTableViewController {
         let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialTableViewControllerKey) as! DetailTableViewController
         detailTableViewController.subject = model.item(at: indexPath).0
         navigationController?.pushViewController(detailTableViewController, animated: true)
-        // TODO:
-//        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.DetialVC) as! DetailViewController
-//        
-//        let request = BangumiRequest.shared
-//        let (subject, isSaved) = searchModel.getSubjectAndSavedInfoToSearchBox(indexPath.row, isSearching)
-//        
-//        detailVC.animeItem = Anime(subject: subject)
-//        detailVC.animeSubject = subject
-//        detailVC.detailSource = BangumiDetailSource()
-//        
-//        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//            self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(1))
-//            self.navigationController?.pushViewController(detailVC, animated: true)
-//            detailVC.initFromSearchBox(request, subject)
-//        })
     }
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let swipeCell = cell as? MGSwipeTableCell {
+            swipeCell.delegate = self
+        }
+    }
+
 }
 
 // MARK: - UISearchBarDelegate
@@ -392,138 +384,82 @@ extension SearchBoxTableViewController {
     
 }
 
-// TODO:
-//// MARK: - MGSwipeTableCellDelegate
-//extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
-//    
-//    func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
-//        //        if let _cell = cell as? SearchBoxTabelCell {
-//        //            if searchModel.isLocalSaved(_cell.subject.id) {
-//        //                return false
-//        //            }
-//        //        }
-//        //
-//        if isSearching {
-//            return (direction == .LeftToRight) ? true : false
-//        } else {
-//            return true
-//        }
-//    }
-//    
-//    func swipeTableCell(cell: MGSwipeTableCell!, swipeButtonsForDirection direction: MGSwipeDirection, swipeSettings: MGSwipeSettings!, expansionSettings: MGSwipeExpansionSettings!) -> [AnyObject]! {
-//        
-//        swipeSettings.transition = MGSwipeTransition.Border
-//        expansionSettings.buttonIndex = 0
-//        
-//        let me = self
-//        
-//        if direction == .LeftToRight {
-//            expansionSettings.fillOnTrigger = true
-//            expansionSettings.threshold = 1.5
-//            
-//            let padding = 15
-//            
-//            let collectButton = MGSwipeButton(title: "收藏", backgroundColor: UIColor(red: 253.0/255.0, green: 204.0/255.0, blue: 49.0/255.0, alpha: 1.0), padding: padding, callback: { (cell) -> Bool in
-//                
-//                let indexPath = me.tableView.indexPathForCell(cell)!
-//                let (subject, saved) = self.searchModel.getSubjectAndSavedInfoToSearchBox(indexPath.row, self.isSearching)
-//                
-//                let collectVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.AnimeCollectVC) as! AnimeCollectTableViewController
-//                collectVC.animeItem = Anime(subject: subject)
-//                //                self.navigationController?.pushViewController(collectVC, animated: true)
-//                //                self.searchController.dismissViewControllerAnimated(true, completion: nil)
-//                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
-//                
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    self.navigationController?.pushViewController(collectVC, animated: true)
-//                })
-//                
-//                return false
-//            })
-//            
-//            let saveButton = MGSwipeButton(title: "保存", backgroundColor: UIColor(red: 0, green: 0x99/255.0, blue:0xcc/255.0, alpha: 1.0), padding: padding, callback: { (cell) -> Bool in
-//                
-//                let indexPath = me.tableView.indexPathForCell(cell)!
-//                let image = (me.tableView.cellForRowAtIndexPath(indexPath) as? SearchBoxTabelCell)?.animeImageView.image
-//                let (subject, _) = self.searchModel.getSubjectAndSavedInfoToSearchBox(indexPath.row, self.isSearching)
-//                
-//                Subject.saveAnimeSubject(subject) { (success) -> Void in
-//                    if success {
-//                        NSLog("^ SearchBoxTableViewController: Save success")
-//                        self.noticeTop("保存成功", autoClear: true, autoClearTime: 3)
-//                    } else {
-//                        NSLog("^ SearchBoxTableViewController: Save failed")
-//                    }
-//                    
-//                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
-//                }
-//                
-//                return false
-//            })
-//            
-//            if isSearching {
-//                if let _cell = cell as? SearchBoxTabelCell {
-//                    if _cell.isSaved {
-//                        return [collectButton]
-//                    } else {
-//                        return [saveButton, collectButton]
-//                    }
-//                    
-//                } else {
-//                    return nil
-//                }
-//                
-//            } else {
-//                return [collectButton]
-//            }   // if isSeaching … else …
-//        } else {    // if .LeftToRight … else { so, Here is .RightToLeft } …
-//            expansionSettings.fillOnTrigger = true
-//            expansionSettings.threshold = 2.0
-//            
-//            let padding = 25
-//            
-//            let deleteButton = MGSwipeButton(title: "删除", backgroundColor: UIColor(red: 255.0/255.0, green: 59.0/255.0, blue: 50.0/255.0, alpha: 1.0), padding: padding, callback: { (cell) -> Bool in
-//                
-//                let indexPath = me.tableView.indexPathForCell(cell)!
-//                let subjectToDelete = self.searchModel.subjectLocalList[indexPath.row]
-//                Subject.deleteSubject(subjectToDelete, { (success) -> Void in
-//                    NSLog("^ SearchBoxTableViewController: Delete is \(success)")
-//                    if success {
-//                        self.searchModel.subjectLocalList.removeAtIndex(indexPath.row)
-//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
-//                        })
-//                    }
-//                })
-//                
-//                return false
-//            })
-//            
-//            
-//            if isSearching {
-//                return nil
-//            } else {
-//                return [deleteButton]
-//            }
-//        }   // if .LeftToRight … else …
-//        
-//        //        return nil
-//    }
-//    
-//    func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
-//        
-//        var str = ""
-//        var active = ""
-//        switch state {
-//        case .None: str = "None"
-//        case .SwipingLeftToRight: str = "SwipeingLeftToRight"
-//        case .SwipingRightToLeft: str = "SwipingRightToLeft"
-//        case .ExpandingLeftToRight: str = "ExpandingLeftToRight"
-//        case .ExpandingRightToLeft: str = "ExpandingRightToLeft"
-//        }
-//        
-//        active = (gestureIsActive) ? "Active" : "Ended"
-//        NSLog("Swipe state: \(str) ::: Gestrue: \(active)")
-//    }
-//
-//}
+
+// MARK: - MGSwipeTableCellDelegate
+extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
+    
+    func swipeTableCell(_ cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
+        return true
+    }
+    
+    func swipeTableCell(_ cell: MGSwipeTableCell!, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings!, expansionSettings: MGSwipeExpansionSettings!) -> [AnyObject]! {
+        
+        guard let cell = cell,
+        let indexPath = self.tableView.indexPath(for: cell) else {
+            return []
+        }
+        
+        let subject = self.model.item(at: indexPath).0
+        
+        swipeSettings.transition = MGSwipeTransition.drag
+        swipeSettings.threshold = 0.1
+        expansionSettings.buttonIndex = 0
+        expansionSettings.fillOnTrigger = true
+        expansionSettings.threshold = 2.0
+        
+        let saveBlue = UIColor(red: 0, green: 0x99/255.0, blue:0xcc/255.0, alpha: 1.0)
+        let collectionYellow = UIColor(red: 253.0/255.0, green: 204.0/255.0, blue: 49.0/255.0, alpha: 1.0)
+        let deleteRed = UIColor(red: 255.0/255.0, green: 59.0/255.0, blue: 50.0/255.0, alpha: 1.0)
+        
+        let saveButton = MGSwipeButton(title: "保存", backgroundColor: saveBlue, padding: 25) { [weak self] (cell: MGSwipeTableCell?) -> Bool in
+            let _ = subject.saveToCoreData()
+            self?.tableView.reloadRows(at: [indexPath], with: .right)
+            
+            return false
+        }
+        
+        let collectionButton = MGSwipeButton(title: "收藏", backgroundColor: collectionYellow, padding: 25) { [weak self] (cell: MGSwipeTableCell?) -> Bool in
+            
+            
+            let navigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.CollectNavigationController) as! UINavigationController
+            let collectTableViewController = navigationController.childViewControllers.first as! CollectTableViewController
+            collectTableViewController.subject = subject
+            
+            navigationController.modalPresentationStyle = .formSheet
+            self?.present(navigationController, animated: true, completion: nil)
+            self?.tableView.reloadRows(at: [indexPath], with: .right)
+            
+            return false
+        }
+        
+        let deleteButton = MGSwipeButton(title: "删除", backgroundColor: deleteRed, padding: 25) { [weak self] (cell: MGSwipeTableCell?) -> Bool in
+            
+            let _ = self?.model.removeItem(at: indexPath)
+            return false
+        }
+        
+        switch direction {
+        case .leftToRight:
+            return (subject.isSaved()) ? [collectionButton!] : [saveButton!, collectionButton!]
+            
+        case .rightToLeft:
+            return (subject.isSaved()) ? [deleteButton!] : []
+        }
+    }
+    
+    func swipeTableCell(_ cell: MGSwipeTableCell!, didChange state: MGSwipeState, gestureIsActive: Bool) {
+        var str = ""
+        var active = ""
+        switch state {
+        case .none: str = "None"
+        case .swipingLeftToRight: str = "SwipeingLeftToRight"
+        case .swipingRightToLeft: str = "SwipingRightToLeft"
+        case .expandingLeftToRight: str = "ExpandingLeftToRight"
+        case .expandingRightToLeft: str = "ExpandingRightToLeft"
+        }
+        
+        active = (gestureIsActive) ? "Active" : "Ended"
+        consolePrint("Swipe state: \(str) ::: Gestrue: \(active)")
+    }
+
+}

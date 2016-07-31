@@ -6,6 +6,7 @@ PODS:
   - Cosmos (3.0.0)
   - Kanna (1.0.6)
   - KeychainAccess (2.3.6)
+  - MGSwipeTableCell (1.5.5)
   - MJRefresh (3.1.10)
   - OHHTTPStubs (5.1.0):
     - OHHTTPStubs/Default (= 5.1.0)
@@ -31,6 +32,7 @@ DEPENDENCIES:
   - Cosmos (~> 3.0)
   - Kanna (from `https://github.com/tid-kijyun/Kanna`, branch `swift3.0`)
   - KeychainAccess (from `https://github.com/kishikawakatsumi/KeychainAccess.git`, branch `swift-3.0`)
+  - MGSwipeTableCell
   - MJRefresh
   - OHHTTPStubs
   - SVProgressHUD
@@ -78,12 +80,13 @@ SPEC CHECKSUMS:
   Cosmos: df6d24193f3aa04e42eaf52d943361b778b3ce90
   Kanna: 9f30945bbd293a609f698ea164687ccc0990ff60
   KeychainAccess: 7f10e2ef998ddf954a64d5d608be08677774684d
+  MGSwipeTableCell: bafeb5f351124544c9364ecbdf24c7b06a37d340
   MJRefresh: bb72948c985914b0b5cecac573a2c69a8915fb02
   OHHTTPStubs: 592f74439d2d72615115cf99a954237a3fbe26e5
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   UITextField+Shake: 47cc0429dafb3da580686339ad2da091249a8ea2
 
-PODFILE CHECKSUM: ecb00aa50369e7586a23d39c12a041d3585c74bb
+PODFILE CHECKSUM: fbfaa35d26973bff8b4fe44d9f2f6a484b5323ee
 
 COCOAPODS: 1.0.1

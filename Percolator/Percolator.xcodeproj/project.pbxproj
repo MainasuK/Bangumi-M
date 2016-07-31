@@ -44,6 +44,9 @@
 		DB6B1BCB1D182F390005CAE6 /* SubjectCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B1BCA1D182F390005CAE6 /* SubjectCollectionViewController.swift */; };
 		DB6B1BCD1D182F570005CAE6 /* SubjectCollectionViewBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B1BCC1D182F570005CAE6 /* SubjectCollectionViewBookCell.swift */; };
 		DB6B1BCF1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B1BCE1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift */; };
+		DB7560961D4B1086005A5046 /* DetailTableViewCell+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7560951D4B1086005A5046 /* DetailTableViewCell+CollectionView.swift */; };
+		DB7560971D4B1805005A5046 /* Crt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B043A1B85E6F40074C80E /* Crt.swift */; };
+		DB7560981D4B1843005A5046 /* Staff.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB3FCD01B86F21000FFF8DE /* Staff.swift */; };
 		DB7A352A1D37F14600FADA6C /* UISearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7A35291D37F14600FADA6C /* UISearchController.swift */; };
 		DB7C24AD1D42F98D00A1A9BC /* DetailTableViewEPSCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7C24AC1D42F98D00A1A9BC /* DetailTableViewEPSCellDelegate.swift */; };
 		DB7D135F1D18E89300ACA94B /* SubjectCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7D135E1D18E89300ACA94B /* SubjectCollectionViewLayoutAttributes.swift */; };
@@ -86,6 +89,7 @@
 		DBBB52531D47AE6E008A1617 /* SaveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52521D47AE6E008A1617 /* SaveActivity.swift */; };
 		DBBB52551D47AE7D008A1617 /* DeleteActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52541D47AE7D008A1617 /* DeleteActivity.swift */; };
 		DBBB52581D47B5CA008A1617 /* SubjectWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52571D47B5CA008A1617 /* SubjectWrapper.swift */; };
+		DBC3A19B1D4B42710016346E /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B043D1B85E7860074C80E /* Actor.swift */; };
 		DBC57A8F1D477167002C4DF2 /* CDSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC57A8E1D477167002C4DF2 /* CDSubject.swift */; };
 		DBCD90BD1D37CDC200E7B37C /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD90BC1D37CDC200E7B37C /* UIAlertController.swift */; };
 		DBCD90C01D37D02300E7B37C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBCD90C21D37D02300E7B37C /* Localizable.strings */; };
@@ -102,6 +106,7 @@
 		DBE1C80F1D3C73820086B83D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1C80E1D3C73820086B83D /* String.swift */; };
 		DBE1C8111D3C7F060086B83D /* SVProgress+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1C8101D3C7F060086B83D /* SVProgress+Style.swift */; };
 		DBE2B9611D405F7C00F677DE /* BangumiRequest+EP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE2B9601D405F7C00F677DE /* BangumiRequest+EP.swift */; };
+		DBEB29BC1D4E43EE00AF4FA1 /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEB29BB1D4E43EE00AF4FA1 /* TestTableViewController.swift */; };
 		DBEF11331D3743DF00E7A0D7 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEF11321D3743DF00E7A0D7 /* CoreDataStack.swift */; };
 		DBEF11351D37469300E7A0D7 /* NSURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEF11341D37469300E7A0D7 /* NSURL.swift */; };
 		DBEF11371D374F8000E7A0D7 /* BangumiRequestLoginTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEF11361D374F8000E7A0D7 /* BangumiRequestLoginTest.swift */; };
@@ -196,6 +201,7 @@
 		DB6B1BCA1D182F390005CAE6 /* SubjectCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewController.swift; sourceTree = "<group>"; };
 		DB6B1BCC1D182F570005CAE6 /* SubjectCollectionViewBookCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewBookCell.swift; sourceTree = "<group>"; };
 		DB6B1BCE1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewNotBookCell.swift; sourceTree = "<group>"; };
+		DB7560951D4B1086005A5046 /* DetailTableViewCell+CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailTableViewCell+CollectionView.swift"; sourceTree = "<group>"; };
 		DB7A35291D37F14600FADA6C /* UISearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UISearchController.swift; sourceTree = "<group>"; };
 		DB7C24AC1D42F98D00A1A9BC /* DetailTableViewEPSCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewEPSCellDelegate.swift; sourceTree = "<group>"; };
 		DB7D135E1D18E89300ACA94B /* SubjectCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
@@ -265,10 +271,6 @@
 		DBD069661D3676740063708C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBD0696C1D3677060063708C /* ArrayDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDataSourceTests.swift; sourceTree = "<group>"; };
 		DBD0696F1D368ECD0063708C /* Tests.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
-		DBD2D5711B841D2400EED59A /* MGSwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeButton.h; sourceTree = "<group>"; };
-		DBD2D5721B841D2400EED59A /* MGSwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeButton.m; sourceTree = "<group>"; };
-		DBD2D5731B841D2400EED59A /* MGSwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeTableCell.h; sourceTree = "<group>"; };
-		DBD2D5741B841D2400EED59A /* MGSwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeTableCell.m; sourceTree = "<group>"; };
 		DBD2D5771B841DC700EED59A /* SearchBoxTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBoxTableViewController.swift; sourceTree = "<group>"; };
 		DBD2D5791B843ADE00EED59A /* SearchBoxTabelViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBoxTabelViewCell.swift; sourceTree = "<group>"; };
 		DBD2D57B1B84AEB300EED59A /* BangumiAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiAPI.swift; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 		DBE1C80E1D3C73820086B83D /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		DBE1C8101D3C7F060086B83D /* SVProgress+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SVProgress+Style.swift"; sourceTree = "<group>"; };
 		DBE2B9601D405F7C00F677DE /* BangumiRequest+EP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BangumiRequest+EP.swift"; sourceTree = "<group>"; };
+		DBEB29BB1D4E43EE00AF4FA1 /* TestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
 		DBEF11321D3743DF00E7A0D7 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		DBEF11341D37469300E7A0D7 /* NSURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURL.swift; sourceTree = "<group>"; };
 		DBEF11361D374F8000E7A0D7 /* BangumiRequestLoginTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiRequestLoginTest.swift; sourceTree = "<group>"; };
@@ -352,9 +355,6 @@
 			children = (
 				DB5B04371B85E6630074C80E /* Anime */,
 				DB8DCB651B873EEC00C5F8D1 /* Topic.swift */,
-				DB5B043A1B85E6F40074C80E /* Crt.swift */,
-				DBB3FCD01B86F21000FFF8DE /* Staff.swift */,
-				DB5B043D1B85E7860074C80E /* Actor.swift */,
 				DB5B043F1B85E7BE0074C80E /* SubjectItemStatus.swift */,
 				DBBA47F81B064D580004BBA2 /* BangumiAnime.swift */,
 				DBC3AC8B1B070539001AA9A7 /* BangumiAnimeDetail.swift */,
@@ -432,6 +432,7 @@
 				DB7D87F31D16FC0F00885937 /* DetailTableView.swift */,
 				DB8EA45B1D3F415400348A6C /* DetailTableViewCell.swift */,
 				DB0B6B071D162A80007AA8AE /* DetailTableViewBannerCell.swift */,
+				DB7560951D4B1086005A5046 /* DetailTableViewCell+CollectionView.swift */,
 				DBA4C9111D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift */,
 				DB22FE0F1D16ADE4004A082D /* DetailTableViewMoreSubjectCell.swift */,
 				DB22FE111D16CB01004A082D /* DetailTableViewEPSCell.swift */,
@@ -498,6 +499,7 @@
 		DBAD79211D39072200CCB8AE /* Dict */ = {
 			isa = PBXGroup;
 			children = (
+				DB5B043D1B85E7860074C80E /* Actor.swift */,
 				DB5B042B1B85E56F0074C80E /* Avatar.swift */,
 				DB80EFF81D34FC94007DEF09 /* Images.swift */,
 				DB80EFFC1D3500D0007DEF09 /* Rating.swift */,
@@ -528,6 +530,7 @@
 		DBBA47C41B060DEA0004BBA2 /* Percolator */ = {
 			isa = PBXGroup;
 			children = (
+				DBEB29BB1D4E43EE00AF4FA1 /* TestTableViewController.swift */,
 				DBBA47CB1B060DEA0004BBA2 /* Main.storyboard */,
 				DBBA47E91B0619BA0004BBA2 /* Model */,
 				DBFC3AB91B79FA8B00F406FF /* View */,
@@ -593,17 +596,6 @@
 			path = "Bangumi M Tests";
 			sourceTree = "<group>";
 		};
-		DBD2D5701B841D2400EED59A /* MGSwipeTableCell */ = {
-			isa = PBXGroup;
-			children = (
-				DBD2D5711B841D2400EED59A /* MGSwipeButton.h */,
-				DBD2D5721B841D2400EED59A /* MGSwipeButton.m */,
-				DBD2D5731B841D2400EED59A /* MGSwipeTableCell.h */,
-				DBD2D5741B841D2400EED59A /* MGSwipeTableCell.m */,
-			);
-			path = MGSwipeTableCell;
-			sourceTree = "<group>";
-		};
 		DBEE657E1D372F70003DBA95 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
@@ -627,6 +619,8 @@
 				DB80EFF61D34E70E007DEF09 /* Subject.swift */,
 				DB80EFFA1D34FEFC007DEF09 /* Collection.swift */,
 				DB88206D1D3F1E91009031AE /* Episode.swift */,
+				DB5B043A1B85E6F40074C80E /* Crt.swift */,
+				DBB3FCD01B86F21000FFF8DE /* Staff.swift */,
 				DB5B04411B85E7DD0074C80E /* CollectInfo.swift */,
 				DB5021841D3FCEF700148C8F /* Progress.swift */,
 				DBAD79211D39072200CCB8AE /* Dict */,
@@ -700,7 +694,6 @@
 				DB33F10E1B8A97A800976CD6 /* AboutViewController.swift */,
 				DB9965C31B89A11E001314A0 /* UINavigationBar.swift */,
 				DBFC3AC21B7A3DD000F406FF /* MenuTableViewController.swift */,
-				DBD2D5701B841D2400EED59A /* MGSwipeTableCell */,
 				DB7E28821D3B8C2900B529CA /* View */,
 				DB1D11E71B5229450067A060 /* Struct */,
 				DB7E28831D3B8C3500B529CA /* Model */,
@@ -967,6 +960,7 @@
 				DBD91C4B1D44546E007AFA80 /* DetailTableViewBannerCellDelegate.swift in Sources */,
 				DB7D135F1D18E89300ACA94B /* SubjectCollectionViewLayoutAttributes.swift in Sources */,
 				DBEF114E1D379C5B00E7A0D7 /* BangumiRequest+Login.swift in Sources */,
+				DB7560971D4B1805005A5046 /* Crt.swift in Sources */,
 				DB1AAB011D33EEA500EE7727 /* Result.swift in Sources */,
 				DBEF11331D3743DF00E7A0D7 /* CoreDataStack.swift in Sources */,
 				DBAD79201D3906C000CCB8AE /* JSONSerializable.swift in Sources */,
@@ -998,10 +992,12 @@
 				DB80EFF11D34AEFF007DEF09 /* Delay.swift in Sources */,
 				DB7D87F81D178D5000885937 /* TopicTableViewCell.swift in Sources */,
 				DB83E2781B0F854D007BE039 /* PercolatorKey.swift in Sources */,
+				DB7560961D4B1086005A5046 /* DetailTableViewCell+CollectionView.swift in Sources */,
 				DB88206E1D3F1E91009031AE /* Episode.swift in Sources */,
 				DB7E288E1D3BE47A00B529CA /* TransitionDelegate.swift in Sources */,
 				DBD2D57C1B84AEB300EED59A /* BangumiAPI.swift in Sources */,
 				DBEF11401D37748D00E7A0D7 /* DataSource.swift in Sources */,
+				DB7560981D4B1843005A5046 /* Staff.swift in Sources */,
 				DB0BC8041D1195FD0091ECE0 /* AnimeListTableViewController.swift in Sources */,
 				DB6B1BCF1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift in Sources */,
 				DBBB52531D47AE6E008A1617 /* SaveActivity.swift in Sources */,
@@ -1028,6 +1024,7 @@
 				DBEF11481D37866800E7A0D7 /* SearchBoxTableViewModel.swift in Sources */,
 				DBE1C80F1D3C73820086B83D /* String.swift in Sources */,
 				DB5021851D3FCEF700148C8F /* Progress.swift in Sources */,
+				DBEB29BC1D4E43EE00AF4FA1 /* TestTableViewController.swift in Sources */,
 				DB7D13611D18E96D00ACA94B /* SubjectCollectionReusableView.swift in Sources */,
 				DB7E287C1D3B68F500B529CA /* AnimeListTableViewModel.swift in Sources */,
 				DB1AAAFD1D33D39100EE7727 /* LoginViewController.swift in Sources */,
@@ -1038,6 +1035,7 @@
 				DBE1C80B1D3C533A0086B83D /* UILabel.swift in Sources */,
 				DB026CE81D37372C0023A507 /* Percolator.xcdatamodeld in Sources */,
 				DB3159711D139C06007B280E /* SearchBoxTableViewController.swift in Sources */,
+				DBC3A19B1D4B42710016346E /* Actor.swift in Sources */,
 				DBAEE4AD1D44AA53008DE0C6 /* ModelDelegate.swift in Sources */,
 				DBEF113E1D37678800E7A0D7 /* DataProvider.swift in Sources */,
 				DBA4C90E1D168E8F0043EDED /* CMKCollectButton.swift in Sources */,
@@ -1186,7 +1184,7 @@
 			baseConfigurationReference = A341A87A1F6A79DEC81B42B0 /* Pods-Bangumi M.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Bangumi M";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Bangumi M.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1211,7 +1209,7 @@
 			baseConfigurationReference = 7EFB831DCE065645C982A805 /* Pods-Bangumi M.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Bangumi M";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Bangumi M.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";

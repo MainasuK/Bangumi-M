@@ -28,8 +28,8 @@ final class SearchBoxTableViewModel: DataProvider {
         let cdSubjects = try? context.fetch(fetchRequest) else {
             return []
         }
-        
-        return cdSubjects.map { $0.toSubject() }
+
+        return cdSubjects.map { $0.toSubject() }.reversed()
     }()
     private var collectDict: CollectDict = [:]
 
@@ -40,7 +40,7 @@ final class SearchBoxTableViewModel: DataProvider {
     private var lastSearchType = 0
     
     /// Change it to true only. Never ever to false
-    private var isSearching = false {
+    private(set) var isSearching = false {
         didSet {
             if oldValue == false {
                 // Prevent view not refresh
@@ -174,7 +174,11 @@ extension SearchBoxTableViewModel {
         if let index = (localItems.index { $0.id == item.id }) {
             localItems.remove(at: index)
         }
-        tableView?.reloadData()
+        if isSearching {
+            tableView?.reloadRows(at: [indexPath], with: .fade)
+        } else {
+            tableView?.deleteRows(at: [indexPath], with: .left)
+        }
         
         return isSuccess
     }

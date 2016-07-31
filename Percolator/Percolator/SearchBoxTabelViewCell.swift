@@ -8,8 +8,9 @@
 
 import UIKit
 import AlamofireImage
+import MGSwipeTableCell
 
-class SearchBoxTableViewCell: UITableViewCell {
+class SearchBoxTableViewCell: MGSwipeTableCell {
     
     @IBOutlet weak var animeImageView: UIImageView!
     @IBOutlet weak var savedArrowImageView: UIImageView!
@@ -126,8 +127,3 @@ extension SearchBoxTableViewCell {
     }
     
 }
-
-
-//extension SearchBoxTabelViewCell: MGSwipeTableCell {
-//
-//}
