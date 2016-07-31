@@ -34,8 +34,8 @@ struct Subject {
     let rating: Rating
     
     /// responseGroup medium or large
-    // TODO: crt
-    // TODO: staff
+    let crts: [Crt]
+    let staffs: [Staff]
     
     /// responseGroup Large only
     // TODO: topic
@@ -73,6 +73,9 @@ struct Subject {
         rating = Rating(json: ratingDict)
         
         // For responseGroup large
+        crts = json[BangumiKey.subjectCrt].arrayValue.map { Crt(from: $0) }
+        staffs = json[BangumiKey.staffDict].arrayValue.map { Staff(from: $0) }
+        
         let EPSArray = json[BangumiKey.eps].arrayValue.map { Episode(from: $0) }
         EPS = EPSArray
         eps = json[BangumiKey.eps].intValue ?? EPSArray.count
@@ -96,6 +99,8 @@ struct Subject {
         collection = Collection(from: cdSubject.collection)
         rating = Rating(from: cdSubject.rating)
         
+        crts = []
+        staffs = []
         EPS = []
     }
     

@@ -7,24 +7,22 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-public struct Actor {
-    public var id = 0
-    public var url = ""
-    public var name = ""
+struct Actor {
+    var id: Int
+    var url: String
+    var name: String
     
-    public var image = CrtImage()
+//    var image = CrtImage()
     
-    init() {
-    }
-    
-    init(actorDict: NSDictionary) {
-        id = actorDict[BangumiKey.id] as! Int
-        url = actorDict[BangumiKey.url] as! String
-        name = actorDict[BangumiKey.name] as! String
+    init(from json: JSON) {
+        id = json[BangumiKey.id].intValue
+        url = json[BangumiKey.url].stringValue
+        name = json[BangumiKey.name].stringValue
         
-        if let imageDict = actorDict[BangumiKey.imagesDict] as? NSDictionary {
-            image = CrtImage(crtImageDict: imageDict)
-        }
+//        if let imageDict = actorDict[BangumiKey.imagesDict] as? NSDictionary {
+//            image = CrtImage(crtImageDict: imageDict)
+//        }
     }
 }

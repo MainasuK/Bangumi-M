@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class DetailTableViewModel: DataProvider {
+final class DetailTableViewModel: NSObject, DataProvider {
     
     typealias ItemType = Result<DetailItem>
     typealias Error = ModelError
@@ -17,7 +17,22 @@ final class DetailTableViewModel: DataProvider {
     
     private var subject: Subject?
     private var progress = Progress()
+    
+    var collectionItems: [(String, [CollectionItem])] {
+        var items: [(String, [CollectionItem])] = []
+        
+        if let crts = subject?.crts, !crts.isEmpty {
+            items.append( ("出场人物", crts.map { CollectionItem.crt($0) }) )
+        }
+        if let staffs = subject?.staffs, !staffs.isEmpty {
+            items.append( ("制作人员", staffs.map { CollectionItem.staff($0) }) )
+        }
+        
+        return items
+    }
+    
     private weak var tableView: UITableView?
+    private weak var collectionViewDelegate: UICollectionViewDelegate?
     
     var isReverse = false
     var isEmpty: Bool {
@@ -27,9 +42,10 @@ final class DetailTableViewModel: DataProvider {
     // TODO:
     // Init controller without subject (only subjectID) is necessary
     // In latter condition, manual call the something like fetch subject…
-    init(tableView: UITableView, with subject: Subject? = nil) {
+    init(tableView: UITableView, collectionViewDelegate delegate: UICollectionViewDelegate, with subject: Subject? = nil) {
         self.tableView = tableView
         self.subject = subject
+        self.collectionViewDelegate = delegate
     }
     
     deinit {
@@ -121,32 +137,35 @@ extension DetailTableViewModel {
     
     func numberOfSections() -> Int {
         // No.0     --> Banner cell
-        // No.1     --> More topic cell
-        // No.2     --> More subject cell
-        // No.3...6 --> EPS cell
-        return 7
+        // No.1     --> Characters + Staff cell
+        // No.2     --> More topic cell
+        // No.3     --> More subject cell
+        // No.4...7 --> EPS cell
+        return 8
     }
     
     func numberOfItems(in section: Int) -> Int {
         switch section {
         // Banner cell
-        case 0: fallthrough
+        case 0: return isEmpty ? 0 : 1
+        // Collection cell
+        case 1: return collectionItems.count
         // More topic cell
-        case 1: fallthrough
-        // More subject cell
         case 2: return isEmpty ? 0 : 1
+        // More subject cell
+        case 3: return isEmpty ? 0 : 1
         // EP
-        case 3:
+        case 4:
             // API return 1 ep to muisc type
             guard subject?.type != 3 else { return 0 }
             
             return subject?.epTable.count ?? 0
          // SP
-        case 4: return subject?.spTable.count ?? 0
+        case 5: return subject?.spTable.count ?? 0
         // OP
-        case 5: return subject?.opTable.count ?? 0
+        case 6: return subject?.opTable.count ?? 0
         // ED
-        case 6: return subject?.edTable.count ?? 0
+        case 7: return subject?.edTable.count ?? 0
             
         default: return 0
         }
@@ -160,34 +179,38 @@ extension DetailTableViewModel {
         
         switch indexPath.section {
         // Banner cell
-        case 0: fallthrough
+        case 0: return .success(.subject(subject))
+        // Collection cell
+        case 1:
+            let headline = collectionItems[indexPath.row].0
+            let item = DetailItem.collection(self, collectionViewDelegate, headline, indexPath)
+            return .success(item)
         // More topic cell
-        case 1: fallthrough
-        // More subject cell
         case 2: return .success(.subject(subject))
-        
+        // More subject cell
+        case 3: return .success(.subject(subject))
         // FIXME: Need clean up
-        // Note: Not profiled code. Should keep watch
+        // Note: Not profiled code. Should keep watching
         // EP
-        case 3:
+        case 4:
             let episode = (isReverse) ? subject.epTableReversed[indexPath.row] : subject.epTable[indexPath.row]
             let status = progress[episode.id]
             return .success(.episode(episode, status))
             
         // SP
-        case 4:
+        case 5:
             let episode = subject.spTable[indexPath.row]
             let status = progress[episode.id]
             return .success(.episode(episode, status))
             
         // OP
-        case 5:
+        case 6:
             let episode = subject.opTable[indexPath.row]
             let status = progress[episode.id]
             return .success(.episode(episode, status))
             
         // ED
-        case 6:
+        case 7:
             let episode = subject.edTable[indexPath.row]
             let status = progress[episode.id]
             return .success(.episode(episode, status))
@@ -201,18 +224,20 @@ extension DetailTableViewModel {
         switch indexPath.section {
         // Banner
         case 0: return StoryboardKey.DetailTableViewBannerCellKey
+        // Collection cell
+        case 1: return StoryboardKey.DetailTableViewCell_CollectionView
         // More topic
-        case 1: return StoryboardKey.DetailTableViewMoreTopicCellKey
+        case 2: return StoryboardKey.DetailTableViewMoreTopicCellKey
         // More subject
-        case 2: return StoryboardKey.DetailTableViewMoreSubjectCellKey
+        case 3: return StoryboardKey.DetailTableViewMoreSubjectCellKey
         // EP
-        case 3: return StoryboardKey.DetailTableViewEPSCellKey
-        // SP
         case 4: return StoryboardKey.DetailTableViewEPSCellKey
-        // OP
+        // SP
         case 5: return StoryboardKey.DetailTableViewEPSCellKey
-        // ED
+        // OP
         case 6: return StoryboardKey.DetailTableViewEPSCellKey
+        // ED
+        case 7: return StoryboardKey.DetailTableViewEPSCellKey
         
         // Should never ever goto here
         default: return "No identifier for this section: \(indexPath.section)"
@@ -221,11 +246,33 @@ extension DetailTableViewModel {
         
 }
 
+extension DetailTableViewModel: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return collectionItems[collectionView.tag].1.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoryboardKey.CMKCollectionViewCell, for: indexPath) as! CMKCollectionViewCell
+        
+        let item = (collectionItems[collectionView.tag].1)[indexPath.row]
+        cell.configure(with: item)
+        
+        return cell
+    }
+}
+
 extension DetailTableViewModel {
+    
+    enum CollectionItem {
+        case crt(Crt)
+        case staff(Staff)
+    }
     
     enum DetailItem {
         case subject(Subject)
         case episode(Episode, Status?)
+        case collection(UICollectionViewDataSource, UICollectionViewDelegate?, String, IndexPath)
     }
     
     enum ModelError: ErrorProtocol {

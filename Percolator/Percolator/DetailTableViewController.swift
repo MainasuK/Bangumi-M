@@ -230,7 +230,7 @@ extension DetailTableViewController {
     
     
     private func setupTableViewDataSource() {
-        model = DetailTableViewModel(tableView: detailTableView, with: subject)
+        model = DetailTableViewModel(tableView: detailTableView, collectionViewDelegate: self, with: subject)
         dataSource = TableViewDataSource<Model, Cell>(model: model)
         detailTableView.dataSource = dataSource
     }
@@ -290,15 +290,6 @@ extension DetailTableViewController {
     
 }
 
-
-// MARK: - UIScrollViweDelegate
-extension DetailTableViewController {
-    
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.updateHeaderView()
-    }
-
-}
 
 extension DetailTableViewController {
     
@@ -418,7 +409,7 @@ extension DetailTableViewController {
 extension DetailTableViewController {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard section >= 3 && section <= 6 else {
+        guard section >= 4 && section <= 7 else {
             return 0
         }
         
@@ -433,7 +424,7 @@ extension DetailTableViewController {
         switch indexPath.section {
         case 0:
             return 300
-        case let section where section >= 3 && section <= 6:
+        case let section where section >= 4 && section <= 7:
             return 100
         default:
             return 200
@@ -453,9 +444,9 @@ extension DetailTableViewController {
         let sectionHeaderView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: StoryboardKey.DetailTableViewEPSHeaderFooterView) as! DetailTableViewEPSHeaderFooterView
     
         switch section {
-        case 3:     sectionHeaderView.typeLabel.text = "EP"
-        case 4:     sectionHeaderView.typeLabel.text = "SP"
-        case 5:     sectionHeaderView.typeLabel.text = "OP"
+        case 4:     sectionHeaderView.typeLabel.text = "EP"
+        case 5:     sectionHeaderView.typeLabel.text = "SP"
+        case 6:     sectionHeaderView.typeLabel.text = "OP"
         default:    sectionHeaderView.typeLabel.text = "ED"
         }
         
@@ -465,27 +456,28 @@ extension DetailTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            break;
-            
-        // More topic cell
+            break
         case 1:
+            break
+        // More topic cell
+        case 2:
             let topicTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.TopicTableViewControllerKey) as! TopicTableViewController
             navigationController?.pushViewController(topicTableViewController, animated: true)
             
             topicTableViewController.subject = self.subject
             
         // More subject cell
-        case 2:
+        case 3:
             let subjectCollectionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.SubjectCollectionViewController) as! SubjectCollectionViewController
             navigationController?.pushViewController(subjectCollectionViewController, animated: true)
             
             subjectCollectionViewController.subject = self.subject
         
         // EPS cell
-        case 3:     fallthrough
         case 4:     fallthrough
         case 5:     fallthrough
-        case 6:     markEpisode(at: indexPath)
+        case 6:     fallthrough
+        case 7:     markEpisode(at: indexPath)
             
         default:    break
         }
@@ -540,6 +532,7 @@ extension DetailTableViewController: DetailTableViewEPSCellDelegate {
     
 }
 
+// MARK: - DetailTableViewBannerCellDelegate
 extension DetailTableViewController: DetailTableViewBannerCellDelegate {
     
     func collectButtonPressed(_ sender: UIButton) {
@@ -552,51 +545,59 @@ extension DetailTableViewController: DetailTableViewBannerCellDelegate {
     }
 }
 
+// MARK: - UIScrollViewDelegate
+
+// MARK: - UIScrollViweDelegate
+extension DetailTableViewController {
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView is UITableView { self.updateHeaderView() }
+    }
+    
+    // Align item to eage
+    // Ref: Design Teardowns
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        if let collectionView = scrollView as? CMKCollectionView,
+        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            let width = layout.itemSize.width + layout.minimumLineSpacing
+            
+            var offset = targetContentOffset.pointee
+            
+            let index = (offset.x + scrollView.contentInset.left) / width
+            let roundedIndex = round(index)
+            
+            offset = CGPoint(x: roundedIndex * width - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+            targetContentOffset.pointee = offset
+        }
+    }
+    
+}
+
 
 // MARK: - UICollectionViewDelegate
-//extension DetailTableViewController: UICollectionViewDelegate {
+extension DetailTableViewController: UICollectionViewDelegate {
 
-//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        var url = ""
-//        let desktopUrl = detailSource.sourceArr[collectionView.tag][indexPath.item].url
-//        let urlSplice = desktopUrl.componentsSeparatedByString("/")
-//        if let id = urlSplice.last {
-//            switch detailSource.sourceNameList[collectionView.tag] {
-//            case "出场人物": url = "http://bangumi.tv/m/topic/crt/" + id
-//            case "制作人员": url = "http://bangumi.tv/m/topic/prsn/" + id
-//            case let tag where tag != "":
-//                pushToNewDetailTableViewController(id)
-//                return
-//                
-//            default:
-//                
-//                // url wrong
-//                NSLog("Error: Url parse error")
-//                return
-//            }
-//            
-//            if #available(iOS 9.0, *) {
-//                let svc = SFSafariViewController(URL: NSURL(string: url)!)
-//                svc.delegate = self
-//                UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-//                self.presentViewController(svc, animated: true, completion: nil)
-//            } else {
-//                // Fallback on earlier versions
-//                UIApplication.sharedApplication().openURL(NSURL(string: url)!)
-//            }
-//            
-//        }
-//        
-//        //        if UIDevice.currentDevice().systemVersion >= "8.0" {
-//        //            let alert = UIAlertController(title: "第\(collectionView.tag)行", message: "第\(indexPath.item)个元素", preferredStyle: UIAlertControllerStyle.Alert)
-//        //            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
-//        //            let v: UIView = UIView(frame: CGRectMake(10, 20, 50, 50))
-//        //            alert.view.addSubview(v)
-//        //            self.presentViewController(alert, animated: true, completion: nil)
-//        //        }
-//    }
-//
-//}
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let item = (model.collectionItems[collectionView.tag].1)[indexPath.row]
+        var urlPath = ""
+        
+        switch item {
+        case .crt(let crt):
+            urlPath = "http://bangumi.tv/m/topic/crt/\(crt.id)"
+        case .staff(let staff):
+            urlPath = "http://bangumi.tv/m/topic/prsn/\(staff.id)"
+        }
+        
+        guard let url = URL(string: urlPath) else {
+            return
+        }
+        
+        present(SFSafariViewController(url: url), animated: true, completion: nil)
+    }
+
+}
 
 // MARK: - MGSwipeTableCellDelegate
 //extension DetailTableViewController: MGSwipeTableCellDelegate {

@@ -9,12 +9,14 @@
 import Foundation
 import SwiftyJSON
 
+// FIXME:
 struct Images {
     let largeUrl: String?
-    let commonUrl: String?
     let mediumUrl: String?
     let smallUrl: String?
     let gridUrl: String?
+    
+    let commonUrl: String?
     
     // Some subjects return null
     init(json: [String : JSON]) {

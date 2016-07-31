@@ -43,7 +43,8 @@ public struct StoryboardKey {
     static let DetailTableViewMoreTopicCellKey      = "DetailTableViewMoreTopicCellKey"
     static let DetailTableViewMoreSubjectCellKey    = "DetailTableViewMoreSubjectCellKey"
     static let DetailTableViewEPSCellKey            = "DetailTableViewEPSCellKey"
-    
+    static let DetailTableViewCell_CollectionView   = "DetailTableViewCell_CollectionView"
+    static let CMKCollectionViewCell                = "CMKCollectionViewCell"
     
     static let TopicTableViewHeaderFooterView       = "TopicTableViewHeaderFooterView"
     static let TopicTableViewControllerKey          = "TopicTableViewControllerKey"
