@@ -60,7 +60,26 @@ final class DetailTableViewController: UITableViewController {
         model.isReverse = !model.isReverse
         tableView.reloadData()
     }
+    
+    @IBAction func longPressGrestureTrigger(_ sender: UILongPressGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            guard let cellIndexPath = tableView.indexPathForRow(at: sender.location(in: tableView)),
+            let tableViewCell = tableView.cellForRow(at: cellIndexPath) as? DetailTableViewCell_CollectionView,
+            let collectionIndexPath = tableViewCell.collectionView.indexPathForItem(at: sender.location(in: tableViewCell.collectionView)),
+            case let Model.CollectionItem.crt(crt) = (model.collectionItems[tableViewCell.collectionView.tag].1)[collectionIndexPath.row],
+            let actorID = crt.actors.first?.id,
+            let url = URL(string: "http://bangumi.tv/m/topic/prsn/\(actorID)") else {
+                return
+            }
+            
+            present(SFSafariViewController(url: url), animated: true, completion: nil)
 
+        default:
+            return
+        }
+        
+    }
     
     
     
@@ -551,7 +570,9 @@ extension DetailTableViewController: DetailTableViewBannerCellDelegate {
 extension DetailTableViewController {
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView is UITableView { self.updateHeaderView() }
+        if scrollView is UITableView {
+            self.updateHeaderView()
+        }
     }
     
     // Align item to eage
