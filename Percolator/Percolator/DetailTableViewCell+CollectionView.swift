@@ -37,33 +37,40 @@ class CMKCollectionView: UICollectionView {
     
     let gradientLayer: CAGradientLayer = {
         let layer = CAGradientLayer()
-        layer.colors = [UIColor.white().withAlphaComponent(0).cgColor,
-                        UIColor.white().withAlphaComponent(1).cgColor,
-                        UIColor.white().withAlphaComponent(1).cgColor,
-                        UIColor.white().withAlphaComponent(0).cgColor]
+        layer.colors = [UIColor.white().withAlphaComponent(1).cgColor,
+                        UIColor.white().withAlphaComponent(0).cgColor,
+                        UIColor.white().withAlphaComponent(0).cgColor,
+                        UIColor.white().withAlphaComponent(1).cgColor]
         layer.locations = [0.0, 0.02, 0.98, 1.0]
         layer.startPoint = CGPoint(x: 0.0, y: 0.5)
         layer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main().scale
         
         return layer
     }()
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        self.layer.mask = gradientLayer
+
+        self.clipsToBounds = true
+        self.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        layoutGradientLayer()
+    }
+    
+    private func layoutGradientLayer() {
+        let threshold = 20.0 / self.bounds.width
+        
         // Fix layout delay issue
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         gradientLayer.frame = self.bounds
-        gradientLayer.frame.origin.x -= 8.0
-        gradientLayer.frame.size.width += 16.0
+        gradientLayer.locations = [0.0, min(threshold, (abs(self.contentOffset.x) + 1.0) / self.bounds.width), 0.97, 1.0]
         CATransaction.commit()
     }
     
