@@ -78,7 +78,9 @@ extension DetailTableViewEPSCell {
     }
     
     private func configureProgressView(with status: Status?) {
-        sortStatusView.layer.cornerRadius = (sortStatusView.bounds.width == 0) ? 6.0 : sortStatusView.bounds.width / 2.0
+        // The init layer width is not preset width in iOS 10 (why 1000 pt?)
+        // Change it when you modify the constraint in storyboard
+        sortStatusView.layer.cornerRadius = 6.0
         sortStatusView.layer.borderWidth = 0.5
         sortStatusView.layer.borderColor = UIColor(red: 0.00, green: 0.38, blue: 0.74, alpha: 1.00).cgColor
 
