@@ -125,7 +125,7 @@ extension DetailTableViewModel {
                 self.progress = try result.resolve()
                 self.tableView?.reloadData()
             } catch {
-                
+                consolePrint(error)
             }
         }
     }
