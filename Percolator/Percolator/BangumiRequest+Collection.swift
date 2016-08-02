@@ -142,7 +142,7 @@ extension BangumiRequest {
     
     // Unwrap JSON to Subjects
     private func toSubjects(from json: JSON) -> Result<CollectionSubjects> {
-        let subjects = json.arrayValue.map { Subject(from: $0["subject"]) }
+        let subjects = json.arrayValue.map { Subject(from: $0["subject"], of: .small) }
 
         return .success(subjects)
     }

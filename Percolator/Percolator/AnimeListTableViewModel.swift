@@ -154,6 +154,9 @@ extension AnimeListTableViewModel {
     private func replaceCollection(with subjectIDs: [Int]) {
         subjectIDs.forEach {
             consolePrint("Fetching subject with id: \($0)…")
+            
+            let theID = $0
+            
             request.subject(of: $0) { (result: Result<Subject>) in
                 consolePrint("… fetched result …")
                 
@@ -174,6 +177,12 @@ extension AnimeListTableViewModel {
                     self.subjects[index] = subject
                     self.tableView?.reloadRows(at: [indexPath], with: .none)
                 } catch {
+                    // FIXME: cell need handle it
+                    if let index = self.subjects.index(where: { theID == $0.id }) {
+                        self.subjects[index].responseGroup = .none
+                        let indexPath = IndexPath(row: index, section: 0)
+                        self.tableView?.reloadRows(at: [indexPath], with: .none)
+                    }
                     consolePrint("Fetch subject large get error: \(error)")
                 }
             }

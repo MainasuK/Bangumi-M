@@ -50,7 +50,7 @@ struct Subject {
     
     var epTableReversed: [Episode] { return epTable.reversed() }
     
-    init(from json: JSON) {
+    init(from json: JSON, of responseGroup: ResponseGroup = .none) {
         id = json[BangumiKey.id].int!
         url = json[BangumiKey.url].string!
         type = json[BangumiKey.type].int!
