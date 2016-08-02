@@ -17,16 +17,9 @@ extension BangumiRequest {
     func subject(of id: Int, with responseGroup: ResponseGroup = .large, handler: (Result<Subject>) -> Void) {
         
         let urlPath = String(format: BangumiApiKey.Subject, id)
-        var parameters = ["responseGroup" : responseGroup.rawValue]
+        let parameters = ["responseGroup" : responseGroup.rawValue]
         
-        if let authEncode = user?.authEncode {
-            consolePrint("Send subject request with auth token")
-            parameters["source"] = BangumiApiKey.Percolator
-            parameters["auth"] = authEncode
-        } else {
-            consolePrint("Send subject request without auth token")
-        }
-        
+        // Speeding up with HTTP protocol (without auth info)
         alamofireManager.request(.GET, urlPath, parameters: parameters).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
             
             let subject = self.getResult(from: response)
