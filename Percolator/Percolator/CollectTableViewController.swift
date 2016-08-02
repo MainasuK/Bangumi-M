@@ -146,7 +146,7 @@ extension CollectTableViewController {
     private func setupControlItem() {
         tagView.setDeleteButtonBackgroundImage(UIImage(named: "btn_tag_delete"), state: .normal)
         tagView.backgroundColor = UIColor.clear()
-        tagView.verticalInsetForTag = UIEdgeInsetsMake(9, 0, 6, 0);
+        tagView.verticalInsetForTag = UIEdgeInsetsMake(9, 8, 6, 0);
         tagView.allowToUseSingleSpace = false
         
         commentTextView.delegate = self

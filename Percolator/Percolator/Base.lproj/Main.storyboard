@@ -56,6 +56,7 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lcn-YZ-68B">
+                                                                                <accessibility key="accessibilityConfiguration" identifier="email"/>
                                                                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="14"/>
                                                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
                                                                                 <connections>
@@ -72,6 +73,7 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NWT-3L-hfA">
+                                                                                <accessibility key="accessibilityConfiguration" identifier="password"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="30" id="32Y-g2-2ZW"/>
                                                                                 </constraints>
@@ -280,18 +282,16 @@
                                         <rect key="frame" x="0.0" y="391" width="375" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ccg-ts-bbh" id="iRA-Ot-BtN">
-                                            <frame key="frameInset" width="375" height="45"/>
+                                            <frame key="frameInset" width="375" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="foX-Qb-63w" customClass="TagWriteView" customModule="Bangumi_M" customModuleProvider="target">
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="foX-Qb-63w" customClass="TagWriteView" customModule="Bangumi_M" customModuleProvider="target"/>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="foX-Qb-63w" secondAttribute="bottom" id="0ze-Vx-XNG"/>
                                                 <constraint firstItem="foX-Qb-63w" firstAttribute="top" secondItem="iRA-Ot-BtN" secondAttribute="top" id="4ul-eH-RZ3"/>
-                                                <constraint firstItem="foX-Qb-63w" firstAttribute="leading" secondItem="iRA-Ot-BtN" secondAttribute="leadingMargin" constant="4" id="a8j-Jm-SVG"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="foX-Qb-63w" secondAttribute="trailing" id="gzX-10-YpV"/>
+                                                <constraint firstItem="foX-Qb-63w" firstAttribute="leading" secondItem="iRA-Ot-BtN" secondAttribute="leading" id="a8j-Jm-SVG"/>
+                                                <constraint firstAttribute="trailing" secondItem="foX-Qb-63w" secondAttribute="trailing" id="gzX-10-YpV"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1023,7 +1023,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="123000A3-8373-4589-8136-751D67A7E526" translatesAutoresizingMaskIntoConstraints="NO" id="75E-1E-wUk">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0DA2BC6A-4DD1-4849-B621-E5DCE918AA78" translatesAutoresizingMaskIntoConstraints="NO" id="75E-1E-wUk">
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="75E-1E-wUk" secondAttribute="height" multiplier="1:1" id="oUT-JR-2UH"/>
                                 </constraints>
@@ -1501,7 +1501,7 @@
                                 <frame key="frameInset" minY="568" width="375" height="155"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GhP-qN-VPB" id="xbx-6B-7i6">
-                                    <frame key="frameInset" width="375" height="154.5"/>
+                                    <frame key="frameInset" width="375" height="155"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出场人物" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vrr-1Y-WHa">
@@ -1845,7 +1845,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="123000A3-8373-4589-8136-751D67A7E526" width="229" height="229">
+        <image name="0DA2BC6A-4DD1-4849-B621-E5DCE918AA78" width="229" height="229">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBMU
 GR4fJSYsLzU4VSRudWxs1QkKCwwNDg8QERJWTlNTaXplViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBz
