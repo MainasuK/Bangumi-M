@@ -34,7 +34,7 @@ struct Episode {
     
     var sortString: String {
         let formatter = NumberFormatter()
-        formatter.locale = Locale(localeIdentifier: "en_US_POSIX")
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.maximumFractionDigits = 3
         formatter.minimumFractionDigits = 0
         

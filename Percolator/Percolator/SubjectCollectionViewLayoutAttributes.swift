@@ -10,7 +10,7 @@ import UIKit
 
 class SubjectCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
     
-    var color = UIColor.white()
+    var color = UIColor.white
     
     override func copy(with zone: NSZone? = nil) -> AnyObject {
         let newAttributes = super.copy(with: zone) as! SubjectCollectionViewLayoutAttributes

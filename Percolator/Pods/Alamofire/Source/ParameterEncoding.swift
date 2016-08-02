@@ -38,8 +38,8 @@ public enum Method: String {
 /**
     Used to specify the way in which a set of parameters are applied to a URL request.
 
-    - `URL`:             Creates a query string to be set as or appended to any existing URL query for `GET`, `HEAD`, 
-                         and `DELETE` requests, or set as the body for requests with any other HTTP method. The 
+    - `URL`:             Creates a query string to be set as or appended to any existing URL query for `GET`, `HEAD`,
+                         and `DELETE` requests, or set as the body for requests with any other HTTP method. The
                          `Content-Type` HTTP header field of an encoded request with HTTP body is set to
                          `application/x-www-form-urlencoded; charset=utf-8`. Since there is no published specification
                          for how to encode collection types, the convention of appending `[]` to the key for array
@@ -49,8 +49,8 @@ public enum Method: String {
     - `URLEncodedInURL`: Creates query string to be set as or appended to any existing URL query. Uses the same
                          implementation as the `.URL` case, but always applies the encoded result to the URL.
 
-    - `JSON`:            Uses `NSJSONSerialization` to create a JSON representation of the parameters object, which is 
-                         set as the body of the request. The `Content-Type` HTTP header field of an encoded request is 
+    - `JSON`:            Uses `NSJSONSerialization` to create a JSON representation of the parameters object, which is
+                         set as the body of the request. The `Content-Type` HTTP header field of an encoded request is
                          set to `application/json`.
 
     - `PropertyList`:    Uses `NSPropertyListSerialization` to create a plist representation of the parameters object,
@@ -74,7 +74,7 @@ public enum ParameterEncoding {
         - parameter URLRequest: The request to have parameters applied.
         - parameter parameters: The parameters to apply.
 
-        - returns: A tuple containing the constructed request and the error that occurred during parameter encoding, 
+        - returns: A tuple containing the constructed request and the error that occurred during parameter encoding,
                    if any.
     */
     public func encode(
@@ -93,7 +93,7 @@ public enum ParameterEncoding {
             func query(_ parameters: [String: AnyObject]) -> String {
                 var components: [(String, String)] = []
 
-                for key in parameters.keys.sorted(isOrderedBefore: <) {
+                for key in parameters.keys.sorted(by: <) {
                     let value = parameters[key]!
                     components += queryComponents(key, value)
                 }
@@ -225,38 +225,6 @@ public enum ParameterEncoding {
         var allowedCharacterSet = NSMutableCharacterSet.urlQueryAllowed
         allowedCharacterSet.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
 
-        var escaped = ""
-
-        //==========================================================================================================
-        //
-        //  Batching is required for escaping due to an internal bug in iOS 8.1 and 8.2. Encoding more than a few
-        //  hundred Chinese characters causes various malloc error crashes. To avoid this issue until iOS 8 is no
-        //  longer supported, batching MUST be used for encoding. This introduces roughly a 20% overhead. For more
-        //  info, please refer to:
-        //
-        //      - https://github.com/Alamofire/Alamofire/issues/206
-        //
-        //==========================================================================================================
-
-        if #available(iOS 8.3, OSX 10.10, *) {
-            escaped = string.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? string
-        } else {
-            let batchSize = 50
-            var index = string.startIndex
-
-            while index != string.endIndex {
-                let startIndex = index
-                let endIndex = string.index(index, offsetBy: batchSize, limitedBy: string.endIndex)
-                let range = startIndex..<(endIndex ?? string.endIndex)
-
-                let substring = string.substring(with: range)
-
-                escaped += substring.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? substring
-
-                index = endIndex ?? string.endIndex
-            }
-        }
-
-        return escaped
+        return string.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? string
     }
 }

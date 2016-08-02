@@ -194,33 +194,33 @@ extension Manager {
     public static let MultipartFormDataEncodingMemoryThreshold: UInt64 = 10 * 1024 * 1024
 
     /**
-        Defines whether the `MultipartFormData` encoding was successful and contains result of the encoding as 
+        Defines whether the `MultipartFormData` encoding was successful and contains result of the encoding as
         associated values.
 
-        - Success: Represents a successful `MultipartFormData` encoding and contains the new `Request` along with 
+        - Success: Represents a successful `MultipartFormData` encoding and contains the new `Request` along with
                    streaming information.
-        - Failure: Used to represent a failure in the `MultipartFormData` encoding and also contains the encoding 
+        - Failure: Used to represent a failure in the `MultipartFormData` encoding and also contains the encoding
                    error.
     */
     public enum MultipartFormDataEncodingResult {
         case success(request: Request, streamingFromDisk: Bool, streamFileURL: URL?)
-        case failure(ErrorProtocol)
+        case failure(Error)
     }
 
     /**
         Encodes the `MultipartFormData` and creates a request to upload the result to the specified URL request.
 
-        It is important to understand the memory implications of uploading `MultipartFormData`. If the cummulative 
-        payload is small, encoding the data in-memory and directly uploading to a server is the by far the most 
-        efficient approach. However, if the payload is too large, encoding the data in-memory could cause your app to 
-        be terminated. Larger payloads must first be written to disk using input and output streams to keep the memory 
-        footprint low, then the data can be uploaded as a stream from the resulting file. Streaming from disk MUST be 
+        It is important to understand the memory implications of uploading `MultipartFormData`. If the cummulative
+        payload is small, encoding the data in-memory and directly uploading to a server is the by far the most
+        efficient approach. However, if the payload is too large, encoding the data in-memory could cause your app to
+        be terminated. Larger payloads must first be written to disk using input and output streams to keep the memory
+        footprint low, then the data can be uploaded as a stream from the resulting file. Streaming from disk MUST be
         used for larger payloads such as video content.
 
-        The `encodingMemoryThreshold` parameter allows Alamofire to automatically determine whether to encode in-memory 
+        The `encodingMemoryThreshold` parameter allows Alamofire to automatically determine whether to encode in-memory
         or stream from disk. If the content length of the `MultipartFormData` is below the `encodingMemoryThreshold`,
-        encoding takes place in-memory. If the content length exceeds the threshold, the data is streamed to disk 
-        during the encoding process. Then the result is uploaded as data or as a stream depending on which encoding 
+        encoding takes place in-memory. If the content length exceeds the threshold, the data is streamed to disk
+        during the encoding process. Then the result is uploaded as data or as a stream depending on which encoding
         technique was used.
 
         If `startRequestsImmediately` is `true`, the request will have `resume()` called before being returned.
@@ -281,14 +281,7 @@ extension Manager {
         encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
         encodingCompletion: ((MultipartFormDataEncodingResult) -> Void)?)
     {
-
-        let attributes: DispatchQueue.GlobalAttributes
-        if #available(OSXApplicationExtension 10.10, *) {
-            attributes = DispatchQueue.GlobalAttributes.qosDefault
-        } else {
-            attributes = []
-        }
-        DispatchQueue.global(attributes: attributes).async {
+        DispatchQueue.global(qos: .utility).async {
             let formData = MultipartFormData()
             multipartFormData(formData)
 
@@ -317,9 +310,9 @@ extension Manager {
             } else {
                 let fileManager = FileManager.default
                 let tempDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory())
-                let directoryURL = try! tempDirectoryURL.appendingPathComponent("com.alamofire.manager/multipart.form.data")
+                let directoryURL = tempDirectoryURL.appendingPathComponent("org.alamofire.manager/multipart.form.data")
                 let fileName = UUID().uuidString
-                let fileURL = try! directoryURL.appendingPathComponent(fileName)
+                let fileURL = directoryURL.appendingPathComponent(fileName)
 
                 do {
                     try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)

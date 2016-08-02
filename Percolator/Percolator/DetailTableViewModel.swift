@@ -11,7 +11,7 @@ import UIKit
 final class DetailTableViewModel: NSObject, DataProvider {
     
     typealias ItemType = Result<DetailItem>
-    typealias Error = ModelError
+    typealias ErrorType = ModelError
     
     private let request = BangumiRequest.shared
     
@@ -85,13 +85,13 @@ extension DetailTableViewModel {
         }
     }
     
-    func markEpisode(at indexPath: IndexPath, to status: Status, handler: (ErrorProtocol?) -> Void) {
+    func markEpisode(at indexPath: IndexPath, to status: Status, handler: (Error?) -> Void) {
         
         guard let item = try? item(at: indexPath).resolve(),
         let episode = item~>^=^ else { return }
         
         NetworkSpinner.on()
-        request.ep(of: episode.id, with: nil, of: status) { (error: ErrorProtocol?) in
+        request.ep(of: episode.id, with: nil, of: status) { (error: Error?) in
             NetworkSpinner.off()
             
             assert(Thread.isMainThread, "Model method should be main thread for thread safe")
@@ -174,7 +174,7 @@ extension DetailTableViewModel {
     func item(at indexPath: IndexPath) -> DetailTableViewModel.ItemType {
         
         guard let subject = self.subject else {
-            return .failure(Error.noSubject)
+            return .failure(ErrorType.noSubject)
         }
         
         switch indexPath.section {
@@ -216,7 +216,7 @@ extension DetailTableViewModel {
             return .success(.episode(episode, status))
             
         // Should never ever goto here
-        default: return .failure(Error.noSubject)
+        default: return .failure(ErrorType.noSubject)
         }
     }
     
@@ -275,7 +275,7 @@ extension DetailTableViewModel {
         case collection(UICollectionViewDataSource, UICollectionViewDelegate?, String, IndexPath)
     }
     
-    enum ModelError: ErrorProtocol {
+    enum ModelError: Error {
         case noSubject
     }
     

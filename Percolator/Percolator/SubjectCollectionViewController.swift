@@ -42,7 +42,7 @@ extension SubjectCollectionViewController {
         setupTableViewDataSource()
         
         title = "相关条目"
-        collectionView?.backgroundColor = UIColor.myAnimeListBackground()
+        collectionView?.backgroundColor = UIColor.myAnimeListBackground
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -51,7 +51,7 @@ extension SubjectCollectionViewController {
         
         if isFirstAppear {
             SVProgressHUD.show()
-            model.fetchRelatedSubjects { (error:ErrorProtocol?) in
+            model.fetchRelatedSubjects { (error: Error?) in
                 delay(3.0) {
                     SVProgressHUD.dismiss()
                 }
@@ -92,7 +92,7 @@ extension SubjectCollectionViewController {
                     
                 } catch UnknownError.network(let error) {
                     let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.rawValue)
+                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
                     self.present(alertController, animated: true, completion: nil)
                     consolePrint("Unknow NSURLError: \(error)")
                     
@@ -172,7 +172,7 @@ extension SubjectCollectionViewController {
                 
             } catch UnknownError.network(let error) {
                 let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.rawValue)
+                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("Unknow NSURLError: \(error)")
                 

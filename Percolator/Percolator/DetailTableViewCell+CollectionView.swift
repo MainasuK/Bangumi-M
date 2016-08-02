@@ -37,15 +37,15 @@ class CMKCollectionView: UICollectionView {
     
     let gradientLayer: CAGradientLayer = {
         let layer = CAGradientLayer()
-        layer.colors = [UIColor.white().withAlphaComponent(1).cgColor,
-                        UIColor.white().withAlphaComponent(0).cgColor,
-                        UIColor.white().withAlphaComponent(0).cgColor,
-                        UIColor.white().withAlphaComponent(1).cgColor]
+        layer.colors = [UIColor.white.withAlphaComponent(1).cgColor,
+                        UIColor.white.withAlphaComponent(0).cgColor,
+                        UIColor.white.withAlphaComponent(0).cgColor,
+                        UIColor.white.withAlphaComponent(1).cgColor]
         layer.locations = [0.0, 0.02, 0.98, 1.0]
         layer.startPoint = CGPoint(x: 0.0, y: 0.5)
         layer.endPoint = CGPoint(x: 1.0, y: 0.5)
         layer.shouldRasterize = true
-        layer.rasterizationScale = UIScreen.main().scale
+        layer.rasterizationScale = UIScreen.main.scale
         
         return layer
     }()
@@ -94,7 +94,7 @@ class CMKCollectionViewCell: UICollectionViewCell, ConfigurableCell {
             subtitleLabel.text = crt.actors.first?.name ?? ""
             if let urlPath = crt.images.gridUrl,
             let url = URL(string: urlPath) {
-                itemImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder(), size: CGSize(width: 80, height: 80)), imageTransition: .crossDissolve(0.2))
+                itemImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: CGSize(width: 80, height: 80)), imageTransition: .crossDissolve(0.2))
             } else {
                 itemImageView.image = UIImage(named: "404")!
             }
@@ -103,7 +103,7 @@ class CMKCollectionViewCell: UICollectionViewCell, ConfigurableCell {
             subtitleLabel.text = staff.jobs.first ?? ""
             if let urlPath = staff.images.gridUrl,
                 let url = URL(string: urlPath) {
-                itemImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder(), size: CGSize(width: 80, height: 80)), imageTransition: .crossDissolve(0.2))
+                itemImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: CGSize(width: 80, height: 80)), imageTransition: .crossDissolve(0.2))
             } else {
                 itemImageView.image = UIImage(named: "404")!
             }
@@ -115,7 +115,7 @@ extension CMKCollectionViewCell {
     
     private func setupCellStyle() {
         itemImageView.layer.cornerRadius = 5
-        itemImageView.layer.borderColor = UIColor.percolatorLightGray().withAlphaComponent(0.8).cgColor
+        itemImageView.layer.borderColor = UIColor.percolatorLightGray.withAlphaComponent(0.8).cgColor
         itemImageView.layer.borderWidth = 0.5  // 1px
     }
 }

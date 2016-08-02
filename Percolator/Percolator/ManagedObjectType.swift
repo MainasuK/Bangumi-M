@@ -11,13 +11,13 @@ import CoreData
 
 protocol ManagedObjectType: class {
     static var entityName: String { get }
-    static var defaultSortDescriptors: [SortDescriptor] { get }
+    static var defaultSortDescriptors: [NSSortDescriptor] { get }
 }
 
 extension ManagedObjectType {
     
     // Default value
-    static var defaultSortDescriptors: [SortDescriptor] {
+    static var defaultSortDescriptors: [NSSortDescriptor] {
         return []
     }
     

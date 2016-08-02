@@ -10,7 +10,7 @@ import UIKit
 
 extension UISearchController {
     
-    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     

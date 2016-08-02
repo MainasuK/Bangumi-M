@@ -80,9 +80,9 @@ extension SearchBoxTableViewCell {
         animeImageView.af_cancelImageRequest()
         if let urlVal = imageURLValue,
         let url = URL(string: urlVal) {
-            animeImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder(), size: size), imageTransition: .crossDissolve(0.2))
+            animeImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
         } else {
-            animeImageView.image = UIImage.fromColor(.placeholder(), size: size)
+            animeImageView.image = UIImage.fromColor(.placeholder, size: size)
         }
     }
     
@@ -107,7 +107,7 @@ extension SearchBoxTableViewCell {
 
         
         // Set iamge view corner
-        animeImageView.layer.borderColor = UIColor.percolatorGray().cgColor
+        animeImageView.layer.borderColor = UIColor.percolatorGray.cgColor
         animeImageView.layer.borderWidth = 0.5
     }
     

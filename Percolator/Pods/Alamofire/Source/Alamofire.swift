@@ -27,7 +27,7 @@ import Foundation
 // MARK: - URLStringConvertible
 
 /**
-    Types adopting the `URLStringConvertible` protocol can be used to construct URL strings, which are then used to 
+    Types adopting the `URLStringConvertible` protocol can be used to construct URL strings, which are then used to
     construct URL requests.
 */
 public protocol URLStringConvertible {
@@ -44,27 +44,19 @@ public protocol URLStringConvertible {
 }
 
 extension String: URLStringConvertible {
-    public var urlString: String {
-        return self
-    }
+    public var urlString: String { return self }
 }
 
 extension URL: URLStringConvertible {
-    public var urlString: String {
-        return absoluteString!
-    }
+    public var urlString: String { return absoluteString }
 }
 
 extension URLComponents: URLStringConvertible {
-    public var urlString: String {
-        return url!.urlString
-    }
+    public var urlString: String { return url!.urlString }
 }
 
 extension Foundation.URLRequest: URLStringConvertible {
-    public var urlString: String {
-        return url!.urlString
-    }
+    public var urlString: String { return url!.urlString }
 }
 
 // MARK: - URLRequestConvertible
@@ -77,10 +69,8 @@ public protocol URLRequestConvertible {
     var urlRequest: URLRequest { get }
 }
 
-extension Foundation.URLRequest: URLRequestConvertible {
-    public var urlRequest: URLRequest {
-        return self
-    }
+extension URLRequest: URLRequestConvertible {
+    public var urlRequest: URLRequest { return self }
 }
 
 // MARK: - Convenience
@@ -88,11 +78,14 @@ extension Foundation.URLRequest: URLRequestConvertible {
 extension URLRequest {
     init(_ method: Method, _ urlString: URLStringConvertible, headers: [String:String]? = nil) {
         self.init(url: URL(string: urlString.urlString)!)
+
+        if let request = urlString as? URLRequest { self = request }
+
         self.httpMethod = method.rawValue
 
         if let headers = headers {
             for (headerField, headerValue) in headers {
-                self.setValue(headerValue, forHTTPHeaderField: headerField)
+                setValue(headerValue, forHTTPHeaderField: headerField)
             }
         }
     }
@@ -112,6 +105,7 @@ extension URLRequest {
 
     - returns: The created request.
 */
+@discardableResult
 public func request(
     _ method: Method,
     _ URLString: URLStringConvertible,
@@ -138,6 +132,7 @@ public func request(
 
     - returns: The created request.
 */
+@discardableResult
 public func request(_ urlRequest: URLRequestConvertible) -> Request {
     return Manager.sharedInstance.request(urlRequest.urlRequest)
 }
@@ -156,6 +151,7 @@ public func request(_ urlRequest: URLRequestConvertible) -> Request {
 
     - returns: The created upload request.
 */
+@discardableResult
 public func upload(
     _ method: Method,
     _ URLString: URLStringConvertible,
@@ -174,6 +170,7 @@ public func upload(
 
     - returns: The created upload request.
 */
+@discardableResult
 public func upload(_ URLRequest: URLRequestConvertible, file: URL) -> Request {
     return Manager.sharedInstance.upload(URLRequest, file: file)
 }
@@ -190,6 +187,7 @@ public func upload(_ URLRequest: URLRequestConvertible, file: URL) -> Request {
 
     - returns: The created upload request.
 */
+@discardableResult
 public func upload(
     _ method: Method,
     _ URLString: URLStringConvertible,
@@ -208,6 +206,7 @@ public func upload(
 
     - returns: The created upload request.
 */
+@discardableResult
 public func upload(_ URLRequest: URLRequestConvertible, data: Data) -> Request {
     return Manager.sharedInstance.upload(URLRequest, data: data)
 }
@@ -224,6 +223,7 @@ public func upload(_ URLRequest: URLRequestConvertible, data: Data) -> Request {
 
     - returns: The created upload request.
 */
+@discardableResult
 public func upload(
     _ method: Method,
     _ URLString: URLStringConvertible,
@@ -242,6 +242,7 @@ public func upload(
 
     - returns: The created upload request.
 */
+@discardableResult
 public func upload(_ URLRequest: URLRequestConvertible, stream: InputStream) -> Request {
     return Manager.sharedInstance.upload(urlRequest: URLRequest, stream: stream)
 }
@@ -316,6 +317,7 @@ public func upload(
 
     - returns: The created download request.
 */
+@discardableResult
 public func download(
     _ method: Method,
     _ URLString: URLStringConvertible,
@@ -343,6 +345,7 @@ public func download(
 
     - returns: The created download request.
 */
+@discardableResult
 public func download(_ URLRequest: URLRequestConvertible, destination: Request.DownloadFileDestination) -> Request {
     return Manager.sharedInstance.download(URLRequest, destination: destination)
 }
@@ -350,16 +353,17 @@ public func download(_ URLRequest: URLRequestConvertible, destination: Request.D
 // MARK: Resume Data
 
 /**
-    Creates a request using the shared manager instance for downloading from the resume data produced from a 
+    Creates a request using the shared manager instance for downloading from the resume data produced from a
     previous request cancellation.
 
     - parameter resumeData:  The resume data. This is an opaque data blob produced by `NSURLSessionDownloadTask`
-                             when a task is cancelled. See `NSURLSession -downloadTaskWithResumeData:` for additional 
+                             when a task is cancelled. See `NSURLSession -downloadTaskWithResumeData:` for additional
                              information.
     - parameter destination: The closure used to determine the destination of the downloaded file.
 
     - returns: The created download request.
 */
+@discardableResult
 public func download(resumeData data: Data, destination: Request.DownloadFileDestination) -> Request {
     return Manager.sharedInstance.download(data, destination: destination)
 }

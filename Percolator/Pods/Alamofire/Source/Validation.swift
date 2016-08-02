@@ -38,7 +38,7 @@ extension Request {
     }
 
     /**
-        A closure used to validate a request that takes a URL request and URL response, and returns whether the 
+        A closure used to validate a request that takes a URL request and URL response, and returns whether the
         request was valid.
     */
     public typealias Validation = (Foundation.URLRequest?, HTTPURLResponse) -> ValidationResult
@@ -52,6 +52,7 @@ extension Request {
 
         - returns: The request.
     */
+    @discardableResult
     public func validate(_ validation: Validation) -> Self {
         delegate.queue.addOperation {
             if let response = self.response, self.delegate.error == nil,
@@ -75,6 +76,7 @@ extension Request {
 
         - returns: The request.
     */
+    @discardableResult
     public func validate<S: Sequence where S.Iterator.Element == Int>(statusCode acceptableStatusCode: S) -> Self {
         return validate { _, response in
             if acceptableStatusCode.contains(response.statusCode) {
@@ -83,11 +85,11 @@ extension Request {
                 let failureReason = "Response status code was unacceptable: \(response.statusCode)"
 
                 let error = NSError(
-                    domain: Error.Domain,
-                    code: Error.Code.statusCodeValidationFailed.rawValue,
+                    domain: ErrorDomain,
+                    code: ErrorCode.statusCodeValidationFailed.rawValue,
                     userInfo: [
                         NSLocalizedFailureReasonErrorKey: failureReason,
-                        Error.UserInfoKeys.StatusCode: response.statusCode
+                        ErrorUserInfoKeys.StatusCode: response.statusCode
                     ]
                 )
 
@@ -138,7 +140,8 @@ extension Request {
 
         - returns: The request.
     */
-    public func validate<S : Sequence where S.Iterator.Element == String>(contentType acceptableContentTypes: S) -> Self {
+    @discardableResult
+    public func validate<S: Sequence where S.Iterator.Element == String>(contentType acceptableContentTypes: S) -> Self {
         return validate { _, response in
             guard let validData = self.delegate.data, validData.count > 0 else { return .success }
 
@@ -174,11 +177,11 @@ extension Request {
             }
 
             let error = NSError(
-                domain: Error.Domain,
-                code: Error.Code.contentTypeValidationFailed.rawValue,
+                domain: ErrorDomain,
+                code: ErrorCode.contentTypeValidationFailed.rawValue,
                 userInfo: [
                     NSLocalizedFailureReasonErrorKey: failureReason,
-                    Error.UserInfoKeys.ContentType: contentType
+                    ErrorUserInfoKeys.ContentType: contentType
                 ]
             )
 
@@ -189,13 +192,14 @@ extension Request {
     // MARK: - Automatic
 
     /**
-        Validates that the response has a status code in the default acceptable range of 200...299, and that the content 
+        Validates that the response has a status code in the default acceptable range of 200...299, and that the content
         type matches any specified in the Accept HTTP header field.
 
         If validation fails, subsequent calls to response handlers will have an associated error.
 
         - returns: The request.
     */
+    @discardableResult
     public func validate() -> Self {
         let acceptableStatusCodes: CountableRange<Int> = 200..<300
         let acceptableContentTypes: [String] = {

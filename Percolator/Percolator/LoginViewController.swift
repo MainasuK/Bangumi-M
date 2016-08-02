@@ -121,7 +121,7 @@ final class LoginViewController: UIViewController {
                 
             } catch UnknownError.network(let error) {
                 let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.rawValue)
+                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
                 
                 SVProgressHUD.dismiss()
                 self.present(alertController, animated: true, completion: nil)
@@ -148,7 +148,7 @@ final class LoginViewController: UIViewController {
 // MARK: - UIViewController
 extension LoginViewController {
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
     
@@ -299,7 +299,7 @@ extension LoginViewController {
 
     func setupLoginView() {
         
-        loginView.layer.shadowColor = UIColor.black().cgColor
+        loginView.layer.shadowColor = UIColor.black.cgColor
         loginView.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         loginView.layer.shadowOpacity = 0.2
         loginView.layer.shadowRadius = 5.0
@@ -342,7 +342,7 @@ extension LoginViewController {
     
     func keyboardDidShow(notification: Notification) {
         guard let userInfo = notification.userInfo,
-        let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue() else {
+        let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
             return
         }
         

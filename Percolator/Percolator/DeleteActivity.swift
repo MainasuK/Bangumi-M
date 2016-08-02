@@ -12,11 +12,11 @@ import SVProgressHUD
 class DeleteActivity: UIActivity {
     var subject: SubjectWrapper?
     
-    override func activityType() -> String? {
+    override var activityType: String? {
         return "Percolator.Delete"
     }
     
-    override func activityTitle() -> String? {
+    override var activityTitle: String? {
         return NSLocalizedString("delete from search box", comment: "")
     }
     
@@ -38,7 +38,7 @@ class DeleteActivity: UIActivity {
         }
     }
     
-    override func activityViewController() -> UIViewController? {
+    override var activityViewController: UIViewController? {
         return nil
     }
     
@@ -51,8 +51,7 @@ class DeleteActivity: UIActivity {
         SVProgressHUD.showSuccess(withStatus: "删除成功")
     }
     
-    
-    override func activityImage() -> UIImage? {
+    override var activityImage: UIImage? {
         return #imageLiteral(resourceName: "RemoveArrow")
     }
 }

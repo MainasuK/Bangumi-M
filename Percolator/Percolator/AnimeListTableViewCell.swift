@@ -126,9 +126,9 @@ extension AnimeListTableViewCell {
         
         animeImageView.af_cancelImageRequest()
         if let urlVal = imageURLValue, let url = URL(string: urlVal) {
-            animeImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder(), size: size), imageTransition: .crossDissolve(0.2))
+            animeImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
         } else {
-            animeImageView.image = UIImage.fromColor(.placeholder(), size: size)
+            animeImageView.image = UIImage.fromColor(.placeholder, size: size)
         }
     }
     
@@ -161,17 +161,17 @@ extension AnimeListTableViewCell {
                 case .air:
                     watchedButton.setTitle("EP.\(nextEpisode.sortString) \(epName)", for: .normal)
                     mark = AnimeMark.episode(nextEpisode, subject)
-                    indicatorView.backgroundColor = UIColor.percolatorPink()
+                    indicatorView.backgroundColor = UIColor.percolatorPink
                     
                 case .notAir:
                     let weekArr: [String] = ["有空", "周一", "周二", "周三", "周四", "周五", "周六", "周日"]
                     watchedButton.setTitle("EP.\(nextEpisode.sortString) 未放送 \(weekArr[subject.airWeekday])再来吧", for: .normal)
-                    indicatorView.backgroundColor = UIColor.myRedColor()
+                    indicatorView.backgroundColor = UIColor.myRedColor
                 
                 case .today:
                     watchedButton.setTitle("EP.\(nextEpisode.sortString) \(epName)", for: .normal)
                     mark = AnimeMark.episode(nextEpisode, subject)
-                    indicatorView.backgroundColor = UIColor.myGreenColor()
+                    indicatorView.backgroundColor = UIColor.myGreenColor
                 }
                 
                 if subject.epTable.first?.id == nextEpisode.id {
@@ -181,15 +181,15 @@ extension AnimeListTableViewCell {
                 if subject.epTable.count == 0 {
                     watchedButton.isEnabled = false
                     watchedButton.setTitle("未收录章节信息", for: .normal)
-                    indicatorView.backgroundColor = UIColor.myRedColor()
+                    indicatorView.backgroundColor = UIColor.myRedColor
                 } else if subject.epTable.last?.id == history.lastEpisode?.id  {
                     watchedButton.setTitle("看完了 我要吐槽", for: .normal)
                     mark = AnimeMark.subject(subject)
-                    indicatorView.backgroundColor = UIColor.myPurpleColor()
+                    indicatorView.backgroundColor = UIColor.myPurpleColor
                 } else {
                     watchedButton.isEnabled = false
                     watchedButton.setTitle("喵帕斯～出错了？为什么什么也找不到", for: .normal)
-                    indicatorView.backgroundColor = UIColor.myRedColor()
+                    indicatorView.backgroundColor = UIColor.myRedColor
                 }
             }
             
@@ -197,7 +197,7 @@ extension AnimeListTableViewCell {
             isSpinnning = false
             watchedButton.isEnabled = false
             watchedButton.setTitle("喵帕斯～出错了？找不到章节信息", for: .normal)
-            indicatorView.backgroundColor = UIColor.myRedColor()
+            indicatorView.backgroundColor = UIColor.myRedColor
             
         } catch ProgressesStatus.fetching {
             isSpinnning = true
@@ -206,36 +206,36 @@ extension AnimeListTableViewCell {
             isSpinnning = false
             watchedButton.isEnabled = false
             watchedButton.setTitle("获取章节信息出错，请刷新重试", for: .normal)
-            indicatorView.backgroundColor = UIColor.myRedColor()
+            indicatorView.backgroundColor = UIColor.myRedColor
             
         } catch ProgressesStatus.unknownError {
             isSpinnning = false
             watchedButton.isEnabled = false
             watchedButton.setTitle("喵帕斯～出错了？未知错误", for: .normal)
-            indicatorView.backgroundColor = UIColor.myRedColor()
+            indicatorView.backgroundColor = UIColor.myRedColor
         } catch {
             isSpinnning = false
             watchedButton.isEnabled = false
             watchedButton.setTitle("喵帕斯～出错了？未知错误", for: .normal)
-            indicatorView.backgroundColor = UIColor.myRedColor()
+            indicatorView.backgroundColor = UIColor.myRedColor
         }
     
     }
     
     private func setupCellStyle() {
         // Configure the appearance of the cell
-        backgroundColor = UIColor.myAnimeListBackground()
+        backgroundColor = UIColor.myAnimeListBackground
         
         // Make cell get readable margin guideline
         preservesSuperviewLayoutMargins = true
         contentView.preservesSuperviewLayoutMargins = true
         
         animeImageView.layer.cornerRadius = 5
-        animeImageView.layer.borderColor = UIColor.percolatorLightGray().withAlphaComponent(0.8).cgColor
+        animeImageView.layer.borderColor = UIColor.percolatorLightGray.withAlphaComponent(0.8).cgColor
         animeImageView.layer.borderWidth = 0.5  // 1px
         
-        watchedButton.setTitleColor(UIColor.percolatorPink(), for: UIControlState.highlighted)
-        indicatorView.backgroundColor = UIColor.percolatorGray()
+        watchedButton.setTitleColor(UIColor.percolatorPink, for: UIControlState.highlighted)
+        indicatorView.backgroundColor = UIColor.percolatorGray
     }
     
     private func setupLabelStyle() {

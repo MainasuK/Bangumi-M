@@ -221,7 +221,7 @@ extension DetailTableViewController {
         headerView = tableView.tableHeaderView
         tableView.tableHeaderView = nil
         tableView.addSubview(headerView)
-        headerViewMarginTop = (navigationController?.navigationBar.bounds.height ?? 44) + UIApplication.shared().statusBarFrame.size.height
+        headerViewMarginTop = (navigationController?.navigationBar.bounds.height ?? 44) + UIApplication.shared.statusBarFrame.size.height
         tableView.scrollIndicatorInsets.top = headerViewMarginTop
         
         // Remove placeholder iamge
@@ -368,7 +368,7 @@ extension DetailTableViewController {
         }
     }
     
-    private func handler(_ error: ErrorProtocol?) {
+    private func handler(_ error: Error?) {
         do {
             try error?.throwMyself()
             
@@ -410,7 +410,7 @@ extension DetailTableViewController {
             
         } catch UnknownError.network(let error) {
             let title = NSLocalizedString("unknown error", comment: "")
-            let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.rawValue)
+            let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
             self.present(alertController, animated: true, completion: nil)
             consolePrint("Unknow NSURLError: \(error)")
             

@@ -13,7 +13,7 @@ class TopicTableViewCell: UITableViewCell, ConfigurableCell {
     typealias ItemType = TopicTableViewModel.ItemType
     
     static let SFAlternativesFormFont: UIFont = {
-        let descriptor = UIFont.systemFont(ofSize: 11.0, weight: UIFontWeightLight).fontDescriptor()
+        let descriptor = UIFont.systemFont(ofSize: 11.0, weight: UIFontWeightLight).fontDescriptor
         let adjusted = descriptor.addingAttributes(
             [
                 UIFontDescriptorFeatureSettingsAttribute: [

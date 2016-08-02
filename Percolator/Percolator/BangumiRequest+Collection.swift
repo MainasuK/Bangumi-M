@@ -66,7 +66,7 @@ extension BangumiRequest {
             return
         }
         
-        let ids = subjectIDs.reduce("", combine: { (str, id) in
+        let ids = subjectIDs.reduce("", { (str, id) in
             if id != subjectIDs.last {
                 return str.appending("\(id),")
             } else {

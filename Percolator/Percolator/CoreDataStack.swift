@@ -88,7 +88,7 @@ class CoreDataStack {
     }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
-        let modelURL = Bundle.main.urlForResource(self.modelName, withExtension: "momd")!
+        let modelURL = Bundle.main.url(forResource: self.modelName, withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     

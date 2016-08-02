@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension ErrorProtocol {
+extension Error {
     
     func throwMyself() throws -> Void {
         throw self

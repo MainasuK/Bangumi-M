@@ -37,7 +37,7 @@ final class TopicTableViewModel: DataProvider {
 
 extension TopicTableViewModel {
     
-    func fetchTopics(handler: (ErrorProtocol?) -> Void) {
+    func fetchTopics(handler: (Error?) -> Void) {
         let url = "http://bgm.tv/subject/\(subject.id)/board"
         
         // KISS
@@ -94,7 +94,7 @@ extension TopicTableViewModel {
 
 extension TopicTableViewModel {
     
-    enum ModelError: ErrorProtocol {
+    enum ModelError: Error {
         case parse
         case noItem
     }

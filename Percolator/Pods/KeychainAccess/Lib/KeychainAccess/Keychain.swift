@@ -1644,7 +1644,7 @@ extension CFError {
     }
 }
 
-public enum Status: OSStatus, ErrorProtocol {
+public enum Status: OSStatus, Error {
     case success                            = 0
     case unimplemented                      = -4
     case diskFull                           = -34

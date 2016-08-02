@@ -43,7 +43,7 @@ final class AnimeListTableViewModel: DataProvider {
 // MARK: - Refresh
 extension AnimeListTableViewModel {
     
-    func refresh(handler: (ErrorProtocol?) -> Void) {
+    func refresh(handler: (Error?) -> Void) {
         fetchProgresses()
         
         request.userCollection { (result: Result<Subjects>) in
@@ -68,10 +68,10 @@ extension AnimeListTableViewModel {
         }   // end request.userCollection { … }
     }   // end func refresh
     
-    func mark(_ episode: Episode, of subject: Subject, handler: (ErrorProtocol?) -> Void) {
+    func mark(_ episode: Episode, of subject: Subject, handler: (Error?) -> Void) {
         isMarkingStatus[subject.id] = true
         consolePrint("Mark episode: EP.\(episode.sortString) \(episode.name)…")
-        request.ep(of: episode.id, with: nil, of: .watched) { (error: ErrorProtocol?) in
+        request.ep(of: episode.id, with: nil, of: .watched) { (error: Error?) in
             
             assert(Thread.isMainThread, "Model method should be main thread for thread safe")
             self.isMarkingStatus[subject.id] = false
@@ -254,7 +254,7 @@ extension AnimeListTableViewModel {
         let nextEpisode: Episode?
     }
     
-    enum ProgressesStatus: ErrorProtocol {
+    enum ProgressesStatus: Error {
         case none
         case fetching
         case fetched        // Not error, sorry
@@ -266,7 +266,7 @@ extension AnimeListTableViewModel {
 
 extension AnimeListTableViewModel {
 
-    enum ModelError: ErrorProtocol {
+    enum ModelError: Error {
         case mark
     }
 

@@ -108,7 +108,7 @@ class CollectTableViewController: UITableViewController {
                 
             } catch UnknownError.network(let error) {
                 let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.rawValue)
+                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("Unknow NSURLError: \(error)")
                 
@@ -145,7 +145,7 @@ extension CollectTableViewController {
     
     private func setupControlItem() {
         tagView.setDeleteButtonBackgroundImage(UIImage(named: "btn_tag_delete"), state: .normal)
-        tagView.backgroundColor = UIColor.clear()
+        tagView.backgroundColor = UIColor.clear
         tagView.verticalInsetForTag = UIEdgeInsetsMake(9, 8, 6, 0);
         tagView.allowToUseSingleSpace = false
         
@@ -284,7 +284,7 @@ extension CollectTableViewController {
             } catch UnknownError.network(let error) {
                 SVProgressHUD.dismiss()
                 let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.rawValue)
+                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("Unknow NSURLError: \(error)")
                 

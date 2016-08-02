@@ -35,13 +35,13 @@ final class SearchBoxTableViewController: UITableViewController {
         controller.searchBar.enablesReturnKeyAutomatically = false
         
         // Note: Override UISearchController preferredStatusBarStyle() method return .lightContent
-        controller.searchBar.barTintColor = UIColor.navigationBarBlue()
-        controller.searchBar.tintColor = UIColor.white()
+        controller.searchBar.barTintColor = UIColor.navigationBarBlue
+        controller.searchBar.tintColor = UIColor.white
         controller.searchBar.placeholder = "条目搜索"
         
         let textFieldAppearance = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
-        textFieldAppearance.backgroundColor = UIColor.white().withAlphaComponent(0.7)
-        textFieldAppearance.tintColor = UIColor.lightText()
+        textFieldAppearance.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+        textFieldAppearance.tintColor = UIColor.lightText
         
         return controller
     }()
@@ -151,7 +151,7 @@ extension SearchBoxTableViewController {
         tableView.cellLayoutMarginsFollowReadableWidth = true
         
         // Configure tableView appearance
-        tableView.backgroundColor = UIColor.myAnimeListBackground()
+        tableView.backgroundColor = UIColor.myAnimeListBackground
         
         // Set Refresh footer
         setupTableViewFooter()
@@ -280,7 +280,7 @@ extension SearchBoxTableViewController {
         
         // Handle error from model
         // Model deal with data source and reload tableView
-        model.search(for: text, type: searchScopeType) { (error: ErrorProtocol?) in
+        model.search(for: text, type: searchScopeType) { (error: Error?) in
             
             defer {
                 SVProgressHUD.dismiss(withDelay: 3.0)
@@ -349,7 +349,7 @@ extension SearchBoxTableViewController {
                     
                 } catch UnknownError.network(let error) {
                     let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.rawValue)
+                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
                     self.present(alertController, animated: true, completion: nil)
                     consolePrint("Unknow NSURLError: \(error)")
                     

@@ -44,7 +44,7 @@ extension TopicTableViewController {
         
         if isFirstAppear {
             SVProgressHUD.show()
-            model.fetchTopics { (error: ErrorProtocol?) in
+            model.fetchTopics { (error: Error?) in
                 
                 do {
                     try error?.throwMyself()
@@ -88,7 +88,7 @@ extension TopicTableViewController {
                 } catch UnknownError.network(let error) {
                     SVProgressHUD.dismiss()
                     let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.rawValue)
+                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
                     self.present(alertController, animated: true, completion: nil)
                     consolePrint("Unknow NSURLError: \(error)")
                     
@@ -128,7 +128,7 @@ extension TopicTableViewController {
         
         // Configure tableView appearance
         tableView.tableFooterView = UIView()
-        tableView.backgroundColor = UIColor.myAnimeListBackground()
+        tableView.backgroundColor = UIColor.myAnimeListBackground
         
         // Configure cell row height
         tableView.estimatedRowHeight = 100

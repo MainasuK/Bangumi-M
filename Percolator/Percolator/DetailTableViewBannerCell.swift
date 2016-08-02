@@ -30,10 +30,10 @@ class DetailTableViewBannerCell: DetailTableViewCell {
             // Add border
             collectButton.layer.cornerRadius = 5
             collectButton.layer.borderWidth = 1   // 2 px
-            collectButton.layer.borderColor = UIColor.collectButtonTint().cgColor
+            collectButton.layer.borderColor = UIColor.collectButtonTint.cgColor
             
             // Set title color for hightlight state
-            collectButton.setTitleColor(UIColor.white(), for: UIControlState.highlighted)
+            collectButton.setTitleColor(UIColor.white, for: UIControlState.highlighted)
         }
     }
     

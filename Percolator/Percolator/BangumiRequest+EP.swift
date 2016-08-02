@@ -16,7 +16,7 @@ extension BangumiRequest {
     
     // Batch mark ep needs ids: [Int]
     // DO NOT use API POST watched_eps method which is bug exists (please test 火影忍者疾风传 to verify the bug)
-    func ep(of id: Int, with ids: [Int]?, of status: Status, handler: (ErrorProtocol?) -> Void) {
+    func ep(of id: Int, with ids: [Int]?, of status: Status, handler: (Error?) -> Void) {
         
         guard let user = self.user else {
             handler(RequestError.userNotLogin)
@@ -25,7 +25,7 @@ extension BangumiRequest {
         
         let urlPath = String(format: BangumiApiKey.EP, id, status.toURLParams(), BangumiApiKey.Percolator, user.authEncode)
         var parameters: [String : AnyObject]? = nil
-        if let epID = ids?.reduce("", combine: { (str, id) in str?.appending("\(id),")} ) {
+        if let epID = ids?.reduce("", { (str, id) in str?.appending("\(id),")} ) {
             parameters = ["ep_id" : epID]
         }
         

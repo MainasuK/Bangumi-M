@@ -22,7 +22,7 @@ public class TagWriteView : UIView
     }
     }
     
-    public var tagBackgroundColor: UIColor = UIColor.darkGray() {
+    public var tagBackgroundColor: UIColor = UIColor.darkGray {
     didSet {
         for btn in tagViews {
             btn.backgroundColor = tagBackgroundColor
@@ -32,7 +32,7 @@ public class TagWriteView : UIView
     }
     }
     
-    public var tagForegroundColor: UIColor = UIColor.white() {
+    public var tagForegroundColor: UIColor = UIColor.white {
     didSet {
         for btn in tagViews {
             btn.setTitleColor(tagForegroundColor, for: UIControlState.normal)
@@ -46,7 +46,7 @@ public class TagWriteView : UIView
         }
     }
     
-    public var backgroundColorForDeleteButton = UIColor.clear() {
+    public var backgroundColorForDeleteButton = UIColor.clear {
         didSet {
             if deleteButton != nil {
                 deleteButton.backgroundColor = backgroundColorForDeleteButton
@@ -62,7 +62,7 @@ public class TagWriteView : UIView
     public var maxTagLength = 20   // maximum length of a tag
     public var tagGap: CGFloat = 4.0   // a gap between tags
     public var allowToUseSingleSpace = false   // if true, space character is allowed to use
-    public var verticalInsetForTag = UIEdgeInsetsZero  // 'top' and 'bottom' properties are only available. set vertical margin to each tags.
+    public var verticalInsetForTag = UIEdgeInsets.zero  // 'top' and 'bottom' properties are only available. set vertical margin to each tags.
     
     public var focusOnAddTag: Bool = false {
     didSet {
@@ -200,7 +200,7 @@ public class TagWriteView : UIView
     
     public func setDeleteButtonBackgroundImage(_ image: UIImage?, state: UIControlState) {
         deleteButton.setBackgroundImage(image, for: state)
-        deleteButton.setTitleColor(UIColor.clear(), for: state)
+        deleteButton.setTitleColor(UIColor.clear, for: state)
     }
     
     // MARK: UI Actions
@@ -238,16 +238,16 @@ public class TagWriteView : UIView
     // MARK: Internals
     private func initControls() {
         scrollView = UIScrollView(frame: self.bounds)
-        scrollView.backgroundColor = UIColor.clear()
+        scrollView.backgroundColor = UIColor.clear
         scrollView.scrollsToTop = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         addSubview(scrollView)
-        scrollView.applyMarginConstraint(margin: UIEdgeInsetsZero)
+        scrollView.applyMarginConstraint(margin: UIEdgeInsets.zero)
         
         inputBaseView = UIView()
-        inputBaseView.backgroundColor = UIColor.clear()
+        inputBaseView.backgroundColor = UIColor.clear
         scrollView.addSubview(inputBaseView)
         
         tagInputView = UITextView(frame: inputBaseView.bounds)
@@ -356,7 +356,7 @@ public class TagWriteView : UIView
     
     private func layoutInputAndScroll() {
         tagInputView.font = font
-        tagInputView.backgroundColor = UIColor.clear()
+        tagInputView.backgroundColor = UIColor.clear
         tagInputView.textColor = tagBackgroundColor
         
         let accumX = posXForObjectNextToLastTagView()

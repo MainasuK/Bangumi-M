@@ -1,24 +1,26 @@
-// ImageDownloader.swift
 //
-// Copyright (c) 2015-2016 Alamofire Software Foundation (http://alamofire.org/)
+//  ImageDownloader.swift
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+//  Copyright (c) 2015-2016 Alamofire Software Foundation (http://alamofire.org/)
 //
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
 //
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//
 
 import Alamofire
 import Foundation
@@ -29,9 +31,9 @@ import UIKit
 import Cocoa
 #endif
 
-/// The `RequestReceipt` is an object vended by the `ImageDownloader` when starting a download request. It can be used 
-/// to cancel active requests running on the `ImageDownloader` session. As a general rule, image download requests 
-/// should be cancelled using the `RequestReceipt` instead of calling `cancel` directly on the `request` itself. The 
+/// The `RequestReceipt` is an object vended by the `ImageDownloader` when starting a download request. It can be used
+/// to cancel active requests running on the `ImageDownloader` session. As a general rule, image download requests
+/// should be cancelled using the `RequestReceipt` instead of calling `cancel` directly on the `request` itself. The
 /// `ImageDownloader` is optimized to handle duplicate request scenarios as well as pending versus active downloads.
 public class RequestReceipt {
     /// The download request created by the `ImageDownloader`.
@@ -47,10 +49,10 @@ public class RequestReceipt {
 }
 
 /// The `ImageDownloader` class is responsible for downloading images in parallel on a prioritized queue. Incoming
-/// downloads are added to the front or back of the queue depending on the download prioritization. Each downloaded 
-/// image is cached in the underlying `NSURLCache` as well as the in-memory image cache that supports image filters. 
+/// downloads are added to the front or back of the queue depending on the download prioritization. Each downloaded
+/// image is cached in the underlying `NSURLCache` as well as the in-memory image cache that supports image filters.
 /// By default, any download request with a cached image equivalent in the image cache will automatically be served the
-/// cached image representation. Additional advanced features include supporting multiple image filters and completion 
+/// cached image representation. Additional advanced features include supporting multiple image filters and completion
 /// handlers for a single request.
 public class ImageDownloader {
     /// The completion handler closure used when an image download completes.
@@ -100,13 +102,13 @@ public class ImageDownloader {
     var responseHandlers: [String: ResponseHandler] = [:]
 
     private let synchronizationQueue: DispatchQueue = {
-        let name = String(format: "com.alamofire.imagedownloader.synchronizationqueue-%08%08", arc4random(), arc4random())
-        return DispatchQueue(label: name, attributes: DispatchQueueAttributes.serial)
+        let name = String(format: "org.alamofire.imagedownloader.synchronizationqueue-%08x%08x", arc4random(), arc4random())
+        return DispatchQueue(label: name)
     }()
 
     private let responseQueue: DispatchQueue = {
-        let name = String(format: "com.alamofire.imagedownloader.responsequeue-%08%08", arc4random(), arc4random())
-        return DispatchQueue(label: name, attributes: DispatchQueueAttributes.concurrent)
+        let name = String(format: "org.alamofire.imagedownloader.responsequeue-%08x%08x", arc4random(), arc4random())
+        return DispatchQueue(label: name, attributes: .concurrent)
     }()
 
     // MARK: - Initialization
@@ -116,7 +118,7 @@ public class ImageDownloader {
 
     /**
         Creates a default `NSURLSessionConfiguration` with common usage parameter values.
-    
+
         - returns: The default `NSURLSessionConfiguration` instance.
     */
     public class func defaultURLSessionConfiguration() -> URLSessionConfiguration {
@@ -144,15 +146,15 @@ public class ImageDownloader {
         return URLCache(
             memoryCapacity: 20 * 1024 * 1024, // 20 MB
             diskCapacity: 150 * 1024 * 1024,  // 150 MB
-            diskPath: "com.alamofire.imagedownloader"
+            diskPath: "org.alamofire.imagedownloader"
         )
     }
 
     /**
-        Initializes the `ImageDownloader` instance with the given configuration, download prioritization, maximum active 
+        Initializes the `ImageDownloader` instance with the given configuration, download prioritization, maximum active
         download count and image cache.
 
-        - parameter configuration:          The `NSURLSessionConfiguration` to use to create the underlying Alamofire 
+        - parameter configuration:          The `NSURLSessionConfiguration` to use to create the underlying Alamofire
                                             `Manager` instance.
         - parameter downloadPrioritization: The download prioritization of the download queue. `.FIFO` by default.
         - parameter maximumActiveDownloads: The maximum number of active downloads allowed at any given time.
@@ -245,9 +247,9 @@ public class ImageDownloader {
         callers.
 
         - parameter URLRequest:     The URL request.
-        - parameter receiptID:      The `identifier` for the `RequestReceipt` returned. Defaults to a new, randomly 
+        - parameter receiptID:      The `identifier` for the `RequestReceipt` returned. Defaults to a new, randomly
                                     generated UUID.
-        - parameter filter:         The image filter to apply to the image after the download is complete. Defaults 
+        - parameter filter:         The image filter to apply to the image after the download is complete. Defaults
                                     to `nil`.
         - parameter progress:       The closure to be executed periodically during the lifecycle of the request.
                                     Defaults to `nil`.
@@ -471,7 +473,7 @@ public class ImageDownloader {
                     let error: NSError = {
                         let failureReason = "ImageDownloader cancelled URL request: \(urlRequest.urlString)"
                         let userInfo = [NSLocalizedFailureReasonErrorKey: failureReason]
-                        return NSError(domain: Error.Domain, code: NSURLErrorCancelled, userInfo: userInfo)
+                        return NSError(domain: ErrorDomain, code: NSURLErrorCancelled, userInfo: userInfo)
                     }()
 
                     return Response(request: urlRequest, response: nil, data: nil, result: .failure(error))
@@ -502,8 +504,8 @@ public class ImageDownloader {
         synchronizationQueue.sync {
             guard self.isActiveRequestCountBelowMaximumLimit() else { return }
 
-            while (!self.queuedRequests.isEmpty) {
-                if let request = self.dequeueRequest() where request.task.state == .suspended {
+            while !self.queuedRequests.isEmpty {
+                if let request = self.dequeueRequest(), request.task.state == .suspended {
                     self.startRequest(request)
                     break
                 }
@@ -535,6 +537,7 @@ public class ImageDownloader {
         }
     }
 
+    @discardableResult
     func dequeueRequest() -> Request? {
         var request: Request?
 

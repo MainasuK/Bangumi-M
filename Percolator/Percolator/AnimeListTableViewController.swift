@@ -69,7 +69,7 @@ extension AnimeListTableViewController {
         loginViewController.modalTransitionStyle = .crossDissolve
         
         if !UIAccessibilityIsReduceTransparencyEnabled() {
-            loginViewController.view.backgroundColor = UIColor.clear()
+            loginViewController.view.backgroundColor = UIColor.clear
         }
         
         present(loginViewController, animated: true)
@@ -84,7 +84,7 @@ extension AnimeListTableViewController {
         let button: UIButton = {
             let btn = UIButton(type: .custom)
             
-            btn.setImage(UIImage.fromColor(.placeholder(), size: CGSize(width: 30, height: 30)), for: .normal)
+            btn.setImage(UIImage.fromColor(.placeholder, size: CGSize(width: 30, height: 30)), for: .normal)
             if let avatarLargeUrl = BangumiRequest.shared.user?.avatar.largeUrl,
             let url = URL(string: avatarLargeUrl) {
                 btn.af_setImageForState(.normal, url: url)
@@ -93,7 +93,7 @@ extension AnimeListTableViewController {
             btn.imageView?.frame.size = CGSize(width: 30, height: 30)
             btn.addTarget(self, action: #selector(AnimeListTableViewController.avatarButtonPressed), for: .touchUpInside)
             btn.imageView?.layer.cornerRadius = 30 * 0.5
-            btn.imageView?.layer.borderColor = UIColor.percolatorLightGray().cgColor
+            btn.imageView?.layer.borderColor = UIColor.percolatorLightGray.cgColor
             btn.imageView?.layer.borderWidth = 0.5   // 1px
             
             return btn
@@ -115,8 +115,8 @@ extension AnimeListTableViewController {
         tableView.cellLayoutMarginsFollowReadableWidth = true
         
         // Configure tableView appearance
-        tableView.separatorColor = UIColor.clear()
-        tableView.backgroundColor = UIColor.myAnimeListBackground()
+        tableView.separatorColor = UIColor.clear
+        tableView.backgroundColor = UIColor.myAnimeListBackground
         
         // Fix the separator display when 0 rows
         tableView.tableFooterView = UIView()
@@ -257,7 +257,7 @@ extension AnimeListTableViewController {
     
     func refreshAnimeList() {
         
-        model.refresh { (error: ErrorProtocol?) in
+        model.refresh { (error: Error?) in
             
             defer {
                 self.tableView.mj_header.endRefreshing()
@@ -328,7 +328,7 @@ extension AnimeListTableViewController {
                 
             } catch UnknownError.network(let error) {
                 let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.rawValue)
+                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("Unknow NSURLError: \(error)")
                 
@@ -438,7 +438,7 @@ extension AnimeListTableViewController {
     
         // Set border of cardView
         cell.cardView.layer.cornerRadius    = 5
-        cell.cardView.layer.shadowColor     = UIColor.black().cgColor
+        cell.cardView.layer.shadowColor     = UIColor.black.cgColor
         cell.cardView.layer.shadowOffset    = CGSize(width: 0, height: 0)
         cell.cardView.layer.shadowPath      = UIBezierPath(rect: cell.cardView.bounds).cgPath
         cell.cardView.layer.shadowRadius    = 3
@@ -532,7 +532,7 @@ extension AnimeListTableViewController: AnimeListTableViewCellDelegate {
     func watchedButtonPressed(_ sender: UIButton, with mark: AnimeMark) {
         switch mark {
         case .episode(let ep, let subject):
-            model.mark(ep, of: subject, handler: { (error: ErrorProtocol?) in
+            model.mark(ep, of: subject, handler: { (error: Error?) in
                 do {
                     try error?.throwMyself()
                 } catch ModelError.mark {
@@ -558,7 +558,7 @@ extension AnimeListTableViewController: AnimeListTableViewCellDelegate {
                     
                 } catch UnknownError.network(let error) {
                     let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.rawValue)
+                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
                     self.present(alertController, animated: true, completion: nil)
                     consolePrint("Unknow NSURLError: \(error)")
                     

@@ -106,9 +106,9 @@ struct Subject {
     
     func isSaved() -> Bool {
         let fetchRequest: NSFetchRequest<CDSubject> = CDSubject.fetchRequest()
-        fetchRequest.predicate = Predicate(format: "id == %@", "\(id)")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
         
-        guard let context = (UIApplication.shared().delegate as? AppDelegate)?.coreDataStack.context,
+        guard let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.context,
         let cdSubjects = try? context.fetch(fetchRequest), !cdSubjects.isEmpty else {
             return false
         }
@@ -117,7 +117,7 @@ struct Subject {
     }
     
     func saveToCoreData() -> Bool {
-        guard let context = (UIApplication.shared().delegate as? AppDelegate)?.coreDataStack.context else {
+        guard let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.context else {
             return false
         }
         
@@ -172,9 +172,9 @@ struct Subject {
     
     func deleteFromCoreData() -> Bool {
         let fetchRequest: NSFetchRequest<CDSubject> = CDSubject.fetchRequest()
-        fetchRequest.predicate = Predicate(format: "id == %@", "\(id)")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
         
-        guard let context = (UIApplication.shared().delegate as? AppDelegate)?.coreDataStack.context else {
+        guard let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.context else {
             return false
             
         }

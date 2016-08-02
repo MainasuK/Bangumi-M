@@ -17,7 +17,7 @@ final class SearchBoxTableViewModel: DataProvider {
     private weak var tableView: UITableView?
     
     private let request = BangumiRequest.shared
-    private weak var context = (UIApplication.shared().delegate as? AppDelegate)?.coreDataStack.context
+    private weak var context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.context
     private let kLimit = 10
     
     private var items = [Subject]()
@@ -86,7 +86,7 @@ extension SearchBoxTableViewModel {
     }
     
     // MARK: - Search method
-    func search(for keywords: String, type searchType: Int, handler: (ErrorProtocol?) -> Void)  {
+    func search(for keywords: String, type searchType: Int, handler: (Error?) -> Void)  {
         isSearching = true
         tableView?.reloadData()
         
@@ -215,13 +215,13 @@ extension SearchBoxTableViewModel {
 /// Controller must handle model error
 extension SearchBoxTableViewModel {
     
-    enum ModelError: ErrorProtocol {
+    enum ModelError: Error {
         case noMoreData
         case needRetry
         case noResult
     }
     
-    enum ModelCollectError: ErrorProtocol {
+    enum ModelCollectError: Error {
         case unknown
     }
     

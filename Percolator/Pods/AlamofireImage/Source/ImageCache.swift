@@ -1,24 +1,26 @@
-// ImageCache.swift
 //
-// Copyright (c) 2015-2016 Alamofire Software Foundation (http://alamofire.org/)
+//  ImageCache.swift
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+//  Copyright (c) 2015-2016 Alamofire Software Foundation (http://alamofire.org/)
 //
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
 //
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//
 
 import Alamofire
 import Foundation
@@ -62,9 +64,9 @@ public protocol ImageRequestCache: ImageCache {
 
 // MARK: -
 
-/// The `AutoPurgingImageCache` in an in-memory image cache used to store images up to a given memory capacity. When 
-/// the memory capacity is reached, the image cache is sorted by last access date, then the oldest image is continuously 
-/// purged until the preferred memory usage after purge is met. Each time an image is accessed through the cache, the 
+/// The `AutoPurgingImageCache` in an in-memory image cache used to store images up to a given memory capacity. When
+/// the memory capacity is reached, the image cache is sorted by last access date, then the oldest image is continuously
+/// purged until the preferred memory usage after purge is met. Each time an image is accessed through the cache, the
 /// internal access date of the image is updated.
 public class AutoPurgingImageCache: ImageRequestCache {
     private class CachedImage {
@@ -112,7 +114,7 @@ public class AutoPurgingImageCache: ImageRequestCache {
     /// The total memory capacity of the cache in bytes.
     public let memoryCapacity: UInt64
 
-    /// The preferred memory usage after purge in bytes. During a purge, images will be purged until the memory 
+    /// The preferred memory usage after purge in bytes. During a purge, images will be purged until the memory
     /// capacity drops below this limit.
     public let preferredMemoryUsageAfterPurge: UInt64
 
@@ -123,7 +125,7 @@ public class AutoPurgingImageCache: ImageRequestCache {
     // MARK: Initialization
 
     /**
-        Initialies the `AutoPurgingImageCache` instance with the given memory capacity and preferred memory usage 
+        Initialies the `AutoPurgingImageCache` instance with the given memory capacity and preferred memory usage
         after purge limit.
 
         Please note, the memory capacity must always be greater than or equal to the preferred memory usage after purge.
@@ -146,8 +148,8 @@ public class AutoPurgingImageCache: ImageRequestCache {
         self.currentMemoryUsage = 0
 
         self.synchronizationQueue = {
-            let name = String(format: "com.alamofire.autopurgingimagecache-%08%08", arc4random(), arc4random())
-            return DispatchQueue(label: name, attributes: DispatchQueueAttributes.concurrent)
+            let name = String(format: "org.alamofire.autopurgingimagecache-%08x%08x", arc4random(), arc4random())
+            return DispatchQueue(label: name, attributes: .concurrent)
         }()
 
         #if os(iOS) || os(tvOS)
@@ -220,7 +222,7 @@ public class AutoPurgingImageCache: ImageRequestCache {
                         break
                     }
                 }
-                
+
                 self.currentMemoryUsage -= bytesPurged
             }
         }

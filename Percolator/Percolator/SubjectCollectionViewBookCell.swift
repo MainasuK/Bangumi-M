@@ -22,17 +22,17 @@ class SubjectCollectionViewBookCell: SubjectCollectionViewCell {
         
         let size = bookCover.bounds.size
         if let url = URL(string: item.coverUrlPath) {
-            bookCover.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder(), size: size), imageTransition: .crossDissolve(0.2))
+            bookCover.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
         } else {
-            bookCover.image = UIImage.fromColor(.placeholder(), size: size)
+            bookCover.image = UIImage.fromColor(.placeholder, size: size)
         }
         
         // Set iamge view corner
-        bookCover.layer.borderColor = UIColor.percolatorGray().cgColor
+        bookCover.layer.borderColor = UIColor.percolatorGray.cgColor
         bookCover.layer.borderWidth = 0.5
         
         // Set background color
-        backgroundColor = UIColor.white()
+        backgroundColor = UIColor.white
     }
     
 }

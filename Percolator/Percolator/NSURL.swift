@@ -11,7 +11,7 @@ import Foundation
 extension NSURL {
     
     static var documentsURL: NSURL {
-        return try! FileManager.default.urlForDirectory(.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        return try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     }
     
 }

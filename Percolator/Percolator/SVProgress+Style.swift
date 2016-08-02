@@ -16,7 +16,7 @@ func setSVProgressHUD(style: SVProgressHUDStyle) {
     case .custom:
         // Configure HUD
         SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.custom)
-        SVProgressHUD.setBackgroundColor(UIColor.white())
+        SVProgressHUD.setBackgroundColor(UIColor.white)
         SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.gradient)
     
     default:

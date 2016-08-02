@@ -12,11 +12,11 @@ import SVProgressHUD
 class SaveActivity: UIActivity {
     var subject: SubjectWrapper?
 
-    override func activityType() -> String? {
+    override var activityType: String? {
         return "Percolator.Save"
     }
     
-    override func activityTitle() -> String? {
+    override var activityTitle: String? {
         return NSLocalizedString("save to search box", comment: "")
     }
     
@@ -38,7 +38,7 @@ class SaveActivity: UIActivity {
         }
     }
     
-    override func activityViewController() -> UIViewController? {
+    override var activityViewController: UIViewController? {
         return nil
     }
     
@@ -52,7 +52,7 @@ class SaveActivity: UIActivity {
     }
     
     
-    override func activityImage() -> UIImage? {
+    override var activityImage: UIImage? {
         return #imageLiteral(resourceName: "AddArrow")
     }
 }

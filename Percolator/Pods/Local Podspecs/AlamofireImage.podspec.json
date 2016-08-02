@@ -1,6 +1,6 @@
 {
   "name": "AlamofireImage",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "license": "MIT",
   "summary": "AlamofireImage is an image component library for Alamofire",
   "homepage": "https://github.com/Alamofire/AlamofireImage",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/Alamofire/AlamofireImage.git",
-    "tag": "2.4.0"
+    "tag": "2.4.1"
   },
   "source_files": "Source/*.swift",
   "osx": {

@@ -31,8 +31,8 @@ In order to keep Alamofire focused specifically on core networking implementatio
 
 ## Requirements
 
-- iOS 8.0+ / Mac OS X 10.9+ / tvOS 9.0+ / watchOS 2.0+
-- Xcode 7.3+
+- iOS 9.0+ / Mac OS X 10.11+ / tvOS 9.0+ / watchOS 2.0+
+- Xcode 8.0 beta 3+
 
 ## Migration Guides
 
@@ -718,7 +718,7 @@ Requests can be suspended, resumed, and cancelled:
 Before implementing custom response serializers or object serialization methods, it's important to be prepared to handle any errors that may occur. Alamofire recommends handling these through the use of either your own `NSError` creation methods, or a simple `enum` that conforms to `ErrorType`. For example, this `BackendError` type, which will be used in later examples:
 
 ```swift
-enum BackendError: ErrorType {
+public enum BackendError: ErrorType {
     case Network(error: NSError)
     case DataSerialization(reason: String)
     case JSONSerialization(error: NSError)

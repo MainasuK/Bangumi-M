@@ -191,9 +191,9 @@ internal final class libxmlHTMLNode: XMLElement {
 private func libxmlGetNodeContent(_ nodePtr: xmlNodePtr) -> String? {
     let content = xmlNodeGetContent(nodePtr)
     if let result  = String(validatingUTF8: UnsafePointer(content!)) {
-        content?.deallocateCapacity(1)
+        content?.deallocate(capacity: 1)
         return result
     }
-    content?.deallocateCapacity(1)
+    content?.deallocate(capacity: 1)
     return nil
 }

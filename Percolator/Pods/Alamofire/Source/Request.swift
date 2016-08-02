@@ -25,7 +25,7 @@
 import Foundation
 
 /**
-    Responsible for sending a request and receiving the response and associated data from the server, as well as 
+    Responsible for sending a request and receiving the response and associated data from the server, as well as
     managing its underlying `NSURLSessionTask`.
 */
 public class Request {
@@ -83,6 +83,7 @@ public class Request {
 
         - returns: The request.
     */
+    @discardableResult
     public func authenticate(
         user: String,
         password: String,
@@ -101,6 +102,7 @@ public class Request {
 
         - returns: The request.
     */
+    @discardableResult
     public func authenticate(usingCredential credential: URLCredential) -> Self {
         delegate.credential = credential
 
@@ -126,12 +128,12 @@ public class Request {
     // MARK: - Progress
 
     /**
-        Sets a closure to be called periodically during the lifecycle of the request as data is written to or read 
+        Sets a closure to be called periodically during the lifecycle of the request as data is written to or read
         from the server.
 
-        - For uploads, the progress closure returns the bytes written, total bytes written, and total bytes expected 
+        - For uploads, the progress closure returns the bytes written, total bytes written, and total bytes expected
           to write.
-        - For downloads and data tasks, the progress closure returns the bytes read, total bytes read, and total bytes 
+        - For downloads and data tasks, the progress closure returns the bytes read, total bytes read, and total bytes
           expected to read.
 
         - parameter closure: The code to be executed periodically during the lifecycle of the request.
@@ -154,8 +156,8 @@ public class Request {
     /**
         Sets a closure to be called periodically during the lifecycle of the request as data is read from the server.
 
-        This closure returns the bytes most recently received from the server, not including data from previous calls. 
-        If this closure is set, data will only be available within this closure, and will not be saved elsewhere. It is 
+        This closure returns the bytes most recently received from the server, not including data from previous calls.
+        If this closure is set, data will only be available within this closure, and will not be saved elsewhere. It is
         also important to note that the `response` closure will be called with nil `responseData`.
 
         - parameter closure: The code to be executed periodically during the lifecycle of the request.
@@ -180,7 +182,12 @@ public class Request {
         if startTime == nil { startTime = CFAbsoluteTimeGetCurrent() }
 
         task.resume()
-        NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.Task.DidResume), object: task)
+
+        NotificationCenter.default.post(
+            name: Notification.Name.Task.DidResume,
+            object: self,
+            userInfo: [Notification.Key.Task: task]
+        )
     }
 
     /**
@@ -188,7 +195,12 @@ public class Request {
     */
     public func suspend() {
         task.suspend()
-        NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.Task.DidSuspend), object: task)
+
+        NotificationCenter.default.post(
+            name: Notification.Name.Task.DidSuspend,
+            object: self,
+            userInfo: [Notification.Key.Task: task]
+        )
     }
 
     /**
@@ -205,17 +217,20 @@ public class Request {
             task.cancel()
         }
 
-        NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.Task.DidCancel), object: task)
+        NotificationCenter.default.post(
+            name: Notification.Name.Task.DidCancel,
+            object: self,
+            userInfo: [Notification.Key.Task: task]
+        )
     }
 
     // MARK: - TaskDelegate
 
     /**
-        The task delegate is responsible for handling all delegate callbacks for the underlying task as well as 
+        The task delegate is responsible for handling all delegate callbacks for the underlying task as well as
         executing all operations attached to the serial operation queue upon task completion.
     */
     public class TaskDelegate: NSObject {
-
         /// The serial operation queue used to execute all operations after the task completes.
         public let queue: OperationQueue
 
@@ -233,12 +248,10 @@ public class Request {
             self.progress = Progress(totalUnitCount: 0)
             self.queue = {
                 let operationQueue = OperationQueue()
+
                 operationQueue.maxConcurrentOperationCount = 1
                 operationQueue.isSuspended = true
-
-                if #available(OSX 10.10, *) {
-                    operationQueue.qualityOfService = QualityOfService.utility
-                }
+                operationQueue.qualityOfService = .utility
 
                 return operationQueue
             }()
@@ -359,8 +372,6 @@ public class Request {
     class DataTaskDelegate: TaskDelegate, URLSessionDataDelegate {
         var dataTask: URLSessionDataTask? { return task as? URLSessionDataTask }
 
-        private var totalBytesReceived: Int64 = 0
-        private var mutableData: NSMutableData
         override var data: Data? {
             if dataStream != nil {
                 return nil
@@ -369,12 +380,15 @@ public class Request {
             }
         }
 
+        private var totalBytesReceived: Int64 = 0
+        private var mutableData: Data
+
         private var expectedContentLength: Int64?
         private var dataProgress: ((bytesReceived: Int64, totalBytesReceived: Int64, totalBytesExpectedToReceive: Int64) -> Void)?
         private var dataStream: ((data: Data) -> Void)?
 
         override init(task: URLSessionTask) {
-            mutableData = NSMutableData()
+            mutableData = Data()
             super.init(task: task)
         }
 
@@ -462,7 +476,7 @@ public class Request {
 extension Request: CustomStringConvertible {
 
     /**
-        The textual representation used when written to an output stream, which includes the HTTP method and URL, as 
+        The textual representation used when written to an output stream, which includes the HTTP method and URL, as
         well as the response status code if a response has been received.
     */
     public var description: String {
@@ -557,7 +571,7 @@ extension Request: CustomDebugStringConvertible {
             components.append("-d \"\(escapedBody)\"")
         }
 
-        components.append("\"\(URL.absoluteString!)\"")
+        components.append("\"\(URL.absoluteString)\"")
 
         return components.joined(separator: " \\\n\t")
     }

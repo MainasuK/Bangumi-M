@@ -14,7 +14,7 @@ class DetailTableViewEPSCell: DetailTableViewCell {
     
     // Ref: WWDC 15 - Session 803
     static let SFAlternativesFormFont: UIFont = {
-        let descriptor = UIFont.systemFont(ofSize: 11.0, weight: UIFontWeightLight).fontDescriptor()
+        let descriptor = UIFont.systemFont(ofSize: 11.0, weight: UIFontWeightLight).fontDescriptor
         let adjusted = descriptor.addingAttributes(
             [
                 UIFontDescriptorFeatureSettingsAttribute: [
@@ -82,22 +82,22 @@ extension DetailTableViewEPSCell {
         sortStatusView.layer.borderWidth = 0.5
         sortStatusView.layer.borderColor = UIColor(red: 0.00, green: 0.38, blue: 0.74, alpha: 1.00).cgColor
 
-        var color: UIColor = UIColor.clear()
+        var color: UIColor = UIColor.clear
         sortStatusView.tintColor = color
         sortStatusView.backgroundColor = color
         
         let progressStatus = status ?? .none
         switch progressStatus {
-        case .watched:      color = UIColor.myWatched()
-        case .queue:        color = UIColor.myQueue()
-        case .drop:         color = UIColor.myDrop()
-        case .none:         color = UIColor.clear()
+        case .watched:      color = UIColor.myWatched
+        case .queue:        color = UIColor.myQueue
+        case .drop:         color = UIColor.myDrop
+        case .none:         color = UIColor.clear
         }
         
         UIView.animate(withDuration: 0.2) { 
             self.sortStatusView.tintColor = color
             self.sortStatusView.backgroundColor = color
-            self.sortStatusView.layer.borderColor = (progressStatus != .none) ? color.cgColor : UIColor.lightGray().cgColor
+            self.sortStatusView.layer.borderColor = (progressStatus != .none) ? color.cgColor : UIColor.lightGray.cgColor
         }
     }
     

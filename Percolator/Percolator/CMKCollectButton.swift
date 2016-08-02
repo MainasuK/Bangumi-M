@@ -16,10 +16,10 @@ class CMKCollectButton: UIButton {
         }
         set {
             if newValue {
-                backgroundColor = UIColor.collectButtonTint()
+                backgroundColor = UIColor.collectButtonTint
             }
             else {
-                backgroundColor = UIColor.white()
+                backgroundColor = UIColor.white
             }
             
             super.isHighlighted = newValue

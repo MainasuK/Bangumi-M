@@ -14,53 +14,53 @@ import Alamofire
 // Controller should handle network error and unknown error
 extension BangumiRequest {
     
-    enum LoginError: ErrorProtocol {
+    enum LoginError: Error {
         case userNameNotEmail
         case unauthorized
     }
     
-    enum SearchError: ErrorProtocol {
+    enum SearchError: Error {
         case notFound
     }
     
-    enum CollectionError: ErrorProtocol {
+    enum CollectionError: Error {
         case noCollection
         case unauthorized
     }
     
-    enum SubjectError: ErrorProtocol {
+    enum SubjectError: Error {
         case notFound
     }
     
-    enum ProgressError: ErrorProtocol {
+    enum ProgressError: Error {
         case noProgress
         case unauthorized
     }
     
-    enum epError: ErrorProtocol {
+    enum epError: Error {
         case unauthorized
     }
     
     // For auth request
-    enum RequestError: ErrorProtocol {
+    enum RequestError: Error {
         case userNotLogin
     }
     
     // NSURLError
-    enum NetworkError: ErrorProtocol {
+    enum NetworkError: Error {
         case timeout
         case notConnectedToInternet
         case dnsLookupFailed
     }
     
     // NSError
-    enum AlamofireError: ErrorProtocol {
+    enum AlamofireError: Error {
         case contentTypeValidationFailed
     }
     
-    enum Unknown: ErrorProtocol {
+    enum Unknown: Error {
         case API(error: String, code: Int)
-        case network(error: NSURLError)
+        case network(error: URLError)
         case alamofire(error: NSError)
     }
     
@@ -70,10 +70,10 @@ extension BangumiRequest {
 // Wrap error
 extension BangumiRequest {
     
-    func wrap(_ error: ErrorProtocol) -> ErrorProtocol {
+    func wrap(_ error: Error) -> Error {
         switch error {
-        case let urlError as NSURLError:
-            switch urlError {
+        case let urlError as URLError:
+            switch urlError.code {
             case .timedOut:
                 timeoutErrorTimes += 1
                 return NetworkError.timeout
@@ -87,7 +87,7 @@ extension BangumiRequest {
             
         case let nsError as NSError:
             switch nsError.code {
-            case Alamofire.Error.Code.contentTypeValidationFailed.rawValue:
+            case Alamofire.ErrorCode.contentTypeValidationFailed.rawValue:
                 return AlamofireError.contentTypeValidationFailed
             default:
                 return Unknown.alamofire(error: nsError)

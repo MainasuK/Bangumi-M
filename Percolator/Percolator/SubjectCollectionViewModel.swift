@@ -38,7 +38,7 @@ final class SubjectCollectionViewModel: DataProvider, HeaderDataProvider {
 
 extension SubjectCollectionViewModel {
     
-    func fetchRelatedSubjects(handler: (ErrorProtocol?) -> Void) {
+    func fetchRelatedSubjects(handler: (Error?) -> Void) {
         let url = "https://bgm.tv/subject/\(subject.id)"
         
         // KISS
@@ -122,7 +122,7 @@ extension SubjectCollectionViewModel {
 
 extension SubjectCollectionViewModel {
     
-    enum ModelError: ErrorProtocol {
+    enum ModelError: Error {
         case parse
         case noItem
     }

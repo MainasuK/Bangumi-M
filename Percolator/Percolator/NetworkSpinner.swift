@@ -11,11 +11,11 @@ import UIKit
 struct NetworkSpinner {
     
     static func on() {
-        UIApplication.shared().isNetworkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     static func off() {
-        UIApplication.shared().isNetworkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
 }

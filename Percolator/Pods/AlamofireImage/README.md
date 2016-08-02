@@ -1,6 +1,6 @@
 # AlamofireImage
 
-[![Build Status](https://travis-ci.org/Alamofire/AlamofireImage.svg)](https://travis-ci.org/Alamofire/AlamofireImage)
+[![Build Status](https://travis-ci.org/Alamofire/AlamofireImage.svg?branch=master)](https://travis-ci.org/Alamofire/AlamofireImage)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AlamofireImage.svg)](https://img.shields.io/cocoapods/v/AlamofireImage.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Platform](https://img.shields.io/cocoapods/p/AlamofireImage.svg?style=flat)](http://cocoadocs.org/docsets/AlamofireImage)
@@ -23,8 +23,8 @@ AlamofireImage is an image component library for Alamofire.
 
 ## Requirements
 
-- iOS 8.0+ / Mac OS X 10.9+ / tvOS 9.0+ / watchOS 2.0+
-- Xcode 7.3+
+- iOS 9.0+ / Mac OS X 10.11+ / tvOS 9.0+ / watchOS 2.0+
+- Xcode 8.0 beta 3+
 
 ## Migration Guides
 
@@ -32,7 +32,7 @@ AlamofireImage is an image component library for Alamofire.
 
 ## Dependencies
 
-- [Alamofire 3.3+](https://github.com/Alamofire/Alamofire)
+- [Alamofire swift3 Branch](https://github.com/Alamofire/Alamofire)
 
 ## Communication
 

@@ -11,7 +11,7 @@ import Alamofire
 
 enum Result<T> {
     case success(T)
-    case failure(ErrorProtocol)
+    case failure(Error)
 }
 
 extension Result {
