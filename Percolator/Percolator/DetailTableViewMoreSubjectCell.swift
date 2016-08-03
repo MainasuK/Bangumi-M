@@ -19,7 +19,7 @@ class DetailTableViewMoreSubjectCell: DetailTableViewCell {
         do {
             let detailItem = try item.resolve()
             switch  detailItem {
-            case .subject(let _): break
+            case .subject(_): break
             default: return
             }
             
