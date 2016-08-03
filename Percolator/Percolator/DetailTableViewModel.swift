@@ -281,6 +281,7 @@ extension DetailTableViewModel {
     
 }
 
+// FIXME: Use case let
 postfix operator ~>^=^ { }
 postfix operator ~>^*^ { }
 
