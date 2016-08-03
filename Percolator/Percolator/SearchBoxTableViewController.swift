@@ -35,17 +35,17 @@ final class SearchBoxTableViewController: UITableViewController {
         controller.searchBar.enablesReturnKeyAutomatically = false
         
         // Note: Override UISearchController preferredStatusBarStyle() method return .lightContent
+        // And it's not work in iOS 10. Manually set statusBarStyle to make sure appearance correct.
+        
         controller.searchBar.barTintColor = UIColor.navigationBarBlue
         controller.searchBar.tintColor = UIColor.white
         controller.searchBar.placeholder = "条目搜索"
-        
-        let textFieldAppearance = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
-        textFieldAppearance.backgroundColor = UIColor.white.withAlphaComponent(0.7)
-        textFieldAppearance.tintColor = UIColor.lightText
-        
+        controller.searchBar.setSearchFieldBackgroundImage(#imageLiteral(resourceName: "searchBarTextFieldBackgroundImage"), for: .normal)
+
         return controller
     }()
     private var searchScopeIndex = 0
+    private var statusBarStyle: UIStatusBarStyle = .default
     
     @IBOutlet weak var searchButton: UIBarButtonItem!
     
@@ -56,6 +56,7 @@ final class SearchBoxTableViewController: UITableViewController {
         searchController.searchBar.text = (title == "搜索盒子") ? "" : title
         
         // Present the view controller
+        changeStatusBarStyle(to: .lightContent)
         present(searchController, animated: true, completion: nil)
     }
     
@@ -126,6 +127,22 @@ final class SearchBoxTableViewController: UITableViewController {
     
     deinit {
         consolePrint("SearchBoxTableViewController deinit")
+    }
+    
+}
+
+extension SearchBoxTableViewController {
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return statusBarStyle
+    }
+    
+    private func changeStatusBarStyle(to style: UIStatusBarStyle) {
+        statusBarStyle = style
+        
+        UIView.animate(withDuration: 0.2) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
     
 }
@@ -224,6 +241,7 @@ extension SearchBoxTableViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         defer {
+            changeStatusBarStyle(to: .default)
             searchController.dismiss(animated: true, completion: nil)
         }
         
@@ -260,8 +278,12 @@ extension SearchBoxTableViewController: UISearchResultsUpdating {
 // MARK: - UISearchControllerDelegate
 extension SearchBoxTableViewController: UISearchControllerDelegate {
     
+    func willPresentSearchController(_ searchController: UISearchController) {
+        changeStatusBarStyle(to: .lightContent)
+    }
+    
     func willDismissSearchController(_ searchController: UISearchController) {
-        setNeedsStatusBarAppearanceUpdate()
+        changeStatusBarStyle(to: .default)
     }
 
 }
