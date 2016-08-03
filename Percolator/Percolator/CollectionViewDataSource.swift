@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CollectionViewDataSource<Model: protocol<DataProvider, HeaderDataProvider>, Cell: ConfigurableCell, Header: ConfigurableHeader where Model.ItemType == Cell.ItemType, Cell: UICollectionViewCell, Model.HeaderItemType == Header.ItemType, Header: UICollectionReusableView>: DataSource<Model>, UICollectionViewDataSource {
+class CollectionViewDataSource<Model: DataProvider & HeaderDataProvider, Cell: ConfigurableCell, Header: ConfigurableHeader where Model.ItemType == Cell.ItemType, Cell: UICollectionViewCell, Model.HeaderItemType == Header.ItemType, Header: UICollectionReusableView>: DataSource<Model>, UICollectionViewDataSource {
     
     deinit {
         consolePrint("CollectionViewDataSource deinit")
