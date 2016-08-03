@@ -38,6 +38,8 @@ extension SearchBoxTableViewCell: ConfigurableCell {
         configureLabel(with: subject)
         configureImage(with: subject.images)
         configureIndicator(with: result, subject: subject)
+        
+        layoutIfNeeded()
     }
     
 }
