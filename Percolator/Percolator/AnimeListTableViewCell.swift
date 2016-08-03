@@ -36,7 +36,6 @@ class AnimeListTableViewCell: UITableViewCell {
     @IBOutlet weak var animeImageView: UIImageView!
 
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var nameCNLabel: UILabel!
     @IBOutlet weak var watchedLabel: UILabel!
     @IBOutlet weak var watchedToLabel: UILabel!
 
@@ -82,10 +81,6 @@ class AnimeListTableViewCell: UITableViewCell {
     }
     
     @IBOutlet weak var watchedSpinner: UIActivityIndicatorView!
-    
-
-    
-    
 }
 
 extension AnimeListTableViewCell: ConfigurableCell {
@@ -104,14 +99,15 @@ extension AnimeListTableViewCell: ConfigurableCell {
         configureButton(with: history, subject)
         
 //        setupLabelStyle()
+        
+        layoutIfNeeded()
     }
 }
 
 extension AnimeListTableViewCell {
     
     private func configureLabel(with subject: Subject) {
-        nameLabel.text = subject.name
-        nameCNLabel.text = subject.nameCN
+        nameLabel.text = (subject.name != "") ? subject.name : subject.nameCN
         
         // Set text in configureButton…
         watchedToLabel.text = "看到："
@@ -201,7 +197,7 @@ extension AnimeListTableViewCell {
             
         } catch ProgressesStatus.fetching {
             isSpinnning = true
-            consolePrint("Waitting for reload \(nameLabel.text ?? nameCNLabel.text ?? "")")
+            consolePrint("Waitting for reload \(nameLabel.text ?? "")")
         } catch ProgressesStatus.timeout {
             isSpinnning = false
             watchedButton.isEnabled = false
@@ -238,16 +234,16 @@ extension AnimeListTableViewCell {
         indicatorView.backgroundColor = UIColor.percolatorGray
     }
     
-    private func setupLabelStyle() {
-        if nameLabel.text == nameCNLabel.text {
-            nameLabel.asyncSetFont(with: "STSongti-SC-Bold", placeholderFontName: "HiraMinProN-W6", size: 17.0, toLanguage: ["zh-Hans", "zh-Hant"])
-        } else {
-            nameLabel.font = UIFont(name: "HiraMinProN-W6", size: 17.0)
-        }
-        nameCNLabel.asyncSetFont(with: "STSongti-SC-Bold", placeholderFontName: "HiraMinProN-W6", size: 17.0)
-        nameCNLabel.isHidden = (nameLabel.text != "") ? true : false
-
+//    private func setupLabelStyle() {
+//        if nameLabel.text == nameCNLabel.text {
+//            nameLabel.asyncSetFont(with: "STSongti-SC-Bold", placeholderFontName: "HiraMinProN-W6", size: 17.0, toLanguage: ["zh-Hans", "zh-Hant"])
+//        } else {
+//            nameLabel.font = UIFont(name: "HiraMinProN-W6", size: 17.0)
+//        }
+//        nameCNLabel.asyncSetFont(with: "STSongti-SC-Bold", placeholderFontName: "HiraMinProN-W6", size: 17.0)
+//        nameCNLabel.isHidden = (nameLabel.text != "") ? true : false
+//
 //        watchedToLabel.asyncSetFont(with: "HiraginoSansGB-W3", placeholderFontName: "HiraginoSans-W3", size: 13.0)
-    }
+//    }
     
 }

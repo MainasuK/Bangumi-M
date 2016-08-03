@@ -431,11 +431,11 @@ extension AnimeListTableViewController {
         }
         
         cell.delegate = self
-
+        
         // Make sure the shadow path set to right size
         cell.cardView.setNeedsLayout()
         cell.cardView.layoutIfNeeded()
-    
+        
         // Set border of cardView
         cell.cardView.layer.cornerRadius    = 5
         cell.cardView.layer.shadowColor     = UIColor.black.cgColor
@@ -456,7 +456,6 @@ extension AnimeListTableViewController {
             
             return maskLayer
         }()
-
     }
     
     
