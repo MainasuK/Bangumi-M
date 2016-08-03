@@ -83,7 +83,7 @@ final class DetailTableViewController: UITableViewController {
     
     
     
-    private func resetHeaderViewHeight() {
+    private func resetHeaderViewHeight(with width: CGFloat? = nil) {
         guard let image = headerImageView.image else {
             headerViewHeight = 0
             return
@@ -91,12 +91,12 @@ final class DetailTableViewController: UITableViewController {
         
         // Set image height to Header with keeping aspect ratio 
         // And make sure height not larger than kHeaderViewMaxHeight
-        let height = ((tableView.bounds.width / image.size.width) * image.size.height)
+        let height = (((width ?? tableView.bounds.width) / image.size.width) * image.size.height)
         headerViewHeight = (height > image.size.height) ? image.size.height : height
     }
     
-    private func updateHeaderView() {
-        var headerRect = CGRect(x: 0.0, y: -headerViewHeight, width: tableView.bounds.width, height: headerViewHeight)
+    private func updateHeaderView(with width: CGFloat? = nil) {
+        var headerRect = CGRect(x: 0.0, y: -headerViewHeight, width: width ?? tableView.bounds.width, height: headerViewHeight)
         let y = tableView.contentOffset.y + headerViewMarginTop
         
         if y <= -headerViewHeight {
@@ -302,8 +302,8 @@ extension DetailTableViewController {
         super.viewWillTransition(to: size, with: coordinator)
         
         coordinator.animate(alongsideTransition: { (context: UIViewControllerTransitionCoordinatorContext) -> Void in
-            self.resetHeaderViewHeight()
-            self.updateHeaderView()
+            self.resetHeaderViewHeight(with: size.width)
+            self.updateHeaderView(with: size.width)
         },completion: nil)
     }
     
