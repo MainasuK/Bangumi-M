@@ -42,7 +42,7 @@ final class AnimeListTableViewController: UITableViewController {
             // ...
         }
         
-        let logoutAction = UIAlertAction(title: "注销", style: .destructive) { (action) in
+        let logoutAction = UIAlertAction(title: NSLocalizedString("sign out", comment: ""), style: .destructive) { (action) in
             User.removeInfo()
             BangumiRequest.shared.user = nil
             self.model.removeAll()

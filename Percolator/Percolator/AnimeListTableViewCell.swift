@@ -148,7 +148,7 @@ extension AnimeListTableViewCell {
                 watchedLabel.text = "EP.\(lastEpisode.sortString) \(epName)"
             } else {
                 watchedToLabel.text = (subject.epTable.count != 0) ? "\(subject.collection.doing)人在看" : ""
-                watchedLabel.text = (subject.epTable.count != 0) ? "来开始标记吧～" : "喵帕斯～"
+                watchedLabel.text = (subject.epTable.count != 0) ? "来标记吧～" : "喵帕斯～"
             }
             
             if let nextEpisode = history.nextEpisode {

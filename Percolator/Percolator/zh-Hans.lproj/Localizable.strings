@@ -6,11 +6,33 @@
   Copyright © 2016年 Cirno MainasuK. All rights reserved.
 */
 
-"dismiss" = "关闭";
+"login…" = "登录中…";
+"sign out" = "注销";
 
-"no result" = "无相关条目";
+"dismiss" = "关闭";
+"cancel" = "取消";
+
+"please check your network connection status" = "请检查网络链接状况";
+"make sure that the network can be connected to bgm.tv" = "请确保可连接至 https://bgm.tv";
+
+"no result" = "无结果";
 "time out" = "请求超时";
+"dns lookup failed" = "DNS 查询失败";
 "unknown error" = "未知错误";
-"not internet connected to internet" = "无网络链接";
+"not connected to internet" = "无网络连接";
 
 "success" = "成功";
+
+"no collection" = "无收藏";
+"mark error" = "标记失败";
+"authorize failed" = "认证失败";
+"try login again" = "请重新登录";
+"please login" = "请先登录";
+
+"save to search box" = "保存到收藏盒子";
+"delete from search box" = "从收藏盒子中删除";
+
+
+/* Bar Button Item*/
+"Cancel" = "取消";
+"Save" = "保存";

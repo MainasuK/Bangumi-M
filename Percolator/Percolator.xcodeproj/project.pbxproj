@@ -311,6 +311,8 @@
 		DBEF114D1D379C5B00E7A0D7 /* BangumiRequest+Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BangumiRequest+Login.swift"; sourceTree = "<group>"; };
 		DBEF114F1D379CD200E7A0D7 /* BangumiRequest+Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BangumiRequest+Search.swift"; sourceTree = "<group>"; };
 		DBEF11511D379D6900E7A0D7 /* BangumiRequest+Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BangumiRequest+Error.swift"; sourceTree = "<group>"; };
+		DBEF7D0D1D5227FE00B60E2C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		DBEF7D0E1D5227FE00B60E2C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		DBFB286A1D50D31000C43E75 /* SimulatorStatusMagic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimulatorStatusMagic.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Percolator-aafqmohbcdbdgecxvzkcbnkdnrbr/Build/Products/Debug-iphonesimulator/SimulatorStatusMagic/SimulatorStatusMagic.framework"; sourceTree = "<group>"; };
 		DBFBCB801B63157E001F3CD1 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		DBFBCB821B633376001F3CD1 /* CollectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectTableViewController.swift; sourceTree = "<group>"; };
@@ -884,6 +886,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = DBBA47B91B060DEA0004BBA2;
 			productRefGroup = DBBA47C31B060DEA0004BBA2 /* Products */;
@@ -1213,6 +1216,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				DBBA47CC1B060DEA0004BBA2 /* Base */,
+				DBEF7D0D1D5227FE00B60E2C /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1221,6 +1225,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				DBCD90C31D37D02900E7B37C /* en */,
+				DBEF7D0E1D5227FE00B60E2C /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1312,6 +1317,7 @@
 				PRODUCT_NAME = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1352,6 +1358,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

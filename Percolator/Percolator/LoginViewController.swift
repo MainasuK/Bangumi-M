@@ -89,8 +89,8 @@ final class LoginViewController: UIViewController {
                 
             } catch NetworkError.timeout {
                 if self.request.timeoutErrorTimes == 3 {
-                    let alertController = UIAlertController(title: "请检查网络链接状况", message: "可能是由于 DNS 污染造成若您无法链接至 bgm.tv，请更换 DNS 或联系当地网络提供商解决", preferredStyle: .alert)
-                    let cancelAction = UIAlertAction(title: NSLocalizedString("不再提醒", comment: ""), style: .cancel) { (action) in
+                    let alertController = UIAlertController(title: NSLocalizedString("please check your network connection status", comment: ""), message: NSLocalizedString("make sure that the network can be connected to bgm.tv", comment: ""), preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("dismiss", comment: ""), style: .cancel) { (action) in
                         // ...
                     }
                     
@@ -164,7 +164,7 @@ extension LoginViewController {
         setupBlurView()
         registeKeyboardNotification()
         
-        loginButton.setTitle("Login…", for: .disabled)
+        loginButton.setTitle(NSLocalizedString("login…", comment: ""), for: .disabled)
     }
     
     override func viewWillAppear(_ animated: Bool) {
