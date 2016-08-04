@@ -720,6 +720,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = Z68BDSMP42;
 						DevelopmentTeamName = "xu hao";
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 						TestTargetID = DBBA47C11B060DEA0004BBA2;
 					};

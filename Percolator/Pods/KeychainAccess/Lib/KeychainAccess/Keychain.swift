@@ -492,7 +492,7 @@ public class Keychain {
             return nil
         }
         guard let string = String(data: data, encoding: .utf8) else {
-            throw conversionError(message: "failed to convert data to string")
+            throw conversionError("failed to convert data to string")
         }
         return string
     }
@@ -517,7 +517,7 @@ public class Keychain {
         case errSecItemNotFound:
             return nil
         default:
-            throw securityError(status: status)
+            throw securityError(status)
         }
     }
 
@@ -545,7 +545,7 @@ public class Keychain {
         case errSecItemNotFound:
             return handler(nil)
         default:
-            throw securityError(status: status)
+            throw securityError(status)
         }
     }
 
@@ -553,7 +553,7 @@ public class Keychain {
     
     public func set(_ value: String, key: String) throws {
         guard let data = value.data(using: .utf8, allowLossyConversion: false) else {
-            throw conversionError(message: "failed to convert string to data")
+            throw conversionError("failed to convert string to data")
         }
         try set(data, key: key)
     }
@@ -595,7 +595,7 @@ public class Keychain {
             } else {
                 status = SecItemUpdate(query, attributes)
                 if status != errSecSuccess {
-                    throw securityError(status: status)
+                    throw securityError(status)
                 }
             }
             #else
@@ -615,10 +615,10 @@ public class Keychain {
 
             status = SecItemAdd(attributes, nil)
             if status != errSecSuccess {
-                throw securityError(status: status)
+                throw securityError(status)
             }
         default:
-            throw securityError(status: status)
+            throw securityError(status)
         }
     }
 
@@ -682,7 +682,7 @@ public class Keychain {
         
         let status = SecItemDelete(query)
         if status != errSecSuccess && status != errSecItemNotFound {
-            throw securityError(status: status)
+            throw securityError(status)
         }
     }
     
@@ -694,7 +694,7 @@ public class Keychain {
         
         let status = SecItemDelete(query)
         if status != errSecSuccess && status != errSecItemNotFound {
-            throw securityError(status: status)
+            throw securityError(status)
         }
     }
     
@@ -711,7 +711,7 @@ public class Keychain {
         case errSecItemNotFound:
             return false
         default:
-            throw securityError(status: status)
+            throw securityError(status)
         }
     }
     
@@ -730,7 +730,7 @@ public class Keychain {
         switch status {
         case errSecSuccess:
             if let items = result as? [[String: AnyObject]] {
-                return prettify(itemClass: itemClass, items: items).map {
+                return prettify(itemClass, items: items).map {
                     switch itemClass {
                     case .genericPassword:
                         return (($0["service"] ?? "") as! String, ($0["key"] ?? "") as! String)
@@ -744,12 +744,12 @@ public class Keychain {
         default: ()
         }
         
-        _ = securityError(status: status)
+        _ = securityError(status)
         return []
     }
     
     public func allKeys() -> [String] {
-        return self.dynamicType.prettify(itemClass: itemClass, items: items()).map { $0["key"] as! String }
+        return self.dynamicType.prettify(itemClass, items: items()).map { $0["key"] as! String }
     }
     
     public class func allItems(_ itemClass: ItemClass) -> [[String: AnyObject]] {
@@ -767,19 +767,19 @@ public class Keychain {
         switch status {
         case errSecSuccess:
             if let items = result as? [[String: AnyObject]] {
-                return prettify(itemClass: itemClass, items: items)
+                return prettify(itemClass, items: items)
             }
         case errSecItemNotFound:
             return []
         default: ()
         }
         
-        _ = securityError(status: status)
+        _ = securityError(status)
         return []
     }
     
     public func allItems() -> [[String: AnyObject]] {
-        return self.dynamicType.prettify(itemClass: itemClass, items: items())
+        return self.dynamicType.prettify(itemClass, items: items())
     }
     
     #if os(iOS)
@@ -796,7 +796,7 @@ public class Keychain {
                 }
             }
         } else {
-            let error = securityError(status: Status.param.rawValue)
+            let error = securityError(Status.param.rawValue)
             completion(account: nil, password: nil, error: error)
         }
     }
@@ -818,7 +818,7 @@ public class Keychain {
                 }
             }
         } else {
-            let error = securityError(status: Status.param.rawValue)
+            let error = securityError(Status.param.rawValue)
             completion(password: nil, error: error)
         }
     }
@@ -843,7 +843,7 @@ public class Keychain {
                 }
             }
         } else {
-            let error = securityError(status: Status.param.rawValue)
+            let error = securityError(Status.param.rawValue)
             completion(error: error)
         }
     }
@@ -865,14 +865,14 @@ public class Keychain {
 
     #if os(iOS)
     @available(iOS 8.0, *)
-    public class func requestSharedWebCredential(domain: String, completion: (credentials: [[String: String]], error: NSError?) -> () = { credentials, error -> () in }) {
+    public class func requestSharedWebCredential(_ domain: String, completion: (credentials: [[String: String]], error: NSError?) -> () = { credentials, error -> () in }) {
         requestSharedWebCredential(domain: domain, account: nil, completion: completion)
     }
     #endif
 
     #if os(iOS)
     @available(iOS 8.0, *)
-    public class func requestSharedWebCredential(domain: String, account: String, completion: (credentials: [[String: String]], error: NSError?) -> () = { credentials, error -> () in }) {
+    public class func requestSharedWebCredential(_ domain: String, account: String, completion: (credentials: [[String: String]], error: NSError?) -> () = { credentials, error -> () in }) {
         requestSharedWebCredential(domain: Optional(domain), account: Optional(account), completion: completion)
     }
     #endif
@@ -944,11 +944,11 @@ public class Keychain {
         default: ()
         }
         
-        _ = securityError(status: status)
+        _ = securityError(status)
         return []
     }
     
-    private class func prettify(itemClass: ItemClass, items: [[String: AnyObject]]) -> [[String: AnyObject]] {
+    private class func prettify(_ itemClass: ItemClass, items: [[String: AnyObject]]) -> [[String: AnyObject]] {
         let items = items.map { attributes -> [String: AnyObject] in
             var item = [String: AnyObject]()
             
@@ -1005,18 +1005,18 @@ public class Keychain {
     
     // MARK:
     
-    private class func conversionError(message: String) -> NSError {
+    private class func conversionError(_ message: String) -> NSError {
         let error = NSError(domain: KeychainAccessErrorDomain, code: Int(Status.conversionError.rawValue), userInfo: [NSLocalizedDescriptionKey: message])
         print("error:[\(error.code)] \(error.localizedDescription)")
         
         return error
     }
     
-    private func conversionError(message: String) -> NSError {
-        return self.dynamicType.conversionError(message: message)
+    private func conversionError(_ message: String) -> NSError {
+        return self.dynamicType.conversionError(message)
     }
     
-    private class func securityError(status: OSStatus) -> NSError {
+    private class func securityError(_ status: OSStatus) -> NSError {
         let message = Status(status: status).description
         
         let error = NSError(domain: KeychainAccessErrorDomain, code: Int(status), userInfo: [NSLocalizedDescriptionKey: message])
@@ -1025,8 +1025,8 @@ public class Keychain {
         return error
     }
     
-    private func securityError(status: OSStatus) -> NSError {
-        return self.dynamicType.securityError(status: status)
+    private func securityError(_ status: OSStatus) -> NSError {
+        return self.dynamicType.securityError(status)
     }
 }
 

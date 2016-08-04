@@ -25,7 +25,7 @@ class CosmosLayers {
 
     for _ in (0..<settings.totalStars) {
       
-      let fillLevel = CosmosRating.starFillLevel(ratingRemainder: ratingRemander,
+      let fillLevel = CosmosRating.starFillLevel(ratingRemander,
         fillMode: settings.fillMode)
       
       let starLayer = createCompositeStarLayer(fillLevel, settings: settings)

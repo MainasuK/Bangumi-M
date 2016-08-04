@@ -41,6 +41,9 @@ class Parser: XCTestCase {
                         let text = node.text {
                             urlPath += href
                             title = text
+                            
+                            XCTAssertNotEqual(urlPath, "https://bgm.tv/")
+                            XCTAssertNotEqual(title, "")
                         }
                         
                     case 1:
@@ -52,6 +55,10 @@ class Parser: XCTestCase {
                         let text = hrefNode.text {
                             uid = id
                             userName = text
+                            
+                            XCTAssertNotEqual(uid, 0)
+                            XCTAssertNotEqual(userName, "")
+                            
                             print(text)
                         }
                         
@@ -60,11 +67,15 @@ class Parser: XCTestCase {
                         let repliesStr = text.components(separatedBy: " ").first,
                         let repliesInt = Int(repliesStr) {
                             replies = repliesInt
+                            
+                            XCTAssertNotEqual(replies, -1)
                         }
                         
                     case 3:
                         if let text = node.text {
                             date = text
+                            
+                            XCTAssertNotEqual(date, "")
                         }
                         
                     default:
