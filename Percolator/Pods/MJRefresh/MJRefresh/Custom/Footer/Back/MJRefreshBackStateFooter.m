@@ -11,7 +11,7 @@
 @interface MJRefreshBackStateFooter()
 {
     /** 显示刷新状态的label */
-    __weak UILabel *_stateLabel;
+    __unsafe_unretained UILabel *_stateLabel;
 }
 /** 所有状态对应的文字 */
 @property (strong, nonatomic) NSMutableDictionary *stateTitles;
@@ -30,7 +30,7 @@
 - (UILabel *)stateLabel
 {
     if (!_stateLabel) {
-        [self addSubview:_stateLabel = [UILabel label]];
+        [self addSubview:_stateLabel = [UILabel mj_label]];
     }
     return _stateLabel;
 }
@@ -43,21 +43,30 @@
     self.stateLabel.text = self.stateTitles[@(self.state)];
 }
 
+- (NSString *)titleForState:(MJRefreshState)state {
+  return self.stateTitles[@(state)];
+}
+
 #pragma mark - 重写父类的方法
 - (void)prepare
 {
     [super prepare];
     
+    // 初始化间距
+    self.labelLeftInset = MJRefreshLabelLeftInset;
+    
     // 初始化文字
-    [self setTitle:MJRefreshBackFooterIdleText forState:MJRefreshStateIdle];
-    [self setTitle:MJRefreshBackFooterPullingText forState:MJRefreshStatePulling];
-    [self setTitle:MJRefreshBackFooterRefreshingText forState:MJRefreshStateRefreshing];
-    [self setTitle:MJRefreshBackFooterNoMoreDataText forState:MJRefreshStateNoMoreData];
+    [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshBackFooterIdleText] forState:MJRefreshStateIdle];
+    [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshBackFooterPullingText] forState:MJRefreshStatePulling];
+    [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshBackFooterRefreshingText] forState:MJRefreshStateRefreshing];
+    [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshBackFooterNoMoreDataText] forState:MJRefreshStateNoMoreData];
 }
 
 - (void)placeSubviews
 {
     [super placeSubviews];
+    
+    if (self.stateLabel.constraints.count) return;
     
     // 状态标签
     self.stateLabel.frame = self.bounds;

@@ -10,38 +10,59 @@ import Foundation
 
 // MARK: - UserDefaultsKey
 
-public struct UserDefaultsKey {
-    static let request              = "request"
-    static let hasLoginKey          = "hasLoginKey"
-    static let userData             = "userData"
+struct UserDefaultsKey {
+    static let hasLoginKey          = "hasLoginKeyV2"
+    
+    static let username             = "username"
+    static let userNickname         = "userNickName"
+    static let userURL              = "user URL"
+    static let userSign             = "userSign"
     static let userID               = "userID"
     static let userEmail            = "userEmail"
+    static let userAvatarDict       = "userAvatarDict"
     static let userAuth             = "userAuth"
     static let userAuthEncode       = "userAuthEncode"
+    static let userLargeAvatar      = "userLargeAvatar"
+    static let userMediumAvatar     = "userMediumAvatar"
+    static let userSmallAvatar      = "usrSmallAvatar"
 }
 
 // MARK: - StoryboardKey
-
+// FIXME: need to unify
 public struct StoryboardKey {
     
-    static let initTabBarVC                     = "initTabBarVC"
+    static let LoginViewController                  = "LoginViewController"
     
-    static let showAnimeListVC                  = "showAnimeListVC"
-    static let showAnimeDetailVC                = "showDetailVC"
-    static let showLoginVC                      = "showLoginVC"
-    static let showSearchVC                     = "showSearch"
+    static let animeTableViewVC                     = "AnimeListTableVC"
+    static let AnimeListTableViewCellKey            = "animeCell"
     
-    static let animeDetailTitleCell             = "animeDetailTitleCell"
-    static let animeDetailSummayTableViewCell   = "animeDetailSummayCell"
+    static let DetailNavigationVC                   = "DetailTableViewControllerNaviVC"
+    static let DetailTableViewEPSHeaderFooterView   = "DetailTableViewEPSHeaderFooterView"
+    static let DetialTableViewControllerKey         = "DetailTableViewController"
+    static let DetailTableViewBannerCellKey         = "DetailTableViewBannerCell"
+    static let DetailTableViewMoreTopicCellKey      = "DetailTableViewMoreTopicCellKey"
+    static let DetailTableViewMoreSubjectCellKey    = "DetailTableViewMoreSubjectCellKey"
+    static let DetailTableViewEPSCellKey            = "DetailTableViewEPSCellKey"
+    static let DetailTableViewCell_CollectionView   = "DetailTableViewCell_CollectionView"
+    static let CMKCollectionViewCell                = "CMKCollectionViewCell"
     
-    static let loginVC                          = "LoginVC"
-    static let animeTableViewVC                 = "AnimeListTableVC"
-    static let DetialVC                         = "DetailViewController"
-    static let DetailNavigationVC               = "DetailViewControllerNaviVC"
-    static let searchTabelVC                    = "SearchTableVC"
-    static let searchTabelNaviVC                = "SearchTableNaviVC"
-    static let AnimeCollectVC                   = "AnimeCollectVC"
-    static let AnimeCollectNavigationVC          = "AnimeCollectNaviVC"
+    static let TopicTableViewHeaderFooterView       = "TopicTableViewHeaderFooterView"
+    static let TopicTableViewControllerKey          = "TopicTableViewControllerKey"
+    static let TopicTableViewCellKey                = "TopicTableViewCellKey"
+    
+    static let SubjectCollectionViewHeaderView      = "SubjectCollectionReusableHeaderView"
+    static let SubjectCollectionViewController      = "SubjectCollectionViewController"
+    static let SubjectCollectionViewBookCellKey     = "SubjectCollectionViewBookCellKey"
+    static let SubjectCollectionViewNotBookCellKey  = "SubjectCollectionViewNotBookCellKey"
+    
+    static let searchTabelVC                        = "SearchTableVC"
+    static let searchTabelNaviVC                    = "SearchTableNaviVC"
+    
+    static let SearchBoxTableViewCellKey            = "SearchBoxTableViewCell"
+    
+    static let CollectTableViewController           = "CollectTableViewController"
+    static let CollectNavigationController          = "CollectNavigationController"
+    
 }
 
 public struct PercolatorKey {
@@ -54,4 +75,12 @@ public struct PercolatorKey {
                                5 : ["想看", "看过", "在看", "搁置", "抛弃"],
                                6 : ["想看", "看过", "在看", "搁置", "抛弃"]
                               ]
+    static let searchTypeArr = ["全部", "动画", "书籍", "音乐", "游戏", "三次元"]
+    static let searchTypeDict = [0 : 0,   // All
+                                 1 : 2,   // Anime
+                                 2 : 1,   // Book
+                                 3 : 3,   // Music
+                                 4 : 4,   // Game
+                                 5 : 6    // Can't understand
+                                ]
 }

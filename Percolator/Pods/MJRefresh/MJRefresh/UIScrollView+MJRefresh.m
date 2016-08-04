@@ -30,50 +30,71 @@
 
 #pragma mark - header
 static const char MJRefreshHeaderKey = '\0';
-- (void)setHeader:(MJRefreshHeader *)header
+- (void)setMj_header:(MJRefreshHeader *)mj_header
 {
-    if (header != self.header) {
+    if (mj_header != self.mj_header) {
         // 删除旧的，添加新的
-        [self.header removeFromSuperview];
-        [self addSubview:header];
+        [self.mj_header removeFromSuperview];
+        [self insertSubview:mj_header atIndex:0];
         
         // 存储新的
-        [self willChangeValueForKey:@"header"]; // KVO
+        [self willChangeValueForKey:@"mj_header"]; // KVO
         objc_setAssociatedObject(self, &MJRefreshHeaderKey,
-                                 header, OBJC_ASSOCIATION_ASSIGN);
-        [self didChangeValueForKey:@"header"]; // KVO
+                                 mj_header, OBJC_ASSOCIATION_ASSIGN);
+        [self didChangeValueForKey:@"mj_header"]; // KVO
     }
 }
 
-- (MJRefreshHeader *)header
+- (MJRefreshHeader *)mj_header
 {
     return objc_getAssociatedObject(self, &MJRefreshHeaderKey);
 }
 
 #pragma mark - footer
 static const char MJRefreshFooterKey = '\0';
-- (void)setFooter:(MJRefreshFooter *)footer
+- (void)setMj_footer:(MJRefreshFooter *)mj_footer
 {
-    if (footer != self.footer) {
+    if (mj_footer != self.mj_footer) {
         // 删除旧的，添加新的
-        [self.footer removeFromSuperview];
-        [self addSubview:footer];
+        [self.mj_footer removeFromSuperview];
+        [self insertSubview:mj_footer atIndex:0];
         
         // 存储新的
-        [self willChangeValueForKey:@"footer"]; // KVO
+        [self willChangeValueForKey:@"mj_footer"]; // KVO
         objc_setAssociatedObject(self, &MJRefreshFooterKey,
-                                 footer, OBJC_ASSOCIATION_ASSIGN);
-        [self didChangeValueForKey:@"footer"]; // KVO
+                                 mj_footer, OBJC_ASSOCIATION_ASSIGN);
+        [self didChangeValueForKey:@"mj_footer"]; // KVO
     }
 }
 
-- (MJRefreshFooter *)footer
+- (MJRefreshFooter *)mj_footer
 {
     return objc_getAssociatedObject(self, &MJRefreshFooterKey);
 }
 
+#pragma mark - 过期
+- (void)setFooter:(MJRefreshFooter *)footer
+{
+    self.mj_footer = footer;
+}
+
+- (MJRefreshFooter *)footer
+{
+    return self.mj_footer;
+}
+
+- (void)setHeader:(MJRefreshHeader *)header
+{
+    self.mj_header = header;
+}
+
+- (MJRefreshHeader *)header
+{
+    return self.mj_header;
+}
+
 #pragma mark - other
-- (NSInteger)totalDataCount
+- (NSInteger)mj_totalDataCount
 {
     NSInteger totalCount = 0;
     if ([self isKindOfClass:[UITableView class]]) {
@@ -93,22 +114,21 @@ static const char MJRefreshFooterKey = '\0';
 }
 
 static const char MJRefreshReloadDataBlockKey = '\0';
-- (void)setReloadDataBlock:(void (^)(NSInteger))reloadDataBlock
+- (void)setMj_reloadDataBlock:(void (^)(NSInteger))mj_reloadDataBlock
 {
-    [self willChangeValueForKey:@"reloadDataBlock"]; // KVO
-    objc_setAssociatedObject(self, &MJRefreshReloadDataBlockKey, reloadDataBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    [self willChangeValueForKey:@"reloadDataBlock"]; // KVO
+    [self willChangeValueForKey:@"mj_reloadDataBlock"]; // KVO
+    objc_setAssociatedObject(self, &MJRefreshReloadDataBlockKey, mj_reloadDataBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    [self didChangeValueForKey:@"mj_reloadDataBlock"]; // KVO
 }
 
-- (void (^)(NSInteger))reloadDataBlock
+- (void (^)(NSInteger))mj_reloadDataBlock
 {
     return objc_getAssociatedObject(self, &MJRefreshReloadDataBlockKey);
 }
 
 - (void)executeReloadDataBlock
 {
-    void (^reloadDataBlock)(NSInteger) = self.reloadDataBlock;
-    !reloadDataBlock ? : reloadDataBlock(self.totalDataCount);
+    !self.mj_reloadDataBlock ? : self.mj_reloadDataBlock(self.mj_totalDataCount);
 }
 @end
 
@@ -117,59 +137,11 @@ static const char MJRefreshReloadDataBlockKey = '\0';
 + (void)load
 {
     [self exchangeInstanceMethod1:@selector(reloadData) method2:@selector(mj_reloadData)];
-    [self exchangeInstanceMethod1:@selector(reloadRowsAtIndexPaths:withRowAnimation:) method2:@selector(mj_reloadRowsAtIndexPaths:withRowAnimation:)];
-    [self exchangeInstanceMethod1:@selector(deleteRowsAtIndexPaths:withRowAnimation:) method2:@selector(mj_deleteRowsAtIndexPaths:withRowAnimation:)];
-    [self exchangeInstanceMethod1:@selector(insertRowsAtIndexPaths:withRowAnimation:) method2:@selector(mj_insertRowsAtIndexPaths:withRowAnimation:)];
-    [self exchangeInstanceMethod1:@selector(reloadSections:withRowAnimation:) method2:@selector(mj_reloadSections:withRowAnimation:)];
-    [self exchangeInstanceMethod1:@selector(deleteSections:withRowAnimation:) method2:@selector(mj_deleteSections:withRowAnimation:)];
-    [self exchangeInstanceMethod1:@selector(insertSections:withRowAnimation:) method2:@selector(mj_insertSections:withRowAnimation:)];
 }
 
 - (void)mj_reloadData
 {
     [self mj_reloadData];
-    
-    [self executeReloadDataBlock];
-}
-
-- (void)mj_insertRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation
-{
-    [self mj_insertRowsAtIndexPaths:indexPaths withRowAnimation:animation];
-    
-    [self executeReloadDataBlock];
-}
-
-- (void)mj_deleteRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation
-{
-    [self mj_deleteRowsAtIndexPaths:indexPaths withRowAnimation:animation];
-    
-    [self executeReloadDataBlock];
-}
-
-- (void)mj_reloadRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation
-{
-    [self mj_reloadRowsAtIndexPaths:indexPaths withRowAnimation:animation];
-    
-    [self executeReloadDataBlock];
-}
-
-- (void)mj_insertSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation
-{
-    [self mj_insertSections:sections withRowAnimation:animation];
-    
-    [self executeReloadDataBlock];
-}
-
-- (void)mj_deleteSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation
-{
-    [self mj_deleteSections:sections withRowAnimation:animation];
-    
-    [self executeReloadDataBlock];
-}
-
-- (void)mj_reloadSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation
-{
-    [self mj_reloadSections:sections withRowAnimation:animation];
     
     [self executeReloadDataBlock];
 }
@@ -180,59 +152,11 @@ static const char MJRefreshReloadDataBlockKey = '\0';
 + (void)load
 {
     [self exchangeInstanceMethod1:@selector(reloadData) method2:@selector(mj_reloadData)];
-    [self exchangeInstanceMethod1:@selector(reloadItemsAtIndexPaths:) method2:@selector(mj_reloadItemsAtIndexPaths:)];
-    [self exchangeInstanceMethod1:@selector(insertItemsAtIndexPaths:) method2:@selector(mj_insertItemsAtIndexPaths:)];
-    [self exchangeInstanceMethod1:@selector(deleteItemsAtIndexPaths:) method2:@selector(mj_deleteItemsAtIndexPaths:)];
-    [self exchangeInstanceMethod1:@selector(reloadSections:) method2:@selector(mj_reloadSections:)];
-    [self exchangeInstanceMethod1:@selector(insertSections:) method2:@selector(mj_insertSections:)];
-    [self exchangeInstanceMethod1:@selector(deleteSections:) method2:@selector(mj_deleteSections:)];
 }
 
 - (void)mj_reloadData
 {
     [self mj_reloadData];
-    
-    [self executeReloadDataBlock];
-}
-
-- (void)mj_insertSections:(NSIndexSet *)sections
-{
-    [self mj_insertSections:sections];
-    
-    [self executeReloadDataBlock];
-}
-
-- (void)mj_deleteSections:(NSIndexSet *)sections
-{
-    [self mj_deleteSections:sections];
-    
-    [self executeReloadDataBlock];
-}
-
-- (void)mj_reloadSections:(NSIndexSet *)sections
-{
-    [self mj_reloadSections:sections];
-    
-    [self executeReloadDataBlock];
-}
-
-- (void)mj_insertItemsAtIndexPaths:(NSArray *)indexPaths
-{
-    [self mj_insertItemsAtIndexPaths:indexPaths];
-    
-    [self executeReloadDataBlock];
-}
-
-- (void)mj_deleteItemsAtIndexPaths:(NSArray *)indexPaths
-{
-    [self mj_deleteItemsAtIndexPaths:indexPaths];
-    
-    [self executeReloadDataBlock];
-}
-
-- (void)mj_reloadItemsAtIndexPaths:(NSArray *)indexPaths
-{
-    [self mj_reloadItemsAtIndexPaths:indexPaths];
     
     [self executeReloadDataBlock];
 }

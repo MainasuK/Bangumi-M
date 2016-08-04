@@ -9,7 +9,9 @@
 #import "MJRefreshGifHeader.h"
 
 @interface MJRefreshGifHeader()
-@property (weak, nonatomic) UIImageView *gifView;
+{
+    __unsafe_unretained UIImageView *_gifView;
+}
 /** 所有状态对应的动画图片 */
 @property (strong, nonatomic) NSMutableDictionary *stateImages;
 /** 所有状态对应的动画时间 */
@@ -64,6 +66,14 @@
 }
 
 #pragma mark - 实现父类的方法
+- (void)prepare
+{
+    [super prepare];
+    
+    // 初始化间距
+    self.labelLeftInset = 20;
+}
+
 - (void)setPullingPercent:(CGFloat)pullingPercent
 {
     [super setPullingPercent:pullingPercent];
@@ -81,12 +91,21 @@
 {
     [super placeSubviews];
     
+    if (self.gifView.constraints.count) return;
+    
     self.gifView.frame = self.bounds;
     if (self.stateLabel.hidden && self.lastUpdatedTimeLabel.hidden) {
         self.gifView.contentMode = UIViewContentModeCenter;
     } else {
         self.gifView.contentMode = UIViewContentModeRight;
-        self.gifView.mj_w = self.mj_w * 0.5 - 90;
+        
+        CGFloat stateWidth = self.stateLabel.mj_textWith;
+        CGFloat timeWidth = 0.0;
+        if (!self.lastUpdatedTimeLabel.hidden) {
+            timeWidth = self.lastUpdatedTimeLabel.mj_textWith;
+        }
+        CGFloat textWidth = MAX(stateWidth, timeWidth);
+        self.gifView.mj_w = self.mj_w * 0.5 - textWidth * 0.5 - self.labelLeftInset;
     }
 }
 
@@ -107,6 +126,8 @@
             self.gifView.animationDuration = [self.stateDurations[@(state)] doubleValue];
             [self.gifView startAnimating];
         }
+    } else if (state == MJRefreshStateIdle) {
+        [self.gifView stopAnimating];
     }
 }
 @end

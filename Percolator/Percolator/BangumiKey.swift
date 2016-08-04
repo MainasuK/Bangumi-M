@@ -9,11 +9,11 @@
 import Foundation
 
 // MARK: User
-public struct BangumiKey {
+struct BangumiKey {
     static let id = "id"
     static let url = "url"
-    static let userName = "username"
-    static let nickName = "nickname"
+    static let username = "username"
+    static let nickname = "nickname"
     static let avatar = "avatar"
     static let avatarLargeUrl = "large"
     static let avatarMediumUrl = "medium"
@@ -43,6 +43,15 @@ extension BangumiKey {
     static let eps = "eps"
     static let airDate = "air_date"
     static let airWeekday = "air_weekday"
+    static let rank = "rank"
+}
+
+extension BangumiKey {
+    // SubjectRating key
+    static let subjectRating = "rating"
+    static let count = "count"
+    static let score = "score"
+    static let total = "total"
 }
 
 extension BangumiKey {
@@ -142,4 +151,10 @@ extension BangumiKey {
     static let replies = "replies"
     
     static let user = "user"
+}
+
+extension BangumiKey {
+    static let cssName = "css_name"
+    static let urlName = "url_name"
+    static let cnName = "cn_name"
 }

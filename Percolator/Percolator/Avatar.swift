@@ -7,18 +7,25 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-public struct Avatar {
-    public var largeUrl = ""
-    public var mediumUrl = ""
-    public var smallUrl = ""
-    
-    init() {
+struct Avatar {
+
+    let largeUrl: String
+    let mediumUrl: String
+    let smallUrl: String
+
+    // Server always return avatar
+    init(avatarDict: [String : JSON]) {
+        largeUrl    = avatarDict[BangumiKey.avatarLargeUrl]!.stringValue
+        mediumUrl   = avatarDict[BangumiKey.avatarMediumUrl]!.stringValue
+        smallUrl    = avatarDict[BangumiKey.avatarSmallUrl]!.stringValue
     }
     
-    init(avatarDict: NSDictionary) {
-        largeUrl    = avatarDict[BangumiKey.avatarLargeUrl]     as! String
-        mediumUrl   = avatarDict[BangumiKey.avatarMediumUrl]    as! String
-        smallUrl    = avatarDict[BangumiKey.avatarSmallUrl]     as! String
+    init(largeURL large: String, mediumURL medium: String, smallURL small: String) {
+        largeUrl = large
+        mediumUrl = medium
+        smallUrl = small
     }
+    
 }

@@ -1,0 +1,33 @@
+/* 
+  Localizable.strings
+  Percolator
+
+  Created by Cirno MainasuK on 2016-7-14.
+  Copyright © 2016年 Cirno MainasuK. All rights reserved.
+*/
+
+"login…" = "Login…";
+"sign out" = "Sign Out";
+
+"dismiss" = "Dismiss";
+"cancel" = "Cancel";
+
+"please check your network connection status" = "Please Check Your Network Connection Status";
+"make sure that the network can be connected to bgm.tv" = "Make sure that the network can be connected to https://bgm.tv";
+
+"no result" = "No Result";
+"time out" = "Timeout";
+"dns lookup failed" = "DNS Lookup Failed";
+"unknown error" = "Unknown Error";
+"not connected to internet" = "Not Connected to Internet";
+
+"success" = "Success";
+
+"no collection" = "No Collection";
+"mark error" = "Mark Process Error";
+"authorize failed" = "Get Authorization Failed";
+"try login again" = "Please Log In Again";
+"please login" = "Please Login";
+
+"save to search box" = "Save to Search Box";
+"delete from search box" = "Delete from Search Box";

@@ -7,79 +7,29 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-public struct StaffTable {
-    public var staffs = [Staff]()
+struct Staff {
+    let id: Int
+    let url: String
+    let name: String
+    let nameCN: String
+    let roleName: String
     
-    init() {
-    }
-    
-    init(staffArr: [NSDictionary]) {
-        for staffDict in staffArr {
-            staffs.append(Staff(staffDict: staffDict))
-        }
-    }
+    let images: Images
+    let jobs: [String]
     
     
-}
-
-public struct Staff {
-    public var id = 0
-    public var url = ""
-    public var name = ""
-    public var nameCN = ""
-    public var role_name = ""
-    
-    public var images = StaffImage()
-    public var jobs = StaffJobs()
-    init() {
-    }
-    
-    init(staffDict: NSDictionary) {
-        id = staffDict[BangumiKey.id] as! Int
-        url = staffDict[BangumiKey.url] as! String
-        name = staffDict[BangumiKey.name] as! String
-        nameCN = staffDict[BangumiKey.nameCN] as! String
-        role_name = staffDict[BangumiKey.roleName] as? String ?? ""
+    init(from json: JSON) {
+        id = json[BangumiKey.id].intValue
+        url = json[BangumiKey.url].stringValue
+        name = json[BangumiKey.name].stringValue
+        nameCN = json[BangumiKey.nameCN].stringValue
+        roleName = json[BangumiKey.roleName].stringValue
         
+        let imageDict = json[BangumiKey.imagesDict].dictionaryValue
+        images = Images(json: imageDict)
         
-        if let imageDict = staffDict[BangumiKey.imagesDict] as? NSDictionary {
-            images = StaffImage(StaffImageDict: imageDict)
-        }
-        
-        if let jobArr = staffDict[BangumiKey.jobs] as? [String] {
-            jobs = StaffJobs(jobArr: jobArr)
-        }
-    }
-
-}
-
-public struct StaffImage {
-    public var largeUrl = ""
-    public var mediumUrl = ""
-    public var smallUrl = ""
-    public var gridUrl = ""
-    
-    init() {
-    }
-    
-    init(StaffImageDict: NSDictionary) {
-        largeUrl = StaffImageDict[BangumiKey.largeUrl] as! String
-        mediumUrl = StaffImageDict[BangumiKey.mediumUrl] as! String
-        smallUrl = StaffImageDict[BangumiKey.smallUrl] as! String
-        gridUrl = StaffImageDict[BangumiKey.gridUrl] as! String
-    }
-}
-
-public struct StaffJobs {
-    public var firstJob = ""
-    
-    init() {
-    }
-    
-    init(jobArr: [String]) {
-        if let job = jobArr.first {
-            firstJob = job
-        }
+        jobs = json[BangumiKey.jobs].arrayValue.flatMap { $0.string }
     }
 }
