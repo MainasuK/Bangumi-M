@@ -238,6 +238,7 @@ public class TagWriteView : UIView
     // MARK: Internals
     private func initControls() {
         scrollView = UIScrollView(frame: self.bounds)
+        scrollView.contentInset.left = 10
         scrollView.backgroundColor = UIColor.clear
         scrollView.scrollsToTop = false
         scrollView.showsVerticalScrollIndicator = false
