@@ -60,4 +60,5 @@ extension TopicTableViewCell {
         commentButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
         commentButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
     }
+    
 }

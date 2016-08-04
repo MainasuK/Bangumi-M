@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 extension String {
     
     func detectLanguage() -> String {

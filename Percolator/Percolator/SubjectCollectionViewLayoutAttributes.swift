@@ -18,4 +18,5 @@ class SubjectCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
         
         return newAttributes
     }
+    
 }

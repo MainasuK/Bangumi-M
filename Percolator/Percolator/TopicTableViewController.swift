@@ -10,7 +10,7 @@ import UIKit
 import SafariServices
 import SVProgressHUD
 
-class TopicTableViewController: UITableViewController {
+final class TopicTableViewController: UITableViewController {
     
     typealias Model = TopicTableViewModel
     typealias Cell = TopicTableViewCell
@@ -135,10 +135,6 @@ extension TopicTableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         
         tableView.cellLayoutMarginsFollowReadableWidth = true
-        
-        // Register section header view
-//        let nib = UINib(nibName: StoryboardKey.TopicTableViewHeaderFooterView, bundle: nil)
-//        tableView.register(nib, forHeaderFooterViewReuseIdentifier: StoryboardKey.TopicTableViewHeaderFooterView)
     }
     
 }
@@ -155,6 +151,7 @@ extension TopicTableViewController {
         
         present(SFSafariViewController(url: url), animated: true, completion: nil)
     }
+    
 }
 
 

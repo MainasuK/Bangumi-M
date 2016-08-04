@@ -9,7 +9,6 @@
 import Foundation
 import Alamofire
 
-
 // Model need headle API Error
 // Controller should handle network error and unknown error
 extension BangumiRequest {

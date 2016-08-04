@@ -10,7 +10,6 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-
 // MARK: - Subject (fetch by id and responseGroup)
 extension BangumiRequest {
     

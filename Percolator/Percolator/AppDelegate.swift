@@ -33,11 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             User.removeInfo()
         }
-        
-        // Configure NavigationBar appearance
-//        UINavigationBar.appearance().barTintColor = UIColor.navigationBarBlue()
-//        UINavigationBar.appearance().tintColor = UIColor.white()
-//        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white()]
 
         // Set version info in Setting
         UserDefaults.standard.setValue(UIApplication.appVersion(), forKey: "Percolator.appVersion")

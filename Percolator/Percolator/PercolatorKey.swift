@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - UserDefaultsKey
 
-public struct UserDefaultsKey {
+struct UserDefaultsKey {
     static let hasLoginKey          = "hasLoginKeyV2"
     
     static let username             = "username"
@@ -62,12 +62,6 @@ public struct StoryboardKey {
     
     static let CollectTableViewController           = "CollectTableViewController"
     static let CollectNavigationController          = "CollectNavigationController"
-    
-}
-
-extension StoryboardKey {
-    
-    static let popToCollectViewController           = "popToCollectViewController"
     
 }
 

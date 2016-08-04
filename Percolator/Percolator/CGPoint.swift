@@ -6,7 +6,6 @@
 //  Copyright © 2016年 Cirno MainasuK. All rights reserved.
 //
 
-
 import UIKit
 
 extension CGPoint {

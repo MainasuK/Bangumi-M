@@ -81,8 +81,6 @@ final class DetailTableViewController: UITableViewController {
         
     }
     
-    
-    
     private func resetHeaderViewHeight(with width: CGFloat? = nil) {
         guard let image = headerImageView.image else {
             headerViewHeight = 0
@@ -105,105 +103,6 @@ final class DetailTableViewController: UITableViewController {
         }
         
         headerView.frame = headerRect
-    }
-    
-    
-    
-    // Model build method
-    // FIXME: If view controller push from a detail view controller,
-    // the animeDetail is not need to fetch (again).
-    // I think the cache will handle it. Maybe fix it is better…
-//    func initFromSearchBox(request: BangumiRequest, _ subject: AnimeSubject) {
-//        var flag = 0
-//        var animeDetail = AnimeDetailLarge()
-//        var subjectStatus = SubjectItemStatus()
-//        
-//        // TODO: add spinner? It's speed is enough, I think.
-//        
-//        // FIXME: how to make async concurrent possible? GDC or NSOperation?
-//        
-//        // Task 1
-//        print("@ DetailTableViewController: initnVC, step 1…")
-//        request.getSubjectDetailLarge(subject.id) { (animeDetailLarge) -> Void in
-//
-//            if let _animeDetail = animeDetailLarge {
-//                debugPrint("@ DetailTableViewController: step 1 success")
-//                animeDetail = _animeDetail
-//                flag += 1
-//                
-//                if flag == 2 {
-//                    self.detailSource.appendSubject(animeDetail)
-//                    self.detailSource.gridStatusTable = GridStatus(epsDict: animeDetail.eps.eps)
-//                    self.detailSource.animeDetailLarge = animeDetail
-//                    self.detailSource.subjectStatusDict = subjectStatus
-//                    
-//                    dispatch_async(dispatch_get_main_queue(), {
-//                        self.reloadDataSourceSection()
-//                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-//                    })
-//                }
-//            }
-//        }
-//        
-//        // Task 2
-//        debugPrint("@ DetailTableViewController: initnVC, step 2…")
-//        request.getSubjectStatus(subject.id) { (subjectItemStatus) -> Void in
-//            debugPrint("@ DetailTableViewController: step 2 success")
-//            subjectStatus = subjectItemStatus
-//            flag += 1
-//            
-//            if flag == 2 {
-//                self.detailSource.appendSubject(animeDetail)
-//                self.detailSource.gridStatusTable = GridStatus(epsDict: animeDetail.eps.eps)
-//                self.detailSource.animeDetailLarge = animeDetail
-//                self.detailSource.subjectStatusDict = subjectStatus
-//                
-//                dispatch_async(dispatch_get_main_queue(), {
-//                    self.reloadDataSourceSection()
-//                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-//                })
-//            }
-//            
-//        }
-//        
-//    }
-}
-
-// MARK: - Related subject fetch & display
-extension DetailTableViewController {
-
-    
-//
-    private func pushToNewDetailTableViewController(_ id: String) {
-//        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.DetialVC) as! DetailTableViewController
-//        let request = BangumiRequest.shared
-//        
-//        self.tableView.userInteractionEnabled = false
-//        self.pleaseWait()
-//        
-//        request.getSubjectDetailLarge(Int(id) ?? 0) { (detail: AnimeDetailLarge?) -> Void in
-//            
-//            self.clearAllNotice()
-//            self.tableView.userInteractionEnabled = true
-//            
-//            guard let detail = detail else {
-//                self.noticeInfo("Error 53", autoClear: true, autoClearTime: 3)
-//                return
-//            }
-//            
-//            let subject = AnimeSubject(animeDetailLarge: detail)
-//            detailVC.animeItem = Anime(subject: subject)
-//            detailVC.animeSubject = subject
-//            detailVC.detailSource = BangumiDetailSource()
-//            
-//            
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                
-//                self.navigationController?.pushViewController(detailVC, animated: true)
-//                // The cache will handle the duple request, hopefully
-//                detailVC.initFromSearchBox(request, subject)
-//            })
-//        }
     }
     
 }
@@ -510,30 +409,6 @@ extension DetailTableViewController {
             bannerCell.delegate = self
         }
     }
-//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-
-//        if !detailSource.sourceList.isEmpty && indexPath.section == 1 {
-//            var url = ""
-//            let desktopUrl = detailSource.sourceList[indexPath.row].url
-//            let urlSplice = desktopUrl.componentsSeparatedByString("/")
-//            if let id = urlSplice.last {
-//                url = "http://bangumi.tv/m/topic/subject/\(id)"
-//                
-//                if #available(iOS 9.0, *) {
-//                    let svc = SFSafariViewController(URL: NSURL(string: url)!)
-//                    svc.delegate = self
-//                    UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-//                    self.presentViewController(svc, animated: true, completion: nil)
-//                } else {
-//                    // Fallback on earlier versions
-//                    UIApplication.sharedApplication().openURL(NSURL(string: url)!)
-//                }
-//                
-//            }
-//        }
-//
-//    }
 
 }
 
@@ -563,8 +438,6 @@ extension DetailTableViewController: DetailTableViewBannerCellDelegate {
         present(navigationController, animated: true, completion: nil)
     }
 }
-
-// MARK: - UIScrollViewDelegate
 
 // MARK: - UIScrollViweDelegate
 extension DetailTableViewController {
@@ -619,138 +492,3 @@ extension DetailTableViewController: UICollectionViewDelegate {
     }
 
 }
-
-// MARK: - MGSwipeTableCellDelegate
-//extension DetailTableViewController: MGSwipeTableCellDelegate {
-
-//    func swipeTableCell(cell: MGSwipeTableCell!, swipeButtonsForDirection direction: MGSwipeDirection, swipeSettings: MGSwipeSettings!, expansionSettings: MGSwipeExpansionSettings!) -> [AnyObject]! {
-//        
-//        swipeSettings.transition = MGSwipeTransition.Border
-//        expansionSettings.buttonIndex = 0
-//        
-//        var me = self
-//        
-//        if direction == .LeftToRight {
-//            expansionSettings.fillOnTrigger = false
-//            expansionSettings.threshold = 1.5
-//            
-//            let padding = 15
-//            
-//            // The button display color is subtle different with origin setting color. Use looks like color substitute for it.
-//            let watchedButton = MGSwipeButton(title: "看过", backgroundColor: UIColor.myNavigatinBarLooksLikeColor(), padding: padding, callback: { (cell) -> Bool in
-//                //
-//                if let _cell = cell as? CMKEPTableViewCell {
-//                    self.pleaseWait()
-//                    BangumiAnimeModel.shared.markEpWatched(BangumiRequest.shared, subjectID: _cell.subjectID, markEpID: _cell.id, method: UpdateSatusMethod.watched, { (success) -> Void in
-//                        if success {
-//                            // FIXME:
-//                            self.clearAllNotice()
-//                            self.detailSource.subjectStatusDict?.subjectStatus[_cell.id] = EpStatusType.watched
-//                            self.noticeTop("\(_cell.epTitleLabel.text!) 看过", autoClear: true, autoClearTime: 3)
-//                            _cell.indicatorView.hidden = false
-//                            _cell.indicatorView.backgroundColor = UIColor.myWatchedColor()
-////                            let indexPath = self.tableView.indexPathForCell(cell)!
-////                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
-//                        } else {
-//                            self.noticeInfo("标记失败 请重试", autoClear: true, autoClearTime: 5)
-////                            let indexPath = self.tableView.indexPathForCell(cell)!
-////                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
-//                        }
-//                    })
-//                }
-//                
-//                return true
-//            })
-//            
-//            let removeButton = MGSwipeButton(title: "撤销", backgroundColor: UIColor(red: 253.0/255.0, green: 204.0/255.0, blue: 49.0/255.0, alpha: 1.0), padding: padding, callback: { (cell) -> Bool in
-//                //
-//                if let _cell = cell as? CMKEPTableViewCell {
-//                    self.pleaseWait()
-//                    BangumiAnimeModel.shared.markEpWatched(BangumiRequest.shared, subjectID: _cell.subjectID, markEpID: _cell.id, method: UpdateSatusMethod.remove, { (success) -> Void in
-//                        if success {
-//                            // FIXME:
-//                            self.clearAllNotice()
-//                            self.detailSource.subjectStatusDict?.subjectStatus[_cell.id] = nil
-//                            self.noticeTop("撤销成功", autoClear: true, autoClearTime: 3)
-//                            _cell.indicatorView.hidden = true
-//                            _cell.indicatorView.backgroundColor = UIColor.myWatchedColor()
-////                            let indexPath = self.tableView.indexPathForCell(cell)!
-////                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
-//                        } else {
-//                            self.noticeInfo("撤销失败", autoClear: true, autoClearTime: 5)
-////                            let indexPath = self.tableView.indexPathForCell(cell)!
-////                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
-//                        }
-//                    })
-//                }
-//                
-//                return true
-//            })
-//            
-//            if let _cell = cell as? CMKEPTableViewCell,
-//                let status = self.detailSource.subjectStatusDict?.subjectStatus[_cell.id] {
-//                switch status {
-//                case .watched: return [removeButton]
-//                    
-//                default:
-//                    return [watchedButton]
-//                }
-//            }
-//            
-//            return [watchedButton]
-//            
-//        } else {
-//            //            expansionSettings.fillOnTrigger = true
-//            //            expansionSettings.threshold = 2.0
-//            //
-//            //            let padding = 25
-//            //
-//            //            let deleteButton = MGSwipeButton(title: "删除", backgroundColor: UIColor(red: 255.0/255.0, green: 59.0/255.0, blue: 50.0/255.0, alpha: 1.0), padding: padding, callback: { (cell) -> Bool in
-//            //
-//            //                let indexPath = me.tableView.indexPathForCell(cell)!
-//            //                let subjectToDelete = self.searchModel.subjectLocalList[indexPath.row]
-//            //                Subject.deleteSubject(subjectToDelete, { (success) -> Void in
-//            //                    NSLog("^ SearchBoxTableViewController: Delete is \(success)")
-//            //                    if success {
-//            //                        self.searchModel.subjectLocalList.removeAtIndex(indexPath.row)
-//            //                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//            //                            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
-//            //                        })
-//            //                    }
-//            //                })
-//            //
-//            //                return false
-//            //            })
-//            
-//            return nil
-//        }
-//        
-//        //        return nil
-//    }
-//    
-//    func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
-//        
-//        var str = ""
-//        var active = ""
-//        switch state {
-//        case .None: str = "None"
-//        case .SwipingLeftToRight: str = "SwipeingLeftToRight"
-//        case .SwipingRightToLeft: str = "SwipingRightToLeft"
-//        case .ExpandingLeftToRight: str = "ExpandingLeftToRight"
-//        case .ExpandingRightToLeft: str = "ExpandingRightToLeft"
-//        }
-//        
-//        active = (gestureIsActive) ? "Active" : "Ended"
-//        NSLog("Swipe state: \(str) ::: Gestrue: \(active)")
-//    }
-//    
-//    func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
-//        guard (cell != nil) else {
-//            return false
-//        }
-//        
-//        return (direction == MGSwipeDirection.LeftToRight) ? true : false
-//        
-//    }
-
-//}

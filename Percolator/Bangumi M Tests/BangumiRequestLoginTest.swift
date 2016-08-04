@@ -12,8 +12,6 @@ import XCTest
 
 class BangumiRequestTest: Bangumi_M_Tests {
     
-
-    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -45,7 +43,7 @@ class BangumiRequestTest: Bangumi_M_Tests {
             requestExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: TimeInterval(20)) { (error: NSError?) in
+        waitForExpectations(timeout: TimeInterval(20)) { (error: Error?) in
             XCTAssertNil(error, "Should no error")
             XCTAssertEqual(userID, self.kDemoID, "Should same ID")
         }

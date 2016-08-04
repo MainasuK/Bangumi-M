@@ -10,6 +10,7 @@ import UIKit
 import SVProgressHUD
 
 class DeleteActivity: UIActivity {
+    
     var subject: SubjectWrapper?
     
     override var activityType: String? {
@@ -54,4 +55,5 @@ class DeleteActivity: UIActivity {
     override var activityImage: UIImage? {
         return #imageLiteral(resourceName: "RemoveArrow")
     }
+    
 }

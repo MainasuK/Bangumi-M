@@ -10,7 +10,6 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-
 // MARK: - Progress
 extension BangumiRequest {
     

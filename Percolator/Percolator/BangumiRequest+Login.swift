@@ -35,30 +35,30 @@ extension BangumiRequest {
 
 extension BangumiRequest {
     
-        // Validate JSON
-        private func validate(json: JSON) -> Result<JSON> {
-            // Bangumi API reture a JSON for error case
-            if let error = json["error"].string,
-                let code = json["code"].int {
-                switch code {
-                // "code":401, "error":"40102 Error: Username is not an Email address"
-                case 401 where error == "40102 Error: Username is not an Email address":
-                    return .failure(LoginError.userNameNotEmail)
+    // Validate JSON
+    private func validate(json: JSON) -> Result<JSON> {
+        // Bangumi API reture a JSON for error case
+        if let error = json["error"].string,
+            let code = json["code"].int {
+            switch code {
+            // "code":401, "error":"40102 Error: Username is not an Email address"
+            case 401 where error == "40102 Error: Username is not an Email address":
+                return .failure(LoginError.userNameNotEmail)
 
-                case 401 where error == "Unauthorized":
-                    return .failure(LoginError.unauthorized)
+            case 401 where error == "Unauthorized":
+                return .failure(LoginError.unauthorized)
 
-                default:
-                    return .failure(Unknown.API(error: error, code: code))
-                }
+            default:
+                return .failure(Unknown.API(error: error, code: code))
             }
-            
-            return .success(json)
         }
         
-        // Unwrap JSON to User
-        private func toUser(from json: JSON) -> Result<User> {
-            return .success(User(json: json))
-        }
+        return .success(json)
+    }
+    
+    // Unwrap JSON to User
+    private func toUser(from json: JSON) -> Result<User> {
+        return .success(User(json: json))
+    }
         
 }

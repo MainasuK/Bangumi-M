@@ -11,7 +11,7 @@ import Cosmos
 import SVProgressHUD
 
 // It's convenient to embed model in static table view controller
-class CollectTableViewController: UITableViewController {
+final class CollectTableViewController: UITableViewController {
     
     private let request = BangumiRequest.shared
     
@@ -32,7 +32,6 @@ class CollectTableViewController: UITableViewController {
     
 
     @IBAction func CancelButtonPressed(_ sender: UIBarButtonItem) {
-//        dismiss(animated: true, completion: nil)
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
     @IBAction func saveButtonItemPressed(_ sender: UIBarButtonItem) {

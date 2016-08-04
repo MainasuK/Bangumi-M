@@ -48,36 +48,6 @@ class AnimeListTableViewCell: UITableViewCell {
         case .episode(_):   isSpinnning = true
         default:            break
         }
-        
-//        debugPrint("$ AnimeTableList_Cell: Mark Button Pressed -> \(animeItem.name)")
-//
-//        if postMark {
-//            return
-//        }
-//
-//        switch mark {
-//        case Marker.ep:
-//            debugPrint("$ AnimeTableList_Cell: Mark ep")
-//            isPosting = true
-//            animeModel.markEpWatched(request, animeItem: animeItem, markEp: nextMarkEp!, { (status) -> Void in
-//
-//                switch status {
-//                case .success: SwiftNotice.noticeOnSatusBar("ep.\(self.nextMarkEp!.sort) \(self.nextMarkEp!.name) 标记成功", autoClear: true, autoClearTime: 4)
-//                case .timeout: SwiftNotice.showNoticeWithText(NoticeType.info, text: "请求超时", autoClear: true, autoClearTime: 5)
-//                case .failed: SwiftNotice.showNoticeWithText(NoticeType.error, text: "请求失败", autoClear: true, autoClearTime: 5) //FIXME: Request Model need rebuild
-//                }
-//
-//                self.reloadData(status)
-//            })
-//
-//        case Marker.eps:
-//            debugPrint("$ AnimeTableList_Cell: Mark eps")
-//            delegate?.pushAnimeCollectionVC(self.animeItem)
-//
-//        default:
-//            debugPrint("$ AnimeTableList_Cell: Unmarkable")
-//        }   // switch mark …
-
     }
     
     @IBOutlet weak var watchedSpinner: UIActivityIndicatorView!

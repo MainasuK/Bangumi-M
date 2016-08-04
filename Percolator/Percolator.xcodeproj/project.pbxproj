@@ -11,7 +11,6 @@
 		7500CEB329EBC0E473F22F9C /* Pods_Bangumi_M.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEB9A65F495FD84C26272CC2 /* Pods_Bangumi_M.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		BD5F69D0BFB882A0A4140836 /* Pods_Bangumi_M_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50E10398D8D754A91C11FA1 /* Pods_Bangumi_M_UITests.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		DB026CE81D37372C0023A507 /* Percolator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB026CE61D37372C0023A507 /* Percolator.xcdatamodeld */; };
-		DB026CEC1D3738B00023A507 /* ManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB026CEB1D3738AC0023A507 /* ManagedObject.swift */; };
 		DB044F771D37DE7F00CB79FB /* TableViewDataSource+DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB044F761D37DE7F00CB79FB /* TableViewDataSource+DataProvider.swift */; };
 		DB0B6B081D1632EE007AA8AE /* DetailTableViewBannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0B6B071D162A80007AA8AE /* DetailTableViewBannerCell.swift */; };
 		DB0BC8031D1194870091ECE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47C71B060DEA0004BBA2 /* AppDelegate.swift */; };
@@ -57,7 +56,6 @@
 		DB7D87F41D16FC0F00885937 /* DetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7D87F31D16FC0F00885937 /* DetailTableView.swift */; };
 		DB7D87F61D17894B00885937 /* TopicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7D87F51D17894B00885937 /* TopicTableViewController.swift */; };
 		DB7D87F81D178D5000885937 /* TopicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7D87F71D178D5000885937 /* TopicTableViewCell.swift */; };
-		DB7E287A1D3B5DB400B529CA /* ManagedObjectContextSettable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E28791D3B5DB400B529CA /* ManagedObjectContextSettable.swift */; };
 		DB7E287C1D3B68F500B529CA /* AnimeListTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E287B1D3B68F500B529CA /* AnimeListTableViewModel.swift */; };
 		DB7E28851D3BA25600B529CA /* KeychainAsscessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E28841D3BA25600B529CA /* KeychainAsscessTests.swift */; };
 		DB7E288C1D3BC98B00B529CA /* BangumiRequest+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E288B1D3BC98B00B529CA /* BangumiRequest+Collection.swift */; };
@@ -74,17 +72,13 @@
 		DB8EA45C1D3F415400348A6C /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8EA45B1D3F415400348A6C /* DetailTableViewCell.swift */; };
 		DB9D24FA1D35CCF500269DFE /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9D24F91D35CCF500269DFE /* UIImage.swift */; };
 		DB9E92DF1D50524100C150C4 /* Bangumi_M_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E92DE1D50524100C150C4 /* Bangumi_M_UITests.swift */; };
-		DB9E92E71D5052CF00C150C4 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E92E61D5052CF00C150C4 /* SnapshotHelper.swift */; };
 		DBA29F4E1B8ADCB800ADED27 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DBA29F4D1B8ADCB800ADED27 /* Settings.bundle */; };
 		DBA3A1EA1D3FC5AD00365553 /* NetworkSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3A1E91D3FC5AD00365553 /* NetworkSpinner.swift */; };
 		DBA480D51D451181004AAF6E /* SubjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA480D41D451181004AAF6E /* SubjectCollectionViewCell.swift */; };
 		DBA4C90E1D168E8F0043EDED /* CMKCollectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA4C90D1D168E8F0043EDED /* CMKCollectButton.swift */; };
 		DBA4C9121D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA4C9111D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift */; };
-		DBAD79201D3906C000CCB8AE /* JSONSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAD791F1D3906C000CCB8AE /* JSONSerializable.swift */; };
 		DBAD79231D39477E00CCB8AE /* ErrorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAD79221D39477E00CCB8AE /* ErrorProtocol.swift */; };
 		DBAD9BCE1D3F6BBE00206ACE /* BangumiRequest+Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAD9BCD1D3F6BBE00206ACE /* BangumiRequest+Subject.swift */; };
-		DBAEE4AC1D44AA3F008DE0C6 /* ArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB80EFFF1D351366007DEF09 /* ArrayDataSource.swift */; };
-		DBAEE4AD1D44AA53008DE0C6 /* ModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB80F0011D351BFE007DEF09 /* ModelDelegate.swift */; };
 		DBAEE4AE1D44AA97008DE0C6 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB80EFFA1D34FEFC007DEF09 /* Collection.swift */; };
 		DBB86A151D4504AE00FBB87B /* SubjectCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB86A141D4504AE00FBB87B /* SubjectCollectionViewModel.swift */; };
 		DBBA47CD1B060DEA0004BBA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47CB1B060DEA0004BBA2 /* Main.storyboard */; };
@@ -99,7 +93,6 @@
 		DBD0695B1D3635EE0063708C /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0695A1D3635EE0063708C /* ConfigurableCell.swift */; };
 		DBD0695D1D36601C0063708C /* ConsolePrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0695C1D36601C0063708C /* ConsolePrint.swift */; };
 		DBD069651D3676740063708C /* Bangumi_M_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD069641D3676740063708C /* Bangumi_M_Tests.swift */; };
-		DBD0696D1D3677060063708C /* ArrayDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0696C1D3677060063708C /* ArrayDataSourceTests.swift */; };
 		DBD069701D368ECD0063708C /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBD0696F1D368ECD0063708C /* Tests.storyboard */; };
 		DBD2D57C1B84AEB300EED59A /* BangumiAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D57B1B84AEB300EED59A /* BangumiAPI.swift */; };
 		DBD91C491D444D94007AFA80 /* CollectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBCB821B633376001F3CD1 /* CollectTableViewController.swift */; };
@@ -112,8 +105,6 @@
 		DBEF11331D3743DF00E7A0D7 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEF11321D3743DF00E7A0D7 /* CoreDataStack.swift */; };
 		DBEF11351D37469300E7A0D7 /* NSURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEF11341D37469300E7A0D7 /* NSURL.swift */; };
 		DBEF11371D374F8000E7A0D7 /* BangumiRequestLoginTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEF11361D374F8000E7A0D7 /* BangumiRequestLoginTest.swift */; };
-		DBEF11391D375D0400E7A0D7 /* ManagedObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEF11381D375D0400E7A0D7 /* ManagedObjectType.swift */; };
-		DBEF113B1D3765F300E7A0D7 /* FetchedResultsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEF113A1D3765F300E7A0D7 /* FetchedResultsDataProvider.swift */; };
 		DBEF113E1D37678800E7A0D7 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEF113D1D37678800E7A0D7 /* DataProvider.swift */; };
 		DBEF11401D37748D00E7A0D7 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEF113F1D37748D00E7A0D7 /* DataSource.swift */; };
 		DBEF11441D377A7A00E7A0D7 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEF11431D377A7A00E7A0D7 /* TableViewDataSource.swift */; };
@@ -167,7 +158,6 @@
 		A50E10398D8D754A91C11FA1 /* Pods_Bangumi_M_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bangumi_M_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEB9A65F495FD84C26272CC2 /* Pods_Bangumi_M.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bangumi_M.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB026CE71D37372C0023A507 /* Percolator.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Percolator.xcdatamodel; sourceTree = "<group>"; };
-		DB026CEB1D3738AC0023A507 /* ManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObject.swift; sourceTree = "<group>"; };
 		DB044F761D37DE7F00CB79FB /* TableViewDataSource+DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TableViewDataSource+DataProvider.swift"; sourceTree = "<group>"; };
 		DB0B6B071D162A80007AA8AE /* DetailTableViewBannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewBannerCell.swift; sourceTree = "<group>"; };
 		DB0DA60D1D430EF3005F4E01 /* AnimeListTableViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeListTableViewCellDelegate.swift; sourceTree = "<group>"; };
@@ -180,37 +170,21 @@
 		DB22FE131D16E97C004A082D /* DetailTableViewEPSHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewEPSHeaderFooterView.swift; sourceTree = "<group>"; };
 		DB22FE151D16E9E6004A082D /* DetailTableViewEPSHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailTableViewEPSHeaderFooterView.xib; sourceTree = "<group>"; };
 		DB2C7B241D45AC8500386366 /* ConfigurableHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableHeader.swift; sourceTree = "<group>"; };
-		DB33F10E1B8A97A800976CD6 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		DB38795E1D44302E0022AD93 /* TagWriteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagWriteView.swift; sourceTree = "<group>"; };
 		DB3B78911D181BF9001A9AF6 /* TopicTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		DB3B78931D181C07001A9AF6 /* TopicTableViewHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicTableViewHeaderFooterView.xib; sourceTree = "<group>"; };
 		DB3C7F131C44B52E0092FD82 /* UIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
-		DB43BD961B0E33ED003477C7 /* AnimeDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetailTableViewCell.swift; sourceTree = "<group>"; };
 		DB4C76601B7E3A8A00B5E921 /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		DB5021821D3FCDC100148C8F /* BangumiRequest+Progress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BangumiRequest+Progress.swift"; sourceTree = "<group>"; };
 		DB5021841D3FCEF700148C8F /* Progress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
-		DB59EC641B873DF8000AFA7A /* CMKTopicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMKTopicTableViewCell.swift; sourceTree = "<group>"; };
-		DB5B04271B85DA7C0074C80E /* CMKCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMKCollectionViewCell.swift; sourceTree = "<group>"; };
-		DB5B04291B85DBAD0074C80E /* BangumiDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiDetail.swift; sourceTree = "<group>"; };
 		DB5B042B1B85E56F0074C80E /* Avatar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Avatar.swift; sourceTree = "<group>"; };
-		DB5B042D1B85E5A10074C80E /* AnimeSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeSubject.swift; sourceTree = "<group>"; };
-		DB5B042F1B85E5E70074C80E /* AnimeImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeImages.swift; sourceTree = "<group>"; };
-		DB5B04311B85E6150074C80E /* AnimeCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCollection.swift; sourceTree = "<group>"; };
-		DB5B04331B85E6310074C80E /* AnimeEps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeEps.swift; sourceTree = "<group>"; };
-		DB5B04351B85E6530074C80E /* AnimeEp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeEp.swift; sourceTree = "<group>"; };
 		DB5B04381B85E6B90074C80E /* BangumiKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiKey.swift; sourceTree = "<group>"; };
 		DB5B043A1B85E6F40074C80E /* Crt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crt.swift; sourceTree = "<group>"; };
 		DB5B043D1B85E7860074C80E /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
-		DB5B043F1B85E7BE0074C80E /* SubjectItemStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectItemStatus.swift; sourceTree = "<group>"; };
 		DB5B04411B85E7DD0074C80E /* CollectInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectInfo.swift; sourceTree = "<group>"; };
-		DB5B04431B85F7660074C80E /* CMKTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMKTableViewCell.swift; sourceTree = "<group>"; };
 		DB61BED31D45E8B500D18F2B /* TopicTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicTableViewModel.swift; sourceTree = "<group>"; };
 		DB61BED51D45EC7500D18F2B /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
-		DB64E6C41B7B5B1C001B819D /* BangumiSearchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiSearchModel.swift; sourceTree = "<group>"; };
 		DB64E6C71B7B6221001B819D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		DB64E6CB1B7BA706001B819D /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
-		DB6820001B7C92A0001ED454 /* BangumiFavoriteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiFavoriteModel.swift; sourceTree = "<group>"; };
-		DB6820031B7D0177001ED454 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 		DB6B1BCA1D182F390005CAE6 /* SubjectCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewController.swift; sourceTree = "<group>"; };
 		DB6B1BCC1D182F570005CAE6 /* SubjectCollectionViewBookCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewBookCell.swift; sourceTree = "<group>"; };
 		DB6B1BCE1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewNotBookCell.swift; sourceTree = "<group>"; };
@@ -224,7 +198,6 @@
 		DB7D87F31D16FC0F00885937 /* DetailTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableView.swift; sourceTree = "<group>"; };
 		DB7D87F51D17894B00885937 /* TopicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicTableViewController.swift; sourceTree = "<group>"; };
 		DB7D87F71D178D5000885937 /* TopicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicTableViewCell.swift; sourceTree = "<group>"; };
-		DB7E28791D3B5DB400B529CA /* ManagedObjectContextSettable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectContextSettable.swift; sourceTree = "<group>"; };
 		DB7E287B1D3B68F500B529CA /* AnimeListTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeListTableViewModel.swift; sourceTree = "<group>"; };
 		DB7E28841D3BA25600B529CA /* KeychainAsscessTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainAsscessTests.swift; sourceTree = "<group>"; };
 		DB7E28861D3BA46E00B529CA /* Bangumi M.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Bangumi M.entitlements"; path = "../Bangumi M.entitlements"; sourceTree = "<group>"; };
@@ -235,31 +208,22 @@
 		DB80EFF81D34FC94007DEF09 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		DB80EFFA1D34FEFC007DEF09 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		DB80EFFC1D3500D0007DEF09 /* Rating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
-		DB80EFFF1D351366007DEF09 /* ArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDataSource.swift; sourceTree = "<group>"; };
-		DB80F0011D351BFE007DEF09 /* ModelDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelDelegate.swift; sourceTree = "<group>"; };
 		DB80F0031D35BF44007DEF09 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		DB80F0041D35BF44007DEF09 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		DB82E7771B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetailSummayTableViewCell.swift; sourceTree = "<group>"; };
 		DB83E2771B0F854D007BE039 /* PercolatorKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PercolatorKey.swift; sourceTree = "<group>"; };
 		DB88206B1D3F19CC009031AE /* DetailTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewModel.swift; sourceTree = "<group>"; };
 		DB88206D1D3F1E91009031AE /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		DB8BCA271D3A89E8003FB83E /* CGPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
-		DB8DCB651B873EEC00C5F8D1 /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		DB8EA45B1D3F415400348A6C /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
-		DB9965C11B88970F001314A0 /* CMKEPTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMKEPTableViewCell.swift; sourceTree = "<group>"; };
-		DB9965C31B89A11E001314A0 /* UINavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationBar.swift; sourceTree = "<group>"; };
 		DB9D24F91D35CCF500269DFE /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		DB9E92DC1D50524100C150C4 /* Bangumi M UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bangumi M UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB9E92DE1D50524100C150C4 /* Bangumi_M_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bangumi_M_UITests.swift; sourceTree = "<group>"; };
 		DB9E92E01D50524100C150C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DB9E92E61D5052CF00C150C4 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		DBA29F4D1B8ADCB800ADED27 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		DBA3A1E91D3FC5AD00365553 /* NetworkSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSpinner.swift; sourceTree = "<group>"; };
 		DBA480D41D451181004AAF6E /* SubjectCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewCell.swift; sourceTree = "<group>"; };
 		DBA4C90D1D168E8F0043EDED /* CMKCollectButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMKCollectButton.swift; sourceTree = "<group>"; };
 		DBA4C9111D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewMoreTopicCell.swift; sourceTree = "<group>"; };
-		DBABA4031B10118600C8DDB0 /* BangumiGridStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiGridStatus.swift; sourceTree = "<group>"; };
-		DBAD791F1D3906C000CCB8AE /* JSONSerializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializable.swift; sourceTree = "<group>"; };
 		DBAD79221D39477E00CCB8AE /* ErrorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorProtocol.swift; sourceTree = "<group>"; };
 		DBAD9BCD1D3F6BBE00206ACE /* BangumiRequest+Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BangumiRequest+Subject.swift"; sourceTree = "<group>"; };
 		DBB3FCD01B86F21000FFF8DE /* Staff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Staff.swift; sourceTree = "<group>"; };
@@ -273,11 +237,9 @@
 		DBBA47EA1B0619DE0004BBA2 /* BangumiRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiRequest.swift; sourceTree = "<group>"; };
 		DBBA47EC1B061D250004BBA2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DBBA47F21B064CF00004BBA2 /* AnimeListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeListTableViewCell.swift; sourceTree = "<group>"; };
-		DBBA47F81B064D580004BBA2 /* BangumiAnime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiAnime.swift; sourceTree = "<group>"; };
 		DBBB52521D47AE6E008A1617 /* SaveActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveActivity.swift; sourceTree = "<group>"; };
 		DBBB52541D47AE7D008A1617 /* DeleteActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteActivity.swift; sourceTree = "<group>"; };
 		DBBB52571D47B5CA008A1617 /* SubjectWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectWrapper.swift; sourceTree = "<group>"; };
-		DBC3AC8B1B070539001AA9A7 /* BangumiAnimeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiAnimeDetail.swift; sourceTree = "<group>"; };
 		DBC57A8E1D477167002C4DF2 /* CDSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDSubject.swift; sourceTree = "<group>"; };
 		DBCD90BC1D37CDC200E7B37C /* UIAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		DBCD90C31D37D02900E7B37C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -286,7 +248,6 @@
 		DBD069621D3676740063708C /* Bangumi M Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bangumi M Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBD069641D3676740063708C /* Bangumi_M_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bangumi_M_Tests.swift; sourceTree = "<group>"; };
 		DBD069661D3676740063708C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DBD0696C1D3677060063708C /* ArrayDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDataSourceTests.swift; sourceTree = "<group>"; };
 		DBD0696F1D368ECD0063708C /* Tests.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		DBD2D5771B841DC700EED59A /* SearchBoxTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBoxTableViewController.swift; sourceTree = "<group>"; };
 		DBD2D5791B843ADE00EED59A /* SearchBoxTabelViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBoxTabelViewCell.swift; sourceTree = "<group>"; };
@@ -301,8 +262,6 @@
 		DBEF11321D3743DF00E7A0D7 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		DBEF11341D37469300E7A0D7 /* NSURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURL.swift; sourceTree = "<group>"; };
 		DBEF11361D374F8000E7A0D7 /* BangumiRequestLoginTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiRequestLoginTest.swift; sourceTree = "<group>"; };
-		DBEF11381D375D0400E7A0D7 /* ManagedObjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectType.swift; sourceTree = "<group>"; };
-		DBEF113A1D3765F300E7A0D7 /* FetchedResultsDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsDataProvider.swift; sourceTree = "<group>"; };
 		DBEF113D1D37678800E7A0D7 /* DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		DBEF113F1D37748D00E7A0D7 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		DBEF11431D377A7A00E7A0D7 /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
@@ -316,8 +275,6 @@
 		DBFB286A1D50D31000C43E75 /* SimulatorStatusMagic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimulatorStatusMagic.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Percolator-aafqmohbcdbdgecxvzkcbnkdnrbr/Build/Products/Debug-iphonesimulator/SimulatorStatusMagic/SimulatorStatusMagic.framework"; sourceTree = "<group>"; };
 		DBFBCB801B63157E001F3CD1 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		DBFBCB821B633376001F3CD1 /* CollectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectTableViewController.swift; sourceTree = "<group>"; };
-		DBFC3AC01B7A3D6600F406FF /* BangumiAnimeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiAnimeModel.swift; sourceTree = "<group>"; };
-		DBFC3AC21B7A3DD000F406FF /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		F9E323AA3257E0E29659EF8E /* Pods-Bangumi M Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bangumi M Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bangumi M Tests/Pods-Bangumi M Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -376,28 +333,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		DB044F751D37DE3000CB79FB /* Deprecated */ = {
-			isa = PBXGroup;
-			children = (
-				DBD0696C1D3677060063708C /* ArrayDataSourceTests.swift */,
-			);
-			name = Deprecated;
-			sourceTree = "<group>";
-		};
-		DB1D11E71B5229450067A060 /* Struct */ = {
-			isa = PBXGroup;
-			children = (
-				DB5B04371B85E6630074C80E /* Anime */,
-				DB8DCB651B873EEC00C5F8D1 /* Topic.swift */,
-				DB5B043F1B85E7BE0074C80E /* SubjectItemStatus.swift */,
-				DBBA47F81B064D580004BBA2 /* BangumiAnime.swift */,
-				DBC3AC8B1B070539001AA9A7 /* BangumiAnimeDetail.swift */,
-				DBABA4031B10118600C8DDB0 /* BangumiGridStatus.swift */,
-				DB5B04291B85DBAD0074C80E /* BangumiDetail.swift */,
-			);
-			name = Struct;
-			sourceTree = "<group>";
-		};
 		DB1D11E91B5229770067A060 /* Key */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,7 +346,6 @@
 		DB37BFF61D39D98C00F48436 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				DB975F0F1D4641EC0058D21D /* Prepare to remove */,
 				DBEF11431D377A7A00E7A0D7 /* TableViewDataSource.swift */,
 				DBEF11451D377A8400E7A0D7 /* CollectionViewDataSource.swift */,
 				DBEF113F1D37748D00E7A0D7 /* DataSource.swift */,
@@ -432,18 +366,6 @@
 				DBE2B9601D405F7C00F677DE /* BangumiRequest+EP.swift */,
 			);
 			name = Network;
-			sourceTree = "<group>";
-		};
-		DB5B04371B85E6630074C80E /* Anime */ = {
-			isa = PBXGroup;
-			children = (
-				DB5B04331B85E6310074C80E /* AnimeEps.swift */,
-				DB5B04351B85E6530074C80E /* AnimeEp.swift */,
-				DB5B042F1B85E5E70074C80E /* AnimeImages.swift */,
-				DB5B042D1B85E5A10074C80E /* AnimeSubject.swift */,
-				DB5B04311B85E6150074C80E /* AnimeCollection.swift */,
-			);
-			name = Anime;
 			sourceTree = "<group>";
 		};
 		DB7E287F1D3B8AE100B529CA /* SubjectCollectionView */ = {
@@ -486,31 +408,6 @@
 			name = TopicTableView;
 			sourceTree = "<group>";
 		};
-		DB7E28821D3B8C2900B529CA /* View */ = {
-			isa = PBXGroup;
-			children = (
-				DB43BD961B0E33ED003477C7 /* AnimeDetailTableViewCell.swift */,
-				DB82E7771B1072C3002E560B /* AnimeDetailSummayTableViewCell.swift */,
-				DB64E6CB1B7BA706001B819D /* SearchTableViewCell.swift */,
-				DB6820031B7D0177001ED454 /* FavoritesTableViewCell.swift */,
-				DB9965C11B88970F001314A0 /* CMKEPTableViewCell.swift */,
-				DB59EC641B873DF8000AFA7A /* CMKTopicTableViewCell.swift */,
-				DB5B04431B85F7660074C80E /* CMKTableViewCell.swift */,
-				DB5B04271B85DA7C0074C80E /* CMKCollectionViewCell.swift */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		DB7E28831D3B8C3500B529CA /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				DBFC3AC01B7A3D6600F406FF /* BangumiAnimeModel.swift */,
-				DB6820001B7C92A0001ED454 /* BangumiFavoriteModel.swift */,
-				DB64E6C41B7B5B1C001B819D /* BangumiSearchModel.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
 		DB80F0061D35BF51007DEF09 /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
@@ -520,21 +417,10 @@
 			name = Reachability;
 			sourceTree = "<group>";
 		};
-		DB975F0F1D4641EC0058D21D /* Prepare to remove */ = {
-			isa = PBXGroup;
-			children = (
-				DBEF113A1D3765F300E7A0D7 /* FetchedResultsDataProvider.swift */,
-				DB80F0011D351BFE007DEF09 /* ModelDelegate.swift */,
-				DB80EFFF1D351366007DEF09 /* ArrayDataSource.swift */,
-			);
-			name = "Prepare to remove";
-			sourceTree = "<group>";
-		};
 		DB9E92DD1D50524100C150C4 /* Bangumi M UITests */ = {
 			isa = PBXGroup;
 			children = (
 				DB9E92DE1D50524100C150C4 /* Bangumi_M_UITests.swift */,
-				DB9E92E61D5052CF00C150C4 /* SnapshotHelper.swift */,
 				DB9E92E01D50524100C150C4 /* Info.plist */,
 			);
 			path = "Bangumi M UITests";
@@ -584,7 +470,6 @@
 				DB3FC1A91D339B8F0045C339 /* Network */,
 				DBEE657E1D372F70003DBA95 /* Misc */,
 				DBBA47C51B060DEA0004BBA2 /* Supporting Files */,
-				DBEF114C1D379BEF00E7A0D7 /* Deprecated */,
 			);
 			path = Percolator;
 			sourceTree = "<group>";
@@ -635,7 +520,6 @@
 				DB7E28841D3BA25600B529CA /* KeychainAsscessTests.swift */,
 				DB044F761D37DE7F00CB79FB /* TableViewDataSource+DataProvider.swift */,
 				DB61BED51D45EC7500D18F2B /* Parser.swift */,
-				DB044F751D37DE3000CB79FB /* Deprecated */,
 				DBD069661D3676740063708C /* Info.plist */,
 			);
 			path = "Bangumi M Tests";
@@ -659,7 +543,6 @@
 		DBEE657F1D373111003DBA95 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
-				DBAD791F1D3906C000CCB8AE /* JSONSerializable.swift */,
 				DBBA47EC1B061D250004BBA2 /* User.swift */,
 				DB80EFF61D34E70E007DEF09 /* Subject.swift */,
 				DB80EFFA1D34FEFC007DEF09 /* Collection.swift */,
@@ -710,8 +593,6 @@
 			isa = PBXGroup;
 			children = (
 				DB026CE61D37372C0023A507 /* Percolator.xcdatamodeld */,
-				DB026CEB1D3738AC0023A507 /* ManagedObject.swift */,
-				DBEF11381D375D0400E7A0D7 /* ManagedObjectType.swift */,
 				DBEF11321D3743DF00E7A0D7 /* CoreDataStack.swift */,
 				DBC57A8E1D477167002C4DF2 /* CDSubject.swift */,
 			);
@@ -725,25 +606,11 @@
 				DB0DA60D1D430EF3005F4E01 /* AnimeListTableViewCellDelegate.swift */,
 				DB7C24AC1D42F98D00A1A9BC /* DetailTableViewEPSCellDelegate.swift */,
 				DB7E288D1D3BE47A00B529CA /* TransitionDelegate.swift */,
-				DB7E28791D3B5DB400B529CA /* ManagedObjectContextSettable.swift */,
 				DB2C7B241D45AC8500386366 /* ConfigurableHeader.swift */,
 				DBD0695A1D3635EE0063708C /* ConfigurableCell.swift */,
 				DBEF113D1D37678800E7A0D7 /* DataProvider.swift */,
 			);
 			name = Protocol;
-			sourceTree = "<group>";
-		};
-		DBEF114C1D379BEF00E7A0D7 /* Deprecated */ = {
-			isa = PBXGroup;
-			children = (
-				DB33F10E1B8A97A800976CD6 /* AboutViewController.swift */,
-				DB9965C31B89A11E001314A0 /* UINavigationBar.swift */,
-				DBFC3AC21B7A3DD000F406FF /* MenuTableViewController.swift */,
-				DB7E28821D3B8C2900B529CA /* View */,
-				DB1D11E71B5229450067A060 /* Struct */,
-				DB7E28831D3B8C3500B529CA /* Model */,
-			);
-			name = Deprecated;
 			sourceTree = "<group>";
 		};
 		DBFC3AB81B79FA4600F406FF /* Controller */ = {
@@ -1074,7 +941,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB9E92DF1D50524100C150C4 /* Bangumi_M_UITests.swift in Sources */,
-				DB9E92E71D5052CF00C150C4 /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1098,7 +964,6 @@
 				DB7560971D4B1805005A5046 /* Crt.swift in Sources */,
 				DB1AAB011D33EEA500EE7727 /* Result.swift in Sources */,
 				DBEF11331D3743DF00E7A0D7 /* CoreDataStack.swift in Sources */,
-				DBAD79201D3906C000CCB8AE /* JSONSerializable.swift in Sources */,
 				DB1AAAFF1D33DE9500EE7727 /* UINavigationController.swift in Sources */,
 				DB7E288C1D3BC98B00B529CA /* BangumiRequest+Collection.swift in Sources */,
 				DBAD79231D39477E00CCB8AE /* ErrorProtocol.swift in Sources */,
@@ -1117,8 +982,6 @@
 				DB9D24FA1D35CCF500269DFE /* UIImage.swift in Sources */,
 				DBA4C9121D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift in Sources */,
 				DB80EFF91D34FC94007DEF09 /* Images.swift in Sources */,
-				DBEF113B1D3765F300E7A0D7 /* FetchedResultsDataProvider.swift in Sources */,
-				DBEF11391D375D0400E7A0D7 /* ManagedObjectType.swift in Sources */,
 				DB7D13631D18F25700ACA94B /* SubjectCollectionViewLayout.swift in Sources */,
 				DB0BC8051D1197FE0091ECE0 /* AnimeListTableViewCell.swift in Sources */,
 				DB88206C1D3F19CC009031AE /* DetailTableViewModel.swift in Sources */,
@@ -1140,7 +1003,6 @@
 				DB5B042C1B85E56F0074C80E /* Avatar.swift in Sources */,
 				DBFBCB811B63157E001F3CD1 /* UIColor.swift in Sources */,
 				DB2C7B251D45AC8500386366 /* ConfigurableHeader.swift in Sources */,
-				DB7E287A1D3B5DB400B529CA /* ManagedObjectContextSettable.swift in Sources */,
 				DBEF11521D379D6900E7A0D7 /* BangumiRequest+Error.swift in Sources */,
 				DBBB52551D47AE7D008A1617 /* DeleteActivity.swift in Sources */,
 				DBEF11351D37469300E7A0D7 /* NSURL.swift in Sources */,
@@ -1150,7 +1012,6 @@
 				DB7D87F61D17894B00885937 /* TopicTableViewController.swift in Sources */,
 				DB38795F1D44302E0022AD93 /* TagWriteView.swift in Sources */,
 				DBEF11501D379CD200E7A0D7 /* BangumiRequest+Search.swift in Sources */,
-				DBAEE4AC1D44AA3F008DE0C6 /* ArrayDataSource.swift in Sources */,
 				DBAD9BCE1D3F6BBE00206ACE /* BangumiRequest+Subject.swift in Sources */,
 				DBE1C8111D3C7F060086B83D /* SVProgress+Style.swift in Sources */,
 				DB1AAB021D33F92600EE7727 /* User.swift in Sources */,
@@ -1170,12 +1031,10 @@
 				DB026CE81D37372C0023A507 /* Percolator.xcdatamodeld in Sources */,
 				DB3159711D139C06007B280E /* SearchBoxTableViewController.swift in Sources */,
 				DBC3A19B1D4B42710016346E /* Actor.swift in Sources */,
-				DBAEE4AD1D44AA53008DE0C6 /* ModelDelegate.swift in Sources */,
 				DBEF113E1D37678800E7A0D7 /* DataProvider.swift in Sources */,
 				DBA4C90E1D168E8F0043EDED /* CMKCollectButton.swift in Sources */,
 				DB5B04391B85E6B90074C80E /* BangumiKey.swift in Sources */,
 				DBCD90BD1D37CDC200E7B37C /* UIAlertController.swift in Sources */,
-				DB026CEC1D3738B00023A507 /* ManagedObject.swift in Sources */,
 				DBA480D51D451181004AAF6E /* SubjectCollectionViewCell.swift in Sources */,
 				DB80EFF71D34E70E007DEF09 /* Subject.swift in Sources */,
 				DBC57A8F1D477167002C4DF2 /* CDSubject.swift in Sources */,
@@ -1187,7 +1046,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBD0696D1D3677060063708C /* ArrayDataSourceTests.swift in Sources */,
 				DB61BED61D45EC7500D18F2B /* Parser.swift in Sources */,
 				DBEF11371D374F8000E7A0D7 /* BangumiRequestLoginTest.swift in Sources */,
 				DBD069651D3676740063708C /* Bangumi_M_Tests.swift in Sources */,

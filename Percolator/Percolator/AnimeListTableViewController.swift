@@ -141,6 +141,7 @@ extension AnimeListTableViewController {
         dataSource = TableViewDataSource<Model, Cell>(model: model)
         tableView.dataSource = dataSource
     }
+    
 }
 
 // MARK: - View Life Cycle
@@ -150,16 +151,6 @@ extension AnimeListTableViewController {
         super.viewDidLoad()
         
         setupTableView()
-    
-        //  Debug
-        //  consolePrint(UIFont.downloadableFontNames())
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-//        self.tableView.header.endRefreshing()
-//        self.clearAllNotice()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -177,72 +168,6 @@ extension AnimeListTableViewController {
         isFirstRefresh = false
         
         setupBarButtonItem()
-        
-//        UIApplication.shared().setStatusBarStyle(UIStatusBarStyle.lightContent, animated: animated)
-//        self.tableView.reloadData()
-//        
-//        // Login Logic
-//        NSLog("AnimeListViewController did appear")
-//        
-//        let hasLoginKey = UserDefaults.standard().bool(forKey: UserDefaultsKey.hasLoginKey)
-//        
-//        if hasLoginKey == false {   // FIXME:
-//            performSegue(withIdentifier: StoryboardKey.showLoginVC, sender: self)
-//        } else if request.userData == nil {
-//            let email = NSUserDefaults.standardUserDefaults().valueForKey(UserDefaultsKey.userEmail) as! String
-//            let pass = myKeyChainWrapper.myObjectForKey(kSecValueData) as! String
-//            
-//            let spinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
-//            spinner.color = UIColor.myPurePinkColor()
-//            spinner.hidesWhenStopped = true
-//            spinner.startAnimating()
-//
-//            self.view.addSubview(spinner)
-//            let centerX = NSLayoutConstraint(item: spinner, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
-//            let centerY = NSLayoutConstraint(item: spinner, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: -64)  // move up 64 point
-//            spinner.translatesAutoresizingMaskIntoConstraints = false
-//            NSLayoutConstraint.activateConstraints([centerX, centerY])
-//            
-//            self.view.userInteractionEnabled = false
-//            
-//            NSLog("Remove JSON cache")
-//            Shared.JSONCache.removeAll()    // remove cache when we lost userdata
-//            
-//            request.userLogin(email, password: pass, handler: { (userData) -> Void in
-//                
-//                spinner.stopAnimating()
-//                self.view.userInteractionEnabled = true
-//                if let user = userData {
-//                    debugPrint("@ AnimeListTableVC: User data get")
-//                    debugPrint("@ AnimeListTableVC: User ID is \(user.id)")
-//                    debugPrint("@ AnimeListTableVC: User nickname is \(user.nickName)")
-//                    
-//                    self.request.userData = user
-//                    self.tableView.header.beginRefreshing()
-//                    self.isFirstLoad = false
-//                } else {
-//                    // FIXME: User auth failed
-//                    debugPrint("@ AnimeListTableVC: User auth failed")
-//                    //                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    //
-//                    //                        self.performSegueWithIdentifier(StoryboardKey.showLoginVC, sender: self)
-//                    //                    })
-//                }
-//                
-//            })
-//            
-//        } else {
-//            if isFirstLoad {
-//                NSLog("@ AnimeListTableVC: First load")
-//                self.tableView.header.beginRefreshing()
-//                isFirstLoad = false
-//            }
-//        }   // if hasLoginKey == fasle … else if … else
-//    }
-//    
-//    override func viewDidDisappear(animated: Bool) {
-//        super.viewDidDisappear(true)
-//        progressView.hidden = true
     }
     
 }
@@ -346,81 +271,6 @@ extension AnimeListTableViewController {
     
 }
 
-// MARK: - UITableViewDataSource
-extension AnimeListTableViewController {
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-//    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        // Return the number of sections.
-//        if !animeModel.animeList.isEmpty || isFetchingData {
-//            //            self.tableView.backgroundView = nil
-//            messageLabel.hidden = true
-//            return 1
-//        } else {
-//            
-//            // is Refetch successful
-//            if isFetchingData {
-//                messageLabel.hidden = true
-//            } else {
-//                //                messageLabel = UILabel(frame: CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, self.tableView.bounds.size.height))
-//                //                messageLabel.text = "没有在看的番组？\n搜索添加一个吧"
-//                //                messageLabel.textColor = UIColor.darkGrayColor()
-//                //                messageLabel.numberOfLines = 2
-//                //                messageLabel.textAlignment = NSTextAlignment.Center
-//                //                messageLabel.font = UIFont(name: "system", size: 20)
-//                //                messageLabel.sizeToFit()
-//                //                messageLabel.center = self.tableView.center
-//                //                self.tableView.addSubview(messageLabel)
-//            }
-//            //
-//            //            self.tableView.backgroundView = messageLabel
-//            //            self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-//            
-//            
-//            return 0
-//        }
-//    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 50
-    }
-//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // Return the number of rows in the section.
-//        if animeModel.animeDetailList.count == animeModel.animeList.count {
-//            return animeModel.animeList.count
-//        }
-//        
-//        return 0
-//    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: StoryboardKey.AnimeListTableViewCellKey, for: indexPath) as! AnimeListTableViewCell
-        
-//        let animeListCount = animeModel.animeList.count
-//        let animeDetailListCount = animeModel.animeDetailList.count
-
-        // Configure the cell...
-//        if animeDetailListCount == animeListCount {
-//            let animeItem = animeModel.animeList[indexPath.row]
-//
-//            cell.delegate = self
-//            cell.animeItem = animeItem
-//            cell.postMark = self.isFetchingData
-//            cell.animeImageView.hnk_setImageFromURL(NSURL(string: animeItem.subject.images.largeUrl)!, placeholder: UIImage(named: "404"))
-//            cell.initCell()
-//
-//        }
-
-        
-        
-        return cell
-    }
-
-}
-
 // MARK: - UITableViewDelegate
 extension AnimeListTableViewController {
     
@@ -460,29 +310,12 @@ extension AnimeListTableViewController {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if isFetchingData || !canRefresh {
-//            return
-//        }
-//
         let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialTableViewControllerKey) as! DetailTableViewController
         let subject = model.item(at: indexPath).0
         detailTableViewController.subject = subject
+        
         navigationController?.pushViewController(detailTableViewController, animated: true)
-//
-//        let animeItem = animeModel.animeList[indexPath.row]
-//        let id = animeItem.subject.id
-//        let subjectLarge = animeModel.animeDetailList[id]!
-//        detailVC.detailSource = BangumiDetailSource(subject: subjectLarge)
-//        detailVC.animeItem = animeItem
-//        detailVC.animeSubject = animeItem.subject
-//        detailVC.detailSource.animeDetailLarge = subjectLarge
-//        detailVC.detailSource.gridStatusTable = animeModel.animeGridStatusList[id]
-//        detailVC.detailSource.subjectStatusDict = animeModel.subjectAllStatusList[id]
-//
-//        self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(1))
-//        self.navigationController?.pushViewController(detailVC, animated: true)
-//               self.navigationController?.pushViewController(detailVC, animated: true)
-        }
+    }
     
 }
 
@@ -500,18 +333,6 @@ extension AnimeListTableViewController {
     
 }
 
-// MARK: - AnimeCollectionViewControllerDelegate
-//extension AnimeListTableViewController: AnimeCollectionViewControllerDelegate {
-//    
-//    func pushAnimeCollectionVC(animeItem: Anime) {
-//        let collectVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.AnimeCollectVC) as! AnimeCollectTableViewController
-//        collectVC.animeItem = animeItem
-//        collectVC.needComment = true
-//        self.navigationController?.pushViewController(collectVC, animated: true)
-//    }
-//    
-//}
-//
 // MARK: - TransitionDelegate
 extension AnimeListTableViewController: TransitionDelegate {
     
@@ -526,6 +347,7 @@ extension AnimeListTableViewController: TransitionDelegate {
     
 }
 
+// MARK: - AnimeListTableViewCellDelegate
 extension AnimeListTableViewController: AnimeListTableViewCellDelegate {
     
     func watchedButtonPressed(_ sender: UIButton, with mark: AnimeMark) {
@@ -584,4 +406,5 @@ extension AnimeListTableViewController: AnimeListTableViewCellDelegate {
             return
         }
     }
+    
 }

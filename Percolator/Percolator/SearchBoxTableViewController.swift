@@ -387,23 +387,6 @@ extension SearchBoxTableViewController {
         
     }
     
-    //    private func fetchLocalData() {
-    
-    //        let fetchRequest = NSFetchRequest(entityName: "Subject")
-    //        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
-    //        fetchRequest.sortDescriptors = [sortDescriptor]
-    //
-    //        if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
-    //
-    //            Subject.fetchSubject({ (animeSubjectArr) -> Void in
-    //
-    //                if animeSubjectArr != nil {
-    //                    self.searchModel.subjectLocalList = animeSubjectArr!
-    //                }
-    //            })
-    //        }
-    //    }
-    
 }
 
 

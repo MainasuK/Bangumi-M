@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: User
-public struct BangumiKey {
+struct BangumiKey {
     static let id = "id"
     static let url = "url"
     static let username = "username"

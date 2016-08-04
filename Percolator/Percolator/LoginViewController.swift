@@ -142,6 +142,7 @@ final class LoginViewController: UIViewController {
     deinit {
         consolePrint("LoginViewController deinit")
     }
+    
 }
 
 
@@ -298,12 +299,10 @@ extension LoginViewController {
     }
 
     func setupLoginView() {
-        
         loginView.layer.shadowColor = UIColor.black.cgColor
         loginView.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         loginView.layer.shadowOpacity = 0.2
         loginView.layer.shadowRadius = 5.0
-        
     }
     
     func setupBlurView() {
@@ -325,6 +324,7 @@ extension LoginViewController {
         blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([leading, trailing, top, bottom])
     }
+    
 }
 
 extension LoginViewController {
@@ -363,4 +363,5 @@ extension LoginViewController {
             self.view.layoutIfNeeded()
         }
     }
+    
 }

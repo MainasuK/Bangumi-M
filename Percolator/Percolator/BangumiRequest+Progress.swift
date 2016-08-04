@@ -10,7 +10,6 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-
 // MARK: - Progress
 extension BangumiRequest {
     
@@ -109,4 +108,5 @@ extension BangumiRequest {
         
         return .success(progresses)
     }
+    
 }

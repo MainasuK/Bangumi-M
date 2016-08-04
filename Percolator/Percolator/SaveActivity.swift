@@ -10,6 +10,7 @@ import UIKit
 import SVProgressHUD
 
 class SaveActivity: UIActivity {
+    
     var subject: SubjectWrapper?
 
     override var activityType: String? {
@@ -55,4 +56,5 @@ class SaveActivity: UIActivity {
     override var activityImage: UIImage? {
         return #imageLiteral(resourceName: "AddArrow")
     }
+    
 }

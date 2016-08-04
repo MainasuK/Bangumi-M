@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 
-class SubjectCollectionViewController: UICollectionViewController {
+final class SubjectCollectionViewController: UICollectionViewController {
     
     typealias Model = SubjectCollectionViewModel
     typealias Cell = SubjectCollectionViewCell
