@@ -61,18 +61,19 @@ final class CollectTableViewController: UITableViewController {
             defer {
                 delay(3.0, handler: {
                     sender.isEnabled = true
-                    SVProgressHUD.dismiss()
                 })
             }
             
             do {
                 let _ = try result.resolve()
                 SVProgressHUD.showSuccess(withStatus: "保存成功")
+                SVProgressHUD.dismiss(withDelay: 3.0)
                 self.dismiss(animated: true, completion: nil)
                 
             } catch ReqeustError.userNotLogin {
                 let title = NSLocalizedString("please login", comment: "")
                 let alertController = UIAlertController.simpleErrorAlert(with: title, description: "")
+                SVProgressHUD.dismiss()
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("User not login")
                 
@@ -80,12 +81,14 @@ final class CollectTableViewController: UITableViewController {
                 let title = NSLocalizedString("authorize failed", comment: "")
                 let desc = NSLocalizedString("try login again", comment: "")
                 let alertController = UIAlertController.simpleErrorAlert(with: title, description: desc)
+                SVProgressHUD.dismiss()
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("Unauthorized")
                 
             } catch UnknownError.API(let error, let code) {
                 let title = NSLocalizedString("server error", comment: "")
                 let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error)", code: code)
+                SVProgressHUD.dismiss()
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("API error: \(error), code: \(code)")
                 
@@ -108,12 +111,14 @@ final class CollectTableViewController: UITableViewController {
             } catch UnknownError.network(let error) {
                 let title = NSLocalizedString("unknown error", comment: "")
                 let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
+                SVProgressHUD.dismiss()
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("Unknow NSURLError: \(error)")
                 
             } catch {
                 let title = NSLocalizedString("unknown error", comment: "")
                 let alertController = UIAlertController.simpleErrorAlert(with: title, description: "", code: -1)
+                SVProgressHUD.dismiss()
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("Unresolve case: \(error)")
             }   // end do-catch block
