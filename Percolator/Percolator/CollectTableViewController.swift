@@ -100,11 +100,13 @@ final class CollectTableViewController: UITableViewController {
             } catch NetworkError.notConnectedToInternet {
                 let title = NSLocalizedString("not connected to internet", comment: "")
                 let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
+                SVProgressHUD.dismiss()
                 self.present(alertController, animated: true, completion: nil)
                 
             } catch UnknownError.alamofire(let error) {
                 let title = NSLocalizedString("unknown error", comment: "")
                 let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
+                SVProgressHUD.dismiss()
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("Unknow NSError: \(error)")
                 
