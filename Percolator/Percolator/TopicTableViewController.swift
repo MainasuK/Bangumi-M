@@ -30,6 +30,7 @@ extension TopicTableViewController {
     
     typealias ModelError = TopicTableViewModel.ModelError
     typealias NetworkError = BangumiRequest.NetworkError
+    typealias HTMLError = BangumiRequest.HTMLError
     typealias UnknownError = BangumiRequest.Unknown
     
     override func viewDidLoad() {
@@ -70,33 +71,34 @@ extension TopicTableViewController {
                     SVProgressHUD.dismiss()
                     let status = NSLocalizedString("time out", comment: "")
                     SVProgressHUD.showInfo(withStatus: status)
-                    consolePrint("Timeout")
+                    consolePrint("Time out")
                     
                 } catch NetworkError.notConnectedToInternet {
                     SVProgressHUD.dismiss()
-                    let title = NSLocalizedString("not connected to internet", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
+                    consolePrint("Not Connected to Internet")
                     
+                } catch HTMLError.notHTML {
+                    SVProgressHUD.dismiss()
+                    let title = NSLocalizedString("can't recognize this web page format", comment: "")
+                    let alertController = UIAlertController.simpleErrorAlert(with: title)
+                    SVProgressHUD.dismiss()
+                    self.present(alertController, animated: true, completion: nil)
+                    consolePrint("Not HTML format")
+                
                 } catch UnknownError.alamofire(let error) {
                     SVProgressHUD.dismiss()
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unknow NSError: \(error)")
                     
                 } catch UnknownError.network(let error) {
                     SVProgressHUD.dismiss()
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unknow NSURLError: \(error)")
                     
                 } catch {
                     SVProgressHUD.dismiss()
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "", code: -1)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unresolve case: \(error)")
                 }   // end do-catch block    
 

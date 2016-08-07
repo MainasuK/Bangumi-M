@@ -40,6 +40,10 @@ extension BangumiRequest {
         case unauthorized
     }
     
+    enum HTMLError: Error {
+        case notHTML
+    }
+    
     // For auth request
     enum RequestError: Error {
         case userNotLogin

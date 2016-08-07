@@ -28,11 +28,7 @@
 "authorize failed" = "认证失败";
 "try login again" = "请重新登录";
 "please login" = "请先登录";
+"can't recognize this web page format" = "不能识别的网页格式";
 
 "save to search box" = "保存到收藏盒子";
 "delete from search box" = "从收藏盒子中删除";
-
-
-/* Bar Button Item*/
-"Cancel" = "取消";
-"Save" = "保存";

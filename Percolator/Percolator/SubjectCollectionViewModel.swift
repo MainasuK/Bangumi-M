@@ -14,7 +14,6 @@ final class SubjectCollectionViewModel: DataProvider, HeaderDataProvider {
     
     typealias ItemType = SubjectItem
     typealias headerItemType = String
-    typealias ResponseData = Response<Data, NSError>
     
     private let request = BangumiRequest.shared
     
@@ -40,15 +39,12 @@ extension SubjectCollectionViewModel {
     
     func fetchRelatedSubjects(handler: (Error?) -> Void) {
         let url = "https://bgm.tv/subject/\(subject.id)"
-        
-        // KISS
-        request.alamofireManager.request(.GET, url).validate().responseData { (response: ResponseData) in
-            assert(Thread.isMainThread, "Model method should on main thread for thread safe")
+    
+        request.html(from: url) { (result: Result<String>) in
             
-            switch response.result {
-            case .success(let data):
-                guard let html = String(data: data, encoding: String.Encoding.utf8),
-                let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8),
+            do {
+                let html = try result.resolve()
+                guard let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8),
                 let bodyNode = doc.body else {
                     handler(ModelError.parse)
                     return
@@ -65,10 +61,10 @@ extension SubjectCollectionViewModel {
                     handler(nil)
                 }
                 
-            case .failure(let error):
+            } catch {
                 handler(error)
-            }   // end switch
-        }   // end request
+            }
+        }
     }
     
 }

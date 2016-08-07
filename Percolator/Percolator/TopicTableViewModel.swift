@@ -15,7 +15,6 @@ final class TopicTableViewModel: DataProvider {
     
     typealias ItemType = TopicItem
     typealias headerItemType = String
-    typealias ResponseData = Response<Data, NSError>
     
     private let request = BangumiRequest.shared
     private let subject: Subject
@@ -40,14 +39,11 @@ extension TopicTableViewModel {
     func fetchTopics(handler: (Error?) -> Void) {
         let url = "http://bgm.tv/subject/\(subject.id)/board"
         
-        // KISS
-        request.alamofireManager.request(.GET, url).validate().responseData { (response: ResponseData) in
-            assert(Thread.isMainThread, "Model method should be main thread for thread safe")
+        request.html(from: url) { (result: Result<String>) in
             
-            switch response.result {
-            case .success(let data):
-                guard let html = String(data: data, encoding: String.Encoding.utf8),
-                    let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8),
+            do {
+                let html = try result.resolve()
+                guard let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8),
                     let bodyNode = doc.body else {
                         handler(ModelError.parse)
                         return
@@ -62,9 +58,10 @@ extension TopicTableViewModel {
                     handler(nil)
                 }
                 
-            case .failure(let error):
+            } catch {
                 handler(error)
-            }   // end switch
+            }
+            
         }   // end request
     }
     
