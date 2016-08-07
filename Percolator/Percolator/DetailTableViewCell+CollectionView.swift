@@ -20,6 +20,10 @@ class DetailTableViewCell_CollectionView: DetailTableViewCell {
     override func configure(with item: ItemType) {
         super.configure(with: item)
         
+        defer {
+            collectionView.reloadData()
+        }
+        
         guard case let ItemType.success(result) = item,
         case let DetailItem.collection(dataSource, delegate, headline, indexPath) = result else {
             return
