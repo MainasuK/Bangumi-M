@@ -99,7 +99,7 @@ final class CollectTableViewController: UITableViewController {
                 
             } catch NetworkError.notConnectedToInternet {
                 let title = NSLocalizedString("not connected to internet", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
+                let alertController = UIAlertController.simpleErrorAlert(with: title)
                 SVProgressHUD.dismiss()
                 self.present(alertController, animated: true, completion: nil)
                 
@@ -276,29 +276,21 @@ extension CollectTableViewController {
                 
             } catch NetworkError.notConnectedToInternet {
                 SVProgressHUD.dismiss()
-                let title = NSLocalizedString("not connected to internet", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
                 
             } catch UnknownError.alamofire(let error) {
                 SVProgressHUD.dismiss()
-                let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                 consolePrint("Unknow NSError: \(error)")
                 
             } catch UnknownError.network(let error) {
                 SVProgressHUD.dismiss()
-                let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                 consolePrint("Unknow NSURLError: \(error)")
                 
             } catch {
                 SVProgressHUD.dismiss()
-                let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "", code: -1)
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                 consolePrint("Unresolve case: \(error)")
             }   // end do-catch block
         }

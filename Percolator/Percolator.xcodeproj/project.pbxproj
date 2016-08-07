@@ -95,6 +95,8 @@
 		DBD069651D3676740063708C /* Bangumi_M_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD069641D3676740063708C /* Bangumi_M_Tests.swift */; };
 		DBD069701D368ECD0063708C /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBD0696F1D368ECD0063708C /* Tests.storyboard */; };
 		DBD2D57C1B84AEB300EED59A /* BangumiAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D57B1B84AEB300EED59A /* BangumiAPI.swift */; };
+		DBD7A9861D56C80B00BCA329 /* BangumiRequest+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD7A9851D56C80B00BCA329 /* BangumiRequest+URL.swift */; };
+		DBD7A9881D56D08500BCA329 /* PercolatorAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD7A9871D56D08500BCA329 /* PercolatorAlertController.swift */; };
 		DBD91C491D444D94007AFA80 /* CollectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBCB821B633376001F3CD1 /* CollectTableViewController.swift */; };
 		DBD91C4B1D44546E007AFA80 /* DetailTableViewBannerCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD91C4A1D44546E007AFA80 /* DetailTableViewBannerCellDelegate.swift */; };
 		DBE1C80B1D3C533A0086B83D /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1C80A1D3C533A0086B83D /* UILabel.swift */; };
@@ -253,6 +255,8 @@
 		DBD2D5791B843ADE00EED59A /* SearchBoxTabelViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBoxTabelViewCell.swift; sourceTree = "<group>"; };
 		DBD2D57B1B84AEB300EED59A /* BangumiAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiAPI.swift; sourceTree = "<group>"; };
 		DBD2D57D1B84CE7000EED59A /* DetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
+		DBD7A9851D56C80B00BCA329 /* BangumiRequest+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BangumiRequest+URL.swift"; sourceTree = "<group>"; };
+		DBD7A9871D56D08500BCA329 /* PercolatorAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PercolatorAlertController.swift; sourceTree = "<group>"; };
 		DBD91C4A1D44546E007AFA80 /* DetailTableViewBannerCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewBannerCellDelegate.swift; sourceTree = "<group>"; };
 		DBE1C80A1D3C533A0086B83D /* UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		DBE1C80C1D3C691B0086B83D /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
@@ -364,6 +368,7 @@
 				DBAD9BCD1D3F6BBE00206ACE /* BangumiRequest+Subject.swift */,
 				DB5021821D3FCDC100148C8F /* BangumiRequest+Progress.swift */,
 				DBE2B9601D405F7C00F677DE /* BangumiRequest+EP.swift */,
+				DBD7A9851D56C80B00BCA329 /* BangumiRequest+URL.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -623,6 +628,7 @@
 				DB6B1BCA1D182F390005CAE6 /* SubjectCollectionViewController.swift */,
 				DBFBCB821B633376001F3CD1 /* CollectTableViewController.swift */,
 				DBBA47C91B060DEA0004BBA2 /* LoginViewController.swift */,
+				DBD7A9871D56D08500BCA329 /* PercolatorAlertController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -951,6 +957,7 @@
 			files = (
 				DB8EA45C1D3F415400348A6C /* DetailTableViewCell.swift in Sources */,
 				DB0BC8061D11B6450091ECE0 /* UIApplication.swift in Sources */,
+				DBD7A9881D56D08500BCA329 /* PercolatorAlertController.swift in Sources */,
 				DB22FE101D16ADE4004A082D /* DetailTableViewMoreSubjectCell.swift in Sources */,
 				DBD0695B1D3635EE0063708C /* ConfigurableCell.swift in Sources */,
 				DB5021831D3FCDC100148C8F /* BangumiRequest+Progress.swift in Sources */,
@@ -974,6 +981,7 @@
 				DBBB52581D47B5CA008A1617 /* SubjectWrapper.swift in Sources */,
 				DBE1C80D1D3C691B0086B83D /* UIFont.swift in Sources */,
 				DB22FE121D16CB01004A082D /* DetailTableViewEPSCell.swift in Sources */,
+				DBD7A9861D56C80B00BCA329 /* BangumiRequest+URL.swift in Sources */,
 				DBEF11441D377A7A00E7A0D7 /* TableViewDataSource.swift in Sources */,
 				DBA3A1EA1D3FC5AD00365553 /* NetworkSpinner.swift in Sources */,
 				DB6B1BCB1D182F390005CAE6 /* SubjectCollectionViewController.swift in Sources */,

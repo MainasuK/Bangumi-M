@@ -188,7 +188,6 @@ extension AnimeListTableViewController {
                 self.tableView.mj_header.endRefreshing()
             }
             
-            
             do {
                 try error?.throwMyself()
                 BangumiRequest.shared.timeoutErrorTimes = 0
@@ -221,8 +220,8 @@ extension AnimeListTableViewController {
             } catch NetworkError.timeout {
                 if BangumiRequest.shared.timeoutErrorTimes == 3 {
                     // FIXME: English localize?
-                    let alertController = UIAlertController(title: "请检查网络链接状况", message: "可能是由于 DNS 污染造成若您无法链接至 bgm.tv，请更换 DNS 或联系当地网络提供商解决", preferredStyle: .alert)
-                    let cancelAction = UIAlertAction(title: NSLocalizedString("不再提醒", comment: ""), style: .cancel) { (action) in
+                    let alertController = UIAlertController(title: NSLocalizedString("please check your network connection status", comment: ""), message: NSLocalizedString("make sure that the network can be connected to bgm.tv", comment: ""), preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("dismiss", comment: ""), style: .cancel) { (action) in
                         // ...
                     }
                     
@@ -236,33 +235,24 @@ extension AnimeListTableViewController {
                 consolePrint("Timeout")
                 
             } catch NetworkError.notConnectedToInternet {
-                let title = NSLocalizedString("not connected to internet", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
                 
             } catch NetworkError.dnsLookupFailed {
-                let title = NSLocalizedString("dns lookup failed", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "")
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.dnsLookupFailed(), animated: true, completion: nil)
+                consolePrint("NetworkError DNS Lookup Failed: \(error)")
                 
             } catch UnknownError.alamofire(let error) {
-                let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                 consolePrint("Unknow NSError: \(error)")
                 
             } catch UnknownError.network(let error) {
-                let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                 consolePrint("Unknow NSURLError: \(error)")
                 
             } catch {
                 // Really? I think never got here.
                 // All error wrapped appropriately above …
-                let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "", code: -1)
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                 consolePrint("Unresolve case: \(error)")
             }
         }
@@ -362,31 +352,21 @@ extension AnimeListTableViewController: AnimeListTableViewCellDelegate {
                     self.present(alertController, animated: true, completion: nil)
                     
                 } catch NetworkError.notConnectedToInternet {
-                    let title = NSLocalizedString("not connected to internet", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
                     
                 } catch NetworkError.timeout {
-                    let title = NSLocalizedString("time out", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "未能标注 EP.\(ep.sortString) \(ep.nameCN)")
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.timeout(withDescription: "未能标注 EP.\(ep.sortString) \(ep.nameCN)"), animated: true, completion: nil)
                     
                 } catch UnknownError.alamofire(let error) {
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unknow NSError: \(error)")
                     
                 } catch UnknownError.network(let error) {
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unknow NSURLError: \(error)")
                     
                 } catch {
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "", code: -1)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unresolve case: \(error)")
                 }   // end do-catch block
             })
