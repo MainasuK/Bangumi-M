@@ -11,17 +11,24 @@ import AlamofireImage
 
 class SubjectCollectionViewBookCell: SubjectCollectionViewCell {
     
+    typealias ModelCollectError = SubjectCollectionViewModel.ModelCollectError
+    
     @IBOutlet weak var cardView: UIView!
     
     @IBOutlet weak var bookCover: UIImageView!
     @IBOutlet weak var bookNameLabel: UILabel!
     // No subtitle for book
+    @IBOutlet weak var indicatorLabel: UILabel!
     
     override func configure(with item: ItemType) {
-        bookNameLabel.text = item.title
+        let subjectItem = item.0
+        bookNameLabel.text = subjectItem.title
+        
+        configureIndicator(with: item.1)
+        
         
         let size = bookCover.bounds.size
-        if let url = URL(string: item.coverUrlPath) {
+        if let url = URL(string: subjectItem.coverUrlPath) {
             bookCover.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
         } else {
             bookCover.image = UIImage.fromColor(.placeholder, size: size)
@@ -33,6 +40,24 @@ class SubjectCollectionViewBookCell: SubjectCollectionViewCell {
         
         // Set background color
         backgroundColor = UIColor.white
+    }
+    
+}
+
+extension SubjectCollectionViewBookCell {
+    
+    private func configureIndicator(with result: Result<CollectInfoSmall>) {
+        indicatorLabel.text = ""
+        
+        do {
+            let collect = try result.resolve()
+            indicatorLabel.text = collect.name
+            
+        } catch ModelCollectError.unknown {
+            consolePrint("Unknown subject collect info")
+        } catch {
+            consolePrint(error)
+        }
     }
     
 }

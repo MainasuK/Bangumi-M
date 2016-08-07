@@ -15,11 +15,13 @@ class SubjectCollectionViewNotBookCell: SubjectCollectionViewCell {
     @IBOutlet weak var nameCNLabel: UILabel!
     
     override func configure(with item: ItemType) {
-        nameLabel.text = item.title
-        nameCNLabel.text = item.subtitle
+        let subjectItem = item.0
+        
+        nameLabel.text = subjectItem.title
+        nameCNLabel.text = subjectItem.subtitle
         
         let size = coverImageView.bounds.size
-        if let url = URL(string: item.coverUrlPath) {
+        if let url = URL(string: subjectItem.coverUrlPath) {
             coverImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
         } else {
             coverImageView.image = UIImage.fromColor(.placeholder, size: size)

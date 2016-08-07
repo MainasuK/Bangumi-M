@@ -12,7 +12,8 @@ import Kanna
 
 final class SubjectCollectionViewModel: DataProvider, HeaderDataProvider {
     
-    typealias ItemType = SubjectItem
+    typealias ItemType = (SubjectItem, Result<CollectInfoSmall>)
+    typealias CollectDict = BangumiRequest.CollectDict
     typealias headerItemType = String
     
     private let request = BangumiRequest.shared
@@ -20,6 +21,8 @@ final class SubjectCollectionViewModel: DataProvider, HeaderDataProvider {
     private var bookSubjectItem = [SubjectItem]()
     private var otherSubjectSectionName = [String]()
     private var otherSubjectItem = [[SubjectItem]]()
+    
+    private var collectDict: CollectDict = [:]
     
     private weak var collectionView: UICollectionView?
     private let subject: Subject
@@ -55,6 +58,8 @@ extension SubjectCollectionViewModel {
                 
                 self.collectionView?.reloadData()
                 
+                self.fetchCollectInfo(for: self.bookSubjectItem.flatMap { $0.urlPath.components(separatedBy: "/").last }.flatMap { Int($0) })
+                
                 if self.bookSubjectItem.isEmpty && self.otherSubjectItem.isEmpty {
                     handler(ModelError.noItem)
                 } else {
@@ -63,6 +68,31 @@ extension SubjectCollectionViewModel {
                 
             } catch {
                 handler(error)
+            }
+        }
+    }
+    
+}
+
+extension SubjectCollectionViewModel {
+    
+    typealias CollectionError = BangumiRequest.CollectionError
+    
+    private func fetchCollectInfo(for subjectIDs: [SubjectID]) {
+        request.collection(of: subjectIDs) { (result: Result<CollectDict>) in
+            do {
+                let dict = try result.resolve()
+                dict.forEach { (key: SubjectID, value: CollectInfoSmall) in
+                    self.collectDict[key] = value
+                }
+                
+                self.collectionView?.reloadData()
+                
+            } catch CollectionError.noCollection {
+                consolePrint("No collect info")
+            } catch {
+                // Jush print it
+                consolePrint(error)
             }
         }
     }
@@ -86,8 +116,17 @@ extension SubjectCollectionViewModel {
     
     func item(at indexPath: IndexPath) -> SubjectCollectionViewModel.ItemType {
         switch indexPath.section {
-        case 0:         return bookSubjectItem[indexPath.row]
-        default:        return otherSubjectItem[indexPath.section][indexPath.row]
+        case 0:
+            let subjectItem = bookSubjectItem[indexPath.row]
+            if let idStr = subjectItem.urlPath.components(separatedBy: "/").last,
+            let id = Int(idStr),
+            let collect = collectDict[id] {
+                return (subjectItem, .success(collect))
+            } else {
+                return (subjectItem, .failure(ModelCollectError.unknown))
+            }
+        default:
+            return (otherSubjectItem[indexPath.section][indexPath.row], .failure(ModelCollectError.unknown))
         }
     }
     
@@ -132,6 +171,10 @@ extension SubjectCollectionViewModel {
         let subtitle: String
         let urlPath: String
         let coverUrlPath: String
+    }
+    
+    enum ModelCollectError: Error {
+        case unknown
     }
 }
 

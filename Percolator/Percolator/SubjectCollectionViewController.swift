@@ -128,7 +128,7 @@ extension SubjectCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let subjectIDStr = model.item(at: indexPath).urlPath.components(separatedBy: "/").last,
+        guard let subjectIDStr = model.item(at: indexPath).0.urlPath.components(separatedBy: "/").last,
         let subjectID = Int(subjectIDStr) else {
             // FIXME:
             return
