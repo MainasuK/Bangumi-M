@@ -48,6 +48,12 @@ extension AnimeListTableViewModel {
         
         request.userCollection { (result: Result<Subjects>) in
             
+            guard self.request.user != nil else {
+                self.tableView?.reloadData()
+                handler(RequestError.userNotLogin)
+                return
+            }
+            
             do {
                 let subjects = try result.resolve()
                 
