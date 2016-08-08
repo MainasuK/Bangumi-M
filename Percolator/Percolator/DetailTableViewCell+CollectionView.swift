@@ -50,6 +50,7 @@ class CMKCollectionView: UICollectionView {
         layer.endPoint = CGPoint(x: 1.0, y: 0.5)
         layer.shouldRasterize = true
         layer.rasterizationScale = UIScreen.main.scale
+        layer.drawsAsynchronously = true
         
         return layer
     }()
@@ -74,7 +75,7 @@ class CMKCollectionView: UICollectionView {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         gradientLayer.frame = self.bounds
-        gradientLayer.locations = [0.0, min(threshold, (abs(self.contentOffset.x) + 1.0) / self.bounds.width), 0.97, 1.0]
+        gradientLayer.locations = [0.0, min(threshold, (abs(self.contentOffset.x) + 0.5) / self.bounds.width), 0.97, 1.0]
         CATransaction.commit()
     }
     

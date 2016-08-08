@@ -334,10 +334,12 @@ extension DetailTableViewController {
         switch indexPath.section {
         case 0:
             return 300
+        case let section where section == 1:
+            return 155
         case let section where section >= 4 && section <= 7:
             return 100
         default:
-            return 200
+            return 100
         }
     }
     
