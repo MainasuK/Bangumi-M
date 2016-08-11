@@ -347,6 +347,14 @@
 			name = Key;
 			sourceTree = "<group>";
 		};
+		DB20C9E41D5B5CFB0091F591 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				DBD7A9871D56D08500BCA329 /* PercolatorAlertController.swift */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
 		DB37BFF61D39D98C00F48436 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -628,7 +636,7 @@
 				DB6B1BCA1D182F390005CAE6 /* SubjectCollectionViewController.swift */,
 				DBFBCB821B633376001F3CD1 /* CollectTableViewController.swift */,
 				DBBA47C91B060DEA0004BBA2 /* LoginViewController.swift */,
-				DBD7A9871D56D08500BCA329 /* PercolatorAlertController.swift */,
+				DB20C9E41D5B5CFB0091F591 /* Helper */,
 			);
 			name = Controller;
 			sourceTree = "<group>";

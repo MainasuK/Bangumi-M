@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11185.3" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hBj-br-rvm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11191" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hBj-br-rvm">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11151.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11156"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -368,7 +368,7 @@
                         <color key="sectionIndexBackgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="animeCell" rowHeight="150" id="0rS-Kv-YqE" userLabel="AnimeListTableViewCell" customClass="AnimeListTableViewCell" customModule="Bangumi_M" customModuleProvider="target">
-                                <frame key="frameInset" minY="86" width="768" height="150"/>
+                                <rect key="frame" x="0.0" y="86" width="768" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0rS-Kv-YqE" id="kZ8-DW-I1s">
                                     <frame key="frameInset" width="768" height="150"/>
@@ -548,17 +548,17 @@
             </objects>
             <point key="canvasLocation" x="392" y="2220"/>
         </scene>
-        <!--Topic Table View Controller-->
+        <!--相关话题-->
         <scene sceneID="aoS-G2-S1h">
             <objects>
-                <tableViewController storyboardIdentifier="TopicTableViewControllerKey" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j1Q-IM-hhi" customClass="TopicTableViewController" customModule="Bangumi_M" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TopicTableViewControllerKey" title="相关话题" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j1Q-IM-hhi" customClass="TopicTableViewController" customModule="Bangumi_M" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="146" sectionHeaderHeight="28" sectionFooterHeight="28" id="MdO-kM-9IH">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TopicTableViewCellKey" rowHeight="150" id="n2Y-YT-Jg9" userLabel="TopicTableViewCell" customClass="TopicTableViewCell" customModule="Bangumi_M" customModuleProvider="target">
-                                <frame key="frameInset" minY="92" width="768" height="150"/>
+                                <rect key="frame" x="0.0" y="92" width="768" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="n2Y-YT-Jg9" id="wxj-S6-GxP">
                                     <frame key="frameInset" width="768" height="149"/>
@@ -618,13 +618,13 @@
                             <outlet property="delegate" destination="j1Q-IM-hhi" id="dLf-il-4uB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="gv8-AN-1Dv"/>
+                    <navigationItem key="navigationItem" title="相关话题" id="gv8-AN-1Dv"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9bV-ff-hlm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1160.8" y="2925.7871064467768"/>
         </scene>
-        <!--Subject Collection View Controller-->
+        <!--相关条目-->
         <scene sceneID="18c-ue-fg1">
             <objects>
                 <collectionViewController storyboardIdentifier="SubjectCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="S5e-T2-3Qd" customClass="SubjectCollectionViewController" customModule="Bangumi_M" customModuleProvider="target" sceneMemberID="viewController">
@@ -639,7 +639,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SubjectCollectionViewBookCellKey" id="wpF-qq-7N1" customClass="SubjectCollectionViewBookCell" customModule="Bangumi_M" customModuleProvider="target">
-                                <frame key="frameInset" minY="175" width="288" height="66"/>
+                                <rect key="frame" x="0.0" y="111" width="288" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="288" height="66"/>
@@ -697,7 +697,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SubjectCollectionViewNotBookCellKey" id="Maa-Vr-lQ5" customClass="SubjectCollectionViewNotBookCell" customModule="Bangumi_M" customModuleProvider="target">
-                                <frame key="frameInset" minX="288" minY="108" width="96" height="200"/>
+                                <rect key="frame" x="288" y="44" width="96" height="200"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="96" height="200"/>
@@ -755,7 +755,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SubjectCollectionReusableHeaderView" id="hd5-lg-WPz" customClass="SubjectCollectionReusableHeaderView" customModule="Bangumi_M" customModuleProvider="target">
-                            <frame key="frameInset" minY="64" width="768" height="44"/>
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="单行本" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rrr-JD-wQ4">
@@ -779,7 +779,7 @@
                             <outlet property="delegate" destination="S5e-T2-3Qd" id="G4T-f2-ze8"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="Hxg-mI-xwu"/>
+                    <navigationItem key="navigationItem" title="相关条目" id="Hxg-mI-xwu"/>
                     <connections>
                         <outlet property="subjectCollectionView" destination="zUA-9l-x0E" id="uvT-jv-jQ9"/>
                     </connections>
@@ -798,7 +798,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchBoxTableViewCell" rowHeight="129" id="MDW-lj-Nbn" userLabel="SearchBoxTabelViewCell" customClass="SearchBoxTableViewCell" customModule="Bangumi_M" customModuleProvider="target">
-                                <frame key="frameInset" minY="86" width="768" height="129"/>
+                                <rect key="frame" x="0.0" y="86" width="768" height="129"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MDW-lj-Nbn" id="nkT-J8-lD5">
                                     <frame key="frameInset" width="768" height="128"/>
@@ -950,7 +950,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" clipsSubviews="YES" contentMode="scaleAspectFill" id="C91-Kk-B4w" userLabel="headerView">
-                            <frame key="frameInset" width="768" height="320"/>
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="320"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" image="saenai" translatesAutoresizingMaskIntoConstraints="NO" id="Gxg-Vt-I3r"/>
@@ -965,7 +965,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DetailTableViewBannerCell" rowHeight="220" id="a5V-Ze-ema" userLabel="DetailTableViewBannerCell" customClass="DetailTableViewBannerCell" customModule="Bangumi_M" customModuleProvider="target">
-                                <frame key="frameInset" minY="348" width="768" height="220"/>
+                                <rect key="frame" x="0.0" y="348" width="768" height="220"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a5V-Ze-ema" id="N7a-xs-26A">
                                     <frame key="frameInset" width="768" height="219"/>
@@ -1098,14 +1098,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DetailTableViewCell_CollectionView" rowHeight="155" id="GhP-qN-VPB" customClass="DetailTableViewCell_CollectionView" customModule="Bangumi_M" customModuleProvider="target">
-                                <frame key="frameInset" minY="568" width="768" height="155"/>
+                                <rect key="frame" x="0.0" y="568" width="768" height="155"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GhP-qN-VPB" id="xbx-6B-7i6">
                                     <frame key="frameInset" width="768" height="154"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出场人物" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vrr-1Y-WHa">
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="16"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1122,7 +1122,7 @@
                                             </collectionViewFlowLayout>
                                             <cells>
                                                 <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="CMKCollectionViewCell" id="JqT-yB-LGU" customClass="CMKCollectionViewCell" customModule="Bangumi_M" customModuleProvider="target">
-                                                    <frame key="frameInset" width="75" height="117"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="75" height="117"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                         <rect key="frame" x="0.0" y="0.0" width="75" height="117"/>
@@ -1207,16 +1207,16 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DetailTableViewMoreTopicCellKey" textLabel="dMC-5i-Og7" detailTextLabel="7fN-tp-SGe" rowHeight="40" style="IBUITableViewCellStyleValue1" id="Zjv-Vw-3Ws" userLabel="DetailTableViewMoreTopicCell" customClass="DetailTableViewMoreTopicCell" customModule="Bangumi_M" customModuleProvider="target">
-                                <frame key="frameInset" minY="723" width="768" height="40"/>
+                                <rect key="frame" x="0.0" y="723" width="768" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zjv-Vw-3Ws" id="mAS-UB-utj">
                                     <frame key="frameInset" width="702" height="39"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="相关话题" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dMC-5i-Og7">
-                                            <frame key="frameInset" minX="48" minY="10" width="66" height="20"/>
+                                            <frame key="frameInset" minX="48" minY="8" width="64" height="23"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="16"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1235,16 +1235,16 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DetailTableViewMoreSubjectCellKey" textLabel="a1y-r6-inb" detailTextLabel="geJ-ax-9rQ" rowHeight="40" style="IBUITableViewCellStyleValue1" id="4nO-Rr-p4H" userLabel="DetailTableViewMoreSubjectCell" customClass="DetailTableViewMoreSubjectCell" customModule="Bangumi_M" customModuleProvider="target">
-                                <frame key="frameInset" minY="763" width="768" height="40"/>
+                                <rect key="frame" x="0.0" y="763" width="768" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4nO-Rr-p4H" id="XDe-OE-a9s">
                                     <frame key="frameInset" width="702" height="39"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="相关条目" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="a1y-r6-inb">
-                                            <frame key="frameInset" minX="48" minY="10" width="66" height="20"/>
+                                            <frame key="frameInset" minX="48" minY="8" width="64" height="23"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="16"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1263,7 +1263,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DetailTableViewEPSCellKey" rowHeight="100" id="3ec-hw-P1l" userLabel="DetailTableViewEPSCell" customClass="DetailTableViewEPSCell" customModule="Bangumi_M" customModuleProvider="target">
-                                <frame key="frameInset" minY="803" width="768" height="100"/>
+                                <rect key="frame" x="0.0" y="803" width="768" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3ec-hw-P1l" id="Dzw-G4-44y">
                                     <frame key="frameInset" width="768" height="99"/>
@@ -1397,6 +1397,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="W0D-n0-UyE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="17"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1415,6 +1418,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wW9-H8-xHm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="17"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
