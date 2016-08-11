@@ -95,6 +95,7 @@ final class LoginViewController: UIViewController {
                     }
                     
                     alertController.addAction(cancelAction)
+                    SVProgressHUD.dismiss()
                     self.present(alertController, animated: true, completion: nil)
                 } else {
                     let status = NSLocalizedString("time out", comment: "")
