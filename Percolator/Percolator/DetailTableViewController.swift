@@ -344,7 +344,7 @@ extension DetailTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard section >= 3 && section <= 6 else {
+        guard section >= 4 && section <= 7 else {
             return UIView()
         }
         
