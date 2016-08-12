@@ -53,7 +53,10 @@ final class DetailTableViewController: UITableViewController {
         let poc = activityViewController.popoverPresentationController
         poc?.barButtonItem = sender
         
-        self.present(activityViewController, animated: true, completion: nil)
+        // Async for not block main queue…
+        DispatchQueue.main.async {
+            self.present(activityViewController, animated: true, completion: nil)
+        }
     }
     
     @IBAction func swipeRestureTrigger(_ sender: UISwipeGestureRecognizer) {
