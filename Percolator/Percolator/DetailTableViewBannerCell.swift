@@ -67,6 +67,7 @@ extension DetailTableViewBannerCell {
         nameLabel.text = subject.name
         nameCNLabel.text = subject.nameCN
         
+        ratingView.isUserInteractionEnabled = false
         ratingView.settings.fillMode = .precise
         ratingView.rating = subject.rating.score * 0.5
         ratingLabel.text = (subject.rating.score == 0) ? "--" : "\(subject.rating.score)"
