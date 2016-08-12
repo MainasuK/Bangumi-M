@@ -118,6 +118,7 @@ extension DetailTableViewController {
         
         // Configure tableView appearance
         tableView.tableFooterView = UIView()
+        self.clearsSelectionOnViewWillAppear = true
         
         // Configure headerView
         headerView = tableView.tableHeaderView
