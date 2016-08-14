@@ -189,8 +189,7 @@ extension DetailTableViewModel {
         case 2: return .success(.subject(subject))
         // More subject cell
         case 3: return .success(.subject(subject))
-        // FIXME: Need clean up
-        // Note: Not profiled code. Should keep watching
+        // FIXME: Not profiled code snip. Should keep watching
         // EP
         case 4:
             let episode = (isReverse) ? subject.epTableReversed[indexPath.row] : subject.epTable[indexPath.row]

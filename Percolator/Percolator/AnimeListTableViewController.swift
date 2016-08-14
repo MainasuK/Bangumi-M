@@ -219,7 +219,6 @@ extension AnimeListTableViewController {
                 
             } catch NetworkError.timeout {
                 if BangumiRequest.shared.timeoutErrorTimes == 3 {
-                    // FIXME: English localize?
                     let alertController = UIAlertController(title: NSLocalizedString("please check your network connection status", comment: ""), message: NSLocalizedString("make sure that the network can be connected to bgm.tv", comment: ""), preferredStyle: .alert)
                     let cancelAction = UIAlertAction(title: NSLocalizedString("dismiss", comment: ""), style: .cancel) { (action) in
                         // ...

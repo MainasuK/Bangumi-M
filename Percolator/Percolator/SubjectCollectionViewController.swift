@@ -135,11 +135,9 @@ extension SubjectCollectionViewController {
         
         guard let subjectIDStr = model.item(at: indexPath).0.urlPath.components(separatedBy: "/").last,
         let subjectID = Int(subjectIDStr) else {
-            // FIXME:
+            // FIXME: Watch out API change
             return
         }
-        
-        // FIXME: Need put in model? or KISS?
         
         SVProgressHUD.show()
         BangumiRequest.shared.subject(of: subjectID, with: .large) { (result: Result<Subject>) in

@@ -183,7 +183,7 @@ extension AnimeListTableViewModel {
                     self.subjects[index] = subject
                     self.tableView?.reloadRows(at: [indexPath], with: .none)
                 } catch {
-                    // FIXME: cell need handle it
+                    // FIXME: cell need to handle errors yo resolve infinite spinning
                     if let index = self.subjects.index(where: { theID == $0.id }) {
                         self.subjects[index].responseGroup = .none
                         let indexPath = IndexPath(row: index, section: 0)

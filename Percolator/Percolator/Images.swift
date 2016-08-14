@@ -9,7 +9,6 @@
 import Foundation
 import SwiftyJSON
 
-// FIXME:
 struct Images {
     let largeUrl: String?
     let mediumUrl: String?

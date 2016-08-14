@@ -28,7 +28,7 @@ struct UserDefaultsKey {
 }
 
 // MARK: - StoryboardKey
-// FIXME: need to unify
+// FIXME: need to unify the format
 public struct StoryboardKey {
     
     static let LoginViewController                  = "LoginViewController"

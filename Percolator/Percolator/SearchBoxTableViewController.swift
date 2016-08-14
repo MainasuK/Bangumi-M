@@ -63,9 +63,9 @@ final class SearchBoxTableViewController: UITableViewController {
     @IBAction func longPressTrigger(_ sender: UILongPressGestureRecognizer) {
         guard sender.state == .began,
         let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)) else {
-            // FIXME:
             return
         }
+        
         let (subject, _) = model.item(at: indexPath)
         
         let alertController = UIAlertController(title: "\(subject.name)", message: nil, preferredStyle: .actionSheet)
@@ -75,7 +75,6 @@ final class SearchBoxTableViewController: UITableViewController {
         }
         
         let saveAction = UIAlertAction(title: "保存", style: .default) { (action) in
-            // FIXME: error info need here?
             if subject.saveToCoreData() {
                 SVProgressHUD.showSuccess(withStatus: "保存成功")
             } else {
