@@ -33,6 +33,23 @@ class DetailTableViewCell_CollectionView: DetailTableViewCell {
         collectionView.dataSource = dataSource
         collectionView.delegate = delegate
         collectionView.tag = indexPath.row
+        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass || traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass {
+            setCollectionViewEdgeInset()
+            layoutIfNeeded()
+        }
+    }
+    
+    private func setCollectionViewEdgeInset() {
+        let isCompact = (traitCollection.horizontalSizeClass == .compact) ? true : false
+        
+        (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset = isCompact ? UIEdgeInsets(top: 0, left: superview?.layoutMargins.left ?? 16, bottom: 0, right: superview?.layoutMargins.right ?? 8) : UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
     }
 
 }

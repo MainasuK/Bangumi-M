@@ -180,8 +180,8 @@ extension DetailTableViewController {
         setupTableViewInsetAndOffset()
         
         // Configure cell row height
-        tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableViewAutomaticDimension
         
         // Configure cell margin
         tableView.cellLayoutMarginsFollowReadableWidth = true

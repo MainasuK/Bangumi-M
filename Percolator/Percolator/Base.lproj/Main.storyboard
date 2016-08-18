@@ -1192,14 +1192,38 @@
                                         </collectionView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="leading" secondItem="2rc-Dk-cea" secondAttribute="leading" id="3Zj-lS-eW5"/>
                                         <constraint firstItem="vrr-1Y-WHa" firstAttribute="top" secondItem="xbx-6B-7i6" secondAttribute="topMargin" id="3c3-6I-692"/>
-                                        <constraint firstAttribute="bottom" secondItem="2rc-Dk-cea" secondAttribute="bottom" id="7Tw-T6-Ta6"/>
+                                        <constraint firstAttribute="bottom" secondItem="2rc-Dk-cea" secondAttribute="bottom" priority="999" id="7Tw-T6-Ta6"/>
                                         <constraint firstItem="2rc-Dk-cea" firstAttribute="leading" secondItem="xbx-6B-7i6" secondAttribute="leadingMargin" id="BkT-Lp-j61"/>
+                                        <constraint firstAttribute="trailing" secondItem="2rc-Dk-cea" secondAttribute="trailing" constant="-354" id="UEa-Wc-wAM">
+                                            <variation key="widthClass=compact" constant="0.0"/>
+                                        </constraint>
                                         <constraint firstItem="vrr-1Y-WHa" firstAttribute="leading" secondItem="xbx-6B-7i6" secondAttribute="leadingMargin" id="WGw-Wy-Vfb"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="2rc-Dk-cea" secondAttribute="trailing" id="eXk-kP-p8Z"/>
                                         <constraint firstItem="2rc-Dk-cea" firstAttribute="top" secondItem="vrr-1Y-WHa" secondAttribute="bottom" constant="8" symbolic="YES" id="z3e-Qo-9OC"/>
                                         <constraint firstItem="vrr-1Y-WHa" firstAttribute="trailing" secondItem="xbx-6B-7i6" secondAttribute="trailingMargin" id="zMS-QB-u8R"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="3Zj-lS-eW5"/>
+                                            <exclude reference="BkT-Lp-j61"/>
+                                            <exclude reference="UEa-Wc-wAM"/>
+                                            <exclude reference="eXk-kP-p8Z"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="widthClass=compact">
+                                        <mask key="constraints">
+                                            <include reference="3Zj-lS-eW5"/>
+                                            <include reference="UEa-Wc-wAM"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="widthClass=regular">
+                                        <mask key="constraints">
+                                            <include reference="BkT-Lp-j61"/>
+                                            <include reference="eXk-kP-p8Z"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="collectionView" destination="2rc-Dk-cea" id="BWe-Bm-54k"/>
