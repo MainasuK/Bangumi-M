@@ -15,13 +15,13 @@ extension BangumiRequest {
     
     typealias SearchSubjects = (Int, [Subject])
     
-    func search(for keywords: String, startIndex: Int, resultLimit: Int, type: Int, handler: (Result<SearchSubjects>) -> Void) {
+    func search(for keywords: String, startIndex: Int, resultLimit: Int, type: Int, handler: @escaping (Result<SearchSubjects>) -> Void) {
     
         // TODO:
         //  let authEncode = userData!.authEncode
         
         let urlPath = String( format: BangumiApiKey.Search, keywords.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)!)
-        var parameters: [String : AnyObject] = ["responseGroup" : "large",
+        var parameters: [String : Any] = ["responseGroup" : "large",
                                                 "max_results" : resultLimit,
                                                 "start" : startIndex]
         
@@ -36,7 +36,7 @@ extension BangumiRequest {
             consolePrint("Send search request without auth token")
         }
         
-        alamofireManager.request(.GET, urlPath, parameters: parameters).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        alamofireManager.request(urlPath, withMethod: .get, parameters: parameters).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
             
             let subjects = self.getResult(from: response)
                 .flatMap(self.toJSON)
@@ -52,7 +52,7 @@ extension BangumiRequest {
 extension BangumiRequest {
     
     // 1. Convert response to Result<AnyObjet> and wrap error
-    func getResult(from response: Response) -> Result<AnyObject> {
+    func getResult(from response: Response) -> Result<Any> {
         switch response.result {
         case .success(let value):   return .success(value)
         case .failure(let error):   return Result { throw wrap(error) }
@@ -60,12 +60,12 @@ extension BangumiRequest {
     }
     
     // 2. Unwrap object to JSON
-    func toJSON(from object: AnyObject) -> Result<JSON> {
+    func toJSON(from object: Any) -> Result<JSON> {
         return .success(JSON(object))
     }
     
     // 3. Validate JSON
-    private func validate(json: JSON) -> Result<JSON> {
+    fileprivate func validate(json: JSON) -> Result<JSON> {
         // Bangumi API reture a JSON for error case
         if let error = json["error"].string,
             let code = json["code"].int {
@@ -83,7 +83,7 @@ extension BangumiRequest {
     }
     
     // 4. Unwrap JSON to Subjects
-    private func toSubjects(from json: JSON) -> Result<SearchSubjects> {
+    fileprivate func toSubjects(from json: JSON) -> Result<SearchSubjects> {
         let totalCount      = json["results"].int!
         let subjectsArray   = json["list"].arrayValue
         let subjects        = (totalCount, subjectsArray.map { Subject.init(from: $0) })

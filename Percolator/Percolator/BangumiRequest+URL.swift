@@ -14,9 +14,9 @@ extension BangumiRequest {
     
     typealias ResponseData = Alamofire.Response<Data, NSError>
     
-    func html(from url: String, handler: (Result<String>) -> Void) {
+    func html(from url: String, handler: @escaping (Result<String>) -> Void) {
         
-        BangumiRequest.shared.alamofireManager.request(.GET, url).validate().responseData { (response: ResponseData) in
+        BangumiRequest.shared.alamofireManager.request(url, withMethod: .get).validate().responseData { (response: ResponseData) in
             assert(Thread.isMainThread, "Model method should on main thread for thread safe")
             
             let html = self.getResult(from: response)
@@ -37,7 +37,7 @@ extension BangumiRequest {
         }
     }
     
-    private func toHTML(from object: Data) -> Result<String> {
+    fileprivate func toHTML(from object: Data) -> Result<String> {
         guard let html = String(data: object, encoding: String.Encoding.utf8) else {
             return .failure(HTMLError.notHTML)
         }

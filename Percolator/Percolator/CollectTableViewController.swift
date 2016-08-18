@@ -13,7 +13,7 @@ import SVProgressHUD
 // It's convenient to embed model in static table view controller
 final class CollectTableViewController: UITableViewController {
     
-    private let request = BangumiRequest.shared
+    fileprivate let request = BangumiRequest.shared
     
     var subject: Subject!
     var isNeedComment = false   // Set this flag to carry user to the comment text view
@@ -137,7 +137,7 @@ final class CollectTableViewController: UITableViewController {
 // MARK: - Tableview setup method
 extension CollectTableViewController {
     
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         
         // Configure tableView row height
         tableView.estimatedRowHeight = 44
@@ -149,7 +149,7 @@ extension CollectTableViewController {
         privacyTableViewCell.contentView.preservesSuperviewLayoutMargins = true
     }
     
-    private func setupControlItem() {
+    fileprivate func setupControlItem() {
         tagView.setDeleteButtonBackgroundImage(UIImage(named: "btn_tag_delete"), state: .normal)
         tagView.backgroundColor = UIColor.clear
         tagView.verticalInsetForTag = UIEdgeInsetsMake(9, 8, 6, 0);
@@ -225,7 +225,7 @@ extension CollectTableViewController {
     typealias NetworkError = BangumiRequest.NetworkError
     typealias UnknownError = BangumiRequest.Unknown
     
-    private func fetchCollectionInfo() {
+    fileprivate func fetchCollectionInfo() {
         title = "少女祈祷中…"
         NetworkSpinner.on()
         SVProgressHUD.show()
@@ -297,7 +297,7 @@ extension CollectTableViewController {
         
     }
     
-    private func freshControlItem(with info: CollectInfo) {
+    fileprivate func freshControlItem(with info: CollectInfo) {
         title = subject.name
         
         saveButtonItem.isEnabled = true

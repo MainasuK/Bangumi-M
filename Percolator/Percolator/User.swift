@@ -16,13 +16,13 @@ struct User {
     let auth: String
     let authEncode: String
     
-    private let url: String
-    private let username: String
+    fileprivate let url: String
+    fileprivate let username: String
     let nickname: String
     
     let avatar: Avatar
 
-    private let sign: String
+    fileprivate let sign: String
     
     // Fail fast - make sure error handle correctly
     init(json: JSON) {

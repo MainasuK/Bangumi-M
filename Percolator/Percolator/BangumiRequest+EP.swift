@@ -15,7 +15,7 @@ extension BangumiRequest {
     
     // Batch mark ep needs ids: [Int]
     // DO NOT use API POST watched_eps method which is bug exists (please test 火影忍者疾风传 to verify the bug)
-    func ep(of id: Int, with ids: [Int]?, of status: Status, handler: (Error?) -> Void) {
+    func ep(of id: Int, with ids: [Int]?, of status: Status, handler: @escaping (Error?) -> Void) {
         
         guard let user = self.user else {
             handler(RequestError.userNotLogin)
@@ -23,12 +23,12 @@ extension BangumiRequest {
         }
         
         let urlPath = String(format: BangumiApiKey.EP, id, status.toURLParams(), BangumiApiKey.Percolator, user.authEncode)
-        var parameters: [String : AnyObject]? = nil
+        var parameters: [String : Any]? = nil
         if let epID = ids?.reduce("", { (str, id) in str?.appending("\(id),")} ) {
             parameters = ["ep_id" : epID]
         }
         
-        alamofireEphemeralManager.request(.POST, urlPath, parameters: parameters).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, withMethod: .post, parameters: parameters).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
             
             let json = self.getResult(from: response)
                 .flatMap(self.toJSON)
@@ -46,7 +46,7 @@ extension BangumiRequest {
 extension BangumiRequest {
     
     // Validate JSON
-    private func validate(json: JSON) -> Result<JSON> {
+    fileprivate func validate(json: JSON) -> Result<JSON> {
         
         // Bangumi API reture a JSON for error case
         // And 200 Ok…

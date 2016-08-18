@@ -45,7 +45,7 @@ extension BangumiRequest {
 extension BangumiRequest {
     
     // Validate JSON
-    private func validate(json: JSON) -> Result<JSON> {
+    fileprivate func validate(json: JSON) -> Result<JSON> {
         // Bangumi API reture a JSON for error case
         if let error = json["error"].string,
         let code = json["code"].int {
@@ -62,7 +62,7 @@ extension BangumiRequest {
     }
     
     // Unwrap JSON to Subjects
-    private func toSubject(from json: JSON) -> Result<Subject> {
+    fileprivate func toSubject(from json: JSON) -> Result<Subject> {
         return .success(Subject(from: json))
     }
     

@@ -15,9 +15,9 @@ final class TopicTableViewController: UITableViewController {
     typealias Model = TopicTableViewModel
     typealias Cell = TopicTableViewCell
 
-    private var model: Model!
-    private var dataSource: TableViewDataSource<Model, Cell>!
-    private var isFirstAppear = true
+    fileprivate var model: Model!
+    fileprivate var dataSource: TableViewDataSource<Model, Cell>!
+    fileprivate var isFirstAppear = true
     var subject: Subject!
     
     deinit {
@@ -118,13 +118,13 @@ extension TopicTableViewController {
 
 extension TopicTableViewController {
     
-    private func setupTableViewDataSource() {
+    fileprivate func setupTableViewDataSource() {
         model = TopicTableViewModel(tableView: tableView, with: subject)
         dataSource = TableViewDataSource<Model, Cell>(model: model)
         tableView.dataSource = dataSource
     }
     
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         
         title = "相关话题"
         

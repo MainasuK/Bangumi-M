@@ -25,7 +25,7 @@ extension Result {
         }
     }
     
-    init(_ expr: @noescape () throws -> T) {
+    init(_ expr: () throws -> T) {
         do {
             let value = try expr()
             self = Result.success(value)
@@ -38,7 +38,7 @@ extension Result {
 
 extension Result {
 
-    func map<U>(_ transform: @noescape (T) -> U) -> Result<U> {
+    func map<U>(_ transform: (T) -> U) -> Result<U> {
         switch self {
         case .success(let t):
             return .success(transform(t))
@@ -47,7 +47,7 @@ extension Result {
         }
     }
     
-    func flatMap<U>(_ transform: @noescape (T) -> Result<U>) -> Result<U> {
+    func flatMap<U>(_ transform: (T) -> Result<U>) -> Result<U> {
         switch self {
         case .success(let t):
             return transform(t)

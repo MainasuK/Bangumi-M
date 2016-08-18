@@ -16,12 +16,12 @@ final class SearchBoxTableViewController: UITableViewController {
     typealias Model = SearchBoxTableViewModel
     typealias Cell = SearchBoxTableViewCell
     
-    private lazy var model: Model = {
+    fileprivate lazy var model: Model = {
         return Model(tableView: self.tableView)
     }()
-    private var dataSource: TableViewDataSource<Model, Cell>!
+    fileprivate var dataSource: TableViewDataSource<Model, Cell>!
     
-    private lazy var searchController: UISearchController = { [weak self] in
+    fileprivate lazy var searchController: UISearchController = { [weak self] in
         let controller = UISearchController(searchResultsController: nil)
         
         controller.delegate = self
@@ -44,8 +44,8 @@ final class SearchBoxTableViewController: UITableViewController {
 
         return controller
     }()
-    private var searchScopeIndex = 0
-    private var statusBarStyle: UIStatusBarStyle = .default
+    fileprivate var searchScopeIndex = 0
+    fileprivate var statusBarStyle: UIStatusBarStyle = .default
     
     @IBOutlet weak var searchButton: UIBarButtonItem!
     
@@ -136,7 +136,7 @@ extension SearchBoxTableViewController {
         return statusBarStyle
     }
     
-    private func changeStatusBarStyle(to style: UIStatusBarStyle) {
+    fileprivate func changeStatusBarStyle(to style: UIStatusBarStyle) {
         statusBarStyle = style
         
         UIView.animate(withDuration: 0.2) {
@@ -149,7 +149,7 @@ extension SearchBoxTableViewController {
 // MARK: - UITableView Setup method
 extension SearchBoxTableViewController {
     
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         // Set navigation bar title
         title = "搜索盒子"
         
@@ -173,7 +173,7 @@ extension SearchBoxTableViewController {
         setupTableViewFooter()
     }
     
-    private func setupTableViewFooter() {
+    fileprivate func setupTableViewFooter() {
         tableView.mj_footer = {
             //  Use unowned because the caller is self. No async
             let footer = MJRefreshAutoNormalFooter { [unowned self] in
@@ -253,8 +253,7 @@ extension SearchBoxTableViewController: UISearchBarDelegate {
         title = searchText
         SVProgressHUD.show()
         
-        searchScopeIndex = searchBar.selectedScopeButtonIndex ?? 0
-        search(for: searchText, type: searchScopeIndex)
+        search(for: searchText, type: searchBar.selectedScopeButtonIndex)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -294,7 +293,7 @@ extension SearchBoxTableViewController {
     typealias NetworkError = BangumiRequest.NetworkError
     typealias UnknownError = BangumiRequest.Unknown
     
-    private func search(for text: String, type scopeIndex: Int) {
+    fileprivate func search(for text: String, type scopeIndex: Int) {
         searchButton.isEnabled = false
         
         let searchScopeType =  PercolatorKey.searchTypeDict[scopeIndex] ?? 0
@@ -388,7 +387,7 @@ extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
         return true
     }
     
-    func swipeTableCell(_ cell: MGSwipeTableCell!, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings!, expansionSettings: MGSwipeExpansionSettings!) -> [AnyObject]! {
+    func swipeTableCell(_ cell: MGSwipeTableCell!, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings!, expansionSettings: MGSwipeExpansionSettings!) -> [Any]! {
         
         guard let cell = cell,
         let indexPath = self.tableView.indexPath(for: cell) else {

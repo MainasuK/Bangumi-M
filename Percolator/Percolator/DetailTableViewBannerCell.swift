@@ -63,7 +63,7 @@ class DetailTableViewBannerCell: DetailTableViewCell {
 
 extension DetailTableViewBannerCell {
     
-    private func configureLabel(with subject: Subject) {
+    fileprivate func configureLabel(with subject: Subject) {
         nameLabel.text = subject.name
         nameCNLabel.text = subject.nameCN
         

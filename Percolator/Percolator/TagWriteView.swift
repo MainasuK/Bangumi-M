@@ -77,17 +77,17 @@ public class TagWriteView : UIView
     public var delegate: TagWriteViewDelegate?
     
     
-    // MARK: Private Properties
-    private var scrollView: UIScrollView!
-    private var inputBaseView: UIView!
-    private var tagInputView: UITextView!
-    private var deleteButton: UIButton!
+    // MARK: fileprivate Properties
+    fileprivate var scrollView: UIScrollView!
+    fileprivate var inputBaseView: UIView!
+    fileprivate var tagInputView: UITextView!
+    fileprivate var deleteButton: UIButton!
     
-    private var tagViews = [UIButton]()
-    private var tagsMade = [String]()
+    fileprivate var tagViews = [UIButton]()
+    fileprivate var tagsMade = [String]()
     
-    private var readyToDelete = false
-    private var readyToFinishMaking = false
+    fileprivate var readyToDelete = false
+    fileprivate var readyToFinishMaking = false
     
     
     // MARK: Initializers
@@ -236,7 +236,7 @@ public class TagWriteView : UIView
     }
     
     // MARK: Internals
-    private func initControls() {
+    fileprivate func initControls() {
         scrollView = UIScrollView(frame: self.bounds)
         scrollView.contentInset.left = 10
         scrollView.backgroundColor = UIColor.clear
@@ -265,7 +265,7 @@ public class TagWriteView : UIView
         deleteButton.isHidden = true;
     }
     
-    private func addTagViewToLast(newTag: String, animated: Bool) {
+    fileprivate func addTagViewToLast(newTag: String, animated: Bool) {
         let posX = posXForObjectNextToLastTagView()
         let tagBtn = createTagButton(tagName: newTag, positionX: posX)
         tagBtn.tag = tagViews.count
@@ -278,7 +278,7 @@ public class TagWriteView : UIView
         }
     }
     
-    private func rearrangeSubViews() {
+    fileprivate func rearrangeSubViews() {
         var accumX = tagGap
         var newTagButtons: [UIButton] = Array()
         
@@ -300,7 +300,7 @@ public class TagWriteView : UIView
         setNeedsLayout();
     }
     
-    private func createTagButton(tagName tag: String, positionX posx: CGFloat) -> UIButton {
+    fileprivate func createTagButton(tagName tag: String, positionX posx: CGFloat) -> UIButton {
         let tagButton = UIButton()
         tagButton.titleLabel?.font = font
         tagButton.backgroundColor = tagBackgroundColor
@@ -311,7 +311,7 @@ public class TagWriteView : UIView
         var btnFrame: CGRect = tagButton.frame
         btnFrame.origin.x = posx
         
-        let temp: NSString = tag
+        let temp: NSString = tag as NSString
         btnFrame.size.width = temp.size(attributes: [NSFontAttributeName:font]).width + (tagButton.layer.cornerRadius * 2.0) + 20.0
 //        btnFrame.size.height = self.frame.size.height - 13.0
         
@@ -321,7 +321,7 @@ public class TagWriteView : UIView
         return tagButton
     }
 
-    private func deleteBackspace() {
+    fileprivate func deleteBackspace() {
         let text: String = tagInputView.text
         if text.characters.count == 0 {
             if readyToDelete {
@@ -336,7 +336,7 @@ public class TagWriteView : UIView
         }
     }
     
-    private func isFinish(with letter: String) -> Bool {
+    fileprivate func isFinish(with letter: String) -> Bool {
         if letter == "\n" {
             return true
         }
@@ -355,7 +355,7 @@ public class TagWriteView : UIView
         return false
     }
     
-    private func layoutInputAndScroll() {
+    fileprivate func layoutInputAndScroll() {
         tagInputView.font = font
         tagInputView.backgroundColor = UIColor.clear
         tagInputView.textColor = tagBackgroundColor
@@ -384,7 +384,7 @@ public class TagWriteView : UIView
         setScrollOffsetToMakeInputViewVisible()
     }
     
-    private func removeTagView(index: Int, animated: Bool, completion: (finished: Bool) -> Void) {
+    fileprivate func removeTagView(index: Int, animated: Bool, completion: @escaping (_ finished: Bool) -> Void) {
         if index >= tagViews.count {
             return
         }
@@ -412,7 +412,7 @@ public class TagWriteView : UIView
         }
     }
     
-    private func posXForObjectNextToLastTagView() -> CGFloat {
+    fileprivate func posXForObjectNextToLastTagView() -> CGFloat {
         var accumX = tagGap
         
         if tagViews.count > 0 {
@@ -422,7 +422,7 @@ public class TagWriteView : UIView
         return accumX
     }
     
-    private func setScrollOffsetToMakeInputViewVisible() {
+    fileprivate func setScrollOffsetToMakeInputViewVisible() {
         let inputRect = inputBaseView.frame
         let scrollingDelta = (inputRect.origin.x + inputRect.size.width) - (scrollView.contentOffset.x + scrollView.frame.size.width)
         if scrollingDelta > 0 {
@@ -432,8 +432,8 @@ public class TagWriteView : UIView
         }
     }
     
-    private func widthForInputView(tagString tag: String) -> CGFloat {
-        let temp: NSString = tag
+    fileprivate func widthForInputView(tagString tag: String) -> CGFloat {
+        let temp: NSString = tag as NSString
         return max(50.0, temp.size(attributes: [NSFontAttributeName:font]).width + 25.0)
     }
     

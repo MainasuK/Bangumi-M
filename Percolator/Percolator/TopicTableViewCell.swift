@@ -44,14 +44,14 @@ class TopicTableViewCell: UITableViewCell, ConfigurableCell {
         userNameLabel.text = item.userName
         dateLabel.text = item.dateStr
         
-        commentButton.titleLabel?.font = self.dynamicType.SFAlternativesFormFont
+        commentButton.titleLabel?.font = type(of: self).SFAlternativesFormFont
         commentButton.setTitle("\(item.replies)", for: .normal)
     }
 }
 
 extension TopicTableViewCell {
     
-    private func setupCellStyle() {
+    fileprivate func setupCellStyle() {
         // Make cell get readable margin guideline
         preservesSuperviewLayoutMargins = true
         contentView.preservesSuperviewLayoutMargins = true

@@ -16,16 +16,16 @@ final class SubjectCollectionViewModel: DataProvider, HeaderDataProvider {
     typealias CollectDict = BangumiRequest.CollectDict
     typealias headerItemType = String
     
-    private let request = BangumiRequest.shared
+    fileprivate let request = BangumiRequest.shared
     
-    private var bookSubjectItem = [SubjectItem]()
-    private var otherSubjectSectionName = [String]()
-    private var otherSubjectItem = [[SubjectItem]]()
+    fileprivate var bookSubjectItem = [SubjectItem]()
+    fileprivate var otherSubjectSectionName = [String]()
+    fileprivate var otherSubjectItem = [[SubjectItem]]()
     
-    private var collectDict: CollectDict = [:]
+    fileprivate var collectDict: CollectDict = [:]
     
-    private weak var collectionView: UICollectionView?
-    private let subject: Subject
+    fileprivate weak var collectionView: UICollectionView?
+    fileprivate let subject: Subject
     
     init(collectionView: UICollectionView, with subject: Subject) {
         self.collectionView = collectionView
@@ -40,7 +40,7 @@ final class SubjectCollectionViewModel: DataProvider, HeaderDataProvider {
 
 extension SubjectCollectionViewModel {
     
-    func fetchRelatedSubjects(handler: (Error?) -> Void) {
+    func fetchRelatedSubjects(handler: @escaping (Error?) -> Void) {
         let url = "https://bgm.tv/subject/\(subject.id)"
     
         request.html(from: url) { (result: Result<String>) in
@@ -78,7 +78,7 @@ extension SubjectCollectionViewModel {
     
     typealias CollectionError = BangumiRequest.CollectionError
     
-    private func fetchCollectInfo(for subjectIDs: [SubjectID]) {
+    fileprivate func fetchCollectInfo(for subjectIDs: [SubjectID]) {
         request.collection(of: subjectIDs) { (result: Result<CollectDict>) in
             do {
                 let dict = try result.resolve()
@@ -180,7 +180,7 @@ extension SubjectCollectionViewModel {
 
 extension SubjectCollectionViewModel {
     
-    private func parseBook(with bodyNode: XMLElement) {
+    fileprivate func parseBook(with bodyNode: XMLElement) {
         if let section = bodyNode.at_xpath("//ul[@class='browserCoverSmall clearit']") {
 
             var items: [SubjectItem] = []
@@ -219,7 +219,7 @@ extension SubjectCollectionViewModel {
         }   // end if let section …
     }
     
-    private func parseOther(with bodyNode: XMLElement) {
+    fileprivate func parseOther(with bodyNode: XMLElement) {
         if let section = bodyNode.at_xpath("//div[@class='content_inner']") {
 
             var sub = ""

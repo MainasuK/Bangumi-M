@@ -20,25 +20,25 @@ final class DetailTableViewController: UITableViewController {
     typealias Model = DetailTableViewModel
     typealias Cell = DetailTableViewCell
     
-    private let kHeaderViewMaxHeight: CGFloat = 500
+    fileprivate let kHeaderViewMaxHeight: CGFloat = 500
     
     var subject: Subject!
-    private var headerViewHeight: CGFloat = 0 {
+    fileprivate var headerViewHeight: CGFloat = 0 {
         didSet {
             headerViewHeight = min(headerViewHeight, kHeaderViewMaxHeight)
             headerView.frame.size.height = headerViewHeight
         }
     }
-    private var headerViewMarginTop: CGFloat = 64
-    private var model: Model!
-    private var dataSource: TableViewDataSource<Model, Cell>!
+    fileprivate var headerViewMarginTop: CGFloat = 64
+    fileprivate var model: Model!
+    fileprivate var dataSource: TableViewDataSource<Model, Cell>!
     
     @IBOutlet var detailTableView: DetailTableView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerImageView: UIImageView!
     
     @IBAction func actionBarButtonItemPressed(_ sender: UIBarButtonItem) {
-        var objectToShare: [AnyObject] = ["\(subject.name) - \(subject.nameCN)"]
+        var objectToShare: [Any] = ["\(subject.name) - \(subject.nameCN)"]
         if let url = URL(string: subject.url) {
             objectToShare.append(url)
         }
@@ -84,7 +84,7 @@ final class DetailTableViewController: UITableViewController {
         
     }
     
-    private func resetHeaderViewHeight(with width: CGFloat? = nil) {
+    fileprivate func resetHeaderViewHeight(with width: CGFloat? = nil) {
         guard let image = headerImageView.image else {
             headerViewHeight = 0
             return
@@ -96,7 +96,7 @@ final class DetailTableViewController: UITableViewController {
         headerViewHeight = (height > image.size.height) ? image.size.height : height
     }
     
-    private func updateHeaderView(with width: CGFloat? = nil) {
+    fileprivate func updateHeaderView(with width: CGFloat? = nil) {
         var headerRect = CGRect(x: 0.0, y: -headerViewHeight, width: width ?? tableView.bounds.width, height: headerViewHeight)
         let y = tableView.contentOffset.y + headerViewMarginTop
         
@@ -112,7 +112,7 @@ final class DetailTableViewController: UITableViewController {
 
 extension DetailTableViewController {
     
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         
         title = subject.name
         
@@ -157,7 +157,7 @@ extension DetailTableViewController {
         detailTableView.dataSource = dataSource
     }
     
-    private func setupTableViewInsetAndOffset() {
+    fileprivate func setupTableViewInsetAndOffset() {
         tableView.contentOffset = CGPoint(x: 0.0, y: -headerViewHeight - headerViewMarginTop)
         tableView.contentInset = UIEdgeInsets(top: headerViewHeight + headerViewMarginTop, left: 0, bottom: 0, right: 0)
         
@@ -222,7 +222,7 @@ extension DetailTableViewController {
     
     // If detail controller popped before mark epsisode callback called.
     // The self will hold the ref to prevent thread safe issue
-    private func markEpisode(at indexPath: IndexPath) {
+    fileprivate func markEpisode(at indexPath: IndexPath) {
         
         guard let item = try? model.item(at: indexPath).resolve(),
         let episode = item~>^=^ else { return }

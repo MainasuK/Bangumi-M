@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TableViewDataSource<Model: DataProvider, Cell: ConfigurableCell where Model.ItemType == Cell.ItemType, Cell: UITableViewCell>: DataSource<Model>, UITableViewDataSource {
+class TableViewDataSource<Model: DataProvider, Cell: ConfigurableCell>: DataSource<Model>, UITableViewDataSource where Model.ItemType == Cell.ItemType, Cell: UITableViewCell {
     
     deinit {
         consolePrint("TableViewDataSource deinit")

@@ -46,7 +46,7 @@ class SubjectCollectionViewBookCell: SubjectCollectionViewCell {
 
 extension SubjectCollectionViewBookCell {
     
-    private func configureIndicator(with result: Result<CollectInfoSmall>) {
+    fileprivate func configureIndicator(with result: Result<CollectInfoSmall>) {
         indicatorLabel.text = ""
         
         do {

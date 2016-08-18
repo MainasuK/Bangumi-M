@@ -16,9 +16,9 @@ final class SubjectCollectionViewController: UICollectionViewController {
     typealias Header = SubjectCollectionReusableHeaderView
     
     @IBOutlet var subjectCollectionView: UICollectionView!
-    private var model: Model!
-    private var dataSource: CollectionViewDataSource<Model, Cell, Header>!
-    private var isFirstAppear = true
+    fileprivate var model: Model!
+    fileprivate var dataSource: CollectionViewDataSource<Model, Cell, Header>!
+    fileprivate var isFirstAppear = true
     
     var subject: Subject!
     
@@ -120,7 +120,7 @@ extension SubjectCollectionViewController {
 
 extension SubjectCollectionViewController {
     
-    private func setupTableViewDataSource() {
+    fileprivate func setupTableViewDataSource() {
         model = SubjectCollectionViewModel(collectionView: subjectCollectionView, with: subject)
         dataSource = CollectionViewDataSource<Model, Cell, SubjectCollectionReusableHeaderView>(model: model)
         subjectCollectionView.dataSource = dataSource

@@ -76,7 +76,7 @@ extension AnimeListTableViewCell: ConfigurableCell {
 
 extension AnimeListTableViewCell {
     
-    private func configureLabel(with subject: Subject) {
+    fileprivate func configureLabel(with subject: Subject) {
         nameLabel.text = (subject.name != "") ? subject.name : subject.nameCN
         
         // Set text in configureButton…
@@ -84,7 +84,7 @@ extension AnimeListTableViewCell {
         watchedLabel.text = "努力分析中…"
     }
     
-    private func configureIamge(with images: Images) {
+    fileprivate func configureIamge(with images: Images) {
         // Async load image
         let networkStatus = BangumiRequest.shared.networkStatus
         let imageURLValue = (networkStatus == ReachableViaWiFi) ? images.largeUrl : images.mediumUrl
@@ -99,7 +99,7 @@ extension AnimeListTableViewCell {
     }
     
     // TL; DR
-    private func configureButton(with result: History, _ subject: Subject) {
+    fileprivate func configureButton(with result: History, _ subject: Subject) {
         guard subject.responseGroup == .large else {
             isSpinnning = true
             return
@@ -188,7 +188,7 @@ extension AnimeListTableViewCell {
     
     }
     
-    private func setupCellStyle() {
+    fileprivate func setupCellStyle() {
         // Configure the appearance of the cell
         backgroundColor = UIColor.myAnimeListBackground
         
@@ -204,7 +204,7 @@ extension AnimeListTableViewCell {
         indicatorView.backgroundColor = UIColor.percolatorGray
     }
     
-//    private func setupLabelStyle() {
+//    fileprivate func setupLabelStyle() {
 //        if nameLabel.text == nameCNLabel.text {
 //            nameLabel.asyncSetFont(with: "STSongti-SC-Bold", placeholderFontName: "HiraMinProN-W6", size: 17.0, toLanguage: ["zh-Hans", "zh-Hant"])
 //        } else {

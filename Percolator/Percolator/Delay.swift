@@ -6,6 +6,6 @@
 
 import Foundation
 
-func delay(_ time: Double, handler: () -> Void) {
+func delay(_ time: Double, handler: @escaping () -> Void) {
     DispatchQueue.main.asyncAfter(deadline: .now(), execute: handler)
 }

@@ -60,13 +60,13 @@ class DetailTableViewEPSCell: DetailTableViewCell {
 
 extension DetailTableViewEPSCell {
     
-    private func configureLabel(with episode: Episode) {
+    fileprivate func configureLabel(with episode: Episode) {
         
         nameLabel.text = "\(episode.sortString) \(episode.name)"
         nameCNLabel.text = episode.nameCN
         
         let title = "\(episode.comment)"
-        commentButton.titleLabel?.font = self.dynamicType.SFAlternativesFormFont
+        commentButton.titleLabel?.font = type(of: self).SFAlternativesFormFont
         commentButton.setTitle(title, for: .normal)
         commentButton.setTitle(title, for: .selected)
         
@@ -77,9 +77,10 @@ extension DetailTableViewEPSCell {
         commentButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
     }
     
-    private func configureProgressView(with status: Status?) {
+    fileprivate func configureProgressView(with status: Status?) {
         // The init layer width is not preset width in iOS 10 (why 1000 pt?)
         // Change it when you modify the constraint in storyboard
+        
         sortStatusView.layer.cornerRadius = 6.0
         sortStatusView.layer.borderWidth = 0.5
         sortStatusView.layer.borderColor = UIColor(red: 0.00, green: 0.38, blue: 0.74, alpha: 1.00).cgColor
@@ -103,7 +104,7 @@ extension DetailTableViewEPSCell {
         }
     }
     
-    private func configureButton(with episode: Episode) {
+    fileprivate func configureButton(with episode: Episode) {
         commentButton.tag = episode.id
     }
     

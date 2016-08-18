@@ -19,17 +19,17 @@ final class AnimeListTableViewController: UITableViewController {
     typealias Model = AnimeListTableViewModel
     typealias Cell = AnimeListTableViewCell
     
-    private lazy var model: Model = {
+    fileprivate lazy var model: Model = {
         return Model(tableView: self.tableView)
     }()
-    private var dataSource: TableViewDataSource<Model, Cell>!
-    private var isFirstRefresh = true
+    fileprivate var dataSource: TableViewDataSource<Model, Cell>!
+    fileprivate var isFirstRefresh = true
     
     @IBAction func unwindToAnimeListTableViewController(_ segue: UIStoryboardSegue) {
         
     }
     
-    @objc private func avatarButtonPressed() {
+    @objc fileprivate func avatarButtonPressed() {
         
         guard let user = BangumiRequest.shared.user else {
             popLoginController()
@@ -60,7 +60,7 @@ final class AnimeListTableViewController: UITableViewController {
 
 extension AnimeListTableViewController {
     
-    private func popLoginController() {
+    fileprivate func popLoginController() {
         let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.LoginViewController) as! LoginViewController
         
         loginViewController.delegate = self
@@ -80,7 +80,7 @@ extension AnimeListTableViewController {
 // MARK: - UITableView Setup method
 extension AnimeListTableViewController {
     
-    private func setupBarButtonItem() {
+    fileprivate func setupBarButtonItem() {
         let button: UIButton = {
             let btn = UIButton(type: .custom)
             
@@ -103,7 +103,7 @@ extension AnimeListTableViewController {
         self.navigationItem.leftBarButtonItem = barButtonItem
     }
     
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         // Setup dataSource and link model
         setupTableViewDataSource()
         
@@ -126,7 +126,7 @@ extension AnimeListTableViewController {
         
     }
     
-    private func setupTableViewHeader() {
+    fileprivate func setupTableViewHeader() {
         tableView.mj_header = {
             //  Use unowned because the caller is self. No async
             let header = MJRefreshNormalHeader { [unowned self] in
@@ -137,7 +137,7 @@ extension AnimeListTableViewController {
         }()
     }
     
-    private func setupTableViewDataSource() {
+    fileprivate func setupTableViewDataSource() {
         dataSource = TableViewDataSource<Model, Cell>(model: model)
         tableView.dataSource = dataSource
     }

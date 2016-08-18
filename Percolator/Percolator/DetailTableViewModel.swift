@@ -13,10 +13,10 @@ final class DetailTableViewModel: NSObject, DataProvider {
     typealias ItemType = Result<DetailItem>
     typealias ErrorType = ModelError
     
-    private let request = BangumiRequest.shared
+    fileprivate let request = BangumiRequest.shared
     
-    private var subject: Subject?
-    private var progress = Progress()
+    fileprivate var subject: Subject?
+    fileprivate var progress = Progress()
     
     var collectionItems: [(String, [CollectionItem])] {
         var items: [(String, [CollectionItem])] = []
@@ -31,8 +31,8 @@ final class DetailTableViewModel: NSObject, DataProvider {
         return items
     }
     
-    private weak var tableView: UITableView?
-    private weak var collectionViewDelegate: UICollectionViewDelegate?
+    fileprivate weak var tableView: UITableView?
+    fileprivate weak var collectionViewDelegate: UICollectionViewDelegate?
     
     var isReverse = false
     var isEmpty: Bool {
@@ -85,7 +85,7 @@ extension DetailTableViewModel {
         }
     }
     
-    func markEpisode(at indexPath: IndexPath, to status: Status, handler: (Error?) -> Void) {
+    func markEpisode(at indexPath: IndexPath, to status: Status, handler: @escaping (Error?) -> Void) {
         
         guard let item = try? item(at: indexPath).resolve(),
         let episode = item~>^=^ else { return }
@@ -111,8 +111,7 @@ extension DetailTableViewModel {
 
 extension DetailTableViewModel {
     
-
-    private func fetchProgress(of subject: Subject) {
+    fileprivate func fetchProgress(of subject: Subject) {
         consolePrint("Fetch progress of subject: \(subject.name) …")
         // Ture on spinner to giver user hint
         NetworkSpinner.on()
@@ -281,8 +280,8 @@ extension DetailTableViewModel {
 }
 
 // FIXME: Use case let
-postfix operator ~>^=^ { }
-postfix operator ~>^*^ { }
+postfix operator ~>^=^
+postfix operator ~>^*^
 
 
 // Happy coding

@@ -39,7 +39,7 @@ struct Episode {
         formatter.minimumFractionDigits = 0
         
         // Remove .0 for episode sort
-        return formatter.string(from: sort) ?? ""
+        return formatter.string(from: sort as NSNumber) ?? ""
     }
     
     var mobileURL: String {

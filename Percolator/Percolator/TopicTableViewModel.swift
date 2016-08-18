@@ -16,11 +16,11 @@ final class TopicTableViewModel: DataProvider {
     typealias ItemType = TopicItem
     typealias headerItemType = String
     
-    private let request = BangumiRequest.shared
-    private let subject: Subject
+    fileprivate let request = BangumiRequest.shared
+    fileprivate let subject: Subject
     
-    private var topics: [TopicItem] = []
-    private weak var tableView: UITableView?
+    fileprivate var topics: [TopicItem] = []
+    fileprivate weak var tableView: UITableView?
     
     
     init(tableView: UITableView, with subject: Subject) {
@@ -36,7 +36,7 @@ final class TopicTableViewModel: DataProvider {
 
 extension TopicTableViewModel {
     
-    func fetchTopics(handler: (Error?) -> Void) {
+    func fetchTopics(handler: @escaping (Error?) -> Void) {
         let url = "http://bgm.tv/subject/\(subject.id)/board"
         
         request.html(from: url) { (result: Result<String>) in
@@ -113,7 +113,7 @@ extension TopicTableViewModel {
 
 extension TopicTableViewModel {
     
-    private func parseTopic(with bodyNode: XMLElement) {
+    fileprivate func parseTopic(with bodyNode: XMLElement) {
         var items = [TopicItem]()
         if let table = bodyNode.at_xpath("//table[@class='topic_list']") {
             

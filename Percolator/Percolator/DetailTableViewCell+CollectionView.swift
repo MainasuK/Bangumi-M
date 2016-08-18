@@ -75,7 +75,7 @@ class CMKCollectionView: UICollectionView {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         gradientLayer.frame = self.bounds
-        gradientLayer.locations = [0.0, min(threshold, (abs(self.contentOffset.x) + 0.5) / self.bounds.width), 0.97, 1.0]
+        gradientLayer.locations = [0.0, min(threshold, (abs(self.contentOffset.x) + 0.5) / self.bounds.width) as NSNumber, 0.97, 1.0]
         CATransaction.commit()
     }
     
@@ -118,9 +118,11 @@ class CMKCollectionViewCell: UICollectionViewCell, ConfigurableCell {
 
 extension CMKCollectionViewCell {
     
-    private func setupCellStyle() {
+    fileprivate func setupCellStyle() {
+        itemImageView.layer.drawsAsynchronously = true
         itemImageView.layer.cornerRadius = 5
         itemImageView.layer.borderColor = UIColor.percolatorLightGray.withAlphaComponent(0.8).cgColor
         itemImageView.layer.borderWidth = 0.5  // 1px
     }
+    
 }

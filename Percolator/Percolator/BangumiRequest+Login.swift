@@ -14,12 +14,12 @@ import SwiftyJSON
 // MARK: - User Login
 extension BangumiRequest {
     
-    func userLogin(_ email: String, password pass: String, handler: (Result<User>) -> Void) {
+    func userLogin(_ email: String, password pass: String, handler: @escaping (Result<User>) -> Void) {
         
         let urlPath = String(format: BangumiApiKey.Auth, BangumiApiKey.Percolator)
         let parameters = ["username" : email, "password" : pass]
 
-        alamofireEphemeralManager.request(.POST, urlPath, parameters: parameters).validate().responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, withMethod: .post, parameters: parameters).validate().responseJSON { (response: Response) in
             
             let user = self.getResult(from: response)
                 .flatMap(self.toJSON)
@@ -36,7 +36,7 @@ extension BangumiRequest {
 extension BangumiRequest {
     
     // Validate JSON
-    private func validate(json: JSON) -> Result<JSON> {
+    fileprivate func validate(json: JSON) -> Result<JSON> {
         // Bangumi API reture a JSON for error case
         if let error = json["error"].string,
             let code = json["code"].int {
@@ -57,7 +57,7 @@ extension BangumiRequest {
     }
     
     // Unwrap JSON to User
-    private func toUser(from json: JSON) -> Result<User> {
+    fileprivate func toUser(from json: JSON) -> Result<User> {
         return .success(User(json: json))
     }
         
