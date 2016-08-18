@@ -24,15 +24,18 @@ extension BangumiRequest {
         }
         
         let urlPath = String(format: BangumiApiKey.Progress, user.id, subjectID, BangumiApiKey.Percolator, user.authEncode)
-
-        alamofireEphemeralManager.request(.GET, urlPath, parameters: nil).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        let jsonQueue = DispatchQueue(label: "com.mainasuk.json")
+        
+        alamofireEphemeralManager.request(urlPath, withMethod: .get).validate(contentType: ["application/json"]).responseJSON(queue: jsonQueue) { (response: Response) in
             
             let progress = self.getResult(from: response)
                 .flatMap(self.toJSON)
                 .flatMap(self.validate)
                 .flatMap(self.toProgress)
             
-            handler(progress)
+            DispatchQueue.main.async {
+                handler(progress)
+            }
         }   // end alamofireEphemeralManager.request(…) { … }
     }   // end func progress(…) { … }
     

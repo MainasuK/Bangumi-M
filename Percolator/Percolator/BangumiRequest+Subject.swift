@@ -13,20 +13,25 @@ import SwiftyJSON
 // MARK: - Subject (fetch by id and responseGroup)
 extension BangumiRequest {
     
-    func subject(of id: Int, with responseGroup: ResponseGroup = .large, handler: (Result<Subject>) -> Void) {
+    func subject(of id: Int, with responseGroup: ResponseGroup = .large, handler: @escaping (Result<Subject>) -> Void) {
         
         let urlPath = String(format: BangumiApiKey.Subject, id)
         let parameters = ["responseGroup" : responseGroup.rawValue]
         
         // Speeding up with HTTP protocol (without auth info)
-        alamofireManager.request(.GET, urlPath, parameters: parameters).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        
+        let jsonQueue = DispatchQueue(label: "com.mainasuk.json")
+        
+        alamofireManager.request(urlPath, withMethod: .get, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: jsonQueue) { (response: Response) in
             
             let subject = self.getResult(from: response)
                 .flatMap(self.toJSON)
                 .flatMap(self.validate)
                 .flatMap(self.toSubject)
             
-            handler(subject)
+            DispatchQueue.main.async {
+                handler(subject)
+            }
         }   // end alamofireManager.request(…) { … }
     }   // end func subject(…) { … }
     
