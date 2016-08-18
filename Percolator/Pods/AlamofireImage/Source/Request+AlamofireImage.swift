@@ -130,14 +130,13 @@ extension Request {
     public func responseImage(
         imageScale: CGFloat = Request.imageScale,
         inflateResponseImage: Bool = true,
-        completionHandler: (Response<Image, NSError>) -> Void)
+        completionHandler: @escaping (Response<Image, NSError>) -> Void)
         -> Self
     {
         return response(
             responseSerializer: Request.imageResponseSerializer(
                 imageScale: imageScale,
-                inflateResponseImage: inflateResponseImage
-            ),
+                inflateResponseImage: inflateResponseImage),
             completionHandler: completionHandler
         )
     }

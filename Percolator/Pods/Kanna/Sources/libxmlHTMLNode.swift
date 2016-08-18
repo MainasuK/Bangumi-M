@@ -1,32 +1,32 @@
 /**@file libxmlHTMLNode.swift
-
-Kanna
-
-Copyright (c) 2015 Atsushi Kiwaki (@_tid_)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
+ 
+ Kanna
+ 
+ Copyright (c) 2015 Atsushi Kiwaki (@_tid_)
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 import libxml2
 
 /**
-libxmlHTMLNode
-*/
+ libxmlHTMLNode
+ */
 internal final class libxmlHTMLNode: XMLElement {
     var text: String? {
         if nodePtr != nil {
@@ -42,7 +42,7 @@ internal final class libxmlHTMLNode: XMLElement {
         xmlBufferFree(buf)
         return html
     }
-
+    
     var toXML: String? {
         let buf = xmlBufferCreate()
         xmlNodeDump(buf, docPtr, nodePtr, 0, 0)
@@ -53,8 +53,9 @@ internal final class libxmlHTMLNode: XMLElement {
     
     var innerHTML: String? {
         if let html = self.toHTML {
-            let inner = html.replacingOccurrences(of: "</[^>]*>$", with: "", options: .regularExpression, range: nil)
-                            .replacingOccurrences(of: "^<[^>]*>", with: "", options: .regularExpression, range: nil)
+            
+            let inner = html.replacingOccurrences(of: "</[^>]*>$", with: "", options: [.regularExpression], range: nil)
+                .replacingOccurrences(of: "^<[^>]*>", with: "", options: [.regularExpression], range: nil)
             return inner
         }
         return nil
@@ -77,12 +78,12 @@ internal final class libxmlHTMLNode: XMLElement {
     
     
     subscript(attributeName: String) -> String?
-    {
+        {
         get {
             var attr = nodePtr?.pointee.properties
             while attr != nil {
                 let mem = attr?.pointee
-                if let tagName = String(validatingUTF8: UnsafePointer((mem?.name)!)) {
+                if let tagName = String(validatingUTF8: UnsafeRawPointer((mem?.name)!).assumingMemoryBound(to: CChar.self)) {
                     if attributeName == tagName {
                         return libxmlGetNodeContent((mem?.children)!)
                     }
@@ -134,7 +135,7 @@ internal final class libxmlHTMLNode: XMLElement {
         if result == nil {
             return XPathObject.none
         }
-
+        
         return XPathObject(docPtr: docPtr!, object: result!.pointee)
     }
     
@@ -172,14 +173,14 @@ internal final class libxmlHTMLNode: XMLElement {
     func at_css(_ selector: String) -> XMLElement? {
         return self.css(selector, namespaces: nil).nodeSetValue.first
     }
-
+    
     func addPrevSibling(_ node: XMLElement) {
         guard let node = node as? libxmlHTMLNode else {
             return
         }
         xmlAddPrevSibling(nodePtr, node.nodePtr)
     }
-
+    
     func addNextSibling(_ node: XMLElement) {
         guard let node = node as? libxmlHTMLNode else {
             return
@@ -190,7 +191,7 @@ internal final class libxmlHTMLNode: XMLElement {
 
 private func libxmlGetNodeContent(_ nodePtr: xmlNodePtr) -> String? {
     let content = xmlNodeGetContent(nodePtr)
-    if let result  = String(validatingUTF8: UnsafePointer(content!)) {
+    if let result  = String(validatingUTF8: UnsafeRawPointer(content!).assumingMemoryBound(to: CChar.self)) {
         content?.deallocate(capacity: 1)
         return result
     }

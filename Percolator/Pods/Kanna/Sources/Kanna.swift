@@ -1,33 +1,33 @@
 /**@file Kanna.swift
-
-Kanna
-
-Copyright (c) 2015 Atsushi Kiwaki (@_tid_)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
+ 
+ Kanna
+ 
+ Copyright (c) 2015 Atsushi Kiwaki (@_tid_)
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 import Foundation
 import libxml2
 
 /*
-ParseOption
-*/
+ ParseOption
+ */
 public enum ParseOption {
     // libxml2
     case xmlParseUseLibxml(Libxml2XMLParserOptions)
@@ -38,13 +38,13 @@ private let kDefaultXmlParseOption   = ParseOption.xmlParseUseLibxml([.RECOVER, 
 private let kDefaultHtmlParseOption  = ParseOption.htmlParseUseLibxml([.RECOVER, .NOERROR, .NOWARNING])
 
 /**
-Parse XML
-
-@param xml      an XML string
-@param url      the base URL to use for the document
-@param encoding the document encoding
-@param options  a ParserOption
-*/
+ Parse XML
+ 
+ @param xml      an XML string
+ @param url      the base URL to use for the document
+ @param encoding the document encoding
+ @param options  a ParserOption
+ */
 public func XML(xml: String, url: String?, encoding: String.Encoding, option: ParseOption = kDefaultXmlParseOption) -> XMLDocument? {
     switch option {
     case .xmlParseUseLibxml(let opt):
@@ -79,13 +79,13 @@ public func XML(url: URL, encoding: String.Encoding, option: ParseOption = kDefa
 }
 
 /**
-Parse HTML
-
-@param html     an HTML string
-@param url      the base URL to use for the document
-@param encoding the document encoding
-@param options  a ParserOption
-*/
+ Parse HTML
+ 
+ @param html     an HTML string
+ @param url      the base URL to use for the document
+ @param encoding the document encoding
+ @param options  a ParserOption
+ */
 public func HTML(html: String, url: String?, encoding: String.Encoding, option: ParseOption = kDefaultHtmlParseOption) -> HTMLDocument? {
     switch option {
     case .htmlParseUseLibxml(let opt):
@@ -120,13 +120,13 @@ public func HTML(url: URL, encoding: String.Encoding, option: ParseOption = kDef
 }
 
 /**
-Searchable
-*/
+ Searchable
+ */
 public protocol Searchable {
     /**
-    Search for node from current node by XPath.
-    
-    @param xpath
+     Search for node from current node by XPath.
+     
+     @param xpath
      */
     func xpath(_ xpath: String, namespaces: [String:String]?) -> XPathObject
     func xpath(_ xpath: String) -> XPathObject
@@ -134,10 +134,10 @@ public protocol Searchable {
     func at_xpath(_ xpath: String) -> XMLElement?
     
     /**
-    Search for node from current node by CSS selector.
-    
-    @param selector a CSS selector
-    */
+     Search for node from current node by CSS selector.
+     
+     @param selector a CSS selector
+     */
     func css(_ selector: String, namespaces: [String:String]?) -> XPathObject
     func css(_ selector: String) -> XPathObject
     func at_css(_ selector: String, namespaces: [String:String]?) -> XMLElement?
@@ -145,8 +145,8 @@ public protocol Searchable {
 }
 
 /**
-SearchableNode
-*/
+ SearchableNode
+ */
 public protocol SearchableNode: Searchable {
     var text: String? { get }
     var toHTML:      String? { get }
@@ -157,24 +157,24 @@ public protocol SearchableNode: Searchable {
 }
 
 /**
-XMLElement
-*/
+ XMLElement
+ */
 public protocol XMLElement: SearchableNode {
     subscript(attr: String) -> String? { get set }
-
+    
     func addPrevSibling(_ node: XMLElement)
     func addNextSibling(_ node: XMLElement)
 }
 
 /**
-XMLDocument
-*/
+ XMLDocument
+ */
 public protocol XMLDocument: SearchableNode {
 }
 
 /**
-HTMLDocument
-*/
+ HTMLDocument
+ */
 public protocol HTMLDocument: XMLDocument {
     var title: String? { get }
     var head: XMLElement? { get }
@@ -182,10 +182,10 @@ public protocol HTMLDocument: XMLDocument {
 }
 
 /**
-XMLNodeSet
-*/
+ XMLNodeSet
+ */
 public final class XMLNodeSet {
-    private var nodes: [XMLElement] = []
+    fileprivate var nodes: [XMLElement] = []
     
     public var toHTML: String? {
         let html = nodes.reduce("") {
@@ -261,8 +261,8 @@ extension XMLNodeSet: Sequence {
 }
 
 /**
-XPathObject
-*/
+ XPathObject
+ */
 
 public enum XPathObject {
     case none
@@ -281,7 +281,7 @@ extension XPathObject {
                 self = .none
                 return
             }
-
+            
             var nodes : [XMLElement] = []
             let size = Int((nodeSet?.pointee.nodeNr)!)
             for i in 0 ..< size {
@@ -297,25 +297,29 @@ extension XPathObject {
         case XPATH_NUMBER:
             self = .Number(num: object.floatval)
         case XPATH_STRING:
-            self = .String(text: Swift.String(cString: UnsafePointer<CChar>(object.stringval)) ?? "")
+            guard let str = UnsafeRawPointer(object.stringval)?.assumingMemoryBound(to: CChar.self) else {
+                self = .String(text: "")
+                return
+            }
+            self = .String(text: Swift.String(cString: str))
             return
         default:
             self = .none
             return
         }
     }
-
+    
     public subscript(index: Int) -> XMLElement {
         return nodeSet![index]
     }
-
+    
     var nodeSet: XMLNodeSet? {
         if case let .NodeSet(nodeset) = self {
             return nodeset
         }
         return nil
     }
-
+    
     var bool: Swift.Bool? {
         if case let .Bool(value) = self {
             return value
