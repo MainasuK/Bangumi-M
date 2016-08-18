@@ -27,6 +27,21 @@ class DetailTableViewEPSCell: DetailTableViewCell {
         )
         return UIFont(descriptor: adjusted, size: 11.0)
     }()
+    
+    static let SFAlternativesFormRegularFont: UIFont = {
+        let descriptor = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightRegular).fontDescriptor
+        let adjusted = descriptor.addingAttributes(
+            [
+                UIFontDescriptorFeatureSettingsAttribute: [
+                    [
+                        UIFontFeatureTypeIdentifierKey: kStylisticAlternativesType,
+                        UIFontFeatureSelectorIdentifierKey: kStylisticAltOneOnSelector
+                    ]
+                ]
+            ]
+        )
+        return UIFont(descriptor: adjusted, size: 17.0)
+    }()
 
     @IBOutlet weak var sortStatusView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -62,7 +77,19 @@ extension DetailTableViewEPSCell {
     
     fileprivate func configureLabel(with episode: Episode) {
         
-        nameLabel.text = "\(episode.sortString) \(episode.name)"
+        let attributedText: NSMutableAttributedString = {
+            let sortAttributes = [NSFontAttributeName : type(of: self).SFAlternativesFormRegularFont]
+            let nameAttributes = [NSFontAttributeName : UIFont(name: "HiraginoSans-W3", size: 16.0) ?? type(of: self).SFAlternativesFormRegularFont]
+            
+            let string = NSMutableAttributedString()
+            string.append(NSAttributedString(string: episode.sortString, attributes: sortAttributes))
+            string.append(NSAttributedString(string: " "))
+            string.append(NSAttributedString(string: episode.name, attributes: nameAttributes))
+            
+            return string
+        }()
+        nameLabel.attributedText = attributedText
+//        nameLabel.text = "\(episode.sortString) \(episode.name))"
         nameCNLabel.text = episode.nameCN
         
         let title = "\(episode.comment)"
