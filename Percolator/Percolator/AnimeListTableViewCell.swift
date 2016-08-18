@@ -68,9 +68,9 @@ extension AnimeListTableViewCell: ConfigurableCell {
         configureIamge(with: subject.images)
         configureButton(with: history, subject)
         
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
 //        setupLabelStyle()
-        
-        layoutIfNeeded()
     }
 }
 

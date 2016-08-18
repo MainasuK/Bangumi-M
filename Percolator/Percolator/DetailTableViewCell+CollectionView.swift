@@ -60,6 +60,9 @@ class CMKCollectionView: UICollectionView {
 
         self.clipsToBounds = true
         self.layer.insertSublayer(gradientLayer, at: 0)
+        self.layer.drawsAsynchronously = true
+        self.layer.shouldRasterize = true
+        self.layer.rasterizationScale = UIScreen.main.scale
     }
     
     override func layoutSubviews() {
@@ -77,6 +80,18 @@ class CMKCollectionView: UICollectionView {
         gradientLayer.frame = self.bounds
         gradientLayer.locations = [0.0, min(threshold, (abs(self.contentOffset.x) + 0.5) / self.bounds.width) as NSNumber, 0.97, 1.0]
         CATransaction.commit()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.horizontalSizeClass == .compact {
+            gradientLayer.isHidden = true
+            self.clipsToBounds = false
+        } else {
+            gradientLayer.isHidden = false
+            self.clipsToBounds = true
+        }
     }
     
 }

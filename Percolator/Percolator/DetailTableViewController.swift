@@ -181,6 +181,7 @@ extension DetailTableViewController {
         
         // Configure cell row height
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 100
         
         // Configure cell margin
         tableView.cellLayoutMarginsFollowReadableWidth = true
@@ -334,19 +335,6 @@ extension DetailTableViewController {
         return 30
     }
     
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0:
-            return 300
-        case let section where section == 1:
-            return 155
-        case let section where section >= 4 && section <= 7:
-            return 100
-        default:
-            return 100
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section >= 4 && section <= 7 else {
             return UIView()
@@ -448,21 +436,21 @@ extension DetailTableViewController {
     
     // Align item to eage
     // Ref: Design Teardowns
-    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
-        if let collectionView = scrollView as? CMKCollectionView,
-        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            let width = layout.itemSize.width + layout.minimumLineSpacing
-            
-            var offset = targetContentOffset.pointee
-            
-            let index = (offset.x + scrollView.contentInset.left) / width
-            let roundedIndex = round(index)
-            
-            offset = CGPoint(x: roundedIndex * width - scrollView.contentInset.left, y: -scrollView.contentInset.top)
-            targetContentOffset.pointee = offset
-        }
-    }
+//    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        
+//        if let collectionView = scrollView as? CMKCollectionView,
+//        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+//            let width = layout.itemSize.width + layout.minimumLineSpacing
+//            
+//            var offset = targetContentOffset.pointee
+//            
+//            let index = (offset.x + scrollView.contentInset.left) / width
+//            let roundedIndex = round(index)
+//            
+//            offset = CGPoint(x: roundedIndex * width - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+//            targetContentOffset.pointee = offset
+//        }
+//    }
     
 }
 
