@@ -125,6 +125,8 @@ class CMKCollectionViewCell: UICollectionViewCell, ConfigurableCell {
     func configure(with item: ItemType) {
         setupCellStyle()
         
+        itemImageView.af_cancelImageRequest()
+        
         switch item {
         case .crt(let crt):
             titleLabel.text = crt.name
