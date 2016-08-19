@@ -37,7 +37,7 @@ DEPENDENCIES:
   - MJRefresh
   - OHHTTPStubs
   - SimulatorStatusMagic
-  - SVProgressHUD
+  - SVProgressHUD (from `https://github.com/SVProgressHUD/SVProgressHUD.git`)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `swift3`)
   - UITextField+Shake (~> 1.1)
 
@@ -54,6 +54,8 @@ EXTERNAL SOURCES:
   KeychainAccess:
     :branch: swift-3.0
     :git: https://github.com/kishikawakatsumi/KeychainAccess.git
+  SVProgressHUD:
+    :git: https://github.com/SVProgressHUD/SVProgressHUD.git
   SwiftyJSON:
     :branch: swift3
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
@@ -71,6 +73,9 @@ CHECKOUT OPTIONS:
   KeychainAccess:
     :commit: fe19b69ec5d4698898c7807daba8eaf5a8dde335
     :git: https://github.com/kishikawakatsumi/KeychainAccess.git
+  SVProgressHUD:
+    :commit: cc5f7d68fe76afdb79e215b8ff00133575fafacc
+    :git: https://github.com/SVProgressHUD/SVProgressHUD.git
   SwiftyJSON:
     :commit: 1a9755949a652967dc2986cd7f4653496e556715
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
@@ -90,6 +95,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   UITextField+Shake: 47cc0429dafb3da580686339ad2da091249a8ea2
 
-PODFILE CHECKSUM: 2e1e029bdb0364821184b3d9d1190a8c3c46ad3f
+PODFILE CHECKSUM: f41e5d3150d2bf37f7ec8ac4ed1da35d4dcdb1ee
 
 COCOAPODS: 1.0.1
