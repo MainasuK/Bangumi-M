@@ -169,16 +169,11 @@ extension LoginViewController {
         addGestureRecognizer()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        setSVProgressHUD(style: .light)
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         removeKeyboardNotification()
+        setSVProgressHUD(style: .dark)
     }
 
 }

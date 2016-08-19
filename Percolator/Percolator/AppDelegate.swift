@@ -47,6 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             imageCache: AutoPurgingImageCache()
         )
         
+        setSVProgressHUD(style: .dark)
+        
         return true
     }
     

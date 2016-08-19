@@ -345,6 +345,9 @@ extension AnimeListTableViewController: AnimeListTableViewCellDelegate {
             model.mark(ep, of: subject, handler: { (error: Error?) in
                 do {
                     try error?.throwMyself()
+                    
+                    SVProgressHUD.showSuccess(withStatus: "EP.\(ep.sortString) \(ep.name) 标记成功")
+                    
                 } catch ModelError.mark {
                     let title = NSLocalizedString("mark error", comment: "")
                     let alertController = UIAlertController.simpleErrorAlert(with: title, description: "未能标注 EP.\(ep.sortString) \(ep.nameCN)")
