@@ -51,6 +51,14 @@ class AnimeListTableViewCell: UITableViewCell {
     }
     
     @IBOutlet weak var watchedSpinner: UIActivityIndicatorView!
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        animeImageView.af_cancelImageRequest()
+        animeImageView.layer.removeAllAnimations()
+        animeImageView.image = nil
+    }
 }
 
 extension AnimeListTableViewCell: ConfigurableCell {
@@ -90,7 +98,6 @@ extension AnimeListTableViewCell {
         let imageURLValue = (networkStatus == ReachableViaWiFi) ? images.largeUrl : images.mediumUrl
         let size = animeImageView.bounds.size
         
-        animeImageView.af_cancelImageRequest()
         if let urlVal = imageURLValue, let url = URL(string: urlVal) {
             animeImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
         } else {

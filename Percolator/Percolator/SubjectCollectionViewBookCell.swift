@@ -20,12 +20,19 @@ class SubjectCollectionViewBookCell: SubjectCollectionViewCell {
     // No subtitle for book
     @IBOutlet weak var indicatorLabel: UILabel!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        bookCover.af_cancelImageRequest()
+        bookCover.layer.removeAllAnimations()
+        bookCover.image = nil
+    }
+    
     override func configure(with item: ItemType) {
         let subjectItem = item.0
         bookNameLabel.text = subjectItem.title
         
         configureIndicator(with: item.1)
-        
         
         let size = bookCover.bounds.size
         if let url = URL(string: subjectItem.coverUrlPath) {

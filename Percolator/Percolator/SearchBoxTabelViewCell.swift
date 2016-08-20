@@ -24,6 +24,14 @@ class SearchBoxTableViewCell: MGSwipeTableCell {
     @IBOutlet weak var indicatorLabel: UILabel!
     
     var isLast: Bool = false
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        animeImageView.af_cancelImageRequest()
+        animeImageView.layer.removeAllAnimations()
+        animeImageView.image = nil
+    }
 }
 
 
@@ -79,7 +87,6 @@ extension SearchBoxTableViewCell {
         
         let size = animeImageView.bounds.size
         
-        animeImageView.af_cancelImageRequest()
         if let urlVal = imageURLValue,
         let url = URL(string: urlVal) {
             animeImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))

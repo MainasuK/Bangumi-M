@@ -14,6 +14,14 @@ class SubjectCollectionViewNotBookCell: SubjectCollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var nameCNLabel: UILabel!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        coverImageView.af_cancelImageRequest()
+        coverImageView.layer.removeAllAnimations()
+        coverImageView.image = nil
+    }
+    
     override func configure(with item: ItemType) {
         let subjectItem = item.0
         

@@ -122,10 +122,16 @@ class CMKCollectionViewCell: UICollectionViewCell, ConfigurableCell {
     
     var isLast: Bool = false
     
-    func configure(with item: ItemType) {
-        setupCellStyle()
+    override func prepareForReuse() {
+        super.prepareForReuse()
         
         itemImageView.af_cancelImageRequest()
+        itemImageView.layer.removeAllAnimations()
+        itemImageView.image = nil
+    }
+    
+    func configure(with item: ItemType) {
+        setupCellStyle()
         
         switch item {
         case .crt(let crt):
