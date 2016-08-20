@@ -28,15 +28,17 @@ extension BangumiRequest {
             parameters = ["ep_id" : epID]
         }
         
-        alamofireEphemeralManager.request(urlPath, withMethod: .post, parameters: parameters).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, withMethod: .post, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let json = self.getResult(from: response)
                 .flatMap(self.toJSON)
                 .flatMap(self.validate)
             
-            switch json {
-            case .success:                  handler(nil)
-            case .failure(let error):       handler(error)
+            DispatchQueue.main.async {
+                switch json {
+                case .success:                  handler(nil)
+                case .failure(let error):       handler(error)
+                }
             }
         }   // end alamofireEphemeralManager.request(…) { … }
     }   // end func ep(…) { … }

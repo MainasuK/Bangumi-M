@@ -19,14 +19,16 @@ extension BangumiRequest {
         let urlPath = String(format: BangumiApiKey.Auth, BangumiApiKey.Percolator)
         let parameters = ["username" : email, "password" : pass]
 
-        alamofireEphemeralManager.request(urlPath, withMethod: .post, parameters: parameters).validate().responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, withMethod: .post, parameters: parameters).validate().responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let user = self.getResult(from: response)
                 .flatMap(self.toJSON)
                 .flatMap(self.validate)
                 .flatMap(self.toUser)
             
-            handler(user)
+            DispatchQueue.main.async {
+                handler(user)
+            }
         }   // end alamofireEphemeralManager.request(…) { … }
     }   // end func userLogin(…) { … }
     

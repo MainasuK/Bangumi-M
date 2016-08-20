@@ -16,13 +16,15 @@ extension BangumiRequest {
     
     func html(from url: String, handler: @escaping (Result<String>) -> Void) {
         
-        BangumiRequest.shared.alamofireManager.request(url, withMethod: .get).validate().responseData { (response: ResponseData) in
+        BangumiRequest.shared.alamofireManager.request(url, withMethod: .get).validate().responseData(queue: DispatchQueue.cmkJson) { (response: ResponseData) in
             assert(Thread.isMainThread, "Model method should on main thread for thread safe")
             
             let html = self.getResult(from: response)
                 .flatMap(self.toHTML)
             
-            handler(html)
+            DispatchQueue.main.async {
+                handler(html)
+            }
         }   // end request
         
     }
