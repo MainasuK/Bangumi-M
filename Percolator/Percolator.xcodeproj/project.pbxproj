@@ -65,6 +65,7 @@
 		DB80EFF91D34FC94007DEF09 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB80EFF81D34FC94007DEF09 /* Images.swift */; };
 		DB80EFFD1D3500D0007DEF09 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB80EFFC1D3500D0007DEF09 /* Rating.swift */; };
 		DB80F0051D35BF44007DEF09 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DB80F0041D35BF44007DEF09 /* Reachability.m */; };
+		DB82D9871D67F9360005474F /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB82D9861D67F9360005474F /* DispatchQueue.swift */; };
 		DB83E2781B0F854D007BE039 /* PercolatorKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB83E2771B0F854D007BE039 /* PercolatorKey.swift */; };
 		DB88206C1D3F19CC009031AE /* DetailTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB88206B1D3F19CC009031AE /* DetailTableViewModel.swift */; };
 		DB88206E1D3F1E91009031AE /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB88206D1D3F1E91009031AE /* Episode.swift */; };
@@ -212,6 +213,7 @@
 		DB80EFFC1D3500D0007DEF09 /* Rating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		DB80F0031D35BF44007DEF09 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		DB80F0041D35BF44007DEF09 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		DB82D9861D67F9360005474F /* DispatchQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchQueue.swift; sourceTree = "<group>"; };
 		DB83E2771B0F854D007BE039 /* PercolatorKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PercolatorKey.swift; sourceTree = "<group>"; };
 		DB88206B1D3F19CC009031AE /* DetailTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewModel.swift; sourceTree = "<group>"; };
 		DB88206D1D3F1E91009031AE /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
@@ -586,6 +588,7 @@
 			children = (
 				DBE1C80E1D3C73820086B83D /* String.swift */,
 				DB8BCA271D3A89E8003FB83E /* CGPoint.swift */,
+				DB82D9861D67F9360005474F /* DispatchQueue.swift */,
 				DBAD79221D39477E00CCB8AE /* ErrorProtocol.swift */,
 				DBEF11341D37469300E7A0D7 /* NSURL.swift */,
 				DBA4C90D1D168E8F0043EDED /* CMKCollectButton.swift */,
@@ -1012,6 +1015,7 @@
 				DB7E288E1D3BE47A00B529CA /* TransitionDelegate.swift in Sources */,
 				DBD2D57C1B84AEB300EED59A /* BangumiAPI.swift in Sources */,
 				DBEF11401D37748D00E7A0D7 /* DataSource.swift in Sources */,
+				DB82D9871D67F9360005474F /* DispatchQueue.swift in Sources */,
 				DB7560981D4B1843005A5046 /* Staff.swift in Sources */,
 				DB0BC8041D1195FD0091ECE0 /* AnimeListTableViewController.swift in Sources */,
 				DB6B1BCF1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift in Sources */,

@@ -20,9 +20,7 @@ extension BangumiRequest {
         
         // Speeding up with HTTP protocol (without auth info)
         
-        let jsonQueue = DispatchQueue(label: "com.mainasuk.json")
-        
-        alamofireManager.request(urlPath, withMethod: .get, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: jsonQueue) { (response: Response) in
+        alamofireManager.request(urlPath, withMethod: .get, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let subject = self.getResult(from: response)
                 .flatMap(self.toJSON)

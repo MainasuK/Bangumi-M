@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/MainasuK/Developer.localized/Swift/Bangumi-M/Percolator/Playground.playground">
-   </FileRef>
-   <FileRef
       location = "group:Percolator.xcodeproj">
    </FileRef>
    <FileRef

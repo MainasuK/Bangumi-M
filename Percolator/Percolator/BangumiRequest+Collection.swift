@@ -28,14 +28,16 @@ extension BangumiRequest {
         let urlPath = String(format: BangumiApiKey.UserWatchingCollection, user.id)
         let parameters = ["cat" : "watching"]
         
-        alamofireEphemeralManager.request(urlPath, withMethod: .get, parameters: parameters).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, withMethod: .get, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let subjects = self.getResult(from: response)
                 .flatMap(self.toJSON)
                 .flatMap(self.validate)
                 .flatMap(self.toSubjects)
             
-            handler(subjects)
+            DispatchQueue.main.async {
+                handler(subjects)
+            }
         }   // end alamofireEphemeralManager.request(…) { … }
     }   // end func userCollection(…) { … }
     
@@ -48,14 +50,16 @@ extension BangumiRequest {
         
         let urlPath = String(format: BangumiApiKey.UserSubjectCollection, subjectID, BangumiApiKey.Percolator, user.authEncode)
     
-        alamofireEphemeralManager.request(urlPath, withMethod: .get, parameters: nil).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, withMethod: .get, parameters: nil).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
         
             let collectInfo = self.getResult(from: response)
                 .flatMap(self.toJSON)
                 .flatMap(self.validate)
                 .flatMap(self.toCollectInfo)
             
-            handler(collectInfo)
+            DispatchQueue.main.async {
+                handler(collectInfo)
+            }
         }
     }
     
