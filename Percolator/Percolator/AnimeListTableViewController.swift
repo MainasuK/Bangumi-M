@@ -156,6 +156,8 @@ extension AnimeListTableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        setupBarButtonItem()
+        
         guard User.isLogin() else {
             popLoginController()
             
@@ -166,8 +168,6 @@ extension AnimeListTableViewController {
             tableView.mj_header.beginRefreshing()
         }
         isFirstRefresh = false
-        
-        setupBarButtonItem()
     }
     
 }
