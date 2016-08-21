@@ -26,7 +26,6 @@ final class SearchBoxTableViewController: UITableViewController {
         
         controller.delegate = self
         controller.searchBar.delegate = self
-        controller.searchResultsUpdater = self
         
         controller.searchBar.scopeButtonTitles = PercolatorKey.searchTypeArr
         
@@ -44,6 +43,13 @@ final class SearchBoxTableViewController: UITableViewController {
 
         return controller
     }()
+    fileprivate var searchKeyword: String {
+        guard let keyword = title else {
+            return ""
+        }
+        
+        return (keyword == "搜索盒子") ? "" : keyword
+    }
     fileprivate var searchScopeIndex = 0
     fileprivate var statusBarStyle: UIStatusBarStyle = .default
     
@@ -52,8 +58,8 @@ final class SearchBoxTableViewController: UITableViewController {
     @IBAction func searchButtonClicked(_ button: UIBarButtonItem?) {
         
         // Make sure Search text based on last search content
-        let title = self.navigationItem.title
-        searchController.searchBar.text = (title == "搜索盒子") ? "" : title
+        searchController.searchBar.text = searchKeyword
+        searchController.searchBar.selectedScopeButtonIndex = searchScopeIndex
         
         // Present the view controller
         changeStatusBarStyle(to: .lightContent)
@@ -177,9 +183,7 @@ extension SearchBoxTableViewController {
         tableView.mj_footer = {
             //  Use unowned because the caller is self. No async
             let footer = MJRefreshAutoNormalFooter { [unowned self] in
-                if let text = self.searchController.searchBar.text {
-                self.search(for: text, type: self.searchScopeIndex)
-                }
+                self.search(for: self.searchKeyword, type: self.searchScopeIndex)
             }
             footer?.isHidden = true // Appeare after search
             
@@ -253,24 +257,10 @@ extension SearchBoxTableViewController: UISearchBarDelegate {
         title = searchText
         SVProgressHUD.show()
         
-        search(for: searchText, type: searchBar.selectedScopeButtonIndex)
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        // Resume selected button
-        searchBar.selectedScopeButtonIndex = searchScopeIndex
+        searchScopeIndex = searchBar.selectedScopeButtonIndex
+        search(for: searchText, type: searchScopeIndex)
     }
 
-}
-
-// MARK: - UISearchResultsUpdating
-extension SearchBoxTableViewController: UISearchResultsUpdating {
-    
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        // TODO:
-    }
-    
 }
 
 // MARK: - UISearchControllerDelegate
