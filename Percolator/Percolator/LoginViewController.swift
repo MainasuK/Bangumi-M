@@ -160,7 +160,7 @@ extension LoginViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setSVProgressHUD(style: .custom)
+        setSVProgressHUD(style: .customLogin)
     }
     
     override func viewDidAppear(_ animated: Bool) {

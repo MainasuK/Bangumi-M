@@ -10,19 +10,21 @@ import Foundation
 import SVProgressHUD
 
 /// Don't forget set it back when controller dismiss
-func setSVProgressHUD(style: SVProgressHUDStyle) {
+func setSVProgressHUD(style: CMKProgressHUDStyle) {
     
     switch style {
-    case .custom:
-        // Configure HUD
-        SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.custom)
-        SVProgressHUD.setBackgroundColor(UIColor.white)
-        SVProgressHUD.setForegroundColor(UIColor.black)
-        SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.gradient)
+    case .customLogin:
+        SVProgressHUD.setDefaultStyle(.light)
+        SVProgressHUD.setDefaultMaskType(.gradient)
     
-    default:
-        SVProgressHUD.setDefaultStyle(style)
-        SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.none)
+    case .dark:
+        SVProgressHUD.setDefaultStyle(.dark)
+        SVProgressHUD.setDefaultMaskType(.none)
     }
     
+}
+
+enum CMKProgressHUDStyle {
+    case customLogin
+    case dark
 }
