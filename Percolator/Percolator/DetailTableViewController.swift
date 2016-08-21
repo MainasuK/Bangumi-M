@@ -60,6 +60,12 @@ final class DetailTableViewController: UITableViewController {
     }
     
     @IBAction func swipeRestureTrigger(_ sender: UISwipeGestureRecognizer) {
+        // Reverse EP section only
+        guard let section = tableView.indexPathForRow(at: sender.location(in: tableView))?.section,
+        section == 4 else {
+            return
+        }
+        
         model.isReverse = !model.isReverse
         tableView.reloadData()
     }
