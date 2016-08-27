@@ -15,29 +15,29 @@ public class TagWriteView : UIView
     
     // MARK: Public Properties
     public var font: UIFont = UIFont.systemFont(ofSize: 14.0) {
-    didSet {
-        for btn in tagViews {
-            btn.titleLabel?.font = font
+        didSet {
+            for btn in tagViews {
+                btn.titleLabel?.font = font
+            }
         }
-    }
     }
     
     public var tagBackgroundColor: UIColor = UIColor.darkGray {
-    didSet {
-        for btn in tagViews {
-            btn.backgroundColor = tagBackgroundColor
+        didSet {
+            for btn in tagViews {
+                btn.backgroundColor = tagBackgroundColor
+            }
+            tagInputView.layer.borderColor = tagBackgroundColor.cgColor
+            tagInputView.textColor = tagBackgroundColor
         }
-        tagInputView.layer.borderColor = tagBackgroundColor.cgColor
-        tagInputView.textColor = tagBackgroundColor
-    }
     }
     
     public var tagForegroundColor: UIColor = UIColor.white {
-    didSet {
-        for btn in tagViews {
-            btn.setTitleColor(tagForegroundColor, for: UIControlState.normal)
+        didSet {
+            for btn in tagViews {
+                btn.setTitleColor(tagForegroundColor, for: .normal)
+            }
         }
-    }
     }
     
     public var sizeForDeleteButton = CGRect(x: 0, y: 0, width: 17, height: 17) {
@@ -46,7 +46,7 @@ public class TagWriteView : UIView
         }
     }
     
-    public var backgroundColorForDeleteButton = UIColor.clear {
+    public var backgroundColorForDeleteButton = UIColor.white {
         didSet {
             if deleteButton != nil {
                 deleteButton.backgroundColor = backgroundColorForDeleteButton
@@ -65,19 +65,19 @@ public class TagWriteView : UIView
     public var verticalInsetForTag = UIEdgeInsets.zero  // 'top' and 'bottom' properties are only available. set vertical margin to each tags.
     
     public var focusOnAddTag: Bool = false {
-    didSet {
-        if focusOnAddTag {
-            tagInputView.becomeFirstResponder()
-        } else {
-            tagInputView.resignFirstResponder()
+        didSet {
+            if focusOnAddTag {
+                tagInputView.becomeFirstResponder()
+            } else {
+                tagInputView.resignFirstResponder()
+            }
         }
-    }
     }
     
     public var delegate: TagWriteViewDelegate?
     
     
-    // MARK: fileprivate Properties
+    // MARK: Private Properties
     fileprivate var scrollView: UIScrollView!
     fileprivate var inputBaseView: UIView!
     fileprivate var tagInputView: UITextView!
@@ -143,7 +143,7 @@ public class TagWriteView : UIView
         rearrangeSubViews()
     }
     
-    public func removeTags(tags: [String]) {
+    public func removeTags(_ tags: [String]) {
         var pickedIndexes = [Int]()
         for tag in tags {
             for (idx, value) in tagsMade.enumerated() {
@@ -160,8 +160,8 @@ public class TagWriteView : UIView
         rearrangeSubViews()
     }
     
-    public func addTagToLast(tag: String, animated: Bool) {
-        let newTag = tag.trimmingCharacters(in: CharacterSet.whitespaces)
+    public func addTagToLast(_ tag: String, animated: Bool) {
+        let newTag = tag.trimmingCharacters(in: .whitespaces)
         for t in tagsMade {
             if newTag == t {
                 NSLog("DUPLICATED!")
@@ -172,12 +172,12 @@ public class TagWriteView : UIView
         tagsMade.append(newTag)
         
         tagInputView.text = ""
-        addTagViewToLast(newTag: newTag, animated: animated)
+        addTagViewToLast(newTag, animated: animated)
         setNeedsLayout()
         delegate?.tagWriteView?(view: self, didChangeText: newTag)
     }
-
-    public func removeTag(tag: String, animated: Bool) {
+    
+    public func removeTag(_ tag: String, animated: Bool) {
         var foundIndex = -1
         for (idx, value) in tagsMade.enumerated() {
             if tag == value {
@@ -191,7 +191,7 @@ public class TagWriteView : UIView
         }
         
         tagsMade.remove(at: foundIndex)
-        removeTagView(index: foundIndex, animated: animated, completion: { (finished: Bool) -> Void in
+        removeTagView(at: foundIndex, animated: animated, completion: { (_ finished: Bool) -> Void in
             self.setNeedsLayout()
         })
         
@@ -200,13 +200,12 @@ public class TagWriteView : UIView
     
     public func setDeleteButtonBackgroundImage(_ image: UIImage?, state: UIControlState) {
         deleteButton.setBackgroundImage(image, for: state)
-        deleteButton.setTitleColor(UIColor.clear, for: state)
     }
     
     // MARK: UI Actions
-    func tagButtonDidPushed(_ sender: AnyObject!) {
-        let btn = sender as! UIButton
-
+    func tagButtonDidPushed(sender: UIButton) {
+        let btn = sender
+        
         if deleteButton.isHidden == false && btn.tag == deleteButton.tag {
             deleteButton.isHidden = true
             deleteButton.removeFromSuperview()
@@ -223,7 +222,7 @@ public class TagWriteView : UIView
         }
     }
     
-    func deleteButtonDidPush(_ sender: AnyObject!) {
+    func deleteButtonDidPush(sender: Any) {
         if tagsMade.count <= deleteButton.tag {
             return
         }
@@ -232,11 +231,11 @@ public class TagWriteView : UIView
         deleteButton.removeFromSuperview()
         
         let tag = tagsMade[deleteButton.tag]
-        removeTag(tag: tag, animated: true)
+        removeTag(tag, animated: true)
     }
     
     // MARK: Internals
-    fileprivate func initControls() {
+    private func initControls() {
         scrollView = UIScrollView(frame: self.bounds)
         scrollView.contentInset.left = 10
         scrollView.backgroundColor = UIColor.clear
@@ -261,11 +260,11 @@ public class TagWriteView : UIView
         
         deleteButton = UIButton(frame: sizeForDeleteButton)
         deleteButton.backgroundColor = backgroundColorForDeleteButton
-        deleteButton.addTarget(self, action: #selector(TagWriteView.deleteButtonDidPush(_:)), for: UIControlEvents.touchUpInside)
+        deleteButton.addTarget(self, action: #selector(self.deleteButtonDidPush(sender:)), for: .touchUpInside)
         deleteButton.isHidden = true;
     }
     
-    fileprivate func addTagViewToLast(newTag: String, animated: Bool) {
+    private func addTagViewToLast(_ newTag: String, animated: Bool) {
         let posX = posXForObjectNextToLastTagView()
         let tagBtn = createTagButton(tagName: newTag, positionX: posX)
         tagBtn.tag = tagViews.count
@@ -278,7 +277,7 @@ public class TagWriteView : UIView
         }
     }
     
-    fileprivate func rearrangeSubViews() {
+    private func rearrangeSubViews() {
         var accumX = tagGap
         var newTagButtons: [UIButton] = Array()
         
@@ -300,34 +299,34 @@ public class TagWriteView : UIView
         setNeedsLayout();
     }
     
-    fileprivate func createTagButton(tagName tag: String, positionX posx: CGFloat) -> UIButton {
+    private func createTagButton(tagName tag: String, positionX posx: CGFloat) -> UIButton {
         let tagButton = UIButton()
         tagButton.titleLabel?.font = font
         tagButton.backgroundColor = tagBackgroundColor
         tagButton.setTitleColor(tagForegroundColor, for: UIControlState.normal)
         tagButton.setTitle(tag, for: UIControlState.normal)
-        tagButton.addTarget(self, action: #selector(TagWriteView.tagButtonDidPushed(_:)), for: UIControlEvents.touchUpInside)
+        tagButton.addTarget(self, action: #selector(self.tagButtonDidPushed(sender:)), for: .touchUpInside)
         
         var btnFrame: CGRect = tagButton.frame
         btnFrame.origin.x = posx
         
-        let temp: NSString = tag as NSString
+        let temp = tag as NSString
         btnFrame.size.width = temp.size(attributes: [NSFontAttributeName:font]).width + (tagButton.layer.cornerRadius * 2.0) + 20.0
-//        btnFrame.size.height = self.frame.size.height - 13.0
+        //        btnFrame.size.height = self.frame.size.height - 13.0
         
         tagButton.layer.cornerRadius = btnFrame.size.height * 0.5
         tagButton.frame = btnFrame.integral
         
         return tagButton
     }
-
+    
     fileprivate func deleteBackspace() {
         let text: String = tagInputView.text
         if text.characters.count == 0 {
             if readyToDelete {
                 if tagsMade.count > 0 {
                     let deletedTag = tagsMade[tagsMade.endIndex - 1]
-                    removeTag(tag: deletedTag, animated: true)
+                    removeTag(deletedTag, animated: true)
                     readyToDelete = false
                 }
             } else {
@@ -336,7 +335,7 @@ public class TagWriteView : UIView
         }
     }
     
-    fileprivate func isFinish(with letter: String) -> Bool {
+    fileprivate func isFinishLetter(_ letter: String) -> Bool {
         if letter == "\n" {
             return true
         }
@@ -366,13 +365,12 @@ public class TagWriteView : UIView
         inputRect.origin.y = verticalInsetForTag.top
         inputRect.size.width = widthForInputView(tagString: tagInputView.text)
         inputRect.size.height = self.bounds.height - (verticalInsetForTag.top + verticalInsetForTag.bottom)
-
+        
         inputBaseView.frame = inputRect
         inputBaseView.layer.borderColor = tagBackgroundColor.cgColor
         inputBaseView.layer.borderWidth = 1.0
-        inputBaseView.layer.cornerRadius = inputBaseView.frame.size.height * 0.5
-
-        // Change tagInputView frame to fit Chinese character (Cirno.MainasuK)
+        inputBaseView.layer.cornerRadius = inputBaseView.bounds.height * 0.5
+        
         tagInputView.frame = inputBaseView.bounds
         tagInputView.frame.origin.y = font.descender * 0.5 // It's a nagetive number
         tagInputView.frame.size.height = self.bounds.height - verticalInsetForTag.top
@@ -380,11 +378,11 @@ public class TagWriteView : UIView
         var contentSize = scrollView.contentSize
         contentSize.width = accumX + inputRect.size.width + 20.0
         scrollView.contentSize = contentSize
-
+        
         setScrollOffsetToMakeInputViewVisible()
     }
     
-    fileprivate func removeTagView(index: Int, animated: Bool, completion: @escaping (_ finished: Bool) -> Void) {
+    fileprivate func removeTagView(at index: Int, animated: Bool, completion: ((_ finished: Bool) -> Void)) {
         if index >= tagViews.count {
             return
         }
@@ -433,13 +431,13 @@ public class TagWriteView : UIView
     }
     
     fileprivate func widthForInputView(tagString tag: String) -> CGFloat {
-        let temp: NSString = tag as NSString
+        let temp = tag as NSString
         return max(50.0, temp.size(attributes: [NSFontAttributeName:font]).width + 25.0)
     }
     
-    // MARK: UITextViewDelegate
 }
 
+// MARK: UITextViewDelegate
 extension TagWriteView: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let piece: String = text
@@ -448,9 +446,9 @@ extension TagWriteView: UITextViewDelegate {
         let pieceCount = piece.characters.count
         let textCount = t.characters.count
         
-        if isFinish(with: piece) {
+        if isFinishLetter(piece) {
             if textCount > 0 {
-                addTagToLast(tag: t, animated: true)
+                addTagToLast(t, animated: true)
                 textView.text = ""
             }
             if piece == "\n" {
@@ -466,9 +464,9 @@ extension TagWriteView: UITextViewDelegate {
         if pieceCount == 0 {
             if textCount > 0 {
                 let loc = textCount - range.length
-                let start = t.startIndex
-                let end = t.index(start, offsetBy: loc)
-                newText =  t[Range(start..<end)]
+                let startIndex = t.startIndex
+                let endIndex = t.index(t.startIndex, offsetBy: loc)
+                newText = t[startIndex...endIndex]
             } else {
                 deleteBackspace()
                 return false
@@ -532,23 +530,3 @@ extension UIView {
         self.superview!.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-top-[view]-bottom-|", options: [], metrics: metrics, views: view))
     }
 }
-
-//
-// It's an extension to support subscription on Array.
-// It helps easily extract substring. Honestly, substringWithRange method of String is quite difficult to use for me.
-// Thus, I looked for an alternative way and finally found a way making an extension of String to support subscript.
-// The following link is where I referenced.
-//
-// http://stackoverflow.com/a/24046551/579236
-//
-//extension String {
-//    subscript (r: Range<Int>) -> String {
-//        get {
-//            let startIndex = self.startIndex.advancedBy(r.startIndex)
-//            let endIndex = self.startIndex.advancedBy(r.endIndex)
-//            return substringWith(Range(start: startIndex, end: endIndex))
-//        }
-//    }
-//}
-
-// In Swift 3.0. use subscript(Range(Index>).
