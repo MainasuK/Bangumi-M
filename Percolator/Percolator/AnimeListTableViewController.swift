@@ -295,6 +295,8 @@ extension AnimeListTableViewController {
             
             return maskLayer
         }()
+        
+        cell.layoutIfNeeded()
     }
     
     
