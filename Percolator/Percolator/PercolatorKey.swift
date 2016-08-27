@@ -46,10 +46,12 @@ public struct StoryboardKey {
     static let DetailTableViewCell_CollectionView   = "DetailTableViewCell_CollectionView"
     static let CMKCollectionViewCell                = "CMKCollectionViewCell"
     
+    static let TopicNavagationController            = "TopicNavagationController"
     static let TopicTableViewHeaderFooterView       = "TopicTableViewHeaderFooterView"
     static let TopicTableViewControllerKey          = "TopicTableViewControllerKey"
     static let TopicTableViewCellKey                = "TopicTableViewCellKey"
     
+    static let SubjectCollectionNaviVC              = "SubjectCollectionNaviVC"
     static let SubjectCollectionViewHeaderView      = "SubjectCollectionReusableHeaderView"
     static let SubjectCollectionViewController      = "SubjectCollectionViewController"
     static let SubjectCollectionViewBookCellKey     = "SubjectCollectionViewBookCellKey"
