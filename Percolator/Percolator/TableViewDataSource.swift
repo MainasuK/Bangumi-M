@@ -24,7 +24,7 @@ class TableViewDataSource<Model: DataProvider, Cell: ConfigurableCell>: DataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = model.identifier(at: indexPath)
-        guard var cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? Cell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? Cell else {
             fatalError("Cell should be configurable")
         }
         

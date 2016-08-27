@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ConfigurableCell {
+protocol ConfigurableCell: class {
     
     associatedtype ItemType
     

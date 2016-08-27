@@ -24,7 +24,7 @@ class CollectionViewDataSource<Model: DataProvider & HeaderDataProvider, Cell: C
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let identifier = model.identifier(at: indexPath)
-        guard var cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? Cell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? Cell else {
             fatalError("Cell should be configurable")
         }
         
