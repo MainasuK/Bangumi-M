@@ -71,6 +71,23 @@ class DetailTableViewEPSCell: DetailTableViewCell {
         }
         
     }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        sortStatusView.layer.cornerRadius = 6.0
+        sortStatusView.layer.borderWidth = 0.5
+        sortStatusView.layer.borderColor = UIColor(red: 0.00, green: 0.38, blue: 0.74, alpha: 1.00).cgColor
+        
+        commentButton.titleLabel?.font = type(of: self).SFAlternativesFormFont
+        
+        // Move arrow to right. Awesome
+        // Ref: http://stackoverflow.com/questions/7100976/how-do-i-put-the-image-on-the-right-side-of-the-text-in-a-uibutton
+        commentButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
+        commentButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
+        commentButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
+    }
+    
 }
 
 extension DetailTableViewEPSCell {
@@ -89,30 +106,14 @@ extension DetailTableViewEPSCell {
             return string
         }()
         nameLabel.attributedText = attributedText
-//        nameLabel.text = "\(episode.sortString) \(episode.name))"
         nameCNLabel.text = episode.nameCN
         
         let title = "\(episode.comment)"
-        commentButton.titleLabel?.font = type(of: self).SFAlternativesFormFont
         commentButton.setTitle(title, for: .normal)
-        commentButton.setTitle(title, for: .selected)
-        
-        // Move arrow to right. Awesome
-        // Ref: http://stackoverflow.com/questions/7100976/how-do-i-put-the-image-on-the-right-side-of-the-text-in-a-uibutton
-        commentButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
-        commentButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
-        commentButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
     }
     
     fileprivate func configureProgressView(with status: Status?) {
-        // The init layer width is not preset width in iOS 10 (why 1000 pt?)
-        // Change it when you modify the constraint in storyboard
-        
-        sortStatusView.layer.cornerRadius = 6.0
-        sortStatusView.layer.borderWidth = 0.5
-        sortStatusView.layer.borderColor = UIColor(red: 0.00, green: 0.38, blue: 0.74, alpha: 1.00).cgColor
-
-        var color: UIColor = UIColor.clear
+        var color = UIColor.clear
         sortStatusView.tintColor = color
         sortStatusView.backgroundColor = color
         

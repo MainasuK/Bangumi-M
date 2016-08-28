@@ -124,7 +124,6 @@ class CMKCollectionViewCell: UICollectionViewCell, ConfigurableCell {
         super.prepareForReuse()
         
         itemImageView.af_cancelImageRequest()
-        itemImageView.layer.removeAllAnimations()
         itemImageView.image = nil
     }
     
