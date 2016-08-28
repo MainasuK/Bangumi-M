@@ -41,6 +41,16 @@ class DetailTableViewBannerCell: DetailTableViewCell {
         delegate?.collectButtonPressed(sender)
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        nameLabel.layer.masksToBounds = true
+        nameCNLabel.layer.masksToBounds = true
+        typeLabel.layer.masksToBounds = true
+        ratingCountLabel.layer.masksToBounds = true
+        summaryLabel.layer.masksToBounds = true
+    }
+    
     override func configure(with item: DetailTableViewCell.ItemType) {
         super.configure(with: item)
         

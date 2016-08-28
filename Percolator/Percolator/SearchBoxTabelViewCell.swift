@@ -25,6 +25,15 @@ class SearchBoxTableViewCell: MGSwipeTableCell {
     
     var isLast: Bool = false
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        nameLabel.layer.masksToBounds = true
+        nameCNLabel.layer.masksToBounds = true
+        typeLabel.layer.masksToBounds = true
+        doingLabel.layer.masksToBounds = true
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -89,7 +98,7 @@ extension SearchBoxTableViewCell {
         
         if let urlVal = imageURLValue,
         let url = URL(string: urlVal) {
-            animeImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
+            animeImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
         } else {
             animeImageView.image = UIImage.fromColor(.placeholder, size: size)
         }

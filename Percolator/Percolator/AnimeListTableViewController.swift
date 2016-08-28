@@ -108,8 +108,9 @@ extension AnimeListTableViewController {
         setupTableViewDataSource()
         
         // Configure tableView row height
-        tableView.estimatedRowHeight = 150
-        tableView.rowHeight = UITableViewAutomaticDimension
+//        tableView.estimatedRowHeight = 150
+//        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = 150
         
         // Set cell conform readable layout margin
         tableView.cellLayoutMarginsFollowReadableWidth = true
@@ -291,6 +292,19 @@ extension AnimeListTableViewController {
                                         cornerRadii: CGSize(width: 5, height: 5))
             
             maskLayer.frame = cell.controlView.bounds
+            maskLayer.path  = maskPath.cgPath
+            
+            return maskLayer
+        }()
+        
+        // Mask infolView for get two top corners
+        cell.infoView.layer.mask = {
+            let maskLayer = CAShapeLayer()
+            let maskPath = UIBezierPath(roundedRect: cell.infoView.bounds,
+                                        byRoundingCorners: [.topLeft, .topRight],
+                                        cornerRadii: CGSize(width: 5, height: 5))
+            
+            maskLayer.frame = cell.infoView.bounds
             maskLayer.path  = maskPath.cgPath
             
             return maskLayer

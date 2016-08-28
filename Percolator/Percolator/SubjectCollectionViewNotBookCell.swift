@@ -14,6 +14,13 @@ class SubjectCollectionViewNotBookCell: SubjectCollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var nameCNLabel: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        nameLabel.layer.masksToBounds = true
+        nameCNLabel.layer.masksToBounds = true
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -30,7 +37,7 @@ class SubjectCollectionViewNotBookCell: SubjectCollectionViewCell {
         
         let size = coverImageView.bounds.size
         if let url = URL(string: subjectItem.coverUrlPath) {
-            coverImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
+            coverImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
         } else {
             coverImageView.image = UIImage.fromColor(.placeholder, size: size)
         }

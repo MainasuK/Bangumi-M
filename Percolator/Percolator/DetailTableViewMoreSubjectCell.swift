@@ -13,6 +13,12 @@ class DetailTableViewMoreSubjectCell: DetailTableViewCell {
     @IBOutlet weak var subjectLabel: UILabel!
     @IBOutlet weak var subjectDetailLabel: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        subjectLabel.layer.masksToBounds = true
+    }
+    
     override func configure(with item: DetailTableViewCell.ItemType) {
         super.configure(with: item)
         

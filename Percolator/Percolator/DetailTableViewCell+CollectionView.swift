@@ -16,6 +16,12 @@ class DetailTableViewCell_CollectionView: DetailTableViewCell {
 
     @IBOutlet weak var headlineLabel: UILabel!
     @IBOutlet weak var collectionView: CMKCollectionView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        headlineLabel.layer.masksToBounds = true
+    }
 
     override func configure(with item: ItemType) {
         super.configure(with: item)
@@ -120,6 +126,13 @@ class CMKCollectionViewCell: UICollectionViewCell, ConfigurableCell {
     
     var isLast: Bool = false
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        titleLabel.layer.masksToBounds = true
+        subtitleLabel.layer.masksToBounds = true
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -136,7 +149,7 @@ class CMKCollectionViewCell: UICollectionViewCell, ConfigurableCell {
             subtitleLabel.text = crt.actors.first?.name ?? ""
             if let urlPath = crt.images.gridUrl,
             let url = URL(string: urlPath) {
-                itemImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: CGSize(width: 75, height: 75)))
+                itemImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: CGSize(width: 75, height: 75)), progressQueue: DispatchQueue.global(qos: .userInitiated))
             } else {
                 itemImageView.image = UIImage(named: "404")!
             }
@@ -145,11 +158,14 @@ class CMKCollectionViewCell: UICollectionViewCell, ConfigurableCell {
             subtitleLabel.text = staff.jobs.first ?? ""
             if let urlPath = staff.images.gridUrl,
                 let url = URL(string: urlPath) {
-                itemImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: CGSize(width: 75, height: 75)))
+                itemImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: CGSize(width: 75, height: 75)), progressQueue: DispatchQueue.global(qos: .userInitiated))
             } else {
                 itemImageView.image = UIImage(named: "404")!
             }
         }
+        
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
     }
 }
 

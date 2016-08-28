@@ -61,7 +61,11 @@ extension DetailTableViewModel {
 
         guard subject.responseGroup != .large else {
             consolePrint("Subject-large is already exists")
-            fetchProgress(of: subject)
+            
+            delay(0.3) { [weak self] in
+                self?.fetchProgress(of: subject)
+            }
+            
             return
         }
         
@@ -78,7 +82,9 @@ extension DetailTableViewModel {
                 self.subject = subject
                 self.tableView?.reloadData()
                 
-                self.fetchProgress(of: subject)
+                delay(0.3) { [weak self] in
+                    self?.fetchProgress(of: subject)
+                }
             } catch {
                 consolePrint("Refetch subject occurred error: \(error)")
             }

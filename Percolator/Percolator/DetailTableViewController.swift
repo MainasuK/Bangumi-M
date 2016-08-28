@@ -54,8 +54,8 @@ final class DetailTableViewController: UITableViewController {
         poc?.barButtonItem = sender
         
         // Async for not block main queue…
-        DispatchQueue.main.async {
-            self.present(activityViewController, animated: true, completion: nil)
+        DispatchQueue.main.async { [weak self] in
+            self?.present(activityViewController, animated: true, completion: nil)
         }
     }
     
@@ -339,6 +339,17 @@ extension DetailTableViewController {
         }
         
         return 30
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 1:
+            return 159.0
+        case let section where section >= 4 && section <= 7:
+            return 66.0
+        default:
+            return UITableViewAutomaticDimension
+        }
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

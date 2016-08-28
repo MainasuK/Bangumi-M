@@ -75,6 +75,9 @@ class DetailTableViewEPSCell: DetailTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        nameLabel.layer.masksToBounds = true
+        nameCNLabel.layer.masksToBounds = true
+        
         sortStatusView.layer.cornerRadius = 6.0
         sortStatusView.layer.borderWidth = 0.5
         sortStatusView.layer.borderColor = UIColor(red: 0.00, green: 0.38, blue: 0.74, alpha: 1.00).cgColor

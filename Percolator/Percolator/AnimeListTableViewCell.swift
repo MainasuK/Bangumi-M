@@ -30,6 +30,7 @@ class AnimeListTableViewCell: UITableViewCell {
     }
     
     @IBOutlet weak var cardView: UIView!
+    @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var indicatorView: UIView!
     @IBOutlet weak var controlView: UIView!
     
@@ -52,6 +53,12 @@ class AnimeListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var watchedSpinner: UIActivityIndicatorView!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        setupCellStyle()
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -71,7 +78,6 @@ extension AnimeListTableViewCell: ConfigurableCell {
         let (subject, history) = item
         mark = .none
         
-        setupCellStyle()
         configureLabel(with: subject)
         configureIamge(with: subject.images)
         configureButton(with: history, subject)
@@ -99,7 +105,7 @@ extension AnimeListTableViewCell {
         let size = animeImageView.bounds.size
         
         if let urlVal = imageURLValue, let url = URL(string: urlVal) {
-            animeImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
+            animeImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
         } else {
             animeImageView.image = UIImage.fromColor(.placeholder, size: size)
         }
@@ -196,6 +202,11 @@ extension AnimeListTableViewCell {
     }
     
     fileprivate func setupCellStyle() {
+        
+        nameLabel.layer.masksToBounds = true
+        watchedLabel.layer.masksToBounds = true
+        watchedToLabel.layer.masksToBounds = true
+        
         // Configure the appearance of the cell
         backgroundColor = UIColor.myAnimeListBackground
         
