@@ -136,7 +136,7 @@ class CMKCollectionViewCell: UICollectionViewCell, ConfigurableCell {
             subtitleLabel.text = crt.actors.first?.name ?? ""
             if let urlPath = crt.images.gridUrl,
             let url = URL(string: urlPath) {
-                itemImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: CGSize(width: 75, height: 75)))
+                itemImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: CGSize(width: 75, height: 75)))
             } else {
                 itemImageView.image = UIImage(named: "404")!
             }
@@ -145,7 +145,7 @@ class CMKCollectionViewCell: UICollectionViewCell, ConfigurableCell {
             subtitleLabel.text = staff.jobs.first ?? ""
             if let urlPath = staff.images.gridUrl,
                 let url = URL(string: urlPath) {
-                itemImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: CGSize(width: 75, height: 75)))
+                itemImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: CGSize(width: 75, height: 75)))
             } else {
                 itemImageView.image = UIImage(named: "404")!
             }

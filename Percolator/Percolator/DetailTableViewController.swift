@@ -146,7 +146,7 @@ extension DetailTableViewController {
         if let urlVal = self.subject.images.largeUrl,
             let url = URL(string: urlVal) {
             // Oops… Reset headerView height when aysn callback finish
-            self.headerImageView.af_setImageWithURL(url, imageTransition: .custom(duration: 0.5, animationOptions: [.allowUserInteraction], animations: {
+            self.headerImageView.af_setImage(withURL: url, imageTransition: .custom(duration: 0.5, animationOptions: [.allowUserInteraction], animations: {
                 $0.image = $1
                 self.resetHeaderViewHeight()
                 self.setupTableViewInsetAndOffset()

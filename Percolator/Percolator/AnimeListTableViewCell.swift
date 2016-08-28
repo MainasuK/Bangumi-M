@@ -99,7 +99,7 @@ extension AnimeListTableViewCell {
         let size = animeImageView.bounds.size
         
         if let urlVal = imageURLValue, let url = URL(string: urlVal) {
-            animeImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
+            animeImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
         } else {
             animeImageView.image = UIImage.fromColor(.placeholder, size: size)
         }

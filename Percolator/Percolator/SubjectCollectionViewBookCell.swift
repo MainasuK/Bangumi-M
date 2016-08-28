@@ -36,7 +36,7 @@ class SubjectCollectionViewBookCell: SubjectCollectionViewCell {
         
         let size = bookCover.bounds.size
         if let url = URL(string: subjectItem.coverUrlPath) {
-            bookCover.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
+            bookCover.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
         } else {
             bookCover.image = UIImage.fromColor(.placeholder, size: size)
         }

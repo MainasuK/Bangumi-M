@@ -30,7 +30,7 @@ class SubjectCollectionViewNotBookCell: SubjectCollectionViewCell {
         
         let size = coverImageView.bounds.size
         if let url = URL(string: subjectItem.coverUrlPath) {
-            coverImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
+            coverImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
         } else {
             coverImageView.image = UIImage.fromColor(.placeholder, size: size)
         }

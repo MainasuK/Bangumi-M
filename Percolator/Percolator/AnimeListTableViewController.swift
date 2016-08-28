@@ -87,7 +87,7 @@ extension AnimeListTableViewController {
             btn.setImage(UIImage.fromColor(.placeholder, size: CGSize(width: 30, height: 30)), for: .normal)
             if let avatarLargeUrl = BangumiRequest.shared.user?.avatar.largeUrl,
             let url = URL(string: avatarLargeUrl) {
-                btn.af_setImageForState(.normal, url: url)
+                btn.af_setImage(for: .normal, url: url)
             }
             btn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
             btn.imageView?.frame.size = CGSize(width: 30, height: 30)

@@ -1,7 +1,7 @@
 PODS:
-  - Alamofire (4.0.0)
-  - AlamofireImage (2.4.1):
-    - Alamofire (~> 4.0)
+  - Alamofire (4.0.0-beta.1)
+  - AlamofireImage (3.0.0-beta.1):
+    - Alamofire (= 4.0.0-beta.1)
   - Canvas (0.1.2)
   - Cosmos (3.0.0)
   - Kanna (1.0.6)
@@ -28,7 +28,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift3`)
-  - AlamofireImage (from `https://github.com/kemchenj/AlamofireImage.git`, branch `swift3`)
+  - AlamofireImage (from `https://github.com/Alamofire/AlamofireImage.git`, branch `swift3`)
   - Canvas
   - Cosmos (~> 3.0)
   - Kanna (from `https://github.com/tid-kijyun/Kanna`, branch `swift3.0`)
@@ -47,7 +47,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/Alamofire/Alamofire.git
   AlamofireImage:
     :branch: swift3
-    :git: https://github.com/kemchenj/AlamofireImage.git
+    :git: https://github.com/Alamofire/AlamofireImage.git
   Kanna:
     :branch: swift3.0
     :git: https://github.com/tid-kijyun/Kanna
@@ -62,11 +62,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Alamofire:
-    :commit: 1dc3992a3854ca369368c8997ea3c45054070e67
+    :commit: 3cc5b4e8453bec9fd6b973d60e6b0605a38e4cf4
     :git: https://github.com/Alamofire/Alamofire.git
   AlamofireImage:
-    :commit: 6bbed1f025c14cb9afebed557a9e8ecc63680267
-    :git: https://github.com/kemchenj/AlamofireImage.git
+    :commit: b02916e89cb7158994df04bf282b3170964e1eaa
+    :git: https://github.com/Alamofire/AlamofireImage.git
   Kanna:
     :commit: ecc112494ca81ad1f8bc3ddd136ad78d09dd2e1b
     :git: https://github.com/tid-kijyun/Kanna
@@ -81,8 +81,8 @@ CHECKOUT OPTIONS:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
-  Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
-  AlamofireImage: a9d41abab7a16db8d53d6fdff5b4cca8cc9dc894
+  Alamofire: 698bf56c9e48d3248168e4a3a90588ac2e23836a
+  AlamofireImage: 1204674be7d67ea8efb61f38b2683a5ca0066452
   Canvas: eb861e3b555d032648146c8ffda1a5dea40059ca
   Cosmos: df6d24193f3aa04e42eaf52d943361b778b3ce90
   Kanna: 9f30945bbd293a609f698ea164687ccc0990ff60
@@ -95,6 +95,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   UITextField+Shake: 47cc0429dafb3da580686339ad2da091249a8ea2
 
-PODFILE CHECKSUM: f41e5d3150d2bf37f7ec8ac4ed1da35d4dcdb1ee
+PODFILE CHECKSUM: 1f081a3b025b1dee30bd15c3b8405a80ac8cd72b
 
 COCOAPODS: 1.0.1

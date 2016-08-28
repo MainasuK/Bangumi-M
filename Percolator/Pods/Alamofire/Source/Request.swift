@@ -156,7 +156,7 @@ open class Request {
     ///
     /// - returns: The request.
     @discardableResult
-    open func progress(closure: (@escaping (Int64, Int64, Int64) -> Void)? = nil) -> Self {
+    open func progress(closure: ((Int64, Int64, Int64) -> Void)? = nil) -> Self {
         if let uploadDelegate = delegate as? UploadTaskDelegate {
             uploadDelegate.uploadProgress = closure
         } else if let dataDelegate = delegate as? DataTaskDelegate {
