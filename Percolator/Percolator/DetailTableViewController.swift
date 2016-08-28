@@ -345,8 +345,13 @@ extension DetailTableViewController {
         switch indexPath.section {
         case 1:
             return 159.0
+        case 2:
+            fallthrough
+        case 3:
+            return 46.0
         case let section where section >= 4 && section <= 7:
             return 66.0
+        // Self-size banner cell only
         default:
             return UITableViewAutomaticDimension
         }
