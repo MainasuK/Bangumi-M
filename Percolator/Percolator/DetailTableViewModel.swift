@@ -62,9 +62,7 @@ extension DetailTableViewModel {
         guard subject.responseGroup != .large else {
             consolePrint("Subject-large is already exists")
             
-            delay(0.3) { [weak self] in
-                self?.fetchProgress(of: subject)
-            }
+            self.fetchProgress(of: subject)
             
             return
         }
@@ -82,9 +80,7 @@ extension DetailTableViewModel {
                 self.subject = subject
                 self.tableView?.reloadData()
                 
-                delay(0.3) { [weak self] in
-                    self?.fetchProgress(of: subject)
-                }
+                self.fetchProgress(of: subject)
             } catch {
                 consolePrint("Refetch subject occurred error: \(error)")
             }
@@ -127,8 +123,14 @@ extension DetailTableViewModel {
             consolePrint("… get progress result of subject: \(subject.name)")
             NetworkSpinner.off()
             do {
-                self.progress = try result.resolve()
-                self.tableView?.reloadData()
+                let progress = try result.resolve()
+                
+                // Prevent tableView scrolling lag issue
+                DispatchQueue.main.async { [weak self] in
+                    self?.progress = progress
+                    self?.tableView?.reloadData()
+                }
+                
             } catch {
                 consolePrint(error)
             }
