@@ -40,6 +40,7 @@ extension TopicTableViewModel {
         let url = "http://bgm.tv/subject/\(subject.id)/board"
         
         request.html(from: url) { (result: Result<String>) in
+            assert(Thread.isMainThread, "Request callback should be main thread")
             
             do {
                 let html = try result.resolve()

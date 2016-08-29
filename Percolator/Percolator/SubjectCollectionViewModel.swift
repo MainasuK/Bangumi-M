@@ -44,6 +44,7 @@ extension SubjectCollectionViewModel {
         let url = "https://bgm.tv/subject/\(subject.id)"
     
         request.html(from: url) { (result: Result<String>) in
+            assert(Thread.isMainThread, "Request callback should be main thread")
             
             do {
                 let html = try result.resolve()
@@ -80,6 +81,8 @@ extension SubjectCollectionViewModel {
     
     fileprivate func fetchCollectInfo(for subjectIDs: [SubjectID]) {
         request.collection(of: subjectIDs) { (result: Result<CollectDict>) in
+            assert(Thread.isMainThread, "Request callback should be main thread")
+            
             do {
                 let dict = try result.resolve()
                 dict.forEach { (key: SubjectID, value: CollectInfoSmall) in
