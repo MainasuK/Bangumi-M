@@ -2,7 +2,7 @@
 
 <img src="./screenshots/press/iPad-Pro-Silver-horizontal-iPhone-6s-Silver-vertical-clear.png" width = "1500" alt="list" align=center />
 
-The third-party iOS applications of [番组计划](http://bgm.tv).
+The third-party iOS application of [番组计划](http://bgm.tv).
 
 
 ### App Store
