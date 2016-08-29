@@ -94,7 +94,7 @@ extension SearchBoxTableViewCell {
         // Use 1.0 MB get 249 subjects. Awesome
         // let imageURLValue = images.smallUrl
         
-        let size = animeImageView.bounds.size
+        let size = CGSize(width: 1, height: 1)
         
         if let urlVal = imageURLValue,
         let url = URL(string: urlVal) {

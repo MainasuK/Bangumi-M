@@ -102,7 +102,7 @@ extension AnimeListTableViewCell {
         // Async load image
         let networkStatus = BangumiRequest.shared.networkStatus
         let imageURLValue = (networkStatus == ReachableViaWiFi) ? images.largeUrl : images.mediumUrl
-        let size = animeImageView.bounds.size
+        let size = CGSize(width: 1, height: 1)
         
         if let urlVal = imageURLValue, let url = URL(string: urlVal) {
             animeImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))

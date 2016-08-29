@@ -41,7 +41,7 @@ class SubjectCollectionViewBookCell: SubjectCollectionViewCell {
         
         configureIndicator(with: item.1)
         
-        let size = bookCover.bounds.size
+        let size = CGSize(width: 1, height: 1)
         if let url = URL(string: subjectItem.coverUrlPath) {
             bookCover.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
         } else {
