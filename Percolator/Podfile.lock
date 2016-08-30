@@ -4,6 +4,7 @@ PODS:
     - Alamofire (= 4.0.0-beta.1)
   - Canvas (0.1.2)
   - Cosmos (3.0.0)
+  - EUMTouchPointView (0.1.0)
   - Kanna (1.0.6)
   - KeychainAccess (2.3.6)
   - MGSwipeTableCell (1.5.5)
@@ -31,6 +32,7 @@ DEPENDENCIES:
   - AlamofireImage (from `https://github.com/Alamofire/AlamofireImage.git`, branch `swift3`)
   - Canvas
   - Cosmos (~> 3.0)
+  - EUMTouchPointView
   - Kanna (from `https://github.com/tid-kijyun/Kanna`, branch `swift3.0`)
   - KeychainAccess (from `https://github.com/kishikawakatsumi/KeychainAccess.git`, branch `swift-3.0`)
   - MGSwipeTableCell
@@ -85,6 +87,7 @@ SPEC CHECKSUMS:
   AlamofireImage: 1204674be7d67ea8efb61f38b2683a5ca0066452
   Canvas: eb861e3b555d032648146c8ffda1a5dea40059ca
   Cosmos: df6d24193f3aa04e42eaf52d943361b778b3ce90
+  EUMTouchPointView: 1c78c09726d22577b933444b42447ecfc636148b
   Kanna: 9f30945bbd293a609f698ea164687ccc0990ff60
   KeychainAccess: 7f10e2ef998ddf954a64d5d608be08677774684d
   MGSwipeTableCell: bafeb5f351124544c9364ecbdf24c7b06a37d340
@@ -95,6 +98,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   UITextField+Shake: 47cc0429dafb3da580686339ad2da091249a8ea2
 
-PODFILE CHECKSUM: 1f081a3b025b1dee30bd15c3b8405a80ac8cd72b
+PODFILE CHECKSUM: cd08e3c45c32fcd62a4505aac0e62c0b98803a4f
 
 COCOAPODS: 1.0.1
