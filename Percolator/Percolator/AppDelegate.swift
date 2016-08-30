@@ -10,11 +10,13 @@ import UIKit
 import CoreData
 import AlamofireImage
 import SVProgressHUD
+import EUMTouchPointView
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+//    public var window: EUMShowTouchWindow? = EUMShowTouchWindow(frame: UIScreen.main.bounds)       // For App Preview
     lazy var coreDataStack: CoreDataStack = {
         let options: [AnyHashable : Any] = [NSPersistentStoreUbiquitousContentNameKey : "Percolator",
                                             NSMigratePersistentStoresAutomaticallyOption : true,
