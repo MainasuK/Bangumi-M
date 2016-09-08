@@ -36,7 +36,7 @@ extension BangumiRequest {
             consolePrint("Send search request without auth token")
         }
         
-        alamofireManager.request(urlPath, withMethod: .get, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
+        alamofireManager.request(urlPath, method: .get, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let subjects = self.getResult(from: response)
                 .flatMap(self.toJSON)

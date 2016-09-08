@@ -19,7 +19,7 @@ extension BangumiRequest {
         let urlPath = String(format: BangumiApiKey.Auth, BangumiApiKey.Percolator)
         let parameters = ["username" : email, "password" : pass]
 
-        alamofireEphemeralManager.request(urlPath, withMethod: .post, parameters: parameters).validate().responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .post, parameters: parameters).validate().responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let user = self.getResult(from: response)
                 .flatMap(self.toJSON)

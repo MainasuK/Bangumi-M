@@ -28,7 +28,7 @@ extension BangumiRequest {
             parameters = ["ep_id" : epID]
         }
         
-        alamofireEphemeralManager.request(urlPath, withMethod: .post, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .post, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let json = self.getResult(from: response)
                 .flatMap(self.toJSON)

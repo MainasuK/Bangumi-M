@@ -12,11 +12,11 @@ import SwiftyJSON
 
 extension BangumiRequest {
     
-    typealias ResponseData = Alamofire.Response<Data, NSError>
+    typealias ResponseData = Alamofire.DataResponse<Data>
     
     func html(from url: String, handler: @escaping (Result<String>) -> Void) {
         
-        BangumiRequest.shared.alamofireManager.request(url, withMethod: .get).validate().responseData(queue: DispatchQueue.cmkJson) { (response: ResponseData) in
+        BangumiRequest.shared.alamofireManager.request(url, method: .get).validate().responseData(queue: DispatchQueue.cmkJson) { (response: ResponseData) in
             
             let html = self.getResult(from: response)
                 .flatMap(self.toHTML)

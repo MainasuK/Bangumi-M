@@ -171,7 +171,7 @@ extension SubjectCollectionViewController {
                 
             } catch UnknownError.alamofire(let error) {
                 let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
+                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.errorDescription)")
                 SVProgressHUD.dismiss()
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("Unknow NSError: \(error)")

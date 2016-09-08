@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class BangumiRequest {
     
-    typealias Response = Alamofire.Response<Any, NSError>
+    typealias Response = Alamofire.DataResponse<Any>
 
     let internetReachability = Reachability.forInternetConnection()
     

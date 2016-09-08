@@ -64,7 +64,7 @@ extension BangumiRequest {
     enum Unknown: Error {
         case API(error: String, code: Int)
         case network(error: URLError)
-        case alamofire(error: NSError)
+        case alamofire(error: AFError)
     }
     
 }
@@ -88,12 +88,13 @@ extension BangumiRequest {
                 return Unknown.network(error: urlError)
             }
             
-        case let nsError as NSError:
-            switch nsError.code {
-            case Alamofire.ErrorCode.contentTypeValidationFailed.rawValue:
+        case let afError as AFError:
+            switch afError {
+            case .responseValidationFailed:
                 return AlamofireError.contentTypeValidationFailed
+                
             default:
-                return Unknown.alamofire(error: nsError)
+                return Unknown.alamofire(error: afError)
             }
             
         default:

@@ -25,7 +25,7 @@ extension BangumiRequest {
         
         let urlPath = String(format: BangumiApiKey.Progress, user.id, subjectID, BangumiApiKey.Percolator, user.authEncode)
         
-        alamofireEphemeralManager.request(urlPath, withMethod: .get).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .get).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let progress = self.getResult(from: response)
                 .flatMap(self.toJSON)
@@ -47,7 +47,7 @@ extension BangumiRequest {
         
         let urlPath = String(format: BangumiApiKey.Progresses, user.id, BangumiApiKey.Percolator, user.authEncode)
         
-        alamofireEphemeralManager.request(urlPath, withMethod: .get, parameters: nil).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .get, parameters: nil).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let progresses = self.getResult(from: response)
                 .flatMap(self.toJSON)

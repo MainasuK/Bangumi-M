@@ -28,7 +28,7 @@ extension BangumiRequest {
         let urlPath = String(format: BangumiApiKey.UserWatchingCollection, user.id)
         let parameters = ["cat" : "watching"]
         
-        alamofireEphemeralManager.request(urlPath, withMethod: .get, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .get, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let subjects = self.getResult(from: response)
                 .flatMap(self.toJSON)
@@ -50,7 +50,7 @@ extension BangumiRequest {
         
         let urlPath = String(format: BangumiApiKey.UserSubjectCollection, subjectID, BangumiApiKey.Percolator, user.authEncode)
     
-        alamofireEphemeralManager.request(urlPath, withMethod: .get, parameters: nil).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .get, parameters: nil).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
         
             let collectInfo = self.getResult(from: response)
                 .flatMap(self.toJSON)
@@ -79,7 +79,7 @@ extension BangumiRequest {
         })
         let urlPath = String(format: BangumiApiKey.UserSubjectCollectionSmall, user.id, ids, BangumiApiKey.Percolator, user.authEncode)
         
-        alamofireEphemeralManager.request(urlPath, withMethod: .get, parameters: nil).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .get, parameters: nil).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
             
             let collectDict = self.getResult(from: response)
                 .flatMap(self.toJSON)
@@ -104,7 +104,7 @@ extension BangumiRequest {
         if let comment = comment { postBody["comment"] = comment }
         if let tags = tags { postBody["tags"] = "\(tags.joined(separator: " "))" }
         
-        alamofireEphemeralManager.request(urlPath, withMethod: .post, parameters: postBody).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .post, parameters: postBody).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
             
             let collectInfo = self.getResult(from: response)
                 .flatMap(self.toJSON)
