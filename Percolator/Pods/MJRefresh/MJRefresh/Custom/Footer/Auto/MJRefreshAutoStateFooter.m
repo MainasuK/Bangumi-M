@@ -11,7 +11,7 @@
 @interface MJRefreshAutoStateFooter()
 {
     /** 显示刷新状态的label */
-    __weak UILabel *_stateLabel;
+    __unsafe_unretained UILabel *_stateLabel;
 }
 /** 所有状态对应的文字 */
 @property (strong, nonatomic) NSMutableDictionary *stateTitles;
@@ -30,7 +30,7 @@
 - (UILabel *)stateLabel
 {
     if (!_stateLabel) {
-        [self addSubview:_stateLabel = [UILabel label]];
+        [self addSubview:_stateLabel = [UILabel mj_label]];
     }
     return _stateLabel;
 }
@@ -56,10 +56,13 @@
 {
     [super prepare];
     
+    // 初始化间距
+    self.labelLeftInset = MJRefreshLabelLeftInset;
+    
     // 初始化文字
-    [self setTitle:MJRefreshAutoFooterIdleText forState:MJRefreshStateIdle];
-    [self setTitle:MJRefreshAutoFooterRefreshingText forState:MJRefreshStateRefreshing];
-    [self setTitle:MJRefreshAutoFooterNoMoreDataText forState:MJRefreshStateNoMoreData];
+    [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshAutoFooterIdleText] forState:MJRefreshStateIdle];
+    [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshAutoFooterRefreshingText] forState:MJRefreshStateRefreshing];
+    [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshAutoFooterNoMoreDataText] forState:MJRefreshStateNoMoreData];
     
     // 监听label
     self.stateLabel.userInteractionEnabled = YES;
@@ -69,6 +72,8 @@
 - (void)placeSubviews
 {
     [super placeSubviews];
+    
+    if (self.stateLabel.constraints.count) return;
     
     // 状态标签
     self.stateLabel.frame = self.bounds;

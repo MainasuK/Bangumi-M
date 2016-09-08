@@ -5,6 +5,7 @@ Kanna(鉋) is an XML/HTML parser for Mac OS X and iOS. (It was formerly known as
 
 It was inspired by [Nokogiri](https://github.com/sparklemotion/nokogiri)(鋸).
 
+[![Build Status](https://travis-ci.org/tid-kijyun/Kanna.svg?branch=master)](https://travis-ci.org/tid-kijyun/Kanna)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat
             )](http://mit-license.org)
 [![Platform](http://img.shields.io/badge/platform-ios_osx_tvos-lightgrey.svg?style=flat
@@ -27,6 +28,27 @@ Features:
 
 Installation:
 =================
+
+### Swift 3.x
+
+#####CocoaPods
+**:warning: CocoaPods (`0.39 or later`) is required.**
+
+Adding it to your `Podfile`:
+```
+use_frameworks!
+pod 'Kanna', '~> 2.0.0'
+```
+
+#####Carthage
+Adding it to your `Cartfile`:
+
+```
+github "tid-kijyun/Kanna" ~> 2.0.0
+```
+
+1. In the project settings add `$(SDKROOT)/usr/include/libxml2` to the "header search paths" field
+
 
 ### Swift 2.x
 

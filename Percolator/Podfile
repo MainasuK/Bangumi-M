@@ -1,10 +1,31 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '8.0'
+platform :ios, '9.0'
 
 use_frameworks!
-pod 'HanekeSwift', :git => 'https://github.com/meteochu/HanekeSwift.git', :branch => 'master'
-pod 'TagWriteView'
-pod 'MJRefresh'
-pod 'Cosmos'
-pod 'Kanna', '~> 1.0.0'
-pod 'ReachabilitySwift'
+
+target 'Bangumi M' do
+    pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :branch => 'swift3'
+    pod 'AlamofireImage', :git => 'https://github.com/calmcom/AlamofireImage.git', :branch => 'swift3'
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'swift3'
+    # pod 'TagWriteView'
+    pod 'MJRefresh'
+    pod 'Cosmos', '~> 3.0'
+    pod 'Kanna', :git => 'https://github.com/tid-kijyun/Kanna', :branch => 'swift3.0'
+    # pod 'ReachabilitySwift'
+    pod 'UITextField+Shake', '~> 1.1'
+    pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'
+    pod 'Canvas'
+    pod 'KeychainAccess', :git => 'https://github.com/kishikawakatsumi/KeychainAccess.git', :branch => 'swift-3.0'
+    pod 'MGSwipeTableCell'
+    pod "EUMTouchPointView"
+
+    target 'Bangumi M Tests' do
+        inherit! :search_paths
+        pod 'OHHTTPStubs'
+    end
+
+    target 'Bangumi M UITests' do
+        inherit! :search_paths
+        pod 'SimulatorStatusMagic'
+    end
+end

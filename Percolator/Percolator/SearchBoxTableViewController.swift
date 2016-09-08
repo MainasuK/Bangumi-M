@@ -7,113 +7,194 @@
 //
 
 import UIKit
-import CoreData
-import Haneke
 import MJRefresh
+import SVProgressHUD
+import MGSwipeTableCell
 
 final class SearchBoxTableViewController: UITableViewController {
+    
+    typealias Model = SearchBoxTableViewModel
+    typealias Cell = SearchBoxTableViewCell
+    
+    fileprivate lazy var model: Model = {
+        return Model(tableView: self.tableView)
+    }()
+    fileprivate var dataSource: TableViewDataSource<Model, Cell>!
+    
+    fileprivate lazy var searchController: UISearchController = { [weak self] in
+        let controller = UISearchController(searchResultsController: nil)
+        
+        controller.delegate = self
+        controller.searchBar.delegate = self
+        
+        controller.searchBar.scopeButtonTitles = PercolatorKey.searchTypeArr
+        
+        controller.dimsBackgroundDuringPresentation = true
+        controller.hidesNavigationBarDuringPresentation = false
+        controller.searchBar.enablesReturnKeyAutomatically = false
+        
+        // Note: Override UISearchController preferredStatusBarStyle() method return .lightContent
+        // And it's not work in iOS 10. Manually set statusBarStyle to make sure appearance correct.
+        
+        controller.searchBar.barTintColor = UIColor.navigationBarBlue
+        controller.searchBar.tintColor = UIColor.white
+        controller.searchBar.placeholder = "条目搜索"
+        controller.searchBar.setSearchFieldBackgroundImage(#imageLiteral(resourceName: "searchBarTextFieldBackgroundImage"), for: .normal)
 
-    let searchModel = BangumiSearchModel.shared
-    let request = BangumiRequest.shared
-    
-    var isSearching = false {
-        willSet {
-            if newValue == true {
-                self.tableView.footer.resetNoMoreData()
-            } else {
-                self.tableView.footer.noticeNoMoreData()
-            }
+        return controller
+    }()
+    fileprivate var searchKeyword: String {
+        guard let keyword = title else {
+            return ""
         }
+        
+        return (keyword == "搜索盒子") ? "" : keyword
     }
-//    var fetchResultController = NSFetchedResultsController!
-    var searchController: UISearchController!
-    var isSearchTabelControllerFirstDisplay = true
-    
+    fileprivate var searchScopeIndex = 0
+    fileprivate var statusBarStyle: UIStatusBarStyle = .default
     
     @IBOutlet weak var searchButton: UIBarButtonItem!
     
-    @IBAction func searchButtonClicked(button: UIBarButtonItem?) {
+    @IBAction func searchButtonClicked(_ button: UIBarButtonItem?) {
         
-        // Set searchController
-        searchController = UISearchController(searchResultsController: nil)
-        searchController.delegate = self
-        searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "条目搜索"
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = true
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.enablesReturnKeyAutomatically = false
+        // Make sure Search text based on last search content
+        searchController.searchBar.text = searchKeyword
+        searchController.searchBar.selectedScopeButtonIndex = searchScopeIndex
         
-        let title = self.navigationItem.title ?? "搜索盒子"
-        searchController.searchBar.text = (title == "搜索盒子") ? "" : title
-        // Present the view controller.
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.presentViewController(self.searchController, animated: true, completion: nil)
-            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-        })
+        // Present the view controller
+        changeStatusBarStyle(to: .lightContent)
+        present(searchController, animated: true, completion: nil)
     }
     
-    
-    func loadMoreData(searchBar: UISearchBar) {
+    @IBAction func longPressTrigger(_ sender: UILongPressGestureRecognizer) {
+        guard sender.state == .began,
+        let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)) else {
+            return
+        }
         
-        let searchText = searchBar.text ?? ""
-        searchController.searchBar.resignFirstResponder()
-        searchButton.enabled = false
+        let (subject, _) = model.item(at: indexPath)
         
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
-        spinner.center = self.view.center
-        spinner.center.y -= 64  // FIXME: Magic number me sad
-        spinner.color = UIColor.myPurePinkColor()
-        spinner.hidesWhenStopped = true
-        spinner.startAnimating()
-        self.view.addSubview(spinner)
+        let alertController = UIAlertController(title: "\(subject.name)", message: nil, preferredStyle: .actionSheet)
         
-        searchModel.sendSearchRequest(request, searchText: searchText) { (error) -> Void in
+        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel) { (action) in
+            // ...
+        }
+        
+        let saveAction = UIAlertAction(title: "保存", style: .default) { (action) in
+            if subject.saveToCoreData() {
+                SVProgressHUD.showSuccess(withStatus: "保存成功")
+            } else {
+                SVProgressHUD.showInfo(withStatus: "保存失败")
+            }
+            self.tableView.reloadRows(at: [indexPath], with: .none)
             
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                
-                spinner.stopAnimating()
-                self.tableView.footer.endRefreshing()
-                self.searchButton.enabled = true
-                
-                if error != nil {
-                    if error?.code == 1 {
-                        // No more data
-                        self.tableView.footer.noticeNoMoreData()
-                        debugPrint("@ SearchTableViewController: No more data")
-                    } else {
-                        // No result
-                        debugPrint("@ SearchTableViewController: No result")
-                        self.noticeInfo("无结果", autoClear: true, autoClearTime: 5)
-                    }
-                    
-                } else {
-                    // success
-                    debugPrint("@ SearchTableViewController: Fetch data success")
-                    self.tableView.reloadData()
-                }
+        }
+        let deleteAction = UIAlertAction(title: "删除", style: .destructive) { (action) in
+            let isSuccess = self.model.removeItem(at: indexPath)
+            if isSuccess {
+                SVProgressHUD.showSuccess(withStatus: "删除成功")
+            } else {
+                SVProgressHUD.showInfo(withStatus: "删除失败")
             }
         }
         
+        let collectAction = UIAlertAction(title: "收藏", style: .default) { (action) in
+            let navigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.CollectNavigationController) as! UINavigationController
+            let collectTableViewController = navigationController.childViewControllers.first as! CollectTableViewController
+            collectTableViewController.subject = subject
+            
+            navigationController.modalPresentationStyle = .formSheet
+            
+            DispatchQueue.main.async {
+                self.present(navigationController, animated: true, completion: nil)
+            }
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(collectAction)
+    
+        if subject.isSaved() {
+            alertController.addAction(deleteAction)
+        } else {
+            alertController.addAction(saveAction)
+        }
+    
+        // Configure the alert controller's popover presentation controller if it has one
+        if let popoverPresentationController = alertController.popoverPresentationController,
+            let cell = tableView.cellForRow(at: indexPath) {
+            popoverPresentationController.sourceRect = cell.frame
+            popoverPresentationController.sourceView = self.view
+            popoverPresentationController.permittedArrowDirections = .any
+        }
+        
+        present(alertController, animated: true, completion: nil)
     }
     
-    private func fetchLocalData() {
+    deinit {
+        consolePrint("SearchBoxTableViewController deinit")
+    }
+    
+}
+
+extension SearchBoxTableViewController {
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return statusBarStyle
+    }
+    
+    fileprivate func changeStatusBarStyle(to style: UIStatusBarStyle) {
+        statusBarStyle = style
         
-        let fetchRequest = NSFetchRequest(entityName: "Subject")
-        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
-            
-            Subject.fetchSubject({ (animeSubjectArr) -> Void in
-                
-                if animeSubjectArr != nil {
-                    self.searchModel.subjectLocalList = animeSubjectArr!
-                }
-            })
+        UIView.animate(withDuration: 0.2) {
+            self.setNeedsStatusBarAppearanceUpdate()
         }
     }
+    
+}
 
+// MARK: - UITableView Setup method
+extension SearchBoxTableViewController {
+    
+    fileprivate func setupTableView() {
+        // Set navigation bar title
+        title = "搜索盒子"
+        
+        // Setup dataSource and link model
+        setupTableViewDataSource()
+        
+        // Set self size cell height
+        tableView.estimatedRowHeight = 200
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
+        // Fix the separator display when 0 rows
+        tableView.tableFooterView = UIView()
+        
+        // Set cell conform readable layout margin
+        tableView.cellLayoutMarginsFollowReadableWidth = true
+        
+        // Configure tableView appearance
+        tableView.backgroundColor = UIColor.myAnimeListBackground
+        
+        // Set Refresh footer
+        setupTableViewFooter()
+    }
+    
+    fileprivate func setupTableViewFooter() {
+        tableView.mj_footer = {
+            //  Use unowned because the caller is self. No async
+            let footer = MJRefreshAutoNormalFooter { [unowned self] in
+                self.search(for: self.searchKeyword, type: self.searchScopeIndex)
+            }
+            footer?.isHidden = true // Appeare after search
+            
+            return footer
+        }()
+    }
+    
+    private func setupTableViewDataSource() {
+        dataSource = TableViewDataSource<Model, Cell>(model: model)
+        tableView.dataSource = dataSource
+    }
 }
 
 // MARK: - View Life Cycle
@@ -122,309 +203,248 @@ extension SearchBoxTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Fetch result from Core Data
-        self.navigationItem.title = "搜索盒子"
-        fetchLocalData()
-        
-        // Fix the separator display when Zero rows
-        tableView.tableFooterView = UIView()
-        
-        /// Set Refresh footer
-        self.tableView.footer = MJRefreshAutoNormalFooter {
-            if self.isSearching {
-                self.loadMoreData(self.searchController.searchBar)
-            } else {
-                self.tableView.footer.noticeNoMoreData()
-            }
-        }
-        
-        // Self Sizing Cells
-        //        self.tableView.estimatedRowHeight = 110;
-        //        self.tableView.rowHeight = UITableViewAutomaticDimension;
-        
-        // Configure tableView appearance
-        
-        //        self.tableView.separatorColor = UIColor.clearColor()
-        self.tableView.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
-        //        self.tableView.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 0.2)
-        
+        setupTableView()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBar.lt_reset()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if isSearchTabelControllerFirstDisplay && searchModel.subjectLocalList.isEmpty {
-            searchButtonClicked(nil)
-        }
-        isSearchTabelControllerFirstDisplay = false
+        if model.isEmpty { searchButtonClicked(nil) }
     }
     
-}
-
-// MARK: - UITableViewDatasource
-extension SearchBoxTableViewController {
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        SVProgressHUD.dismiss()
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        var rows = 0
-        if isSearching {
-            rows = searchModel.subjectsList.count
-        } else {
-            NSLog("@ SearchBoxTableViewController: Get local list (\(searchModel.subjectLocalList.count))")
-            rows = searchModel.subjectLocalList.count
-        }
-        
-        return rows
-    }
-    
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! SearchBoxTabelCell
-        
-        let (subject, isSaved) = searchModel.getSubjectAndSavedInfoToSearchBox(indexPath.row, isSearching)
-        
-        cell.delegate = self
-        cell.subject = subject
-        cell.isSaved = (isSearching) ? isSaved : false
-        cell.initCell()
-        
-        if indexPath.row == tableView.numberOfRowsInSection(indexPath.section) - 1  {
-            // Prevent app window resize
-            cell.separatorInset.left = CGFloat(999999)
-        } else {
-            cell.separatorInset = UITableViewCell().separatorInset
-        }
-        
-        return cell
-    }
-
 }
 
 // MARK: - UITableViewDelegate
 extension SearchBoxTableViewController {
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.DetialVC) as! DetailViewController
-        
-        let request = BangumiRequest.shared
-        let (subject, isSaved) = searchModel.getSubjectAndSavedInfoToSearchBox(indexPath.row, isSearching)
-        
-        detailVC.animeItem = Anime(subject: subject)
-        detailVC.animeSubject = subject
-        detailVC.detailSource = BangumiDetailSource()
-        
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.navigationController?.navigationBar.lt_setBackgroundColor(UIColor.myNavigatinBarLooksLikeColor().colorWithAlphaComponent(1))
-            self.navigationController?.pushViewController(detailVC, animated: true)
-            detailVC.initFromSearchBox(request, subject)
-        })
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+        let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialTableViewControllerKey) as! DetailTableViewController
+        detailTableViewController.subject = model.item(at: indexPath).0
+        navigationController?.pushViewController(detailTableViewController, animated: true)
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        return 110
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let swipeCell = cell as? MGSwipeTableCell {
+            swipeCell.delegate = self
+        }
     }
-    
+
 }
 
 // MARK: - UISearchBarDelegate
 extension SearchBoxTableViewController: UISearchBarDelegate {
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        if searchBar.text == "" || searchBar.text == "搜索盒子" {
-            isSearching = false
-            fetchLocalData()
-            self.navigationItem.title = "搜索盒子"
-        } else {
-            isSearching = true
-            searchModel.dropModel()
-            loadMoreData(searchBar)
-            self.navigationItem.title = searchBar.text
+        defer {
+            changeStatusBarStyle(to: .default)
+            searchController.dismiss(animated: true, completion: nil)
         }
         
-        searchController.dismissViewControllerAnimated(true, completion: nil)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
-        self.tableView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        
-        if searchBar.text == "搜索盒子" || searchBar.text == "" {
-            isSearching = false
-            fetchLocalData()
+        // Check if user type nothing
+        guard let searchText = searchBar.text, searchBar.text != "" else {
+            return
         }
-        self.navigationItem.title = (searchBar.text != "") ? searchBar.text : "搜索盒子"
-        self.tableView.reloadData()
+        
+        // Set navigation bar title and show HUD
+        title = searchText
+        SVProgressHUD.show()
+        
+        searchScopeIndex = searchBar.selectedScopeButtonIndex
+        search(for: searchText, type: searchScopeIndex)
     }
 
-}
-
-// MARK: - UISearchResultsUpdating
-extension SearchBoxTableViewController: UISearchResultsUpdating {
-    
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
-        if searchController.searchBar.text == "搜索盒子" {
-            isSearching = false
-            fetchLocalData()
-        }
-        
-        self.tableView.reloadData()
-        self.tableView.footer.resetNoMoreData()
-    }
-    
 }
 
 // MARK: - UISearchControllerDelegate
 extension SearchBoxTableViewController: UISearchControllerDelegate {
     
-    func didDismissSearchController(searchController: UISearchController) {
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
+    func willPresentSearchController(_ searchController: UISearchController) {
+        changeStatusBarStyle(to: .lightContent)
     }
+    
+    func willDismissSearchController(_ searchController: UISearchController) {
+        changeStatusBarStyle(to: .default)
+    }
+
 }
+
+// MARK: - Search method
+extension SearchBoxTableViewController {
+    
+    typealias ModelError = Model.ModelError
+    typealias NetworkError = BangumiRequest.NetworkError
+    typealias UnknownError = BangumiRequest.Unknown
+    
+    fileprivate func search(for text: String, type scopeIndex: Int) {
+        searchButton.isEnabled = false
+        
+        let searchScopeType =  PercolatorKey.searchTypeDict[scopeIndex] ?? 0
+        
+        // Handle error from model
+        // Model deal with data source and reload tableView
+        model.search(for: text, type: searchScopeType) { (error: Error?) in
+            
+            defer {
+                SVProgressHUD.dismiss(withDelay: 3.0)
+                self.searchButton.isEnabled = true
+            }
+            
+            do {
+
+                // Too many errors to catch…
+                // Be careful hurt youself
+                do {
+                    try error?.throwMyself()
+                    
+                    // No error
+                    consolePrint("Search success")
+                    self.tableView.mj_footer?.isHidden = false
+                    self.tableView.mj_footer.isAutomaticallyHidden = true
+                    self.tableView.mj_footer.resetNoMoreData()
+                    SVProgressHUD.dismiss()
+                    
+                } catch ModelError.noMoreData {
+                    consolePrint("Search no more data")
+                    self.tableView.mj_footer.endRefreshingWithNoMoreData()
+                    
+                } catch ModelError.needRetry {
+                    consolePrint("Retry search")
+                    SVProgressHUD.show()
+                    delay(1.0) {
+                        self.tableView.mj_footer.resetNoMoreData()
+                        self.search(for: text, type: searchScopeType)
+                    }
+                    
+                } catch ModelError.noResult {
+                    consolePrint("Search not found")
+                    self.tableView.mj_footer.endRefreshingWithNoMoreData()
+                    let status = NSLocalizedString("no result", comment: "")
+                    delay(1.0) {
+                        SVProgressHUD.showInfo(withStatus: status)
+                    }
+                    
+                } catch UnknownError.API(let error, let code) {
+                    self.tableView.mj_footer.endRefreshingWithNoMoreData()
+                    
+                    let title = NSLocalizedString("server error", comment: "")
+                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error)", code: code)
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                    consolePrint("API error: \(error), code: \(code)")
+                    
+                } catch NetworkError.timeout {
+                    let status = NSLocalizedString("time out", comment: "")
+                    SVProgressHUD.showInfo(withStatus: status)
+                    self.tableView.mj_footer.resetNoMoreData()
+                    consolePrint("Time out")
+                    
+                } catch NetworkError.notConnectedToInternet {
+                    self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
+                    
+                } catch UnknownError.alamofire(let error) {
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
+                    consolePrint("Unknow NSError: \(error)")
+                    
+                } catch UnknownError.network(let error) {
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
+                    consolePrint("Unknow NSURLError: \(error)")
+                    
+                } catch {
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
+                    consolePrint("Unresolve case: \(error)")
+                }   // end do-catch block
+                
+            }   // end do
+        }
+        
+    }
+    
+}
+
 
 // MARK: - MGSwipeTableCellDelegate
 extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
     
-    func swipeTableCell(cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
-        //        if let _cell = cell as? SearchBoxTabelCell {
-        //            if searchModel.isLocalSaved(_cell.subject.id) {
-        //                return false
-        //            }
-        //        }
-        //
-        if isSearching {
-            return (direction == .LeftToRight) ? true : false
-        } else {
-            return true
+    func swipeTableCell(_ cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
+        return true
+    }
+    
+    func swipeTableCell(_ cell: MGSwipeTableCell!, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings!, expansionSettings: MGSwipeExpansionSettings!) -> [Any]! {
+        
+        guard let cell = cell,
+        let indexPath = self.tableView.indexPath(for: cell) else {
+            return []
+        }
+        
+        let subject = self.model.item(at: indexPath).0
+        
+        swipeSettings.transition = MGSwipeTransition.drag
+        swipeSettings.threshold = 0.1
+        expansionSettings.buttonIndex = 0
+        expansionSettings.fillOnTrigger = true
+        expansionSettings.threshold = 2.0
+        
+        let saveBlue = UIColor(red: 0, green: 0x99/255.0, blue:0xcc/255.0, alpha: 1.0)
+        let collectionYellow = UIColor(red: 253.0/255.0, green: 204.0/255.0, blue: 49.0/255.0, alpha: 1.0)
+        let deleteRed = UIColor(red: 255.0/255.0, green: 59.0/255.0, blue: 50.0/255.0, alpha: 1.0)
+        
+        let saveButton = MGSwipeButton(title: "保存", backgroundColor: saveBlue, padding: 25) { [weak self] (cell: MGSwipeTableCell?) -> Bool in
+            let _ = subject.saveToCoreData()
+            self?.tableView.reloadRows(at: [indexPath], with: .right)
+            
+            return false
+        }
+        
+        let collectionButton = MGSwipeButton(title: "收藏", backgroundColor: collectionYellow, padding: 25) { [weak self] (cell: MGSwipeTableCell?) -> Bool in
+            
+            
+            let navigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.CollectNavigationController) as! UINavigationController
+            let collectTableViewController = navigationController.childViewControllers.first as! CollectTableViewController
+            collectTableViewController.subject = subject
+            
+            navigationController.modalPresentationStyle = .formSheet
+            self?.present(navigationController, animated: true, completion: nil)
+            self?.tableView.reloadRows(at: [indexPath], with: .right)
+            
+            return false
+        }
+        
+        let deleteButton = MGSwipeButton(title: "删除", backgroundColor: deleteRed, padding: 25) { [weak self] (cell: MGSwipeTableCell?) -> Bool in
+            
+            let _ = self?.model.removeItem(at: indexPath)
+            return false
+        }
+        
+        switch direction {
+        case .leftToRight:
+            return (subject.isSaved()) ? [collectionButton!] : [saveButton!, collectionButton!]
+            
+        case .rightToLeft:
+            return (subject.isSaved()) ? [deleteButton!] : []
         }
     }
     
-    func swipeTableCell(cell: MGSwipeTableCell!, swipeButtonsForDirection direction: MGSwipeDirection, swipeSettings: MGSwipeSettings!, expansionSettings: MGSwipeExpansionSettings!) -> [AnyObject]! {
-        
-        swipeSettings.transition = MGSwipeTransition.Border
-        expansionSettings.buttonIndex = 0
-        
-        let me = self
-        
-        if direction == .LeftToRight {
-            expansionSettings.fillOnTrigger = true
-            expansionSettings.threshold = 1.5
-            
-            let padding = 15
-            
-            let collectButton = MGSwipeButton(title: "收藏", backgroundColor: UIColor(red: 253.0/255.0, green: 204.0/255.0, blue: 49.0/255.0, alpha: 1.0), padding: padding, callback: { (cell) -> Bool in
-                
-                let indexPath = me.tableView.indexPathForCell(cell)!
-                let (subject, saved) = self.searchModel.getSubjectAndSavedInfoToSearchBox(indexPath.row, self.isSearching)
-                
-                let collectVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(StoryboardKey.AnimeCollectVC) as! AnimeCollectTableViewController
-                collectVC.animeItem = Anime(subject: subject)
-                //                self.navigationController?.pushViewController(collectVC, animated: true)
-                //                self.searchController.dismissViewControllerAnimated(true, completion: nil)
-                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.navigationController?.pushViewController(collectVC, animated: true)
-                })
-                
-                return false
-            })
-            
-            let saveButton = MGSwipeButton(title: "保存", backgroundColor: UIColor(red: 0, green: 0x99/255.0, blue:0xcc/255.0, alpha: 1.0), padding: padding, callback: { (cell) -> Bool in
-                
-                let indexPath = me.tableView.indexPathForCell(cell)!
-                let image = (me.tableView.cellForRowAtIndexPath(indexPath) as? SearchBoxTabelCell)?.animeImageView.image
-                let (subject, _) = self.searchModel.getSubjectAndSavedInfoToSearchBox(indexPath.row, self.isSearching)
-                
-                Subject.saveAnimeSubject(subject) { (success) -> Void in
-                    if success {
-                        NSLog("^ SearchBoxTableViewController: Save success")
-                        self.noticeTop("保存成功", autoClear: true, autoClearTime: 3)
-                    } else {
-                        NSLog("^ SearchBoxTableViewController: Save failed")
-                    }
-                    
-                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
-                }
-                
-                return false
-            })
-            
-            if isSearching {
-                if let _cell = cell as? SearchBoxTabelCell {
-                    if _cell.isSaved {
-                        return [collectButton]
-                    } else {
-                        return [saveButton, collectButton]
-                    }
-                    
-                } else {
-                    return nil
-                }
-                
-            } else {
-                return [collectButton]
-            }   // if isSeaching … else …
-        } else {    // if .LeftToRight … else { so, Here is .RightToLeft } …
-            expansionSettings.fillOnTrigger = true
-            expansionSettings.threshold = 2.0
-            
-            let padding = 25
-            
-            let deleteButton = MGSwipeButton(title: "删除", backgroundColor: UIColor(red: 255.0/255.0, green: 59.0/255.0, blue: 50.0/255.0, alpha: 1.0), padding: padding, callback: { (cell) -> Bool in
-                
-                let indexPath = me.tableView.indexPathForCell(cell)!
-                let subjectToDelete = self.searchModel.subjectLocalList[indexPath.row]
-                Subject.deleteSubject(subjectToDelete, { (success) -> Void in
-                    NSLog("^ SearchBoxTableViewController: Delete is \(success)")
-                    if success {
-                        self.searchModel.subjectLocalList.removeAtIndex(indexPath.row)
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
-                        })
-                    }
-                })
-                
-                return false
-            })
-            
-            
-            if isSearching {
-                return nil
-            } else {
-                return [deleteButton]
-            }
-        }   // if .LeftToRight … else …
-        
-        //        return nil
-    }
-    
-    func swipeTableCell(cell: MGSwipeTableCell!, didChangeSwipeState state: MGSwipeState, gestureIsActive: Bool) {
-        
+    func swipeTableCell(_ cell: MGSwipeTableCell!, didChange state: MGSwipeState, gestureIsActive: Bool) {
         var str = ""
         var active = ""
         switch state {
-        case .None: str = "None"
-        case .SwipingLeftToRight: str = "SwipeingLeftToRight"
-        case .SwipingRightToLeft: str = "SwipingRightToLeft"
-        case .ExpandingLeftToRight: str = "ExpandingLeftToRight"
-        case .ExpandingRightToLeft: str = "ExpandingRightToLeft"
+        case .none: str = "None"
+        case .swipingLeftToRight: str = "SwipeingLeftToRight"
+        case .swipingRightToLeft: str = "SwipingRightToLeft"
+        case .expandingLeftToRight: str = "ExpandingLeftToRight"
+        case .expandingRightToLeft: str = "ExpandingRightToLeft"
         }
         
         active = (gestureIsActive) ? "Active" : "Ended"
-        NSLog("Swipe state: \(str) ::: Gestrue: \(active)")
+        consolePrint("Swipe state: \(str) ::: Gestrue: \(active)")
     }
 
 }

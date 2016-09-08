@@ -1,0 +1,6 @@
+framework module Pods_Bangumi_M_Tests {
+  umbrella header "Pods-Bangumi M Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

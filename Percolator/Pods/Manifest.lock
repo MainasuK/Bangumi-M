@@ -1,35 +1,103 @@
 PODS:
-  - Cosmos (1.0.22)
-  - HanekeSwift (0.10.0)
-  - Kanna (1.0.5)
-  - MJRefresh (2.4.7)
-  - ReachabilitySwift (2.3.3)
-  - TagWriteView (1.1.3)
+  - Alamofire (4.0.0-beta.2)
+  - AlamofireImage (3.0.0-beta.1):
+    - Alamofire (= 4.0.0-beta.2)
+  - Canvas (0.1.2)
+  - Cosmos (3.0.0)
+  - EUMTouchPointView (0.1.0)
+  - Kanna (2.0.0)
+  - KeychainAccess (2.3.6)
+  - MGSwipeTableCell (1.5.5)
+  - MJRefresh (3.1.12)
+  - OHHTTPStubs (5.2.0):
+    - OHHTTPStubs/Default (= 5.2.0)
+  - OHHTTPStubs/Core (5.2.0)
+  - OHHTTPStubs/Default (5.2.0):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (5.2.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (5.2.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (5.2.0)
+  - SimulatorStatusMagic (1.9)
+  - SVProgressHUD (2.0.3)
+  - SwiftyJSON (2.3.2)
+  - UITextField+Shake (1.1.2)
 
 DEPENDENCIES:
-  - Cosmos
-  - HanekeSwift (from `https://github.com/meteochu/HanekeSwift.git`, branch `master`)
-  - Kanna (~> 1.0.0)
+  - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift3`)
+  - AlamofireImage (from `https://github.com/calmcom/AlamofireImage.git`, branch `swift3`)
+  - Canvas
+  - Cosmos (~> 3.0)
+  - EUMTouchPointView
+  - Kanna (from `https://github.com/tid-kijyun/Kanna`, branch `swift3.0`)
+  - KeychainAccess (from `https://github.com/kishikawakatsumi/KeychainAccess.git`, branch `swift-3.0`)
+  - MGSwipeTableCell
   - MJRefresh
-  - ReachabilitySwift
-  - TagWriteView
+  - OHHTTPStubs
+  - SimulatorStatusMagic
+  - SVProgressHUD (from `https://github.com/SVProgressHUD/SVProgressHUD.git`)
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `swift3`)
+  - UITextField+Shake (~> 1.1)
 
 EXTERNAL SOURCES:
-  HanekeSwift:
-    :branch: master
-    :git: https://github.com/meteochu/HanekeSwift.git
+  Alamofire:
+    :branch: swift3
+    :git: https://github.com/Alamofire/Alamofire.git
+  AlamofireImage:
+    :branch: swift3
+    :git: https://github.com/calmcom/AlamofireImage.git
+  Kanna:
+    :branch: swift3.0
+    :git: https://github.com/tid-kijyun/Kanna
+  KeychainAccess:
+    :branch: swift-3.0
+    :git: https://github.com/kishikawakatsumi/KeychainAccess.git
+  SVProgressHUD:
+    :git: https://github.com/SVProgressHUD/SVProgressHUD.git
+  SwiftyJSON:
+    :branch: swift3
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 CHECKOUT OPTIONS:
-  HanekeSwift:
-    :commit: b227e3854c6f5d1e83226a3ee9e0dfcc5560618c
-    :git: https://github.com/meteochu/HanekeSwift.git
+  Alamofire:
+    :commit: 680690beaa7abf9578487688de4d24d038f679b5
+    :git: https://github.com/Alamofire/Alamofire.git
+  AlamofireImage:
+    :commit: 0469d9ebab544478ba6644a9881aba3833ce1a86
+    :git: https://github.com/calmcom/AlamofireImage.git
+  Kanna:
+    :commit: 109249451c32e14dac541bfbfeaa91b4dcb47a87
+    :git: https://github.com/tid-kijyun/Kanna
+  KeychainAccess:
+    :commit: a8d3c64f788b6a59be6f6eb773874c08b29b1967
+    :git: https://github.com/kishikawakatsumi/KeychainAccess.git
+  SVProgressHUD:
+    :commit: cc5f7d68fe76afdb79e215b8ff00133575fafacc
+    :git: https://github.com/SVProgressHUD/SVProgressHUD.git
+  SwiftyJSON:
+    :commit: 1a9755949a652967dc2986cd7f4653496e556715
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
-  Cosmos: 85d6e39fbc7930d9d857e5c2460aad966d7c732c
-  HanekeSwift: d6f5bdf9dbdbbc09d59623b2c1d533e46463dd4d
-  Kanna: 1df5cd995dc1f3a282e3dcf7521cfef2f069ac4d
-  MJRefresh: 6eb2f61338f89f64fd628fd43debcf479381ff59
-  ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
-  TagWriteView: 07e6d74544c7d47dcd69a5edb5d19ed434302da3
+  Alamofire: 7f837be535fe424db2b87d9117f13836939719ca
+  AlamofireImage: 02e8e913060e2af662e562b3d530ed9bd8bd42aa
+  Canvas: eb861e3b555d032648146c8ffda1a5dea40059ca
+  Cosmos: df6d24193f3aa04e42eaf52d943361b778b3ce90
+  EUMTouchPointView: 1c78c09726d22577b933444b42447ecfc636148b
+  Kanna: 8d60d86a3580f7dee732811e5163a5e3e41a32a7
+  KeychainAccess: 7f10e2ef998ddf954a64d5d608be08677774684d
+  MGSwipeTableCell: bafeb5f351124544c9364ecbdf24c7b06a37d340
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  OHHTTPStubs: 29ae105797c3410112d10b217c8b7a55aab616b2
+  SimulatorStatusMagic: 4db65b11c095bbb3abd966a4ae8ee0f11789e8e0
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  UITextField+Shake: 47cc0429dafb3da580686339ad2da091249a8ea2
 
-COCOAPODS: 0.38.2
+PODFILE CHECKSUM: 84862807d61bf4279d15eb9cb2d21808017143af
+
+COCOAPODS: 1.0.1
