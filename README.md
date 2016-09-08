@@ -6,7 +6,7 @@ The third-party iOS application of [番组计划](http://bgm.tv).
 
 
 ### App Store
-[<img src="./screenshots/App Store Badge Localized/简体中文 (Chinese Simplified)/Web SVG/Download_on_the_App_Store_Badge_CN_135x40.svg" alt="detail" align=center />](https://itunes.apple.com/cn/app/bangumi-m/id1029813683?l=en&mt=8)
+[<img src="./screenshots/App Store Badge Localized/简体中文 (Chinese Simplified)/Download_on_the_App_Store_Badge_CN_135x40.png" alt="detail" align=center />](https://itunes.apple.com/cn/app/bangumi-m/id1029813683?l=en&mt=8)
 
 ## Acknowledgements
 - [Alamofire](https://github.com/Alamofire/Alamofire)
