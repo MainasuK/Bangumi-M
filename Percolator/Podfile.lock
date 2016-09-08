@@ -1,35 +1,35 @@
 PODS:
-  - Alamofire (4.0.0-beta.1)
+  - Alamofire (4.0.0-beta.2)
   - AlamofireImage (3.0.0-beta.1):
-    - Alamofire (= 4.0.0-beta.1)
+    - Alamofire (= 4.0.0-beta.2)
   - Canvas (0.1.2)
   - Cosmos (3.0.0)
   - EUMTouchPointView (0.1.0)
-  - Kanna (1.0.6)
+  - Kanna (2.0.0)
   - KeychainAccess (2.3.6)
   - MGSwipeTableCell (1.5.5)
   - MJRefresh (3.1.12)
-  - OHHTTPStubs (5.1.0):
-    - OHHTTPStubs/Default (= 5.1.0)
-  - OHHTTPStubs/Core (5.1.0)
-  - OHHTTPStubs/Default (5.1.0):
+  - OHHTTPStubs (5.2.0):
+    - OHHTTPStubs/Default (= 5.2.0)
+  - OHHTTPStubs/Core (5.2.0)
+  - OHHTTPStubs/Default (5.2.0):
     - OHHTTPStubs/Core
     - OHHTTPStubs/JSON
     - OHHTTPStubs/NSURLSession
     - OHHTTPStubs/OHPathHelpers
-  - OHHTTPStubs/JSON (5.1.0):
+  - OHHTTPStubs/JSON (5.2.0):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/NSURLSession (5.1.0):
+  - OHHTTPStubs/NSURLSession (5.2.0):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/OHPathHelpers (5.1.0)
-  - SimulatorStatusMagic (1.8)
+  - OHHTTPStubs/OHPathHelpers (5.2.0)
+  - SimulatorStatusMagic (1.9)
   - SVProgressHUD (2.0.3)
   - SwiftyJSON (2.3.2)
   - UITextField+Shake (1.1.2)
 
 DEPENDENCIES:
   - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift3`)
-  - AlamofireImage (from `https://github.com/Alamofire/AlamofireImage.git`, branch `swift3`)
+  - AlamofireImage (from `https://github.com/calmcom/AlamofireImage.git`, branch `swift3`)
   - Canvas
   - Cosmos (~> 3.0)
   - EUMTouchPointView
@@ -49,7 +49,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/Alamofire/Alamofire.git
   AlamofireImage:
     :branch: swift3
-    :git: https://github.com/Alamofire/AlamofireImage.git
+    :git: https://github.com/calmcom/AlamofireImage.git
   Kanna:
     :branch: swift3.0
     :git: https://github.com/tid-kijyun/Kanna
@@ -64,16 +64,16 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Alamofire:
-    :commit: 3cc5b4e8453bec9fd6b973d60e6b0605a38e4cf4
+    :commit: 680690beaa7abf9578487688de4d24d038f679b5
     :git: https://github.com/Alamofire/Alamofire.git
   AlamofireImage:
-    :commit: b02916e89cb7158994df04bf282b3170964e1eaa
-    :git: https://github.com/Alamofire/AlamofireImage.git
+    :commit: 0469d9ebab544478ba6644a9881aba3833ce1a86
+    :git: https://github.com/calmcom/AlamofireImage.git
   Kanna:
-    :commit: ecc112494ca81ad1f8bc3ddd136ad78d09dd2e1b
+    :commit: 109249451c32e14dac541bfbfeaa91b4dcb47a87
     :git: https://github.com/tid-kijyun/Kanna
   KeychainAccess:
-    :commit: fe19b69ec5d4698898c7807daba8eaf5a8dde335
+    :commit: a8d3c64f788b6a59be6f6eb773874c08b29b1967
     :git: https://github.com/kishikawakatsumi/KeychainAccess.git
   SVProgressHUD:
     :commit: cc5f7d68fe76afdb79e215b8ff00133575fafacc
@@ -83,21 +83,21 @@ CHECKOUT OPTIONS:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
-  Alamofire: 698bf56c9e48d3248168e4a3a90588ac2e23836a
-  AlamofireImage: 1204674be7d67ea8efb61f38b2683a5ca0066452
+  Alamofire: 7f837be535fe424db2b87d9117f13836939719ca
+  AlamofireImage: 02e8e913060e2af662e562b3d530ed9bd8bd42aa
   Canvas: eb861e3b555d032648146c8ffda1a5dea40059ca
   Cosmos: df6d24193f3aa04e42eaf52d943361b778b3ce90
   EUMTouchPointView: 1c78c09726d22577b933444b42447ecfc636148b
-  Kanna: 9f30945bbd293a609f698ea164687ccc0990ff60
+  Kanna: 8d60d86a3580f7dee732811e5163a5e3e41a32a7
   KeychainAccess: 7f10e2ef998ddf954a64d5d608be08677774684d
   MGSwipeTableCell: bafeb5f351124544c9364ecbdf24c7b06a37d340
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  OHHTTPStubs: 592f74439d2d72615115cf99a954237a3fbe26e5
-  SimulatorStatusMagic: 4dbf0faa0208e9ac0d56cea06eaa5f7a5f3d02fb
+  OHHTTPStubs: 29ae105797c3410112d10b217c8b7a55aab616b2
+  SimulatorStatusMagic: 4db65b11c095bbb3abd966a4ae8ee0f11789e8e0
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   UITextField+Shake: 47cc0429dafb3da580686339ad2da091249a8ea2
 
-PODFILE CHECKSUM: cd08e3c45c32fcd62a4505aac0e62c0b98803a4f
+PODFILE CHECKSUM: 84862807d61bf4279d15eb9cb2d21808017143af
 
 COCOAPODS: 1.0.1

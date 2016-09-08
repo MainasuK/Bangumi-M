@@ -5,7 +5,7 @@ use_frameworks!
 
 target 'Bangumi M' do
     pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :branch => 'swift3'
-    pod 'AlamofireImage', :git => 'https://github.com/Alamofire/AlamofireImage.git', :branch => 'swift3'
+    pod 'AlamofireImage', :git => 'https://github.com/calmcom/AlamofireImage.git', :branch => 'swift3'
     pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'swift3'
     # pod 'TagWriteView'
     pod 'MJRefresh'

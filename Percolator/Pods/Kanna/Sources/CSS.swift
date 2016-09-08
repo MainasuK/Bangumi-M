@@ -146,7 +146,7 @@ private func substringWithRangeAtIndex(_ result: NSTextCheckingResult, str: Stri
     return ""
 }
 
-private func getElement( _ str: inout String, skip: Bool = true) -> String {
+private func getElement(_ str: inout String, skip: Bool = true) -> String {
     if let result = matchElement(str) {
         let (text, text2) = (substringWithRangeAtIndex(result, str: str, at: 1),
                              substringWithRangeAtIndex(result, str: str, at: 4))
