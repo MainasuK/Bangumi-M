@@ -382,7 +382,7 @@ public class TagWriteView : UIView
         setScrollOffsetToMakeInputViewVisible()
     }
     
-    fileprivate func removeTagView(at index: Int, animated: Bool, completion: ((_ finished: Bool) -> Void)) {
+    fileprivate func removeTagView(at index: Int, animated: Bool, completion: @escaping ((_ finished: Bool) -> Void)) {
         if index >= tagViews.count {
             return
         }
