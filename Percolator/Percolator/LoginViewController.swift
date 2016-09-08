@@ -95,6 +95,7 @@ final class LoginViewController: UIViewController {
                     }
                     
                     alertController.addAction(cancelAction)
+                    SVProgressHUD.dismiss()
                     self.present(alertController, animated: true, completion: nil)
                 } else {
                     let status = NSLocalizedString("time out", comment: "")
@@ -105,34 +106,22 @@ final class LoginViewController: UIViewController {
                 consolePrint("Time out")
                 
             } catch NetworkError.notConnectedToInternet {
-                let title = NSLocalizedString("not connected to internet", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
-                
                 SVProgressHUD.dismiss()
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
                 
             } catch UnknownError.alamofire(let error) {
-                let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
-                
                 SVProgressHUD.dismiss()
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                 consolePrint("Unknow NSError: \(error)")
                 
             } catch UnknownError.network(let error) {
-                let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
-                
                 SVProgressHUD.dismiss()
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                 consolePrint("Unknow NSURLError: \(error)")
                 
             } catch {
-                let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "", code: -1)
-                
                 SVProgressHUD.dismiss()
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                 consolePrint("Unresolve case: \(error)")
             }
 
@@ -171,7 +160,7 @@ extension LoginViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setSVProgressHUD(style: .custom)
+        setSVProgressHUD(style: .customLogin)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -180,16 +169,11 @@ extension LoginViewController {
         addGestureRecognizer()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        setSVProgressHUD(style: .light)
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         removeKeyboardNotification()
+        setSVProgressHUD(style: .dark)
     }
 
 }
@@ -303,6 +287,8 @@ extension LoginViewController {
         loginView.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         loginView.layer.shadowOpacity = 0.2
         loginView.layer.shadowRadius = 5.0
+        loginView.layer.shouldRasterize = true
+        loginView.layer.rasterizationScale = UIScreen.main.scale
     }
     
     func setupBlurView() {

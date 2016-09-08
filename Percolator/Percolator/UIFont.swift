@@ -12,7 +12,7 @@ import UIKit
 extension UIFont {
     
     public class func downloadableFontNames() -> [String] {
-        let downloadableDescriptor = CTFontDescriptorCreateWithAttributes([(kCTFontDownloadableAttribute as NSString): kCFBooleanTrue])
+        let downloadableDescriptor = CTFontDescriptorCreateWithAttributes([(kCTFontDownloadableAttribute as NSString): kCFBooleanTrue] as CFDictionary)
         
         guard let cfMatchedDescriptors = CTFontDescriptorCreateMatchingFontDescriptors(downloadableDescriptor, nil),
         let matchedDescriptors = (cfMatchedDescriptors as NSArray) as? [CTFontDescriptor] else {

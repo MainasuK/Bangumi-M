@@ -12,7 +12,7 @@ extension String {
     
     func detectLanguage() -> String {
         let range = CFRangeMake(0, min(self.characters.count, 100))
-        guard let language = CFStringTokenizerCopyBestStringLanguage(self, range) else {
+        guard let language = CFStringTokenizerCopyBestStringLanguage(self as CFString, range) else {
             return ""
         }
         

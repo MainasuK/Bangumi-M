@@ -18,13 +18,13 @@ final class AnimeListTableViewModel: DataProvider {
     typealias RequestError = BangumiRequest.RequestError
     typealias ProgressError = BangumiRequest.ProgressError
     
-    private let request = BangumiRequest.shared
+    fileprivate let request = BangumiRequest.shared
     
-    private weak var tableView: UITableView?
-    private var subjects = Subjects()
-    private var progresses = Progresses()
-    private var progressesStatus: ProgressesStatus = .none
-    private var isMarkingStatus = [SubjectID : Bool]()
+    fileprivate weak var tableView: UITableView?
+    fileprivate var subjects = Subjects()
+    fileprivate var progresses = Progresses()
+    fileprivate var progressesStatus: ProgressesStatus = .none
+    fileprivate var isMarkingStatus = [SubjectID : Bool]()
     
     var isEmpty: Bool {
         return subjects.count == 0
@@ -43,10 +43,16 @@ final class AnimeListTableViewModel: DataProvider {
 // MARK: - Refresh
 extension AnimeListTableViewModel {
     
-    func refresh(handler: (Error?) -> Void) {
+    func refresh(handler: @escaping (Error?) -> Void) {
         fetchProgresses()
         
         request.userCollection { (result: Result<Subjects>) in
+            
+            guard self.request.user != nil else {
+                self.tableView?.reloadData()
+                handler(RequestError.userNotLogin)
+                return
+            }
             
             do {
                 let subjects = try result.resolve()
@@ -68,7 +74,7 @@ extension AnimeListTableViewModel {
         }   // end request.userCollection { … }
     }   // end func refresh
     
-    func mark(_ episode: Episode, of subject: Subject, handler: (Error?) -> Void) {
+    func mark(_ episode: Episode, of subject: Subject, handler: @escaping (Error?) -> Void) {
         isMarkingStatus[subject.id] = true
         consolePrint("Mark episode: EP.\(episode.sortString) \(episode.name)…")
         request.ep(of: episode.id, with: nil, of: .watched) { (error: Error?) in
@@ -118,7 +124,7 @@ extension AnimeListTableViewModel {
 
 extension AnimeListTableViewModel {
     
-    private func fetchProgresses() {
+    fileprivate func fetchProgresses() {
         consolePrint("Fetching progresses…")
         progressesStatus = .fetching
         
@@ -151,7 +157,7 @@ extension AnimeListTableViewModel {
     
     // Fetch large subject to replace collection version subject
     // Note: Use Alamofire with *cache*
-    private func replaceCollection(with subjectIDs: [Int]) {
+    fileprivate func replaceCollection(with subjectIDs: [Int]) {
         subjectIDs.forEach {
             consolePrint("Fetching subject with id: \($0)…")
             
@@ -177,7 +183,7 @@ extension AnimeListTableViewModel {
                     self.subjects[index] = subject
                     self.tableView?.reloadRows(at: [indexPath], with: .none)
                 } catch {
-                    // FIXME: cell need handle it
+                    // FIXME: cell need to handle errors yo resolve infinite spinning
                     if let index = self.subjects.index(where: { theID == $0.id }) {
                         self.subjects[index].responseGroup = .none
                         let indexPath = IndexPath(row: index, section: 0)
@@ -224,7 +230,7 @@ extension AnimeListTableViewModel {
 extension AnimeListTableViewModel {
     
     // Compute the subject history
-    private func lookupSubjectHistory(for subject: Subject) -> Result<SubjectHistory> {
+    fileprivate func lookupSubjectHistory(for subject: Subject) -> Result<SubjectHistory> {
         guard progressesStatus == .fetched else {
             return .failure(progressesStatus)
         }

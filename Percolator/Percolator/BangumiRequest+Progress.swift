@@ -16,7 +16,7 @@ extension BangumiRequest {
     // [SubjectID : Progress]
     typealias Progresses = [Int : Progress]
     
-    func progress(of subjectID: Int, handler: (Result<Progress>) -> Void) {
+    func progress(of subjectID: Int, handler: @escaping (Result<Progress>) -> Void) {
         
         guard let user = self.user else {
             handler(.failure(RequestError.userNotLogin))
@@ -24,19 +24,21 @@ extension BangumiRequest {
         }
         
         let urlPath = String(format: BangumiApiKey.Progress, user.id, subjectID, BangumiApiKey.Percolator, user.authEncode)
-
-        alamofireEphemeralManager.request(.GET, urlPath, parameters: nil).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        
+        alamofireEphemeralManager.request(urlPath, method: .get).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let progress = self.getResult(from: response)
                 .flatMap(self.toJSON)
                 .flatMap(self.validate)
                 .flatMap(self.toProgress)
             
-            handler(progress)
+            DispatchQueue.main.async {
+                handler(progress)
+            }
         }   // end alamofireEphemeralManager.request(…) { … }
     }   // end func progress(…) { … }
     
-    func progresses(handler: (Result<Progresses>) -> Void) {
+    func progresses(handler: @escaping (Result<Progresses>) -> Void) {
         
         guard let user = self.user else {
             handler(.failure(RequestError.userNotLogin))
@@ -45,14 +47,16 @@ extension BangumiRequest {
         
         let urlPath = String(format: BangumiApiKey.Progresses, user.id, BangumiApiKey.Percolator, user.authEncode)
         
-        alamofireEphemeralManager.request(.GET, urlPath, parameters: nil).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .get, parameters: nil).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let progresses = self.getResult(from: response)
                 .flatMap(self.toJSON)
                 .flatMap(self.validate)
                 .flatMap(self.toProgresses)
             
-            handler(progresses)
+            DispatchQueue.main.async {
+                handler(progresses)
+            }
         }   // end alamofireEphemeralManager.request(…) { … }
     }   // end func progresses(…) { … }
     
@@ -61,7 +65,7 @@ extension BangumiRequest {
 extension BangumiRequest {
     
     // Validate JSON
-    private func validate(json: JSON) -> Result<JSON> {
+    fileprivate func validate(json: JSON) -> Result<JSON> {
         // Bangumi API reture a "null" for no progress case
         guard json.rawString() != "null" else {
             return .failure(ProgressError.noProgress)
@@ -84,7 +88,7 @@ extension BangumiRequest {
     }
     
     // Unwrap JSON to Subjects
-    private func toProgress(from json: JSON) -> Result<Progress> {
+    fileprivate func toProgress(from json: JSON) -> Result<Progress> {
         var progress = Progress()
         json[BangumiKey.eps].arrayValue.forEach {
             guard let key = $0[BangumiKey.id].int,
@@ -97,7 +101,7 @@ extension BangumiRequest {
         return .success(progress)
     }
     
-    private func toProgresses(from json: JSON) -> Result<Progresses> {
+    fileprivate func toProgresses(from json: JSON) -> Result<Progresses> {
         var progresses = Progresses()
         json.arrayValue.forEach {
             guard let key = $0[BangumiKey.subjectID].int,

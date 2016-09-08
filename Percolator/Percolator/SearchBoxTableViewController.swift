@@ -16,17 +16,16 @@ final class SearchBoxTableViewController: UITableViewController {
     typealias Model = SearchBoxTableViewModel
     typealias Cell = SearchBoxTableViewCell
     
-    private lazy var model: Model = {
+    fileprivate lazy var model: Model = {
         return Model(tableView: self.tableView)
     }()
-    private var dataSource: TableViewDataSource<Model, Cell>!
+    fileprivate var dataSource: TableViewDataSource<Model, Cell>!
     
-    private lazy var searchController: UISearchController = { [weak self] in
+    fileprivate lazy var searchController: UISearchController = { [weak self] in
         let controller = UISearchController(searchResultsController: nil)
         
         controller.delegate = self
         controller.searchBar.delegate = self
-        controller.searchResultsUpdater = self
         
         controller.searchBar.scopeButtonTitles = PercolatorKey.searchTypeArr
         
@@ -44,16 +43,23 @@ final class SearchBoxTableViewController: UITableViewController {
 
         return controller
     }()
-    private var searchScopeIndex = 0
-    private var statusBarStyle: UIStatusBarStyle = .default
+    fileprivate var searchKeyword: String {
+        guard let keyword = title else {
+            return ""
+        }
+        
+        return (keyword == "搜索盒子") ? "" : keyword
+    }
+    fileprivate var searchScopeIndex = 0
+    fileprivate var statusBarStyle: UIStatusBarStyle = .default
     
     @IBOutlet weak var searchButton: UIBarButtonItem!
     
     @IBAction func searchButtonClicked(_ button: UIBarButtonItem?) {
         
         // Make sure Search text based on last search content
-        let title = self.navigationItem.title
-        searchController.searchBar.text = (title == "搜索盒子") ? "" : title
+        searchController.searchBar.text = searchKeyword
+        searchController.searchBar.selectedScopeButtonIndex = searchScopeIndex
         
         // Present the view controller
         changeStatusBarStyle(to: .lightContent)
@@ -63,9 +69,9 @@ final class SearchBoxTableViewController: UITableViewController {
     @IBAction func longPressTrigger(_ sender: UILongPressGestureRecognizer) {
         guard sender.state == .began,
         let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)) else {
-            // FIXME:
             return
         }
+        
         let (subject, _) = model.item(at: indexPath)
         
         let alertController = UIAlertController(title: "\(subject.name)", message: nil, preferredStyle: .actionSheet)
@@ -75,7 +81,6 @@ final class SearchBoxTableViewController: UITableViewController {
         }
         
         let saveAction = UIAlertAction(title: "保存", style: .default) { (action) in
-            // FIXME: error info need here?
             if subject.saveToCoreData() {
                 SVProgressHUD.showSuccess(withStatus: "保存成功")
             } else {
@@ -137,7 +142,7 @@ extension SearchBoxTableViewController {
         return statusBarStyle
     }
     
-    private func changeStatusBarStyle(to style: UIStatusBarStyle) {
+    fileprivate func changeStatusBarStyle(to style: UIStatusBarStyle) {
         statusBarStyle = style
         
         UIView.animate(withDuration: 0.2) {
@@ -150,7 +155,7 @@ extension SearchBoxTableViewController {
 // MARK: - UITableView Setup method
 extension SearchBoxTableViewController {
     
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         // Set navigation bar title
         title = "搜索盒子"
         
@@ -174,13 +179,11 @@ extension SearchBoxTableViewController {
         setupTableViewFooter()
     }
     
-    private func setupTableViewFooter() {
+    fileprivate func setupTableViewFooter() {
         tableView.mj_footer = {
             //  Use unowned because the caller is self. No async
             let footer = MJRefreshAutoNormalFooter { [unowned self] in
-                if let text = self.searchController.searchBar.text {
-                self.search(for: text, type: self.searchScopeIndex)
-                }
+                self.search(for: self.searchKeyword, type: self.searchScopeIndex)
             }
             footer?.isHidden = true // Appeare after search
             
@@ -254,25 +257,10 @@ extension SearchBoxTableViewController: UISearchBarDelegate {
         title = searchText
         SVProgressHUD.show()
         
-        searchScopeIndex = searchBar.selectedScopeButtonIndex ?? 0
+        searchScopeIndex = searchBar.selectedScopeButtonIndex
         search(for: searchText, type: searchScopeIndex)
     }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        // Resume selected button
-        searchBar.selectedScopeButtonIndex = searchScopeIndex
-    }
 
-}
-
-// MARK: - UISearchResultsUpdating
-extension SearchBoxTableViewController: UISearchResultsUpdating {
-    
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        // TODO:
-    }
-    
 }
 
 // MARK: - UISearchControllerDelegate
@@ -295,7 +283,7 @@ extension SearchBoxTableViewController {
     typealias NetworkError = BangumiRequest.NetworkError
     typealias UnknownError = BangumiRequest.Unknown
     
-    private func search(for text: String, type scopeIndex: Int) {
+    fileprivate func search(for text: String, type scopeIndex: Int) {
         searchButton.isEnabled = false
         
         let searchScopeType =  PercolatorKey.searchTypeDict[scopeIndex] ?? 0
@@ -359,26 +347,18 @@ extension SearchBoxTableViewController {
                     consolePrint("Time out")
                     
                 } catch NetworkError.notConnectedToInternet {
-                    let title = NSLocalizedString("not connected to internet", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
                     
                 } catch UnknownError.alamofire(let error) {
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unknow NSError: \(error)")
                     
                 } catch UnknownError.network(let error) {
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unknow NSURLError: \(error)")
                     
                 } catch {
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "", code: -1)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unresolve case: \(error)")
                 }   // end do-catch block
                 
@@ -397,7 +377,7 @@ extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
         return true
     }
     
-    func swipeTableCell(_ cell: MGSwipeTableCell!, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings!, expansionSettings: MGSwipeExpansionSettings!) -> [AnyObject]! {
+    func swipeTableCell(_ cell: MGSwipeTableCell!, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings!, expansionSettings: MGSwipeExpansionSettings!) -> [Any]! {
         
         guard let cell = cell,
         let indexPath = self.tableView.indexPath(for: cell) else {

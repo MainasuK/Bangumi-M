@@ -9,19 +9,19 @@
 import UIKit
 import SVProgressHUD
 
-class SaveActivity: UIActivity {
+final class SaveActivity: UIActivity {
     
     var subject: SubjectWrapper?
 
-    override var activityType: String? {
-        return "Percolator.Save"
+    @nonobjc override var activityType: UIActivityType? {
+        return UIActivityType("Percolator.Save")
     }
     
     override var activityTitle: String? {
         return NSLocalizedString("save to search box", comment: "")
     }
     
-    override func canPerform(withActivityItems activityItems: [AnyObject]) -> Bool {
+    override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
         for item in activityItems {
             if let subject = item as? SubjectWrapper {
                 return !subject.isSaved()
@@ -31,7 +31,7 @@ class SaveActivity: UIActivity {
         return false
     }
     
-    override func prepare(withActivityItems activityItems: [AnyObject]) {
+    override func prepare(withActivityItems activityItems: [Any]) {
         for item in activityItems {
             if let subject = item as? SubjectWrapper {
                 self.subject = subject

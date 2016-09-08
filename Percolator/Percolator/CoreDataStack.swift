@@ -11,7 +11,7 @@ import CoreData
 class CoreDataStack {
     var modelName: String
     var storeName: String
-    var options: [NSObject : AnyObject]? = nil
+    var options: [AnyHashable : Any]? = nil
     
     // Flag of listening notification or not
     var updateContextWithUbiquitousContentUpdates: Bool = false {
@@ -33,7 +33,7 @@ class CoreDataStack {
         }
     }
     
-    init(modelName: String, storeName: String, options: ([NSObject : AnyObject])?) {
+    init(modelName: String, storeName: String, options: ([AnyHashable : Any])?) {
         self.modelName = modelName
         self.storeName = storeName
         self.options = options
@@ -43,7 +43,7 @@ class CoreDataStack {
         NotificationCenter.default.removeObserver(self)
     }
     
-    private lazy var applicationDocumentsDirectory = NSURL.documentsURL
+    private lazy var applicationDocumentsDirectory = URL.documentsURL
     
     /// Root context
     lazy var rootContext: NSManagedObjectContext = {

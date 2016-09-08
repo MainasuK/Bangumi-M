@@ -13,20 +13,23 @@ import SwiftyJSON
 // MARK: - Subject (fetch by id and responseGroup)
 extension BangumiRequest {
     
-    func subject(of id: Int, with responseGroup: ResponseGroup = .large, handler: (Result<Subject>) -> Void) {
+    func subject(of id: Int, with responseGroup: ResponseGroup = .large, handler: @escaping (Result<Subject>) -> Void) {
         
         let urlPath = String(format: BangumiApiKey.Subject, id)
         let parameters = ["responseGroup" : responseGroup.rawValue]
         
         // Speeding up with HTTP protocol (without auth info)
-        alamofireManager.request(.GET, urlPath, parameters: parameters).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        
+        alamofireManager.request(urlPath, method: .get, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let subject = self.getResult(from: response)
                 .flatMap(self.toJSON)
                 .flatMap(self.validate)
                 .flatMap(self.toSubject)
             
-            handler(subject)
+            DispatchQueue.main.async {
+                handler(subject)
+            }
         }   // end alamofireManager.request(…) { … }
     }   // end func subject(…) { … }
     
@@ -45,7 +48,7 @@ extension BangumiRequest {
 extension BangumiRequest {
     
     // Validate JSON
-    private func validate(json: JSON) -> Result<JSON> {
+    fileprivate func validate(json: JSON) -> Result<JSON> {
         // Bangumi API reture a JSON for error case
         if let error = json["error"].string,
         let code = json["code"].int {
@@ -62,7 +65,7 @@ extension BangumiRequest {
     }
     
     // Unwrap JSON to Subjects
-    private func toSubject(from json: JSON) -> Result<Subject> {
+    fileprivate func toSubject(from json: JSON) -> Result<Subject> {
         return .success(Subject(from: json))
     }
     

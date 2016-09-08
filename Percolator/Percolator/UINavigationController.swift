@@ -10,11 +10,11 @@ import UIKit
 
 extension UINavigationController {
 
-    public override var childViewControllerForStatusBarStyle: UIViewController? {
+    open override var childViewControllerForStatusBarStyle: UIViewController? {
         return self.topViewController
     }
     
-    public override var childViewControllerForStatusBarHidden: UIViewController? {
+    open override var childViewControllerForStatusBarHidden: UIViewController? {
         return self.topViewController
     }
 

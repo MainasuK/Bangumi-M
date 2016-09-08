@@ -19,17 +19,17 @@ final class AnimeListTableViewController: UITableViewController {
     typealias Model = AnimeListTableViewModel
     typealias Cell = AnimeListTableViewCell
     
-    private lazy var model: Model = {
+    fileprivate lazy var model: Model = {
         return Model(tableView: self.tableView)
     }()
-    private var dataSource: TableViewDataSource<Model, Cell>!
-    private var isFirstRefresh = true
+    fileprivate var dataSource: TableViewDataSource<Model, Cell>!
+    fileprivate var isFirstRefresh = true
     
     @IBAction func unwindToAnimeListTableViewController(_ segue: UIStoryboardSegue) {
         
     }
     
-    @objc private func avatarButtonPressed() {
+    @objc fileprivate func avatarButtonPressed() {
         
         guard let user = BangumiRequest.shared.user else {
             popLoginController()
@@ -60,7 +60,7 @@ final class AnimeListTableViewController: UITableViewController {
 
 extension AnimeListTableViewController {
     
-    private func popLoginController() {
+    fileprivate func popLoginController() {
         let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.LoginViewController) as! LoginViewController
         
         loginViewController.delegate = self
@@ -80,14 +80,14 @@ extension AnimeListTableViewController {
 // MARK: - UITableView Setup method
 extension AnimeListTableViewController {
     
-    private func setupBarButtonItem() {
+    fileprivate func setupBarButtonItem() {
         let button: UIButton = {
             let btn = UIButton(type: .custom)
             
             btn.setImage(UIImage.fromColor(.placeholder, size: CGSize(width: 30, height: 30)), for: .normal)
             if let avatarLargeUrl = BangumiRequest.shared.user?.avatar.largeUrl,
             let url = URL(string: avatarLargeUrl) {
-                btn.af_setImageForState(.normal, url: url)
+                btn.af_setImage(for: .normal, url: url)
             }
             btn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
             btn.imageView?.frame.size = CGSize(width: 30, height: 30)
@@ -103,13 +103,14 @@ extension AnimeListTableViewController {
         self.navigationItem.leftBarButtonItem = barButtonItem
     }
     
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         // Setup dataSource and link model
         setupTableViewDataSource()
         
         // Configure tableView row height
-        tableView.estimatedRowHeight = 150
-        tableView.rowHeight = UITableViewAutomaticDimension
+//        tableView.estimatedRowHeight = 150
+//        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = 150
         
         // Set cell conform readable layout margin
         tableView.cellLayoutMarginsFollowReadableWidth = true
@@ -126,7 +127,7 @@ extension AnimeListTableViewController {
         
     }
     
-    private func setupTableViewHeader() {
+    fileprivate func setupTableViewHeader() {
         tableView.mj_header = {
             //  Use unowned because the caller is self. No async
             let header = MJRefreshNormalHeader { [unowned self] in
@@ -137,7 +138,7 @@ extension AnimeListTableViewController {
         }()
     }
     
-    private func setupTableViewDataSource() {
+    fileprivate func setupTableViewDataSource() {
         dataSource = TableViewDataSource<Model, Cell>(model: model)
         tableView.dataSource = dataSource
     }
@@ -156,6 +157,8 @@ extension AnimeListTableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        setupBarButtonItem()
+        
         guard User.isLogin() else {
             popLoginController()
             
@@ -166,8 +169,6 @@ extension AnimeListTableViewController {
             tableView.mj_header.beginRefreshing()
         }
         isFirstRefresh = false
-        
-        setupBarButtonItem()
     }
     
 }
@@ -187,7 +188,6 @@ extension AnimeListTableViewController {
             defer {
                 self.tableView.mj_header.endRefreshing()
             }
-            
             
             do {
                 try error?.throwMyself()
@@ -220,9 +220,8 @@ extension AnimeListTableViewController {
                 
             } catch NetworkError.timeout {
                 if BangumiRequest.shared.timeoutErrorTimes == 3 {
-                    // FIXME: English localize?
-                    let alertController = UIAlertController(title: "请检查网络链接状况", message: "可能是由于 DNS 污染造成若您无法链接至 bgm.tv，请更换 DNS 或联系当地网络提供商解决", preferredStyle: .alert)
-                    let cancelAction = UIAlertAction(title: NSLocalizedString("不再提醒", comment: ""), style: .cancel) { (action) in
+                    let alertController = UIAlertController(title: NSLocalizedString("please check your network connection status", comment: ""), message: NSLocalizedString("make sure that the network can be connected to bgm.tv", comment: ""), preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("dismiss", comment: ""), style: .cancel) { (action) in
                         // ...
                     }
                     
@@ -236,33 +235,24 @@ extension AnimeListTableViewController {
                 consolePrint("Timeout")
                 
             } catch NetworkError.notConnectedToInternet {
-                let title = NSLocalizedString("not connected to internet", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
                 
             } catch NetworkError.dnsLookupFailed {
-                let title = NSLocalizedString("dns lookup failed", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "")
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.dnsLookupFailed(), animated: true, completion: nil)
+                consolePrint("NetworkError DNS Lookup Failed: \(error)")
                 
             } catch UnknownError.alamofire(let error) {
-                let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                 consolePrint("Unknow NSError: \(error)")
                 
             } catch UnknownError.network(let error) {
-                let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                 consolePrint("Unknow NSURLError: \(error)")
                 
             } catch {
                 // Really? I think never got here.
                 // All error wrapped appropriately above …
-                let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "", code: -1)
-                self.present(alertController, animated: true, completion: nil)
+                self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                 consolePrint("Unresolve case: \(error)")
             }
         }
@@ -306,6 +296,21 @@ extension AnimeListTableViewController {
             
             return maskLayer
         }()
+        
+        // Mask infolView for get two top corners
+        cell.infoView.layer.mask = {
+            let maskLayer = CAShapeLayer()
+            let maskPath = UIBezierPath(roundedRect: cell.infoView.bounds,
+                                        byRoundingCorners: [.topLeft, .topRight],
+                                        cornerRadii: CGSize(width: 5, height: 5))
+            
+            maskLayer.frame = cell.infoView.bounds
+            maskLayer.path  = maskPath.cgPath
+            
+            return maskLayer
+        }()
+        
+        cell.layoutIfNeeded()
     }
     
     
@@ -356,37 +361,30 @@ extension AnimeListTableViewController: AnimeListTableViewCellDelegate {
             model.mark(ep, of: subject, handler: { (error: Error?) in
                 do {
                     try error?.throwMyself()
+                    
+                    SVProgressHUD.showSuccess(withStatus: "EP.\(ep.sortString) \(ep.name) 标记成功")
+                    
                 } catch ModelError.mark {
                     let title = NSLocalizedString("mark error", comment: "")
                     let alertController = UIAlertController.simpleErrorAlert(with: title, description: "未能标注 EP.\(ep.sortString) \(ep.nameCN)")
                     self.present(alertController, animated: true, completion: nil)
                     
                 } catch NetworkError.notConnectedToInternet {
-                    let title = NSLocalizedString("not connected to internet", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
                     
                 } catch NetworkError.timeout {
-                    let title = NSLocalizedString("time out", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "未能标注 EP.\(ep.sortString) \(ep.nameCN)")
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.timeout(withDescription: "未能标注 EP.\(ep.sortString) \(ep.nameCN)"), animated: true, completion: nil)
                     
                 } catch UnknownError.alamofire(let error) {
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unknow NSError: \(error)")
                     
                 } catch UnknownError.network(let error) {
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unknow NSURLError: \(error)")
                     
                 } catch {
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "", code: -1)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unresolve case: \(error)")
                 }   // end do-catch block
             })

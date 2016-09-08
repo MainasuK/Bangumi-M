@@ -10,20 +10,22 @@ import UIKit
 import CoreData
 import AlamofireImage
 import SVProgressHUD
+import EUMTouchPointView
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+//    public var window: EUMShowTouchWindow? = EUMShowTouchWindow(frame: UIScreen.main.bounds)       // For App Preview
     lazy var coreDataStack: CoreDataStack = {
-        let options = [NSPersistentStoreUbiquitousContentNameKey : "Percolator",
-                       NSMigratePersistentStoresAutomaticallyOption : true,
-                       NSInferMappingModelAutomaticallyOption : true]
+        let options: [AnyHashable : Any] = [NSPersistentStoreUbiquitousContentNameKey : "Percolator",
+                                            NSMigratePersistentStoresAutomaticallyOption : true,
+                                            NSInferMappingModelAutomaticallyOption : true]
         return CoreDataStack(modelName: "Percolator", storeName: "Percolator", options: options)
     }()
     
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         // Override point for customization after application launch.
         
         // Restore user info and update auth
@@ -46,6 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             maximumActiveDownloads: 4,
             imageCache: AutoPurgingImageCache()
         )
+        
+        setSVProgressHUD(style: .dark)
         
         return true
     }

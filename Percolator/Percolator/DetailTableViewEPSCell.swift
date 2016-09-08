@@ -27,6 +27,21 @@ class DetailTableViewEPSCell: DetailTableViewCell {
         )
         return UIFont(descriptor: adjusted, size: 11.0)
     }()
+    
+    static let SFAlternativesFormRegularFont: UIFont = {
+        let descriptor = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightRegular).fontDescriptor
+        let adjusted = descriptor.addingAttributes(
+            [
+                UIFontDescriptorFeatureSettingsAttribute: [
+                    [
+                        UIFontFeatureTypeIdentifierKey: kStylisticAlternativesType,
+                        UIFontFeatureSelectorIdentifierKey: kStylisticAltOneOnSelector
+                    ]
+                ]
+            ]
+        )
+        return UIFont(descriptor: adjusted, size: 17.0)
+    }()
 
     @IBOutlet weak var sortStatusView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -56,19 +71,18 @@ class DetailTableViewEPSCell: DetailTableViewCell {
         }
         
     }
-}
-
-extension DetailTableViewEPSCell {
     
-    private func configureLabel(with episode: Episode) {
+    override func awakeFromNib() {
+        super.awakeFromNib()
         
-        nameLabel.text = "\(episode.sortString) \(episode.name)"
-        nameCNLabel.text = episode.nameCN
+        nameLabel.layer.masksToBounds = true
+        nameCNLabel.layer.masksToBounds = true
         
-        let title = "\(episode.comment)"
-        commentButton.titleLabel?.font = self.dynamicType.SFAlternativesFormFont
-        commentButton.setTitle(title, for: .normal)
-        commentButton.setTitle(title, for: .selected)
+        sortStatusView.layer.cornerRadius = 6.0
+        sortStatusView.layer.borderWidth = 0.5
+        sortStatusView.layer.borderColor = UIColor(red: 0.00, green: 0.38, blue: 0.74, alpha: 1.00).cgColor
+        
+        commentButton.titleLabel?.font = type(of: self).SFAlternativesFormFont
         
         // Move arrow to right. Awesome
         // Ref: http://stackoverflow.com/questions/7100976/how-do-i-put-the-image-on-the-right-side-of-the-text-in-a-uibutton
@@ -77,14 +91,32 @@ extension DetailTableViewEPSCell {
         commentButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
     }
     
-    private func configureProgressView(with status: Status?) {
-        // The init layer width is not preset width in iOS 10 (why 1000 pt?)
-        // Change it when you modify the constraint in storyboard
-        sortStatusView.layer.cornerRadius = 6.0
-        sortStatusView.layer.borderWidth = 0.5
-        sortStatusView.layer.borderColor = UIColor(red: 0.00, green: 0.38, blue: 0.74, alpha: 1.00).cgColor
+}
 
-        var color: UIColor = UIColor.clear
+extension DetailTableViewEPSCell {
+    
+    fileprivate func configureLabel(with episode: Episode) {
+        
+        let attributedText: NSMutableAttributedString = {
+            let sortAttributes = [NSFontAttributeName : type(of: self).SFAlternativesFormRegularFont]
+            let nameAttributes = [NSFontAttributeName : UIFont(name: "HiraginoSans-W3", size: 16.0) ?? type(of: self).SFAlternativesFormRegularFont]
+            
+            let string = NSMutableAttributedString()
+            string.append(NSAttributedString(string: episode.sortString, attributes: sortAttributes))
+            string.append(NSAttributedString(string: " "))
+            string.append(NSAttributedString(string: episode.name, attributes: nameAttributes))
+            
+            return string
+        }()
+        nameLabel.attributedText = attributedText
+        nameCNLabel.text = episode.nameCN
+        
+        let title = "\(episode.comment)"
+        commentButton.setTitle(title, for: .normal)
+    }
+    
+    fileprivate func configureProgressView(with status: Status?) {
+        var color = UIColor.clear
         sortStatusView.tintColor = color
         sortStatusView.backgroundColor = color
         
@@ -103,7 +135,7 @@ extension DetailTableViewEPSCell {
         }
     }
     
-    private func configureButton(with episode: Episode) {
+    fileprivate func configureButton(with episode: Episode) {
         commentButton.tag = episode.id
     }
     

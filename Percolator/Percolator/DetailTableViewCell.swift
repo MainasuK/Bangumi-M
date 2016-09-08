@@ -22,7 +22,7 @@ class DetailTableViewCell: UITableViewCell, ConfigurableCell {
 
 extension DetailTableViewCell {
     
-    private func setupCellStyle() {
+    fileprivate func setupCellStyle() {
         // Make cell get readable margin guideline
         preservesSuperviewLayoutMargins = true
         contentView.preservesSuperviewLayoutMargins = true

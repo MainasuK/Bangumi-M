@@ -41,6 +41,16 @@ class DetailTableViewBannerCell: DetailTableViewCell {
         delegate?.collectButtonPressed(sender)
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        nameLabel.layer.masksToBounds = true
+        nameCNLabel.layer.masksToBounds = true
+        typeLabel.layer.masksToBounds = true
+        ratingCountLabel.layer.masksToBounds = true
+        summaryLabel.layer.masksToBounds = true
+    }
+    
     override func configure(with item: DetailTableViewCell.ItemType) {
         super.configure(with: item)
         
@@ -63,10 +73,11 @@ class DetailTableViewBannerCell: DetailTableViewCell {
 
 extension DetailTableViewBannerCell {
     
-    private func configureLabel(with subject: Subject) {
+    fileprivate func configureLabel(with subject: Subject) {
         nameLabel.text = subject.name
         nameCNLabel.text = subject.nameCN
         
+        ratingView.isUserInteractionEnabled = false
         ratingView.settings.fillMode = .precise
         ratingView.rating = subject.rating.score * 0.5
         ratingLabel.text = (subject.rating.score == 0) ? "--" : "\(subject.rating.score)"

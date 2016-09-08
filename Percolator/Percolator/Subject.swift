@@ -42,11 +42,10 @@ struct Subject {
     // TODO: blog
     
     /// responseGroup Large only
-    private let EPS: [Episode]
-    var epTable: [Episode] { return EPS.filter { $0.type == .ep } }
-    var spTable: [Episode] { return EPS.filter { $0.type == .sp } }
-    var opTable: [Episode] { return EPS.filter { $0.type == .op } }
-    var edTable: [Episode] { return EPS.filter { $0.type == .ed } }
+    var epTable: [Episode]
+    var spTable: [Episode]
+    var opTable: [Episode]
+    var edTable: [Episode]
     
     var epTableReversed: [Episode] { return epTable.reversed() }
     
@@ -76,9 +75,13 @@ struct Subject {
         crts = json[BangumiKey.subjectCrt].arrayValue.map { Crt(from: $0) }
         staffs = json[BangumiKey.staffDict].arrayValue.map { Staff(from: $0) }
         
-        let EPSArray = json[BangumiKey.eps].arrayValue.map { Episode(from: $0) }
-        EPS = EPSArray
-        eps = json[BangumiKey.eps].intValue ?? EPSArray.count
+        let EPS = json[BangumiKey.eps].arrayValue.map { Episode(from: $0) }
+        epTable = EPS.filter { $0.type == .ep }
+        spTable = EPS.filter { $0.type == .sp }
+        opTable = EPS.filter { $0.type == .op }
+        edTable = EPS.filter { $0.type == .ed }
+
+        eps = json[BangumiKey.eps].int ?? EPS.count
     }
     
     init(from cdSubject: CDSubject) {
@@ -101,7 +104,10 @@ struct Subject {
         
         crts = []
         staffs = []
-        EPS = []
+        epTable = []
+        spTable = []
+        opTable = []
+        edTable = []
     }
     
     func isSaved() -> Bool {
@@ -155,7 +161,7 @@ struct Subject {
         cdImages.smallUrl = images.smallUrl
         cdSubject.images = cdImages
 
-        cdRating.count = rating.count
+        cdRating.count = rating.count as NSObject
         cdRating.score = rating.score
         cdRating.total = Int64(rating.total)
         cdSubject.rating = cdRating
@@ -212,59 +218,8 @@ extension Subject {
 
 extension String {
     
-    private func replaceEscapes() -> String {
+    fileprivate func replaceEscapes() -> String {
         return self.replacingOccurrences(of: "&quot;", with: "\"").replacingOccurrences(of: "&lt;", with: "<").replacingOccurrences(of: "&gt;", with: ">").replacingOccurrences(of: "&amp;", with: "&")
     }
 
 }
-
-
-
-//    // FIXME: Swift2.0 error handle need here (throws)
-//    class func fetchSubject(handler: ([AnimeSubject]?) -> Void) {
-//        guard let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext else {
-//            
-//            handler(nil)
-//            return
-//        }
-//        
-//        let fetchRequest = NSFetchRequest(entityName: "Subject")
-//        var subjects = [Subject]()
-//        var animeSubjects = [AnimeSubject]()
-//        
-//        do {
-//            subjects = (try managedObjectContext.executeFetchRequest(fetchRequest)) as! [Subject]
-//            for subject in subjects {
-//                animeSubjects.append(AnimeSubject(subject: subject))
-//            }
-//        } catch let error as NSError {
-//            NSLog("% Subject: Failed to retrieve record: \(error.localizedDescription)")
-//            handler(nil)
-//            return
-//        }
-//        
-//        handler(animeSubjects)
-//    }
-//    
-//    class func searchSubjectInLocal(subjectID: Int) -> Bool {
-//        
-//        let fetchRequest = NSFetchRequest(entityName: "Subject")
-//        fetchRequest.predicate = NSPredicate(format: "id == %@", "\(subjectID)")
-//        
-//        guard let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext,
-//            let subjects = try! managedObjectContext.executeFetchRequest(fetchRequest) as? [Subject],
-//            let _  = subjects.first else {
-//                
-//                return false
-//        }
-//        
-//        do {
-//            try managedObjectContext.save()
-//        } catch let error as NSError {
-//            NSLog("% Subject: Delete error: \(error.localizedDescription)")
-//            return false
-//        }
-//        
-//        return true
-//    }
-//}

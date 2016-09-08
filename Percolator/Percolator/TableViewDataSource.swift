@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TableViewDataSource<Model: DataProvider, Cell: ConfigurableCell where Model.ItemType == Cell.ItemType, Cell: UITableViewCell>: DataSource<Model>, UITableViewDataSource {
+class TableViewDataSource<Model: DataProvider, Cell: ConfigurableCell>: DataSource<Model>, UITableViewDataSource where Model.ItemType == Cell.ItemType, Cell: UITableViewCell {
     
     deinit {
         consolePrint("TableViewDataSource deinit")
@@ -24,7 +24,7 @@ class TableViewDataSource<Model: DataProvider, Cell: ConfigurableCell where Mode
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = model.identifier(at: indexPath)
-        guard var cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? Cell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? Cell else {
             fatalError("Cell should be configurable")
         }
         

@@ -18,7 +18,7 @@ extension BangumiRequest {
     typealias CollectDict = [SubjectID : CollectInfoSmall]
     
     // Discard no use info excepte subect
-    func userCollection(handler: (Result<CollectionSubjects>) -> Void) {
+    func userCollection(handler: @escaping (Result<CollectionSubjects>) -> Void) {
         
         guard let user = self.user else {
             handler(.failure(RequestError.userNotLogin))
@@ -28,18 +28,20 @@ extension BangumiRequest {
         let urlPath = String(format: BangumiApiKey.UserWatchingCollection, user.id)
         let parameters = ["cat" : "watching"]
         
-        alamofireEphemeralManager.request(.GET, urlPath, parameters: parameters).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .get, parameters: parameters).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
             
             let subjects = self.getResult(from: response)
                 .flatMap(self.toJSON)
                 .flatMap(self.validate)
                 .flatMap(self.toSubjects)
             
-            handler(subjects)
+            DispatchQueue.main.async {
+                handler(subjects)
+            }
         }   // end alamofireEphemeralManager.request(…) { … }
     }   // end func userCollection(…) { … }
     
-    func collection(of subjectID: SubjectID, handler: (Result<CollectInfo>) -> Void) {
+    func collection(of subjectID: SubjectID, handler: @escaping (Result<CollectInfo>) -> Void) {
         
         guard let user = self.user else {
             handler(.failure(RequestError.userNotLogin))
@@ -48,18 +50,20 @@ extension BangumiRequest {
         
         let urlPath = String(format: BangumiApiKey.UserSubjectCollection, subjectID, BangumiApiKey.Percolator, user.authEncode)
     
-        alamofireEphemeralManager.request(.GET, urlPath, parameters: nil).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .get, parameters: nil).validate(contentType: ["application/json"]).responseJSON(queue: DispatchQueue.cmkJson) { (response: Response) in
         
             let collectInfo = self.getResult(from: response)
                 .flatMap(self.toJSON)
                 .flatMap(self.validate)
                 .flatMap(self.toCollectInfo)
             
-            handler(collectInfo)
+            DispatchQueue.main.async {
+                handler(collectInfo)
+            }
         }
     }
     
-    func collection(of subjectIDs: [SubjectID], handler: (Result<CollectDict>) -> Void) {
+    func collection(of subjectIDs: [SubjectID], handler: @escaping (Result<CollectDict>) -> Void) {
         
         guard let user = self.user else {
             handler(.failure(RequestError.userNotLogin))
@@ -75,7 +79,7 @@ extension BangumiRequest {
         })
         let urlPath = String(format: BangumiApiKey.UserSubjectCollectionSmall, user.id, ids, BangumiApiKey.Percolator, user.authEncode)
         
-        alamofireEphemeralManager.request(.GET, urlPath, parameters: nil).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .get, parameters: nil).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
             
             let collectDict = self.getResult(from: response)
                 .flatMap(self.toJSON)
@@ -86,7 +90,7 @@ extension BangumiRequest {
         }
     }
     
-    func updateCollection(of subjectID: SubjectID, with statusType: CollectInfo.StatusType, _ rating: Int?, _ comment: String?, _ tags: [String]?, isPrivacy: Bool, handler: (Result<CollectInfo>) -> Void) {
+    func updateCollection(of subjectID: SubjectID, with statusType: CollectInfo.StatusType, _ rating: Int?, _ comment: String?, _ tags: [String]?, isPrivacy: Bool, handler: @escaping (Result<CollectInfo>) -> Void) {
         
         guard let user = self.user else {
             handler(.failure(RequestError.userNotLogin))
@@ -94,13 +98,13 @@ extension BangumiRequest {
         }
         
         let urlPath = String(format: BangumiApiKey.UpdateSubjectStatus, subjectID, BangumiApiKey.Percolator, user.authEncode)
-        var postBody: [String : AnyObject] = ["status" : statusType.rawValue,
-                                              "privacy" : isPrivacy ? "1" : "0"]  // Do Not Public It. Keep it in privacy.
+        var postBody: [String : Any] = ["status" : statusType.rawValue,
+                                        "privacy" : isPrivacy ? "1" : "0"]  // Do Not Public It. Keep it in privacy.
         if let rating = rating { postBody["rating"] = rating }
         if let comment = comment { postBody["comment"] = comment }
         if let tags = tags { postBody["tags"] = "\(tags.joined(separator: " "))" }
         
-        alamofireEphemeralManager.request(.POST, urlPath, parameters: postBody).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
+        alamofireEphemeralManager.request(urlPath, method: .post, parameters: postBody).validate(contentType: ["application/json"]).responseJSON { (response: Response) in
             
             let collectInfo = self.getResult(from: response)
                 .flatMap(self.toJSON)
@@ -117,7 +121,7 @@ extension BangumiRequest {
 extension BangumiRequest {
     
     // Validate JSON
-    private func validate(json: JSON) -> Result<JSON> {
+    fileprivate func validate(json: JSON) -> Result<JSON> {
         // Bangumi API reture a "null" for no collection case
         guard json.rawString() != "null" else {
             return .failure(CollectionError.noCollection)
@@ -141,19 +145,19 @@ extension BangumiRequest {
     }
     
     // Unwrap JSON to Subjects
-    private func toSubjects(from json: JSON) -> Result<CollectionSubjects> {
+    fileprivate func toSubjects(from json: JSON) -> Result<CollectionSubjects> {
         let subjects = json.arrayValue.map { Subject(from: $0["subject"], of: .small) }
 
         return .success(subjects)
     }
     
     // Unwrap JSON to CollectInfo
-    private func toCollectInfo(from json: JSON) -> Result<CollectInfo> {
+    fileprivate func toCollectInfo(from json: JSON) -> Result<CollectInfo> {
         return .success(CollectInfo(from: json))
     }
     
     // Unwrap JSON to CollectDict
-    private func toCollecDict(from json: JSON) -> Result<CollectDict> {
+    fileprivate func toCollecDict(from json: JSON) -> Result<CollectDict> {
         var dict = CollectDict()
         for (key, subJSON) in json.dictionaryValue {
             if let subjectID = Int(key) {

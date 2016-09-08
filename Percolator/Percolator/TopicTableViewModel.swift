@@ -15,13 +15,12 @@ final class TopicTableViewModel: DataProvider {
     
     typealias ItemType = TopicItem
     typealias headerItemType = String
-    typealias ResponseData = Response<Data, NSError>
     
-    private let request = BangumiRequest.shared
-    private let subject: Subject
+    fileprivate let request = BangumiRequest.shared
+    fileprivate let subject: Subject
     
-    private var topics: [TopicItem] = []
-    private weak var tableView: UITableView?
+    fileprivate var topics: [TopicItem] = []
+    fileprivate weak var tableView: UITableView?
     
     
     init(tableView: UITableView, with subject: Subject) {
@@ -37,17 +36,15 @@ final class TopicTableViewModel: DataProvider {
 
 extension TopicTableViewModel {
     
-    func fetchTopics(handler: (Error?) -> Void) {
+    func fetchTopics(handler: @escaping (Error?) -> Void) {
         let url = "http://bgm.tv/subject/\(subject.id)/board"
         
-        // KISS
-        request.alamofireManager.request(.GET, url).validate().responseData { (response: ResponseData) in
-            assert(Thread.isMainThread, "Model method should be main thread for thread safe")
+        request.html(from: url) { (result: Result<String>) in
+            assert(Thread.isMainThread, "Request callback should be main thread")
             
-            switch response.result {
-            case .success(let data):
-                guard let html = String(data: data, encoding: String.Encoding.utf8),
-                    let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8),
+            do {
+                let html = try result.resolve()
+                guard let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8),
                     let bodyNode = doc.body else {
                         handler(ModelError.parse)
                         return
@@ -62,9 +59,10 @@ extension TopicTableViewModel {
                     handler(nil)
                 }
                 
-            case .failure(let error):
+            } catch {
                 handler(error)
-            }   // end switch
+            }
+            
         }   // end request
     }
     
@@ -116,7 +114,7 @@ extension TopicTableViewModel {
 
 extension TopicTableViewModel {
     
-    private func parseTopic(with bodyNode: XMLElement) {
+    fileprivate func parseTopic(with bodyNode: XMLElement) {
         var items = [TopicItem]()
         if let table = bodyNode.at_xpath("//table[@class='topic_list']") {
             

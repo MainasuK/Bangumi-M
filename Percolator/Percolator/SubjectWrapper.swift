@@ -9,12 +9,14 @@
 import Foundation
 
 // Wrap subject struct in class to comform AnyObject Protocol
-class SubjectWrapper {
-    private let subject: Subject
+final class SubjectWrapper {
+    
+    fileprivate let subject: Subject
     
     init(with subject: Subject) {
         self.subject = subject
     }
+    
 }
 
 extension SubjectWrapper {

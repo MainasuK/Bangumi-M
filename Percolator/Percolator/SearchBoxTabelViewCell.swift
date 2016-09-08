@@ -24,6 +24,23 @@ class SearchBoxTableViewCell: MGSwipeTableCell {
     @IBOutlet weak var indicatorLabel: UILabel!
     
     var isLast: Bool = false
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        nameLabel.layer.masksToBounds = true
+        nameCNLabel.layer.masksToBounds = true
+        typeLabel.layer.masksToBounds = true
+        doingLabel.layer.masksToBounds = true
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        animeImageView.af_cancelImageRequest()
+        animeImageView.layer.removeAllAnimations()
+        animeImageView.image = nil
+    }
 }
 
 
@@ -46,7 +63,7 @@ extension SearchBoxTableViewCell: ConfigurableCell {
 
 extension SearchBoxTableViewCell {
 
-    private func configureLabel(with subject: Subject) {
+    fileprivate func configureLabel(with subject: Subject) {
         nameLabel.text = subject.name
         nameCNLabel.text = subject.nameCN
         typeLabel.text = PercolatorKey.typeArr[subject.type]
@@ -64,7 +81,7 @@ extension SearchBoxTableViewCell {
         savedArrowImageView.isHidden = !subject.isSaved()
     }
     
-    private func configureImage(with images: Images) {
+    fileprivate func configureImage(with images: Images) {
         // Async load image
         let networkStatus = BangumiRequest.shared.networkStatus
         let imageURLValue = (networkStatus == ReachableViaWiFi) ? images.largeUrl : images.mediumUrl
@@ -77,18 +94,17 @@ extension SearchBoxTableViewCell {
         // Use 1.0 MB get 249 subjects. Awesome
         // let imageURLValue = images.smallUrl
         
-        let size = animeImageView.bounds.size
+        let size = CGSize(width: 1, height: 1)
         
-        animeImageView.af_cancelImageRequest()
         if let urlVal = imageURLValue,
         let url = URL(string: urlVal) {
-            animeImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
+            animeImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
         } else {
             animeImageView.image = UIImage.fromColor(.placeholder, size: size)
         }
     }
     
-    private func configureIndicator(with result: Result<CollectInfoSmall>, subject: Subject) {
+    fileprivate func configureIndicator(with result: Result<CollectInfoSmall>, subject: Subject) {
         indicatorLabel.text = ""
         
         do {
@@ -102,7 +118,7 @@ extension SearchBoxTableViewCell {
         }
     }
     
-    private func setupCellStyle() {
+    fileprivate func setupCellStyle() {
         // Make cell get readable margin guideline
         preservesSuperviewLayoutMargins = true
         contentView.preservesSuperviewLayoutMargins = true
@@ -113,7 +129,7 @@ extension SearchBoxTableViewCell {
         animeImageView.layer.borderWidth = 0.5
     }
     
-    private func setupLabelStyle() {
+    fileprivate func setupLabelStyle() {
 //        airDateLabel.asyncSetFont(with: "HiraginoSansGB-W3", placeholderFontName: "HiraginoSans-W3", size: 13.0)
 //        typeLabel.asyncSetFont(with: "HiraginoSansGB-W3", placeholderFontName: "HiraginoSans-W3", size: 13.0)
 //        

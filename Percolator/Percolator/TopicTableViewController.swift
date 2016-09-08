@@ -15,9 +15,9 @@ final class TopicTableViewController: UITableViewController {
     typealias Model = TopicTableViewModel
     typealias Cell = TopicTableViewCell
 
-    private var model: Model!
-    private var dataSource: TableViewDataSource<Model, Cell>!
-    private var isFirstAppear = true
+    fileprivate var model: Model!
+    fileprivate var dataSource: TableViewDataSource<Model, Cell>!
+    fileprivate var isFirstAppear = true
     var subject: Subject!
     
     deinit {
@@ -30,6 +30,7 @@ extension TopicTableViewController {
     
     typealias ModelError = TopicTableViewModel.ModelError
     typealias NetworkError = BangumiRequest.NetworkError
+    typealias HTMLError = BangumiRequest.HTMLError
     typealias UnknownError = BangumiRequest.Unknown
     
     override func viewDidLoad() {
@@ -70,33 +71,34 @@ extension TopicTableViewController {
                     SVProgressHUD.dismiss()
                     let status = NSLocalizedString("time out", comment: "")
                     SVProgressHUD.showInfo(withStatus: status)
-                    consolePrint("Timeout")
+                    consolePrint("Time out")
                     
                 } catch NetworkError.notConnectedToInternet {
                     SVProgressHUD.dismiss()
-                    let title = NSLocalizedString("not connected to internet", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
+                    consolePrint("Not Connected to Internet")
                     
+                } catch HTMLError.notHTML {
+                    SVProgressHUD.dismiss()
+                    let title = NSLocalizedString("can't recognize this web page format", comment: "")
+                    let alertController = UIAlertController.simpleErrorAlert(with: title)
+                    SVProgressHUD.dismiss()
+                    self.present(alertController, animated: true, completion: nil)
+                    consolePrint("Not HTML format")
+                
                 } catch UnknownError.alamofire(let error) {
                     SVProgressHUD.dismiss()
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unknow NSError: \(error)")
                     
                 } catch UnknownError.network(let error) {
                     SVProgressHUD.dismiss()
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unknow NSURLError: \(error)")
                     
                 } catch {
                     SVProgressHUD.dismiss()
-                    let title = NSLocalizedString("unknown error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "", code: -1)
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
                     consolePrint("Unresolve case: \(error)")
                 }   // end do-catch block    
 
@@ -116,15 +118,19 @@ extension TopicTableViewController {
 
 extension TopicTableViewController {
     
-    private func setupTableViewDataSource() {
+    fileprivate func setupTableViewDataSource() {
         model = TopicTableViewModel(tableView: tableView, with: subject)
         dataSource = TableViewDataSource<Model, Cell>(model: model)
         tableView.dataSource = dataSource
     }
     
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         
         title = "相关话题"
+        
+        if let barFont = UIFont(name: "PingFangSC-Medium", size: 17.0) {
+            navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName : barFont]
+        }
         
         // Configure tableView appearance
         tableView.tableFooterView = UIView()

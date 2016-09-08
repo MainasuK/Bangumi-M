@@ -14,14 +14,14 @@ final class SearchBoxTableViewModel: DataProvider {
     typealias ItemType = (Subject, Result<CollectInfoSmall>)
     typealias CollectDict = BangumiRequest.CollectDict
     
-    private weak var tableView: UITableView?
+    fileprivate weak var tableView: UITableView?
     
-    private let request = BangumiRequest.shared
-    private weak var context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.context
-    private let kLimit = 10
+    fileprivate let request = BangumiRequest.shared
+    fileprivate weak var context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.context
+    fileprivate let kLimit = 10
     
-    private var items = [Subject]()
-    private lazy var localItems: [Subject] = {
+    fileprivate var items = [Subject]()
+    fileprivate lazy var localItems: [Subject] = {
         let fetchRequest: NSFetchRequest<CDSubject> = CDSubject.fetchRequest()
         
         guard let context = self.context,
@@ -31,16 +31,16 @@ final class SearchBoxTableViewModel: DataProvider {
 
         return cdSubjects.map { $0.toSubject() }.reversed()
     }()
-    private var collectDict: CollectDict = [:]
+    fileprivate var collectDict: CollectDict = [:]
 
-    private var subjectsIDArray = [Int]()
-    private var startIndex = 0
-    private var lastSearchText = ""
-    private var noMoreData = false
-    private var lastSearchType = 0
+    fileprivate var subjectsIDArray = [Int]()
+    fileprivate var startIndex = 0
+    fileprivate var lastSearchText = ""
+    fileprivate var noMoreData = false
+    fileprivate var lastSearchType = 0
     
     /// Change it to true only. Never ever to false
-    private(set) var isSearching = false {
+    fileprivate(set) var isSearching = false {
         didSet {
             if oldValue == false {
                 // Prevent view not refresh
@@ -86,7 +86,7 @@ extension SearchBoxTableViewModel {
     }
     
     // MARK: - Search method
-    func search(for keywords: String, type searchType: Int, handler: (Error?) -> Void)  {
+    func search(for keywords: String, type searchType: Int, handler: @escaping (Error?) -> Void)  {
         isSearching = true
         tableView?.reloadData()
         
@@ -144,7 +144,7 @@ extension SearchBoxTableViewModel {
     
     typealias CollectionError = BangumiRequest.CollectionError
     
-    private func fetchCollectInfo(for subjectIDs: [SubjectID]) {
+    fileprivate func fetchCollectInfo(for subjectIDs: [SubjectID]) {
         request.collection(of: subjectIDs) { (result: Result<CollectDict>) in
             do {
                 let dict = try result.resolve()

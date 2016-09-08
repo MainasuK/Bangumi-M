@@ -28,6 +28,7 @@
 "authorize failed" = "Get Authorization Failed";
 "try login again" = "Please Log In Again";
 "please login" = "Please Login";
+"can't recognize this web page format" = "Can't Recognize This Web Page Format";
 
 "save to search box" = "Save to Search Box";
 "delete from search box" = "Delete from Search Box";

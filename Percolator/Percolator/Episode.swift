@@ -10,6 +10,16 @@ import Foundation
 import SwiftyJSON
 
 struct Episode {
+    
+    static let sortFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.maximumFractionDigits = 3
+        formatter.minimumFractionDigits = 0
+        
+        return formatter
+    }()
+    
     let id: EpisodeID
     
     let url: String
@@ -33,13 +43,8 @@ struct Episode {
     }
     
     var sortString: String {
-        let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.maximumFractionDigits = 3
-        formatter.minimumFractionDigits = 0
-        
         // Remove .0 for episode sort
-        return formatter.string(from: sort) ?? ""
+        return Episode.sortFormatter.string(from: sort as NSNumber) ?? ""
     }
     
     var mobileURL: String {

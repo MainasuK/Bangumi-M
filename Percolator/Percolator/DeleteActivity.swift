@@ -9,19 +9,19 @@
 import UIKit
 import SVProgressHUD
 
-class DeleteActivity: UIActivity {
+final class DeleteActivity: UIActivity {
     
     var subject: SubjectWrapper?
     
-    override var activityType: String? {
-        return "Percolator.Delete"
+    @nonobjc override var activityType: UIActivityType? {
+        return UIActivityType("Percolator.Delete")
     }
     
     override var activityTitle: String? {
         return NSLocalizedString("delete from search box", comment: "")
     }
     
-    override func canPerform(withActivityItems activityItems: [AnyObject]) -> Bool {
+    override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
         for item in activityItems {
             if let subject = item as? SubjectWrapper {
                 return subject.isSaved()
@@ -31,7 +31,7 @@ class DeleteActivity: UIActivity {
         return false
     }
     
-    override func prepare(withActivityItems activityItems: [AnyObject]) {
+    override func prepare(withActivityItems activityItems: [Any]) {
         for item in activityItems {
             if let subject = item as? SubjectWrapper {
                 self.subject = subject

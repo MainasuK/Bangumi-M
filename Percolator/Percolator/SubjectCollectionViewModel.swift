@@ -12,18 +12,20 @@ import Kanna
 
 final class SubjectCollectionViewModel: DataProvider, HeaderDataProvider {
     
-    typealias ItemType = SubjectItem
+    typealias ItemType = (SubjectItem, Result<CollectInfoSmall>)
+    typealias CollectDict = BangumiRequest.CollectDict
     typealias headerItemType = String
-    typealias ResponseData = Response<Data, NSError>
     
-    private let request = BangumiRequest.shared
+    fileprivate let request = BangumiRequest.shared
     
-    private var bookSubjectItem = [SubjectItem]()
-    private var otherSubjectSectionName = [String]()
-    private var otherSubjectItem = [[SubjectItem]]()
+    fileprivate var bookSubjectItem = [SubjectItem]()
+    fileprivate var otherSubjectSectionName = [String]()
+    fileprivate var otherSubjectItem = [[SubjectItem]]()
     
-    private weak var collectionView: UICollectionView?
-    private let subject: Subject
+    fileprivate var collectDict: CollectDict = [:]
+    
+    fileprivate weak var collectionView: UICollectionView?
+    fileprivate let subject: Subject
     
     init(collectionView: UICollectionView, with subject: Subject) {
         self.collectionView = collectionView
@@ -38,17 +40,15 @@ final class SubjectCollectionViewModel: DataProvider, HeaderDataProvider {
 
 extension SubjectCollectionViewModel {
     
-    func fetchRelatedSubjects(handler: (Error?) -> Void) {
+    func fetchRelatedSubjects(handler: @escaping (Error?) -> Void) {
         let url = "https://bgm.tv/subject/\(subject.id)"
-        
-        // KISS
-        request.alamofireManager.request(.GET, url).validate().responseData { (response: ResponseData) in
-            assert(Thread.isMainThread, "Model method should on main thread for thread safe")
+    
+        request.html(from: url) { (result: Result<String>) in
+            assert(Thread.isMainThread, "Request callback should be main thread")
             
-            switch response.result {
-            case .success(let data):
-                guard let html = String(data: data, encoding: String.Encoding.utf8),
-                let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8),
+            do {
+                let html = try result.resolve()
+                guard let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8),
                 let bodyNode = doc.body else {
                     handler(ModelError.parse)
                     return
@@ -59,16 +59,45 @@ extension SubjectCollectionViewModel {
                 
                 self.collectionView?.reloadData()
                 
+                self.fetchCollectInfo(for: self.bookSubjectItem.flatMap { $0.urlPath.components(separatedBy: "/").last }.flatMap { Int($0) })
+                
                 if self.bookSubjectItem.isEmpty && self.otherSubjectItem.isEmpty {
                     handler(ModelError.noItem)
                 } else {
                     handler(nil)
                 }
                 
-            case .failure(let error):
+            } catch {
                 handler(error)
-            }   // end switch
-        }   // end request
+            }
+        }
+    }
+    
+}
+
+extension SubjectCollectionViewModel {
+    
+    typealias CollectionError = BangumiRequest.CollectionError
+    
+    fileprivate func fetchCollectInfo(for subjectIDs: [SubjectID]) {
+        request.collection(of: subjectIDs) { (result: Result<CollectDict>) in
+            assert(Thread.isMainThread, "Request callback should be main thread")
+            
+            do {
+                let dict = try result.resolve()
+                dict.forEach { (key: SubjectID, value: CollectInfoSmall) in
+                    self.collectDict[key] = value
+                }
+                
+                self.collectionView?.reloadData()
+                
+            } catch CollectionError.noCollection {
+                consolePrint("No collect info")
+            } catch {
+                // Jush print it
+                consolePrint(error)
+            }
+        }
     }
     
 }
@@ -90,8 +119,17 @@ extension SubjectCollectionViewModel {
     
     func item(at indexPath: IndexPath) -> SubjectCollectionViewModel.ItemType {
         switch indexPath.section {
-        case 0:         return bookSubjectItem[indexPath.row]
-        default:        return otherSubjectItem[indexPath.section][indexPath.row]
+        case 0:
+            let subjectItem = bookSubjectItem[indexPath.row]
+            if let idStr = subjectItem.urlPath.components(separatedBy: "/").last,
+            let id = Int(idStr),
+            let collect = collectDict[id] {
+                return (subjectItem, .success(collect))
+            } else {
+                return (subjectItem, .failure(ModelCollectError.unknown))
+            }
+        default:
+            return (otherSubjectItem[indexPath.section][indexPath.row], .failure(ModelCollectError.unknown))
         }
     }
     
@@ -137,11 +175,15 @@ extension SubjectCollectionViewModel {
         let urlPath: String
         let coverUrlPath: String
     }
+    
+    enum ModelCollectError: Error {
+        case unknown
+    }
 }
 
 extension SubjectCollectionViewModel {
     
-    private func parseBook(with bodyNode: XMLElement) {
+    fileprivate func parseBook(with bodyNode: XMLElement) {
         if let section = bodyNode.at_xpath("//ul[@class='browserCoverSmall clearit']") {
 
             var items: [SubjectItem] = []
@@ -180,7 +222,7 @@ extension SubjectCollectionViewModel {
         }   // end if let section …
     }
     
-    private func parseOther(with bodyNode: XMLElement) {
+    fileprivate func parseOther(with bodyNode: XMLElement) {
         if let section = bodyNode.at_xpath("//div[@class='content_inner']") {
 
             var sub = ""

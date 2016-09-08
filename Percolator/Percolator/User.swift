@@ -16,13 +16,13 @@ struct User {
     let auth: String
     let authEncode: String
     
-    private let url: String
-    private let username: String
+    fileprivate let url: String
+    fileprivate let username: String
     let nickname: String
     
     let avatar: Avatar
 
-    private let sign: String
+    fileprivate let sign: String
     
     // Fail fast - make sure error handle correctly
     init(json: JSON) {
@@ -161,54 +161,3 @@ extension User {
     }
 
 }
-
-//
-//    class func deleteUserInfo() {
-//        print("$ Bangumi_User: user is log out status. Clean usre data")
-//        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//            
-//            let myKeyChainWrapper = KeychainWrapper()
-//            
-//            NSstandardUserDefaults().setBool(false, forKey: UserDefaultsKey.hasLoginKey)
-//            NSstandardUserDefaults().setValue(nil, forKey: UserDefaultsKey.userID)
-//            NSstandardUserDefaults().setValue(nil, forKey: UserDefaultsKey.userEmail)
-//            NSstandardUserDefaults().setValue(nil, forKey: UserDefaultsKey.userAuth)
-//            NSstandardUserDefaults().setValue(nil, forKey: UserDefaultsKey.userAuthEncode)
-//            NSstandardUserDefaults().synchronize()
-//            
-//            myKeyChainWrapper.mySetObject(nil, forKey: kSecValueData)
-//            myKeyChainWrapper.writeToKeychain()
-//        })
-//    }
-//    
-//    // FIXME: Something is wrong
-//    class func refetchUserAuth() {
-//        print("$ Bangumi_User: Refetch user auth")
-//        let myKeyChainWrapper = KeychainWrapper()
-//        let request = BangumiRequest.shared
-//
-//
-//        if User.isUserLogin() {
-//            let email = NSstandardUserDefaults().valueForKey(UserDefaultsKey.userEmail) as? String
-//            let pass = myKeyChainWrapper.myObjectForKey(kSecValueData) as? String
-//            print("$ Bangumi_User: Try to prase user json")
-//            
-//            if email != nil && pass != nil {
-//                request.userLogin(email!, password: pass!) { (userData) -> Void in
-//
-//                    if let user = userData {
-//                        debugPrint("$ Bangumi_User: User auth up to date: \(user.auth), save it in NSUserDefaults")
-//                        debugPrint("$ Bangumi_User: request userData up to date")
-//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                            
-//                            NSstandardUserDefaults().setValue(user.auth, forKey: UserDefaultsKey.userAuth)
-//                            NSstandardUserDefaults().synchronize()
-//                        })
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    
-//    
-//}

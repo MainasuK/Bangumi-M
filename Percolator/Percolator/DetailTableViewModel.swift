@@ -13,10 +13,10 @@ final class DetailTableViewModel: NSObject, DataProvider {
     typealias ItemType = Result<DetailItem>
     typealias ErrorType = ModelError
     
-    private let request = BangumiRequest.shared
+    fileprivate let request = BangumiRequest.shared
     
-    private var subject: Subject?
-    private var progress = Progress()
+    fileprivate var subject: Subject?
+    fileprivate var progress = Progress()
     
     var collectionItems: [(String, [CollectionItem])] {
         var items: [(String, [CollectionItem])] = []
@@ -31,8 +31,8 @@ final class DetailTableViewModel: NSObject, DataProvider {
         return items
     }
     
-    private weak var tableView: UITableView?
-    private weak var collectionViewDelegate: UICollectionViewDelegate?
+    fileprivate weak var tableView: UITableView?
+    fileprivate weak var collectionViewDelegate: UICollectionViewDelegate?
     
     var isReverse = false
     var isEmpty: Bool {
@@ -61,7 +61,9 @@ extension DetailTableViewModel {
 
         guard subject.responseGroup != .large else {
             consolePrint("Subject-large is already exists")
-            fetchProgress(of: subject)
+            
+            self.fetchProgress(of: subject)
+            
             return
         }
         
@@ -85,7 +87,7 @@ extension DetailTableViewModel {
         }
     }
     
-    func markEpisode(at indexPath: IndexPath, to status: Status, handler: (Error?) -> Void) {
+    func markEpisode(at indexPath: IndexPath, to status: Status, handler: @escaping (Error?) -> Void) {
         
         guard let item = try? item(at: indexPath).resolve(),
         let episode = item~>^=^ else { return }
@@ -111,8 +113,7 @@ extension DetailTableViewModel {
 
 extension DetailTableViewModel {
     
-
-    private func fetchProgress(of subject: Subject) {
+    fileprivate func fetchProgress(of subject: Subject) {
         consolePrint("Fetch progress of subject: \(subject.name) …")
         // Ture on spinner to giver user hint
         NetworkSpinner.on()
@@ -122,8 +123,14 @@ extension DetailTableViewModel {
             consolePrint("… get progress result of subject: \(subject.name)")
             NetworkSpinner.off()
             do {
-                self.progress = try result.resolve()
-                self.tableView?.reloadData()
+                let progress = try result.resolve()
+                
+                // Prevent tableView scrolling lag issue
+                DispatchQueue.main.async { [weak self] in
+                    self?.progress = progress
+                    self?.tableView?.reloadData()
+                }
+                
             } catch {
                 consolePrint(error)
             }
@@ -189,8 +196,7 @@ extension DetailTableViewModel {
         case 2: return .success(.subject(subject))
         // More subject cell
         case 3: return .success(.subject(subject))
-        // FIXME: Need clean up
-        // Note: Not profiled code. Should keep watching
+        // FIXME: Not profiled code snip. Should keep watching
         // EP
         case 4:
             let episode = (isReverse) ? subject.epTableReversed[indexPath.row] : subject.epTable[indexPath.row]
@@ -282,8 +288,8 @@ extension DetailTableViewModel {
 }
 
 // FIXME: Use case let
-postfix operator ~>^=^ { }
-postfix operator ~>^*^ { }
+postfix operator ~>^=^
+postfix operator ~>^*^
 
 
 // Happy coding

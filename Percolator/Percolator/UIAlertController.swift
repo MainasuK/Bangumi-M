@@ -10,7 +10,7 @@ import UIKit
 
 extension UIAlertController {
     
-    class func simpleErrorAlert(with title: String, description: String, code: Int = 0) -> UIAlertController {
+    class func simpleErrorAlert(with title: String, description: String = "", code: Int = 0) -> UIAlertController {
         let cancelButtonTitle = NSLocalizedString("dismiss", comment: "")
         let codeString = (code != 0) ? "\(code)" : ""
         let message: String? = ("" == codeString && "" == description) ? nil : "\(codeString) \(description)"

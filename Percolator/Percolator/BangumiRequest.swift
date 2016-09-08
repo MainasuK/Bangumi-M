@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class BangumiRequest {
     
-    typealias Response = Alamofire.Response<AnyObject, NSError>
+    typealias Response = Alamofire.DataResponse<Any>
 
     let internetReachability = Reachability.forInternetConnection()
     
@@ -21,24 +21,24 @@ class BangumiRequest {
     var user: User?
     
     // Use default manager for changeless resource (with cache)
-    let alamofireManager: Alamofire.Manager = {
+    let alamofireManager: Alamofire.SessionManager = {
         let kTimeoutInterval: TimeInterval = 15.0
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = kTimeoutInterval
         configuration.timeoutIntervalForResource = kTimeoutInterval
-        configuration.httpAdditionalHeaders = Manager.defaultHTTPHeaders
+        configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
         
-        return Alamofire.Manager(configuration: configuration)
+        return Alamofire.SessionManager(configuration: configuration)
     }()
     // Use ephemeral manager for mutable resource (without cache)
-    let alamofireEphemeralManager: Alamofire.Manager = {
+    let alamofireEphemeralManager: Alamofire.SessionManager = {
         let kTimeoutInterval: TimeInterval = 15.0
         let configuration = URLSessionConfiguration.ephemeral
         configuration.timeoutIntervalForRequest = kTimeoutInterval
         configuration.timeoutIntervalForResource = kTimeoutInterval
-        configuration.httpAdditionalHeaders = Manager.defaultHTTPHeaders
+        configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
         
-        return Alamofire.Manager(configuration: configuration)
+        return Alamofire.SessionManager(configuration: configuration)
     }()
 
     // MARK: - Singleton

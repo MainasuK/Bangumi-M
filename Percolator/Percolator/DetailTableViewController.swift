@@ -20,25 +20,25 @@ final class DetailTableViewController: UITableViewController {
     typealias Model = DetailTableViewModel
     typealias Cell = DetailTableViewCell
     
-    private let kHeaderViewMaxHeight: CGFloat = 500
+    fileprivate let kHeaderViewMaxHeight: CGFloat = 500
     
     var subject: Subject!
-    private var headerViewHeight: CGFloat = 0 {
+    fileprivate var headerViewHeight: CGFloat = 0 {
         didSet {
             headerViewHeight = min(headerViewHeight, kHeaderViewMaxHeight)
             headerView.frame.size.height = headerViewHeight
         }
     }
-    private var headerViewMarginTop: CGFloat = 64
-    private var model: Model!
-    private var dataSource: TableViewDataSource<Model, Cell>!
+    fileprivate var headerViewMarginTop: CGFloat = 64
+    fileprivate var model: Model!
+    fileprivate var dataSource: TableViewDataSource<Model, Cell>!
     
     @IBOutlet var detailTableView: DetailTableView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerImageView: UIImageView!
     
     @IBAction func actionBarButtonItemPressed(_ sender: UIBarButtonItem) {
-        var objectToShare: [AnyObject] = ["\(subject.name) - \(subject.nameCN)"]
+        var objectToShare: [Any] = ["\(subject.name) - \(subject.nameCN)"]
         if let url = URL(string: subject.url) {
             objectToShare.append(url)
         }
@@ -53,10 +53,19 @@ final class DetailTableViewController: UITableViewController {
         let poc = activityViewController.popoverPresentationController
         poc?.barButtonItem = sender
         
-        self.present(activityViewController, animated: true, completion: nil)
+        // Async for not block main queue…
+        DispatchQueue.main.async { [weak self] in
+            self?.present(activityViewController, animated: true, completion: nil)
+        }
     }
     
     @IBAction func swipeRestureTrigger(_ sender: UISwipeGestureRecognizer) {
+        // Reverse EP section only
+        guard let section = tableView.indexPathForRow(at: sender.location(in: tableView))?.section,
+        section == 4 else {
+            return
+        }
+        
         model.isReverse = !model.isReverse
         tableView.reloadData()
     }
@@ -81,7 +90,7 @@ final class DetailTableViewController: UITableViewController {
         
     }
     
-    private func resetHeaderViewHeight(with width: CGFloat? = nil) {
+    fileprivate func resetHeaderViewHeight(with width: CGFloat? = nil) {
         guard let image = headerImageView.image else {
             headerViewHeight = 0
             return
@@ -93,7 +102,7 @@ final class DetailTableViewController: UITableViewController {
         headerViewHeight = (height > image.size.height) ? image.size.height : height
     }
     
-    private func updateHeaderView(with width: CGFloat? = nil) {
+    fileprivate func updateHeaderView(with width: CGFloat? = nil) {
         var headerRect = CGRect(x: 0.0, y: -headerViewHeight, width: width ?? tableView.bounds.width, height: headerViewHeight)
         let y = tableView.contentOffset.y + headerViewMarginTop
         
@@ -109,12 +118,13 @@ final class DetailTableViewController: UITableViewController {
 
 extension DetailTableViewController {
     
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         
         title = subject.name
         
         // Configure tableView appearance
         tableView.tableFooterView = UIView()
+        self.clearsSelectionOnViewWillAppear = true
         
         // Configure headerView
         headerView = tableView.tableHeaderView
@@ -136,7 +146,7 @@ extension DetailTableViewController {
         if let urlVal = self.subject.images.largeUrl,
             let url = URL(string: urlVal) {
             // Oops… Reset headerView height when aysn callback finish
-            self.headerImageView.af_setImageWithURL(url, imageTransition: .custom(duration: 0.5, animationOptions: [.allowUserInteraction], animations: {
+            self.headerImageView.af_setImage(withURL: url, imageTransition: .custom(duration: 0.5, animationOptions: [.allowUserInteraction], animations: {
                 $0.image = $1
                 self.resetHeaderViewHeight()
                 self.setupTableViewInsetAndOffset()
@@ -153,7 +163,7 @@ extension DetailTableViewController {
         detailTableView.dataSource = dataSource
     }
     
-    private func setupTableViewInsetAndOffset() {
+    fileprivate func setupTableViewInsetAndOffset() {
         tableView.contentOffset = CGPoint(x: 0.0, y: -headerViewHeight - headerViewMarginTop)
         tableView.contentInset = UIEdgeInsets(top: headerViewHeight + headerViewMarginTop, left: 0, bottom: 0, right: 0)
         
@@ -176,6 +186,7 @@ extension DetailTableViewController {
         setupTableViewInsetAndOffset()
         
         // Configure cell row height
+        tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         
         // Configure cell margin
@@ -218,7 +229,7 @@ extension DetailTableViewController {
     
     // If detail controller popped before mark epsisode callback called.
     // The self will hold the ref to prevent thread safe issue
-    private func markEpisode(at indexPath: IndexPath) {
+    fileprivate func markEpisode(at indexPath: IndexPath) {
         
         guard let item = try? model.item(at: indexPath).resolve(),
         let episode = item~>^=^ else { return }
@@ -297,26 +308,18 @@ extension DetailTableViewController {
             consolePrint("Time out")
             
         } catch NetworkError.notConnectedToInternet {
-            let title = NSLocalizedString("not connected to internet", comment: "")
-            let alertController = UIAlertController.simpleErrorAlert(with: title, description: "Not connected to internet")
-            self.present(alertController, animated: true, completion: nil)
+            self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
             
         } catch UnknownError.alamofire(let error) {
-            let title = NSLocalizedString("unknown error", comment: "")
-            let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.description)", code: error.code)
-            self.present(alertController, animated: true, completion: nil)
+            self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
             consolePrint("Unknow NSError: \(error)")
             
         } catch UnknownError.network(let error) {
-            let title = NSLocalizedString("unknown error", comment: "")
-            let alertController = UIAlertController.simpleErrorAlert(with: title, description: "NSURLError", code: error.code.rawValue)
-            self.present(alertController, animated: true, completion: nil)
+            self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
             consolePrint("Unknow NSURLError: \(error)")
             
         } catch {
-            let title = NSLocalizedString("unknown error", comment: "")
-            let alertController = UIAlertController.simpleErrorAlert(with: title, description: "", code: -1)
-            self.present(alertController, animated: true, completion: nil)
+            self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
             consolePrint("Unresolve case: \(error)")
         }   // end do-catch block    
     }
@@ -338,19 +341,24 @@ extension DetailTableViewController {
         return 30
     }
     
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
-        case 0:
-            return 300
+        case 1:
+            return 159.0
+        case 2:
+            fallthrough
+        case 3:
+            return 46.0
         case let section where section >= 4 && section <= 7:
-            return 100
+            return 66.0
+        // Self-size banner cell only
         default:
-            return 200
+            return UITableViewAutomaticDimension
         }
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard section >= 3 && section <= 6 else {
+        guard section >= 4 && section <= 7 else {
             return UIView()
         }
         
@@ -450,21 +458,21 @@ extension DetailTableViewController {
     
     // Align item to eage
     // Ref: Design Teardowns
-    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
-        if let collectionView = scrollView as? CMKCollectionView,
-        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            let width = layout.itemSize.width + layout.minimumLineSpacing
-            
-            var offset = targetContentOffset.pointee
-            
-            let index = (offset.x + scrollView.contentInset.left) / width
-            let roundedIndex = round(index)
-            
-            offset = CGPoint(x: roundedIndex * width - scrollView.contentInset.left, y: -scrollView.contentInset.top)
-            targetContentOffset.pointee = offset
-        }
-    }
+//    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        
+//        if let collectionView = scrollView as? CMKCollectionView,
+//        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+//            let width = layout.itemSize.width + layout.minimumLineSpacing
+//            
+//            var offset = targetContentOffset.pointee
+//            
+//            let index = (offset.x + scrollView.contentInset.left) / width
+//            let roundedIndex = round(index)
+//            
+//            offset = CGPoint(x: roundedIndex * width - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+//            targetContentOffset.pointee = offset
+//        }
+//    }
     
 }
 

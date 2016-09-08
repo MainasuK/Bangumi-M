@@ -30,6 +30,7 @@ class AnimeListTableViewCell: UITableViewCell {
     }
     
     @IBOutlet weak var cardView: UIView!
+    @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var indicatorView: UIView!
     @IBOutlet weak var controlView: UIView!
     
@@ -51,6 +52,20 @@ class AnimeListTableViewCell: UITableViewCell {
     }
     
     @IBOutlet weak var watchedSpinner: UIActivityIndicatorView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        setupCellStyle()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        animeImageView.af_cancelImageRequest()
+        animeImageView.layer.removeAllAnimations()
+        animeImageView.image = nil
+    }
 }
 
 extension AnimeListTableViewCell: ConfigurableCell {
@@ -63,20 +78,19 @@ extension AnimeListTableViewCell: ConfigurableCell {
         let (subject, history) = item
         mark = .none
         
-        setupCellStyle()
         configureLabel(with: subject)
         configureIamge(with: subject.images)
         configureButton(with: history, subject)
         
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
 //        setupLabelStyle()
-        
-        layoutIfNeeded()
     }
 }
 
 extension AnimeListTableViewCell {
     
-    private func configureLabel(with subject: Subject) {
+    fileprivate func configureLabel(with subject: Subject) {
         nameLabel.text = (subject.name != "") ? subject.name : subject.nameCN
         
         // Set text in configureButton…
@@ -84,22 +98,21 @@ extension AnimeListTableViewCell {
         watchedLabel.text = "努力分析中…"
     }
     
-    private func configureIamge(with images: Images) {
+    fileprivate func configureIamge(with images: Images) {
         // Async load image
         let networkStatus = BangumiRequest.shared.networkStatus
         let imageURLValue = (networkStatus == ReachableViaWiFi) ? images.largeUrl : images.mediumUrl
-        let size = animeImageView.bounds.size
+        let size = CGSize(width: 1, height: 1)
         
-        animeImageView.af_cancelImageRequest()
         if let urlVal = imageURLValue, let url = URL(string: urlVal) {
-            animeImageView.af_setImageWithURL(url, placeholderImage: UIImage.fromColor(.placeholder, size: size), imageTransition: .crossDissolve(0.2))
+            animeImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
         } else {
             animeImageView.image = UIImage.fromColor(.placeholder, size: size)
         }
     }
     
     // TL; DR
-    private func configureButton(with result: History, _ subject: Subject) {
+    fileprivate func configureButton(with result: History, _ subject: Subject) {
         guard subject.responseGroup == .large else {
             isSpinnning = true
             return
@@ -188,7 +201,12 @@ extension AnimeListTableViewCell {
     
     }
     
-    private func setupCellStyle() {
+    fileprivate func setupCellStyle() {
+        
+        nameLabel.layer.masksToBounds = true
+        watchedLabel.layer.masksToBounds = true
+        watchedToLabel.layer.masksToBounds = true
+        
         // Configure the appearance of the cell
         backgroundColor = UIColor.myAnimeListBackground
         
@@ -204,7 +222,7 @@ extension AnimeListTableViewCell {
         indicatorView.backgroundColor = UIColor.percolatorGray
     }
     
-//    private func setupLabelStyle() {
+//    fileprivate func setupLabelStyle() {
 //        if nameLabel.text == nameCNLabel.text {
 //            nameLabel.asyncSetFont(with: "STSongti-SC-Bold", placeholderFontName: "HiraMinProN-W6", size: 17.0, toLanguage: ["zh-Hans", "zh-Hant"])
 //        } else {

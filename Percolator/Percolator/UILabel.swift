@@ -44,7 +44,8 @@ extension UILabel {
             
             // Create a new font descriptor
             // Fallback to 'Helvetica' when font is not downloadable
-            let descs: CFArray = [CTFontDescriptorCreateWithAttributes([kCTFontNameAttribute as NSString : fontName])]
+            
+            let descs = [CTFontDescriptorCreateWithAttributes([kCTFontNameAttribute as NSString : fontName] as CFDictionary)] as CFArray
             
             var isFailWithError = false
             
