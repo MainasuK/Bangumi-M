@@ -59,6 +59,7 @@ final class DetailTableViewController: UITableViewController {
         }
     }
     
+    // FIXME: misspell function name
     @IBAction func swipeRestureTrigger(_ sender: UISwipeGestureRecognizer) {
         // Reverse EP section only
         guard let section = tableView.indexPathForRow(at: sender.location(in: tableView))?.section,
@@ -70,6 +71,7 @@ final class DetailTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    // FIXME: misspell function name
     @IBAction func longPressGrestureTrigger(_ sender: UILongPressGestureRecognizer) {
         switch sender.state {
         case .began:
