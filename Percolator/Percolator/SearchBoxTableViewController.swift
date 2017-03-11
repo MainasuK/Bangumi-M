@@ -76,11 +76,11 @@ final class SearchBoxTableViewController: UITableViewController {
         
         let alertController = UIAlertController(title: "\(subject.name)", message: nil, preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel) { (action) in
+        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel) { _ in
             // ...
         }
         
-        let saveAction = UIAlertAction(title: "保存", style: .default) { (action) in
+        let saveAction = UIAlertAction(title: "保存", style: .default) { _ in
             if subject.saveToCoreData() {
                 SVProgressHUD.showSuccess(withStatus: "保存成功")
             } else {
@@ -89,7 +89,7 @@ final class SearchBoxTableViewController: UITableViewController {
             self.tableView.reloadRows(at: [indexPath], with: .none)
             
         }
-        let deleteAction = UIAlertAction(title: "删除", style: .destructive) { (action) in
+        let deleteAction = UIAlertAction(title: "删除", style: .destructive) { _ in
             let isSuccess = self.model.removeItem(at: indexPath)
             if isSuccess {
                 SVProgressHUD.showSuccess(withStatus: "删除成功")
@@ -98,7 +98,7 @@ final class SearchBoxTableViewController: UITableViewController {
             }
         }
         
-        let collectAction = UIAlertAction(title: "收藏", style: .default) { (action) in
+        let collectAction = UIAlertAction(title: "收藏", style: .default) { _ in
             let navigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.CollectNavigationController) as! UINavigationController
             let collectTableViewController = navigationController.childViewControllers.first as! CollectTableViewController
             collectTableViewController.subject = subject
@@ -369,7 +369,6 @@ extension SearchBoxTableViewController {
     
 }
 
-
 // MARK: - MGSwipeTableCellDelegate
 extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
     
@@ -396,16 +395,15 @@ extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
         let collectionYellow = UIColor(red: 253.0/255.0, green: 204.0/255.0, blue: 49.0/255.0, alpha: 1.0)
         let deleteRed = UIColor(red: 255.0/255.0, green: 59.0/255.0, blue: 50.0/255.0, alpha: 1.0)
         
-        let saveButton = MGSwipeButton(title: "保存", backgroundColor: saveBlue, padding: 25) { [weak self] (cell: MGSwipeTableCell?) -> Bool in
+        let saveButton = MGSwipeButton(title: "保存", backgroundColor: saveBlue, padding: 25) { [weak self] _ -> Bool in
             let _ = subject.saveToCoreData()
             self?.tableView.reloadRows(at: [indexPath], with: .right)
             
             return false
         }
         
-        let collectionButton = MGSwipeButton(title: "收藏", backgroundColor: collectionYellow, padding: 25) { [weak self] (cell: MGSwipeTableCell?) -> Bool in
-            
-            
+        let collectionButton = MGSwipeButton(title: "收藏", backgroundColor: collectionYellow, padding: 25) { [weak self] _ -> Bool in
+
             let navigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.CollectNavigationController) as! UINavigationController
             let collectTableViewController = navigationController.childViewControllers.first as! CollectTableViewController
             collectTableViewController.subject = subject
@@ -417,7 +415,7 @@ extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
             return false
         }
         
-        let deleteButton = MGSwipeButton(title: "删除", backgroundColor: deleteRed, padding: 25) { [weak self] (cell: MGSwipeTableCell?) -> Bool in
+        let deleteButton = MGSwipeButton(title: "删除", backgroundColor: deleteRed, padding: 25) { [weak self] _ -> Bool in
             
             let _ = self?.model.removeItem(at: indexPath)
             return false

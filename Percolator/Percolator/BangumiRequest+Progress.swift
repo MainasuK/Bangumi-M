@@ -78,7 +78,6 @@ extension BangumiRequest {
             case 401 where error == "Unauthorized":
                 return .failure(ProgressError.unauthorized)
 
-                
             default:
                 return .failure(Unknown.API(error: error, code: code))
             }

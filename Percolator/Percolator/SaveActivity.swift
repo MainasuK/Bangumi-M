@@ -51,8 +51,7 @@ final class SaveActivity: UIActivity {
         
         SVProgressHUD.showSuccess(withStatus: "保存成功")
     }
-    
-    
+
     override var activityImage: UIImage? {
         return #imageLiteral(resourceName: "AddArrow")
     }

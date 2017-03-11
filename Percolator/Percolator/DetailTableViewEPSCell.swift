@@ -75,20 +75,23 @@ class DetailTableViewEPSCell: DetailTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        nameLabel.layer.masksToBounds = true
-        nameCNLabel.layer.masksToBounds = true
+        layer.shouldRasterize               = true
+        layer.rasterizationScale            = UIScreen.main.scale 
+
+        nameLabel.layer.masksToBounds       = true
+        nameCNLabel.layer.masksToBounds     = true
         
-        sortStatusView.layer.cornerRadius = 6.0
-        sortStatusView.layer.borderWidth = 0.5
-        sortStatusView.layer.borderColor = UIColor(red: 0.00, green: 0.38, blue: 0.74, alpha: 1.00).cgColor
+        sortStatusView.layer.cornerRadius   = 6.0
+        sortStatusView.layer.borderWidth    = 0.5
+        sortStatusView.layer.borderColor    = UIColor(red: 0.00, green: 0.38, blue: 0.74, alpha: 1.00).cgColor
         
-        commentButton.titleLabel?.font = type(of: self).SFAlternativesFormFont
+        commentButton.titleLabel?.font      = type(of: self).SFAlternativesFormFont
         
         // Move arrow to right. Awesome
         // Ref: http://stackoverflow.com/questions/7100976/how-do-i-put-the-image-on-the-right-side-of-the-text-in-a-uibutton
-        commentButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
-        commentButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
-        commentButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
+        commentButton.transform             = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        commentButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        commentButton.imageView?.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
 }
@@ -116,8 +119,8 @@ extension DetailTableViewEPSCell {
     }
     
     fileprivate func configureProgressView(with status: Status?) {
-        var color = UIColor.clear
-        sortStatusView.tintColor = color
+        var color                      = UIColor.clear
+        sortStatusView.tintColor       = color
         sortStatusView.backgroundColor = color
         
         let progressStatus = status ?? .none
@@ -148,7 +151,7 @@ extension DetailTableViewEPSCell {
         let color = sortStatusView.backgroundColor
         super.setSelected(selected, animated: animated)
         
-        if (selected) {
+        if selected {
             sortStatusView.backgroundColor = color
         }
     }
@@ -157,7 +160,7 @@ extension DetailTableViewEPSCell {
         let color = sortStatusView.backgroundColor
         super.setHighlighted(highlighted, animated: animated)
         
-        if (highlighted) {
+        if highlighted {
             sortStatusView.backgroundColor = color
         }
     }

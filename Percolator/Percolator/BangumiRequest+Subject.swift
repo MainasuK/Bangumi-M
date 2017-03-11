@@ -35,13 +35,12 @@ extension BangumiRequest {
     
 }
 
-
 extension BangumiRequest {
 
     enum ResponseGroup: String {
-        case large = "large"
-        case medium = "medium"
-        case small = "small"
+        case large
+        case medium
+        case small
     }
     
 }

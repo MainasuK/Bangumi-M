@@ -16,14 +16,13 @@ extension BangumiRequest {
     typealias SearchSubjects = (Int, [Subject])
     
     func search(for keywords: String, startIndex: Int, resultLimit: Int, type: Int, handler: @escaping (Result<SearchSubjects>) -> Void) {
-    
-        // TODO:
-        //  let authEncode = userData!.authEncode
         
         let urlPath = String( format: BangumiApiKey.Search, keywords.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)!)
-        var parameters: [String : Any] = ["responseGroup" : "large",
-                                                "max_results" : resultLimit,
-                                                "start" : startIndex]
+        var parameters: [String : AnyHashable] = [
+            "responseGroup" : "large",
+            "max_results"   : resultLimit,
+            "start"         : startIndex
+        ]
         
         if type != 0 {
             parameters["type"] = type

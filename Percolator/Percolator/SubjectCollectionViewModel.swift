@@ -196,8 +196,7 @@ extension SubjectCollectionViewModel {
                 let lastSpanNode = aNodeset.last,
                 let href = hrefNode["href"],
                 let title = hrefNode["title"],
-                let style = lastSpanNode["style"]
-                {
+                let style = lastSpanNode["style"] {
                     
                     let urlPath = "http://bgm.tv" + href
                     var imgUrlPath = "http:"

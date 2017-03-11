@@ -27,8 +27,6 @@ final class SubjectCollectionViewController: UICollectionViewController {
     }
 }
 
-
-
 // MARK: - View Life Cycle
 extension SubjectCollectionViewController {
     
@@ -53,7 +51,6 @@ extension SubjectCollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         
         if isFirstAppear {
             SVProgressHUD.show()
@@ -194,7 +191,6 @@ extension SubjectCollectionViewController {
     }
 }
 
-
 // MARK: - UICollectionViewDelegateFlowLayout
 extension SubjectCollectionViewController {
     
@@ -206,7 +202,7 @@ extension SubjectCollectionViewController {
         case 0:
             let margin: CGFloat = 0
             let minSpacing: CGFloat = 1
-            let width: CGFloat =  {
+            let width: CGFloat = {
                 if traitCollection.horizontalSizeClass == .compact {
                     return collectionView.bounds.width - 2.0 * margin
                 } else {
@@ -261,7 +257,6 @@ extension SubjectCollectionViewController {
         }
     }
     
-
 }
 
 // MARK: - UIContentContainer

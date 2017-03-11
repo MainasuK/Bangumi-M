@@ -159,6 +159,3 @@ extension TopicTableViewController {
     }
     
 }
-
-
-

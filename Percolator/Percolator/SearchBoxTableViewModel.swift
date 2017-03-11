@@ -73,7 +73,6 @@ extension SearchBoxTableViewModel {
     typealias SearchError = BangumiRequest.SearchError
     typealias AlamofireError = BangumiRequest.AlamofireError
 
-    
     func removeAll() {
         self.startIndex = 0
         self.lastSearchText = ""
@@ -86,7 +85,7 @@ extension SearchBoxTableViewModel {
     }
     
     // MARK: - Search method
-    func search(for keywords: String, type searchType: Int, handler: @escaping (Error?) -> Void)  {
+    func search(for keywords: String, type searchType: Int, handler: @escaping (Error?) -> Void) {
         isSearching = true
         tableView?.reloadData()
         

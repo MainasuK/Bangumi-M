@@ -58,7 +58,6 @@ extension Result {
     
 }
 
-
 //extension Result {
 //    
 //    typealias Response = Alamofire.Response<T, NSError>

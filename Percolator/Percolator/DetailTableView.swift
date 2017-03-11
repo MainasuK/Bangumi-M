@@ -41,7 +41,7 @@ class DetailTableView: UITableView {
                 let sectionFrame = rect(forSection: section)
                 let y = sectionFrame.origin.y
                 
-                sectionHeaderViewFrame.origin.y = ((y < sectionViewMinimumOriginY) ? sectionViewMinimumOriginY : y);
+                sectionHeaderViewFrame.origin.y = ((y < sectionViewMinimumOriginY) ? sectionViewMinimumOriginY : y)
                 
                 // If it's not last section, manually 'stick' it to the below section if needed
                 // Section frame include header… Really?

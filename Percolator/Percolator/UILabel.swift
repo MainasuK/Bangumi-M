@@ -50,9 +50,7 @@ extension UILabel {
             var isFailWithError = false
             
             // Async
-            CTFontDescriptorMatchFontDescriptorsWithProgressHandler(descs, nil) {
-                (state :CTFontDescriptorMatchingState, dict: CFDictionary) -> Bool in
-                
+            CTFontDescriptorMatchFontDescriptorsWithProgressHandler(descs, nil) { (state :CTFontDescriptorMatchingState, dict: CFDictionary) -> Bool in
                 switch state {
                 case .didBegin: // called once at the beginning.
                     //consolePrint("Begin match font…")

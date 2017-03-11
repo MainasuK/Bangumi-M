@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-
+// swiftlint:disable function_parameter_count
 // MARK: - User now watching anime collection list (API return 50 MAX)
 extension BangumiRequest {
     
@@ -89,7 +89,7 @@ extension BangumiRequest {
             handler(collectDict)
         }
     }
-    
+
     func updateCollection(of subjectID: SubjectID, with statusType: CollectInfo.StatusType, _ rating: Int?, _ comment: String?, _ tags: [String]?, isPrivacy: Bool, handler: @escaping (Result<CollectInfo>) -> Void) {
         
         guard let user = self.user else {
@@ -116,7 +116,6 @@ extension BangumiRequest {
     }
     
 }
-
 
 extension BangumiRequest {
     

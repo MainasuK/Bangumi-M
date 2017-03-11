@@ -29,7 +29,6 @@ final class CollectTableViewController: UITableViewController {
     
     @IBOutlet weak var cancelButtonItem: UIBarButtonItem!
     @IBOutlet weak var saveButtonItem: UIBarButtonItem!
-    
 
     @IBAction func CancelButtonPressed(_ sender: UIBarButtonItem) {
         self.navigationController?.dismiss(animated: true, completion: nil)
@@ -132,7 +131,6 @@ final class CollectTableViewController: UITableViewController {
     }
 
 }
-
 
 // MARK: - Tableview setup method
 extension CollectTableViewController {

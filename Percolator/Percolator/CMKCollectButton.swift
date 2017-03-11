@@ -17,8 +17,7 @@ class CMKCollectButton: UIButton {
         set {
             if newValue {
                 backgroundColor = UIColor.collectButtonTint
-            }
-            else {
+            } else {
                 backgroundColor = UIColor.white
             }
             

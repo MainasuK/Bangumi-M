@@ -63,9 +63,8 @@ extension AnimeListTableViewModel {
                 self.tableView?.reloadData()
                 
                 handler(nil)
-                self.replaceCollection(with: subjects.map { $0.id } )
-            
-                
+                self.replaceCollection(with: subjects.map { $0.id })
+
             } catch {
                 // No model error need to handle
                 handler(error)
@@ -170,7 +169,7 @@ extension AnimeListTableViewModel {
 
                 do {
                     var subject = try result.resolve()
-                    let index = self.subjects.index(where: { $0.id == subject.id } ) ?? -1
+                    let index = self.subjects.index(where: { $0.id == subject.id }) ?? -1
                     consolePrint("… with id \(subject.id) at subjects[\(index)]")
                     
                     guard index != -1 else {
@@ -183,7 +182,7 @@ extension AnimeListTableViewModel {
                     self.subjects[index] = subject
                     self.tableView?.reloadRows(at: [indexPath], with: .none)
                 } catch {
-                    // FIXME: cell need to handle errors yo resolve infinite spinning
+                    // TODO: cell need to handle errors to resolve infinite spinning
                     if let index = self.subjects.index(where: { theID == $0.id }) {
                         self.subjects[index].responseGroup = .none
                         let indexPath = IndexPath(row: index, section: 0)

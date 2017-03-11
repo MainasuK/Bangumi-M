@@ -10,7 +10,7 @@ import Foundation
 
 extension Error {
     
-    func throwMyself() throws -> Void {
+    func throwMyself() throws {
         throw self
     }
     

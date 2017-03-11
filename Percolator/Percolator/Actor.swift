@@ -13,14 +13,14 @@ struct Actor {
     var id: Int
     var url: String
     var name: String
-    
+
 //    var image = CrtImage()
-    
+
     init(from json: JSON) {
         id = json[BangumiKey.id].intValue
         url = json[BangumiKey.url].stringValue
         name = json[BangumiKey.name].stringValue
-        
+
 //        if let imageDict = actorDict[BangumiKey.imagesDict] as? NSDictionary {
 //            image = CrtImage(crtImageDict: imageDict)
 //        }
