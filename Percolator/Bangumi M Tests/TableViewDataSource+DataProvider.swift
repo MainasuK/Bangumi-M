@@ -63,8 +63,6 @@ class TableViewDataSource_DataProvider: XCTestCase {
         super.tearDown()
     }
 
-
-
 }
 
 class Provider: DataProvider {
@@ -73,12 +71,10 @@ class Provider: DataProvider {
     
     // At least one item on (0, 0)
     var items = [[ItemType]]()
-    
-    
+
     func append(_ item: [ItemType]) {
         items.append(item)
     }
-    
     
     func numberOfSections() -> Int {
         return items.count

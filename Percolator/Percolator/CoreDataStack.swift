@@ -11,7 +11,7 @@ import CoreData
 class CoreDataStack {
     var modelName: String
     var storeName: String
-    var options: [AnyHashable : Any]? = nil
+    var options: [AnyHashable : Any]?
     
     // Flag of listening notification or not
     var updateContextWithUbiquitousContentUpdates: Bool = false {
@@ -99,7 +99,7 @@ class CoreDataStack {
             return
         }
         
-        moc.perform() {
+        moc.perform {
             do {
                 try moc.obtainPermanentIDs(for: Array(moc.insertedObjects))
             } catch {
@@ -116,7 +116,7 @@ class CoreDataStack {
     }
     
     func saveDerivedContext(context moc: NSManagedObjectContext) {
-        moc.perform() {
+        moc.perform {
             do {
                 try moc.obtainPermanentIDs(for: Array(moc.insertedObjects))
             } catch {

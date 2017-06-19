@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class AnimeListTableViewCell: UITableViewCell {
     
     weak var delegate: AnimeListTableViewCellDelegate?
@@ -105,13 +104,19 @@ extension AnimeListTableViewCell {
         let size = CGSize(width: 1, height: 1)
         
         if let urlVal = imageURLValue, let url = URL(string: urlVal) {
-            animeImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
+            animeImageView.af_setImage(
+                withURL: url,
+                placeholderImage: UIImage.fromColor(.placeholder, size: size),
+                progressQueue: DispatchQueue.global(qos: .userInitiated),
+                imageTransition: .crossDissolve(0.2)
+            )
         } else {
             animeImageView.image = UIImage.fromColor(.placeholder, size: size)
         }
     }
     
     // TL; DR
+    // swiftlint:disable function_body_length
     fileprivate func configureButton(with result: History, _ subject: Subject) {
         guard subject.responseGroup == .large else {
             isSpinnning = true
@@ -161,7 +166,7 @@ extension AnimeListTableViewCell {
                     watchedButton.isEnabled = false
                     watchedButton.setTitle("未收录章节信息", for: .normal)
                     indicatorView.backgroundColor = UIColor.myRedColor
-                } else if subject.epTable.last?.id == history.lastEpisode?.id  {
+                } else if subject.epTable.last?.id == history.lastEpisode?.id {
                     watchedButton.setTitle("看完了 我要吐槽", for: .normal)
                     mark = AnimeMark.subject(subject)
                     indicatorView.backgroundColor = UIColor.myPurpleColor

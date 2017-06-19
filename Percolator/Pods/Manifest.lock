@@ -22,6 +22,7 @@ PODS:
   - OHHTTPStubs/NSURLSession (5.2.0):
     - OHHTTPStubs/Core
   - OHHTTPStubs/OHPathHelpers (5.2.0)
+  - PPCopiableLabel (1.0.1)
   - SimulatorStatusMagic (1.9)
   - SVProgressHUD (2.0.3)
   - SwiftyJSON (2.3.2)
@@ -38,6 +39,7 @@ DEPENDENCIES:
   - MGSwipeTableCell
   - MJRefresh
   - OHHTTPStubs
+  - PPCopiableLabel
   - SimulatorStatusMagic
   - SVProgressHUD (from `https://github.com/SVProgressHUD/SVProgressHUD.git`)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `swift3`)
@@ -93,11 +95,12 @@ SPEC CHECKSUMS:
   MGSwipeTableCell: bafeb5f351124544c9364ecbdf24c7b06a37d340
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   OHHTTPStubs: 29ae105797c3410112d10b217c8b7a55aab616b2
+  PPCopiableLabel: 4835065e5bfa853b3f7311972c214640d10b38ee
   SimulatorStatusMagic: 4db65b11c095bbb3abd966a4ae8ee0f11789e8e0
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   UITextField+Shake: 47cc0429dafb3da580686339ad2da091249a8ea2
 
-PODFILE CHECKSUM: 84862807d61bf4279d15eb9cb2d21808017143af
+PODFILE CHECKSUM: 5fd745108ddc1b060f348089ff7284a8a050c311
 
 COCOAPODS: 1.0.1

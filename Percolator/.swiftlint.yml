@@ -1,0 +1,21 @@
+disabled_rules:
+    - variable_name
+    - trailing_whitespace
+    - force_cast
+    - colon
+    - force_try
+    - type_name
+    - cyclomatic_complexity
+    - todo
+    - type_body_length
+excluded:
+    - Pods
+line_length:
+  warning: 500
+  error: 1000
+function_body_length:
+  - 100
+  - 200
+file_length:
+  warning: 1000
+  error: 1500

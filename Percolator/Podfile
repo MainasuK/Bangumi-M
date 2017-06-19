@@ -18,6 +18,7 @@ target 'Bangumi M' do
     pod 'KeychainAccess', :git => 'https://github.com/kishikawakatsumi/KeychainAccess.git', :branch => 'swift-3.0'
     pod 'MGSwipeTableCell'
     pod "EUMTouchPointView"
+    pod 'PPCopiableLabel'
 
     target 'Bangumi M Tests' do
         inherit! :search_paths

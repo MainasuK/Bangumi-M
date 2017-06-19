@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 Cirno MainasuK. All rights reserved.
 //
 
-
 import UIKit
 import CoreData
 import QuartzCore
@@ -38,11 +37,11 @@ final class AnimeListTableViewController: UITableViewController {
         
         let alertController = UIAlertController(title: "\(user.nickname)", message: nil, preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel) { (action) in
+        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel) { _ in
             // ...
         }
         
-        let logoutAction = UIAlertAction(title: NSLocalizedString("sign out", comment: ""), style: .destructive) { (action) in
+        let logoutAction = UIAlertAction(title: NSLocalizedString("sign out", comment: ""), style: .destructive) { _ in
             User.removeInfo()
             BangumiRequest.shared.user = nil
             self.model.removeAll()
@@ -180,7 +179,8 @@ extension AnimeListTableViewController {
     typealias UnknownError = BangumiRequest.Unknown
     typealias NetworkError = BangumiRequest.NetworkError
     typealias ModelError = AnimeListTableViewModel.ModelError
-    
+
+    // swiftlint:disable function_body_length
     func refreshAnimeList() {
         
         model.refresh { (error: Error?) in
@@ -206,7 +206,7 @@ extension AnimeListTableViewController {
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("Unauthorized")
                 
-            } catch RequestError.userNotLogin  {
+            } catch RequestError.userNotLogin {
                 let title = NSLocalizedString("please login", comment: "")
                 let alertController = UIAlertController.simpleErrorAlert(with: title, description: "")
                 self.present(alertController, animated: true, completion: nil)
@@ -220,8 +220,12 @@ extension AnimeListTableViewController {
                 
             } catch NetworkError.timeout {
                 if BangumiRequest.shared.timeoutErrorTimes == 3 {
-                    let alertController = UIAlertController(title: NSLocalizedString("please check your network connection status", comment: ""), message: NSLocalizedString("make sure that the network can be connected to bgm.tv", comment: ""), preferredStyle: .alert)
-                    let cancelAction = UIAlertAction(title: NSLocalizedString("dismiss", comment: ""), style: .cancel) { (action) in
+                    let alertController = UIAlertController(
+                        title: NSLocalizedString("please check your network connection status", comment: ""),
+                        message: NSLocalizedString("make sure that the network can be connected to bgm.tv", comment: ""),
+                        preferredStyle: .alert
+                    )
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("dismiss", comment: ""), style: .cancel) { _ in
                         // ...
                     }
                     
@@ -312,8 +316,7 @@ extension AnimeListTableViewController {
         
         cell.layoutIfNeeded()
     }
-    
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialTableViewControllerKey) as! DetailTableViewController
         let subject = model.item(at: indexPath).0
@@ -330,7 +333,7 @@ extension AnimeListTableViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        coordinator.animate(alongsideTransition: { (context: UIViewControllerTransitionCoordinatorContext) in
+        coordinator.animate(alongsideTransition: { _ in
             // For re-calculate cell shadow path
             self.tableView.reloadData()
         }, completion: nil)

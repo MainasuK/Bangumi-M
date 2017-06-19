@@ -27,16 +27,13 @@ class TopicTableViewCell: UITableViewCell, ConfigurableCell {
         return UIFont(descriptor: adjusted, size: 11.0)
     }()
 
-    
     var isLast: Bool = false
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var commentButton: UIButton!
-    
-    
-    
+
     func configure(with item: TopicTableViewCell.ItemType) {
         setupCellStyle()
         
@@ -56,9 +53,9 @@ extension TopicTableViewCell {
         preservesSuperviewLayoutMargins = true
         contentView.preservesSuperviewLayoutMargins = true
         
-        commentButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
-        commentButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
-        commentButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
+        commentButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        commentButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        commentButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
 }

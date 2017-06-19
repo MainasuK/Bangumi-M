@@ -23,7 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                             NSInferMappingModelAutomaticallyOption : true]
         return CoreDataStack(modelName: "Percolator", storeName: "Percolator", options: options)
     }()
-    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         // Override point for customization after application launch.
@@ -53,9 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-    
-    
-    
+
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         
         // Only allow iPad device rotate

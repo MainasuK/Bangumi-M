@@ -183,7 +183,6 @@ class TableViewDataSource<Model: DataProvider, Cell: ConfigurableCell>: DataSour
     
 }
 
-
 // MARK: - Setup
 
 let controller = CMKTableViewController()

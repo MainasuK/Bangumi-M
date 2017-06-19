@@ -86,11 +86,9 @@ extension DetailTableViewBannerCell {
         
         let ratingCount = subject.rating.count.reduce(0) { $0 + $1.value }
         ratingCountLabel.text = "\(ratingCount) 人评分"
-        
-        
+
         summaryLabel.text = subject.summary
         airDateLabel.text = subject.airDate
     }
     
 }
-

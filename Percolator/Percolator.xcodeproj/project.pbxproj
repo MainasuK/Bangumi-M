@@ -691,6 +691,7 @@
 				8368E1EDA903B48C27AB5445 /* [CP] Embed Pods Frameworks */,
 				70AA7802892F2C61E825F20F /* [CP] Copy Pods Resources */,
 				DB3FC1BD1D33A6950045C339 /* Embed Frameworks */,
+				DB657D9F1E74575A009486CB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -730,7 +731,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Cirno MainasuK";
 				TargetAttributes = {
 					DB9E92DB1D50524100C150C4 = {
@@ -936,6 +937,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M UITests/Pods-Bangumi M UITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		DB657D9F1E74575A009486CB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		DBFB286D1D50D3BB00C43E75 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

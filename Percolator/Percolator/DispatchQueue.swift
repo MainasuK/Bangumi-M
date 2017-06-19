@@ -11,7 +11,7 @@ import Foundation
 extension DispatchQueue {
     
     public class var cmkJson: DispatchQueue {
-        return DispatchQueue(label: "com.mainasuk.json", qos: .userInitiated, attributes: DispatchQueue.Attributes.concurrent)
+        return DispatchQueue(label: "com.mainasuk.json", qos: .userInitiated, attributes: .concurrent)
     }
     
 }

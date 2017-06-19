@@ -25,4 +25,3 @@ class SubjectCollectionReusableHeaderView: UICollectionReusableView, Configurabl
     }
         
 }
-

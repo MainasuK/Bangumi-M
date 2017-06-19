@@ -52,7 +52,6 @@ final class LoginViewController: UIViewController {
         }
         passwordTextField.placeholder = ""
 
-
         sender.isEnabled = false
         SVProgressHUD.show()
         
@@ -90,7 +89,7 @@ final class LoginViewController: UIViewController {
             } catch NetworkError.timeout {
                 if self.request.timeoutErrorTimes == 3 {
                     let alertController = UIAlertController(title: NSLocalizedString("please check your network connection status", comment: ""), message: NSLocalizedString("make sure that the network can be connected to bgm.tv", comment: ""), preferredStyle: .alert)
-                    let cancelAction = UIAlertAction(title: NSLocalizedString("dismiss", comment: ""), style: .cancel) { (action) in
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("dismiss", comment: ""), style: .cancel) { _ in
                         // ...
                     }
                     
@@ -133,7 +132,6 @@ final class LoginViewController: UIViewController {
     }
     
 }
-
 
 // MARK: - UIViewController
 extension LoginViewController {
@@ -243,7 +241,7 @@ extension LoginViewController {
             snapBehavior = UISnapBehavior(item: loginView, snapTo: center)
             animator.addBehavior(snapBehavior!)
             
-            if sender.translation(in: view).length() > 150.0  {
+            if sender.translation(in: view).length() > 150.0 {
                 dissmissController()
             }
             
@@ -297,8 +295,7 @@ extension LoginViewController {
         blurEffectView.frame = self.view.bounds
         blurEffectView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         blurEffectView.translatesAutoresizingMaskIntoConstraints = true
-        
-        
+
         view.addSubview(blurEffectView)
         view.sendSubview(toBack: blurEffectView)
         
@@ -324,8 +321,7 @@ extension LoginViewController {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
-    
-    
+
     func keyboardDidShow(notification: Notification) {
         guard let userInfo = notification.userInfo,
         let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {

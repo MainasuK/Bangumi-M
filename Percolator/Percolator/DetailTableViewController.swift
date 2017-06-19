@@ -11,7 +11,6 @@ import AlamofireImage
 import SafariServices
 import SVProgressHUD
 
-
 // I change tableView contentInset to make some space for tableViewHeaderView,
 // but it stick the section headerView in the middle of screen.
 // So, use a subclass of *tableView* to solve that issue.
@@ -59,6 +58,7 @@ final class DetailTableViewController: UITableViewController {
         }
     }
     
+    // FIXME: misspell function name
     @IBAction func swipeRestureTrigger(_ sender: UISwipeGestureRecognizer) {
         // Reverse EP section only
         guard let section = tableView.indexPathForRow(at: sender.location(in: tableView))?.section,
@@ -70,6 +70,7 @@ final class DetailTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    // FIXME: misspell function name
     @IBAction func longPressGrestureTrigger(_ sender: UILongPressGestureRecognizer) {
         switch sender.state {
         case .began:
@@ -155,8 +156,7 @@ extension DetailTableViewController {
             self.headerImageView.image = nil
         }
     }
-    
-    
+
     private func setupTableViewDataSource() {
         model = DetailTableViewModel(tableView: detailTableView, collectionViewDelegate: self, with: subject)
         dataSource = TableViewDataSource<Model, Cell>(model: model)
@@ -211,14 +211,13 @@ extension DetailTableViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        coordinator.animate(alongsideTransition: { (context: UIViewControllerTransitionCoordinatorContext) -> Void in
+        coordinator.animate(alongsideTransition: { _ in
             self.resetHeaderViewHeight(with: size.width)
             self.updateHeaderView(with: size.width)
-        },completion: nil)
+        }, completion: nil)
     }
     
 }
-
 
 extension DetailTableViewController {
     
@@ -228,7 +227,7 @@ extension DetailTableViewController {
     typealias UnknownError = BangumiRequest.Unknown
     
     // If detail controller popped before mark epsisode callback called.
-    // The self will hold the ref to prevent thread safe issue
+    // Weak self will prevent thread safe issue
     fileprivate func markEpisode(at indexPath: IndexPath) {
         
         guard let item = try? model.item(at: indexPath).resolve(),
@@ -236,35 +235,36 @@ extension DetailTableViewController {
         
         let alertController = UIAlertController(title: "\(episode.typeString)\(episode.sortString) \(episode.name)", message: nil, preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel) { (action) in
+        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel) { _ in
             // ...
         }
         
-        let watched = UIAlertAction(title: "看过", style: .default) { (action) in
+        let watched = UIAlertAction(title: "看过", style: .default) { _ in
             self.model.markEpisode(at: indexPath, to: .watched) { self.handler($0) }
         }
         
-        let queue = UIAlertAction(title: "想看", style: .default) { (action) in
+        let queue = UIAlertAction(title: "想看", style: .default) { _ in
             self.model.markEpisode(at: indexPath, to: .queue) { self.handler($0) }
         }
         
-        let drop = UIAlertAction(title: "抛弃", style: .default) { (action) in
+        let drop = UIAlertAction(title: "抛弃", style: .default) { _ in
             self.model.markEpisode(at: indexPath, to: .drop) { self.handler($0) }
         }
         
-        let remove = UIAlertAction(title: "撤销", style: .destructive) { (action) in
+        let remove = UIAlertAction(title: "撤销", style: .destructive) { _ in
             self.model.markEpisode(at: indexPath, to: .none) { self.handler($0) }
         }
-        
         
         alertController.addAction(cancelAction)
         
         let status = item~>^*^
+        // swiftlint:disable opening_brace
         if status != .watched                   { alertController.addAction(watched) }
         if status != .queue                     { alertController.addAction(queue)   }
         if status != .drop                      { alertController.addAction(drop)    }
         if status != .none && status != nil     { alertController.addAction(remove)  }
-        
+        // swiftlint:enable opening_brace
+
         // Configure the alert controller's popover presentation controller if it has one
         if let popoverPresentationController = alertController.popoverPresentationController,
         let cell = tableView.cellForRow(at: indexPath) {
@@ -273,8 +273,8 @@ extension DetailTableViewController {
             popoverPresentationController.permittedArrowDirections = .any
         }
         
-        DispatchQueue.main.async {
-            self.present(alertController, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alertController, animated: true)
         }
     }
     
@@ -282,7 +282,7 @@ extension DetailTableViewController {
         do {
             try error?.throwMyself()
             
-        } catch RequestError.userNotLogin  {
+        } catch RequestError.userNotLogin {
             let title = NSLocalizedString("please login", comment: "")
             let alertController = UIAlertController.simpleErrorAlert(with: title, description: "")
             self.present(alertController, animated: true, completion: nil)
@@ -475,7 +475,6 @@ extension DetailTableViewController {
 //    }
     
 }
-
 
 // MARK: - UICollectionViewDelegate
 extension DetailTableViewController: UICollectionViewDelegate {

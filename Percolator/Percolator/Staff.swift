@@ -19,7 +19,6 @@ struct Staff {
     let images: Images
     let jobs: [String]
     
-    
     init(from json: JSON) {
         id = json[BangumiKey.id].intValue
         url = json[BangumiKey.url].stringValue

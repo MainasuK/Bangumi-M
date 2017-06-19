@@ -10,7 +10,6 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-
 // MARK: - User Login
 extension BangumiRequest {
     
@@ -33,7 +32,6 @@ extension BangumiRequest {
     }   // end func userLogin(…) { … }
     
 }
-
 
 extension BangumiRequest {
     

@@ -36,7 +36,7 @@ extension BangumiRequest {
         case unauthorized
     }
     
-    enum epError: Error {
+    enum EpError: Error {
         case unauthorized
     }
     
@@ -68,7 +68,6 @@ extension BangumiRequest {
     }
     
 }
-
 
 // Wrap error
 extension BangumiRequest {

@@ -33,7 +33,7 @@ class SubjectCollectionViewLayout: UICollectionViewFlowLayout {
                 let decorationAttributes = SubjectCollectionViewLayoutAttributes(forDecorationViewOfKind: "sectionBackground", with: attr.indexPath)
                 
                 // Set the color(s)
-                if (attr.indexPath.section == 0) {  // Book section
+                if attr.indexPath.section == 0 {  // Book section
                     decorationAttributes.color = UIColor.myAnimeListBackground
                 } else {                            // Not book section
                     decorationAttributes.color = UIColor.white
