@@ -143,10 +143,8 @@ public class TagWriteView: UIView {
     public func removeTags(_ tags: [String]) {
         var pickedIndexes = [Int]()
         for tag in tags {
-            for (idx, value) in tagsMade.enumerated() {
-                if value == tag {
-                    pickedIndexes.append(idx)
-                }
+            for (idx, value) in tagsMade.enumerated() where value == tag {
+                pickedIndexes.append(idx)
             }
         }
         
@@ -159,11 +157,9 @@ public class TagWriteView: UIView {
     
     public func addTagToLast(_ tag: String, animated: Bool) {
         let newTag = tag.trimmingCharacters(in: .whitespaces)
-        for t in tagsMade {
-            if newTag == t {
-                NSLog("DUPLICATED!")
-                return
-            }
+        for t in tagsMade where newTag == t {
+            NSLog("DUPLICATED!")
+            return
         }
         
         tagsMade.append(newTag)
@@ -176,11 +172,9 @@ public class TagWriteView: UIView {
     
     public func removeTag(_ tag: String, animated: Bool) {
         var foundIndex = -1
-        for (idx, value) in tagsMade.enumerated() {
-            if tag == value {
-                print("FOUND!")
-                foundIndex = idx
-            }
+        for (idx, value) in tagsMade.enumerated() where tag == value {
+            consolePrint("FOUND!")
+            foundIndex = idx
         }
         
         if foundIndex == -1 {

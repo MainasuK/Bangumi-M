@@ -243,7 +243,7 @@ extension AnimeListTableViewController {
                 
             } catch NetworkError.dnsLookupFailed {
                 self.present(PercolatorAlertController.dnsLookupFailed(), animated: true, completion: nil)
-                consolePrint("NetworkError DNS Lookup Failed: \(error)")
+                consolePrint("NetworkError DNS Lookup Failed: \(error?.localizedDescription ?? "unknown")")
                 
             } catch UnknownError.alamofire(let error) {
                 self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)

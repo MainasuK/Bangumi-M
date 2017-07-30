@@ -241,8 +241,9 @@ extension AnimeListTableViewModel {
         
         let lastTouchEpisode: Episode? = {
             var episode: Episode?
-            for ep in subject.epTable { // Wow~ epTable in order
-                if progress[ep.id] == .watched { episode = ep }
+            for ep in subject.epTable where progress[ep.id] == .watched {
+                // loop to last ep watched
+                episode = ep
             }
             
             return episode
@@ -253,8 +254,8 @@ extension AnimeListTableViewModel {
                 return subject.epTable.first
             }
             
-            for ep in subject.epTable {
-                if ep.sort > lastEpisodeSort { return ep }
+            for ep in subject.epTable where ep.sort > lastEpisodeSort {
+                return ep 
             }
             
             return nil

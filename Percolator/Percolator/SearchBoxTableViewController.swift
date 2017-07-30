@@ -396,7 +396,7 @@ extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
         let deleteRed = UIColor(red: 255.0/255.0, green: 59.0/255.0, blue: 50.0/255.0, alpha: 1.0)
         
         let saveButton = MGSwipeButton(title: "保存", backgroundColor: saveBlue, padding: 25) { [weak self] _ -> Bool in
-            let _ = subject.saveToCoreData()
+            _ = subject.saveToCoreData()
             self?.tableView.reloadRows(at: [indexPath], with: .right)
             
             return false
@@ -417,7 +417,7 @@ extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
         
         let deleteButton = MGSwipeButton(title: "删除", backgroundColor: deleteRed, padding: 25) { [weak self] _ -> Bool in
             
-            let _ = self?.model.removeItem(at: indexPath)
+            _ = self?.model.removeItem(at: indexPath)
             return false
         }
         

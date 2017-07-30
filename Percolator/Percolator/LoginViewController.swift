@@ -258,7 +258,7 @@ extension LoginViewController {
         animator.addBehavior(gravityBehaviour)
         
         let itemBehaviour = UIDynamicItemBehavior(items: [loginView])
-        itemBehaviour.addAngularVelocity(CGFloat(-M_PI_2), for: loginView)
+        itemBehaviour.addAngularVelocity(CGFloat(-Double.pi / 2), for: loginView)
         animator.addBehavior(itemBehaviour)
         
         consolePrint("dissmissController")

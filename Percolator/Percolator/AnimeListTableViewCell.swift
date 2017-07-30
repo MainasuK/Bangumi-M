@@ -45,7 +45,7 @@ class AnimeListTableViewCell: UITableViewCell {
     @IBAction func watchedButtonPressed(_ sender: UIButton) {
         delegate?.watchedButtonPressed(sender, with: mark)
         switch mark {
-        case .episode(_):   isSpinnning = true
+        case .episode:      isSpinnning = true
         default:            break
         }
     }

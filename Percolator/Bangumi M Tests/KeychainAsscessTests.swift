@@ -47,7 +47,7 @@ class KeychainAsscessTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         do {
-            let _ = try keychain.removeAll()
+            try keychain.removeAll()
         } catch {
             consolePrint(error)
         }
