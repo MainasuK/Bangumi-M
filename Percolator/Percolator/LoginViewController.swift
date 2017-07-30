@@ -149,7 +149,7 @@ extension LoginViewController {
         super.viewDidLoad()
         
         setupLoginView()
-        setupBlurView()
+//        setupBlurView()
         registeKeyboardNotification()
         
         loginButton.setTitle(NSLocalizedString("login…", comment: ""), for: .disabled)
@@ -267,6 +267,7 @@ extension LoginViewController {
         
         delay(0.75) {
             self.dismiss(animated: true, completion: nil)
+            self.delegate?.dissmissViewController(with: false)
         }
     }
     
