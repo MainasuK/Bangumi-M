@@ -149,7 +149,7 @@ extension LoginViewController {
         super.viewDidLoad()
         
         setupLoginView()
-        setupBlurView()
+//        setupBlurView()
         registeKeyboardNotification()
         
         loginButton.setTitle(NSLocalizedString("login…", comment: ""), for: .disabled)
@@ -258,7 +258,7 @@ extension LoginViewController {
         animator.addBehavior(gravityBehaviour)
         
         let itemBehaviour = UIDynamicItemBehavior(items: [loginView])
-        itemBehaviour.addAngularVelocity(CGFloat(-M_PI_2), for: loginView)
+        itemBehaviour.addAngularVelocity(CGFloat(-Double.pi / 2), for: loginView)
         animator.addBehavior(itemBehaviour)
         
         consolePrint("dissmissController")
@@ -267,6 +267,7 @@ extension LoginViewController {
         
         delay(0.75) {
             self.dismiss(animated: true, completion: nil)
+            self.delegate?.dissmissViewController(with: false)
         }
     }
     

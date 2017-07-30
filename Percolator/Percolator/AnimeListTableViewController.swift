@@ -17,12 +17,15 @@ final class AnimeListTableViewController: UITableViewController {
     
     typealias Model = AnimeListTableViewModel
     typealias Cell = AnimeListTableViewCell
+
+    let transition = LoginViewPresentTransition()
     
     fileprivate lazy var model: Model = {
         return Model(tableView: self.tableView)
     }()
     fileprivate var dataSource: TableViewDataSource<Model, Cell>!
     fileprivate var isFirstRefresh = true
+    fileprivate var hasTriedLogin = false
     
     @IBAction func unwindToAnimeListTableViewController(_ segue: UIStoryboardSegue) {
         
@@ -63,10 +66,10 @@ extension AnimeListTableViewController {
         let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.LoginViewController) as! LoginViewController
         
         loginViewController.delegate = self
-        
+        loginViewController.transitioningDelegate = self
         loginViewController.modalPresentationStyle = .overCurrentContext
-        loginViewController.modalTransitionStyle = .crossDissolve
-        
+//        loginViewController.modalTransitionStyle = .crossDissolve
+
         if !UIAccessibilityIsReduceTransparencyEnabled() {
             loginViewController.view.backgroundColor = UIColor.clear
         }
@@ -149,7 +152,7 @@ extension AnimeListTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupTableView()
     }
     
@@ -159,7 +162,10 @@ extension AnimeListTableViewController {
         setupBarButtonItem()
         
         guard User.isLogin() else {
-            popLoginController()
+            if !hasTriedLogin {
+                hasTriedLogin = true
+                popLoginController()
+            }
             
             return
         }
@@ -243,7 +249,7 @@ extension AnimeListTableViewController {
                 
             } catch NetworkError.dnsLookupFailed {
                 self.present(PercolatorAlertController.dnsLookupFailed(), animated: true, completion: nil)
-                consolePrint("NetworkError DNS Lookup Failed: \(error)")
+                consolePrint("NetworkError DNS Lookup Failed: \(error?.localizedDescription ?? "unknown")")
                 
             } catch UnknownError.alamofire(let error) {
                 self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
@@ -408,4 +414,17 @@ extension AnimeListTableViewController: AnimeListTableViewCellDelegate {
         }
     }
     
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
+extension AnimeListTableViewController: UIViewControllerTransitioningDelegate {
+
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transition
+    }
+
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transition
+    }
+
 }
