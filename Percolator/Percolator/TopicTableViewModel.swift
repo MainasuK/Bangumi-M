@@ -6,7 +6,6 @@
 //  Copyright © 2016年 Cirno MainasuK. All rights reserved.
 //
 
-
 import UIKit
 import Alamofire
 import Kanna
@@ -21,7 +20,6 @@ final class TopicTableViewModel: DataProvider {
     
     fileprivate var topics: [TopicItem] = []
     fileprivate weak var tableView: UITableView?
-    
     
     init(tableView: UITableView, with subject: Subject) {
         self.tableView = tableView

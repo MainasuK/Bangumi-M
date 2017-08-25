@@ -96,7 +96,6 @@ extension BangumiKey {
     static let blogDict = "blog"
 }
 
-
 extension BangumiKey {
     // crt key
     static let roleName = "role_name"

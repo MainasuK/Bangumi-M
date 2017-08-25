@@ -3,7 +3,6 @@
 //  Percolator
 //
 
-
 import Foundation
 
 func delay(_ time: Double, handler: @escaping () -> Void) {

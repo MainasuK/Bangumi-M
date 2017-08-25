@@ -1,0 +1,6 @@
+framework module PPCopiableLabel {
+  umbrella header "PPCopiableLabel-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -10,8 +10,8 @@ import UIKit
 import Foundation
 import QuartzCore
 
-public class TagWriteView : UIView
-{
+// swiftlint:disable file_length
+public class TagWriteView: UIView {
     
     // MARK: Public Properties
     public var font: UIFont = UIFont.systemFont(ofSize: 14.0) {
@@ -53,8 +53,7 @@ public class TagWriteView : UIView
             }
         }
     }
-    
-    
+
     public var tags: [String] {
         return tagsMade
     }
@@ -73,10 +72,9 @@ public class TagWriteView : UIView
             }
         }
     }
-    
-    public var delegate: TagWriteViewDelegate?
-    
-    
+
+    public weak var delegate: TagWriteViewDelegate?
+
     // MARK: Private Properties
     fileprivate var scrollView: UIScrollView!
     fileprivate var inputBaseView: UIView!
@@ -88,8 +86,7 @@ public class TagWriteView : UIView
     
     fileprivate var readyToDelete = false
     fileprivate var readyToFinishMaking = false
-    
-    
+
     // MARK: Initializers
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -146,10 +143,8 @@ public class TagWriteView : UIView
     public func removeTags(_ tags: [String]) {
         var pickedIndexes = [Int]()
         for tag in tags {
-            for (idx, value) in tagsMade.enumerated() {
-                if value == tag {
-                    pickedIndexes.append(idx)
-                }
+            for (idx, value) in tagsMade.enumerated() where value == tag {
+                pickedIndexes.append(idx)
             }
         }
         
@@ -162,11 +157,9 @@ public class TagWriteView : UIView
     
     public func addTagToLast(_ tag: String, animated: Bool) {
         let newTag = tag.trimmingCharacters(in: .whitespaces)
-        for t in tagsMade {
-            if newTag == t {
-                NSLog("DUPLICATED!")
-                return
-            }
+        for t in tagsMade where newTag == t {
+            NSLog("DUPLICATED!")
+            return
         }
         
         tagsMade.append(newTag)
@@ -179,11 +172,9 @@ public class TagWriteView : UIView
     
     public func removeTag(_ tag: String, animated: Bool) {
         var foundIndex = -1
-        for (idx, value) in tagsMade.enumerated() {
-            if tag == value {
-                print("FOUND!")
-                foundIndex = idx
-            }
+        for (idx, value) in tagsMade.enumerated() where tag == value {
+            consolePrint("FOUND!")
+            foundIndex = idx
         }
         
         if foundIndex == -1 {
@@ -261,7 +252,7 @@ public class TagWriteView : UIView
         deleteButton = UIButton(frame: sizeForDeleteButton)
         deleteButton.backgroundColor = backgroundColorForDeleteButton
         deleteButton.addTarget(self, action: #selector(self.deleteButtonDidPush(sender:)), for: .touchUpInside)
-        deleteButton.isHidden = true;
+        deleteButton.isHidden = true
     }
     
     private func addTagViewToLast(_ newTag: String, animated: Bool) {
@@ -296,7 +287,7 @@ public class TagWriteView : UIView
         tagViews.removeAll(keepingCapacity: false)
         tagViews += newTagButtons
         
-        setNeedsLayout();
+        setNeedsLayout()
     }
     
     private func createTagButton(tagName tag: String, positionX posx: CGFloat) -> UIButton {
@@ -515,7 +506,6 @@ extension TagWriteView: UITextViewDelegate {
     @objc optional func tagWriteView(view: TagWriteView!, didRemoveTag tag: String!)
 }
 
-
 extension UIView {
     func applyMarginConstraint(margin: UIEdgeInsets) {
         if self.superview == nil {
@@ -525,7 +515,7 @@ extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         
         let view = ["view":self]
-        let metrics = ["left":margin.left, "right":margin.right,"top":margin.top, "bottom":margin.bottom]
+        let metrics = ["left":margin.left, "right":margin.right, "top":margin.top, "bottom":margin.bottom]
         self.superview!.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-left-[view]-right-|", options: [], metrics: metrics, views: view))
         self.superview!.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-top-[view]-bottom-|", options: [], metrics: metrics, views: view))
     }

@@ -291,9 +291,8 @@ extension DetailTableViewModel {
 postfix operator ~>^=^
 postfix operator ~>^*^
 
-
 // Happy coding
-postfix func ~>^=^(left: DetailTableViewModel.DetailItem) -> Episode? {
+postfix func ~>^=^ (left: DetailTableViewModel.DetailItem) -> Episode? {
     switch left {
     case .episode(let episode, _):
         return episode
@@ -302,7 +301,7 @@ postfix func ~>^=^(left: DetailTableViewModel.DetailItem) -> Episode? {
     }
 }
 
-postfix func ~>^*^(left: DetailTableViewModel.DetailItem) -> Status? {
+postfix func ~>^*^ (left: DetailTableViewModel.DetailItem) -> Status? {
     switch left {
     case .episode(_, let status):
         return status

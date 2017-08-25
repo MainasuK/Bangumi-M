@@ -17,7 +17,7 @@ extension UIAlertController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         // Create the action.
-        let cancelAction = UIAlertAction(title: cancelButtonTitle, style: .cancel) { action in
+        let cancelAction = UIAlertAction(title: cancelButtonTitle, style: .cancel) { _ in
             consolePrint("The simple alert's cancel action occured.")
         }
         

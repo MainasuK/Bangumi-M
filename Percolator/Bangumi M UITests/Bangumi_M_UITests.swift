@@ -25,37 +25,37 @@ class Bangumi_M_UITests: XCTestCase {
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
         SDStatusBarManager.sharedInstance().enableOverrides()
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
 //        SDStatusBarManager.sharedInstance().disableOverrides()
     }
-    
+
     private func setupStatusBar() {
         SDStatusBarManager.sharedInstance().enableOverrides()
     }
-    
+
     func testSetupStatusBar() {
         setupStatusBar()
     }
-    
+
     func testLogin() {
         sleep(5)
-        
+
         let app = XCUIApplication()
         let emailTextField = app.textFields["email"]
         let passTextField = app.secureTextFields["password"]
-        
+
         emailTextField.tap()
         emailTextField.typeText("cirno.percolator@gmail.com")
-        
+
         passTextField.tap()
         passTextField.typeText("percolator\n")
         sleep(10)
-        
+
         // Time to snapshotting…
         setupStatusBar()
     }
-    
+
 }

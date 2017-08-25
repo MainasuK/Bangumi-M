@@ -29,7 +29,6 @@ final class CollectTableViewController: UITableViewController {
     
     @IBOutlet weak var cancelButtonItem: UIBarButtonItem!
     @IBOutlet weak var saveButtonItem: UIBarButtonItem!
-    
 
     @IBAction func CancelButtonPressed(_ sender: UIBarButtonItem) {
         self.navigationController?.dismiss(animated: true, completion: nil)
@@ -65,7 +64,7 @@ final class CollectTableViewController: UITableViewController {
             }
             
             do {
-                let _ = try result.resolve()
+                _ = try result.resolve()
                 SVProgressHUD.showSuccess(withStatus: "保存成功")
                 SVProgressHUD.dismiss(withDelay: 3.0)
                 self.dismiss(animated: true, completion: nil)
@@ -105,7 +104,7 @@ final class CollectTableViewController: UITableViewController {
                 
             } catch UnknownError.alamofire(let error) {
                 let title = NSLocalizedString("unknown error", comment: "")
-                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.errorDescription)")
+                let alertController = UIAlertController.simpleErrorAlert(with: title, description: "\(error.localizedDescription)")
                 SVProgressHUD.dismiss()
                 self.present(alertController, animated: true, completion: nil)
                 consolePrint("Unknow NSError: \(error)")
@@ -132,7 +131,6 @@ final class CollectTableViewController: UITableViewController {
     }
 
 }
-
 
 // MARK: - Tableview setup method
 extension CollectTableViewController {

@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class DataSource<Model: DataProvider>: NSObject {
     
     weak var model: Model!

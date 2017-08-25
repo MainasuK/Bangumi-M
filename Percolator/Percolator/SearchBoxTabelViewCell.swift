@@ -43,7 +43,6 @@ class SearchBoxTableViewCell: MGSwipeTableCell {
     }
 }
 
-
 extension SearchBoxTableViewCell: ConfigurableCell {
     
     typealias ItemType = (Subject, Result<CollectInfoSmall>)
@@ -123,7 +122,6 @@ extension SearchBoxTableViewCell {
         preservesSuperviewLayoutMargins = true
         contentView.preservesSuperviewLayoutMargins = true
 
-        
         // Set iamge view corner
         animeImageView.layer.borderColor = UIColor.percolatorGray.cgColor
         animeImageView.layer.borderWidth = 0.5

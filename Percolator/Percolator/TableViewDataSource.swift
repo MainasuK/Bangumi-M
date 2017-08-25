@@ -31,7 +31,6 @@ class TableViewDataSource<Model: DataProvider, Cell: ConfigurableCell>: DataSour
         cell.isLast = indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1
         cell.configure(with: model.item(at: indexPath))
 
-        
         return cell
     }
     

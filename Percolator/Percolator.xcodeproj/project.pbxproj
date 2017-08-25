@@ -12,6 +12,7 @@
 		BD5F69D0BFB882A0A4140836 /* Pods_Bangumi_M_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50E10398D8D754A91C11FA1 /* Pods_Bangumi_M_UITests.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		DB026CE81D37372C0023A507 /* Percolator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB026CE61D37372C0023A507 /* Percolator.xcdatamodeld */; };
 		DB044F771D37DE7F00CB79FB /* TableViewDataSource+DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB044F761D37DE7F00CB79FB /* TableViewDataSource+DataProvider.swift */; };
+		DB0A43321F2E22FB00010030 /* LoginViewPresentTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0A43311F2E22FB00010030 /* LoginViewPresentTransition.swift */; };
 		DB0B6B081D1632EE007AA8AE /* DetailTableViewBannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0B6B071D162A80007AA8AE /* DetailTableViewBannerCell.swift */; };
 		DB0BC8031D1194870091ECE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47C71B060DEA0004BBA2 /* AppDelegate.swift */; };
 		DB0BC8041D1195FD0091ECE0 /* AnimeListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47E71B0617020004BBA2 /* AnimeListTableViewController.swift */; };
@@ -162,6 +163,7 @@
 		AEB9A65F495FD84C26272CC2 /* Pods_Bangumi_M.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bangumi_M.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB026CE71D37372C0023A507 /* Percolator.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Percolator.xcdatamodel; sourceTree = "<group>"; };
 		DB044F761D37DE7F00CB79FB /* TableViewDataSource+DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TableViewDataSource+DataProvider.swift"; sourceTree = "<group>"; };
+		DB0A43311F2E22FB00010030 /* LoginViewPresentTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewPresentTransition.swift; sourceTree = "<group>"; };
 		DB0B6B071D162A80007AA8AE /* DetailTableViewBannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewBannerCell.swift; sourceTree = "<group>"; };
 		DB0DA60D1D430EF3005F4E01 /* AnimeListTableViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeListTableViewCellDelegate.swift; sourceTree = "<group>"; };
 		DB18C8AD1B0A2ABC00A0BA11 /* Percolator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Percolator-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				DBD7A9871D56D08500BCA329 /* PercolatorAlertController.swift */,
+				DB0A43311F2E22FB00010030 /* LoginViewPresentTransition.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -669,6 +672,7 @@
 				DB9E92DA1D50524100C150C4 /* Resources */,
 				C4D770453744952AA9C24EEF /* [CP] Copy Pods Resources */,
 				DBFB286D1D50D3BB00C43E75 /* ShellScript */,
+				C8C97043CA577AE0E9DEA8F1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -691,6 +695,7 @@
 				8368E1EDA903B48C27AB5445 /* [CP] Embed Pods Frameworks */,
 				70AA7802892F2C61E825F20F /* [CP] Copy Pods Resources */,
 				DB3FC1BD1D33A6950045C339 /* Embed Frameworks */,
+				DB657D9F1E74575A009486CB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -730,7 +735,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Cirno MainasuK";
 				TargetAttributes = {
 					DB9E92DB1D50524100C150C4 = {
@@ -745,6 +750,7 @@
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = Z68BDSMP42;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -874,7 +880,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		8368E1EDA903B48C27AB5445 /* [CP] Embed Pods Frameworks */ = {
@@ -904,7 +910,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		B82D4450F1EF0B08BFC8CD9D /* [CP] Check Pods Manifest.lock */ = {
@@ -919,7 +925,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C4D770453744952AA9C24EEF /* [CP] Copy Pods Resources */ = {
@@ -936,6 +942,34 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M UITests/Pods-Bangumi M UITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		C8C97043CA577AE0E9DEA8F1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M UITests/Pods-Bangumi M UITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DB657D9F1E74575A009486CB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		DBFB286D1D50D3BB00C43E75 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1055,6 +1089,7 @@
 				DBEF113E1D37678800E7A0D7 /* DataProvider.swift in Sources */,
 				DBA4C90E1D168E8F0043EDED /* CMKCollectButton.swift in Sources */,
 				DB5B04391B85E6B90074C80E /* BangumiKey.swift in Sources */,
+				DB0A43321F2E22FB00010030 /* LoginViewPresentTransition.swift in Sources */,
 				DBCD90BD1D37CDC200E7B37C /* UIAlertController.swift in Sources */,
 				DBA480D51D451181004AAF6E /* SubjectCollectionViewCell.swift in Sources */,
 				DB80EFF71D34E70E007DEF09 /* Subject.swift in Sources */,
@@ -1116,15 +1151,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1B559F211ADB84B5BE2FF9DA /* Pods-Bangumi M UITests.debug.xcconfig */;
 			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = "Bangumi M UITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.Bangumi-M-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "Bangumi M";
@@ -1135,14 +1166,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 132D057987CE247875843067 /* Pods-Bangumi M UITests.release.xcconfig */;
 			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				INFOPLIST_FILE = "Bangumi M UITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.Bangumi-M-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "Bangumi M";
@@ -1152,6 +1179,7 @@
 		DBBA47DF1B060DEA0004BBA2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1189,7 +1217,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "";
@@ -1203,6 +1231,7 @@
 		DBBA47E01B060DEA0004BBA2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1233,7 +1262,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "";
 				SDKROOT = iphoneos;
@@ -1246,19 +1275,21 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A341A87A1F6A79DEC81B42B0 /* Pods-Bangumi M.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Bangumi M";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Bangumi M.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z68BDSMP42;
 				INFOPLIST_FILE = Percolator/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "$(inherited) \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Percolator/Percolator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1271,19 +1302,21 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7EFB831DCE065645C982A805 /* Pods-Bangumi M.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Bangumi M";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Bangumi M.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z68BDSMP42;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Percolator/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Percolator/Percolator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1296,14 +1329,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2F25F777FF922D757C69B782 /* Pods-Bangumi M Tests.debug.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = "Bangumi M Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.Bangumi-M-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Percolator/Percolator-Bridging-Header.h";
@@ -1316,13 +1344,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F9E323AA3257E0E29659EF8E /* Pods-Bangumi M Tests.release.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				INFOPLIST_FILE = "Bangumi M Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.Bangumi-M-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Percolator/Percolator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

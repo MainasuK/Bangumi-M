@@ -24,7 +24,7 @@ extension BangumiRequest {
         
         let urlPath = String(format: BangumiApiKey.EP, id, status.toURLParams(), BangumiApiKey.Percolator, user.authEncode)
         var parameters: [String : Any]? = nil
-        if let epID = ids?.reduce("", { (str, id) in str?.appending("\(id),")} ) {
+        if let epID = ids?.reduce("", { (str, id) in str?.appending("\(id),")}) {
             parameters = ["ep_id" : epID]
         }
         

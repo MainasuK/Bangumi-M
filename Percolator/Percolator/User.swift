@@ -69,7 +69,6 @@ struct User {
 
 }
 
-
 extension User {
 
     func saveInfo(with email: String, password: String) {
@@ -124,7 +123,6 @@ extension User {
     }
 
 }
-
 
 extension User {
     
