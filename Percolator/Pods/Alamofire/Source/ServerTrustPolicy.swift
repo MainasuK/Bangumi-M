@@ -60,15 +60,15 @@ open class ServerTrustPolicyManager {
 
 extension URLSession {
     private struct AssociatedKeys {
-        static var ManagerKey = "URLSession.ServerTrustPolicyManager"
+        static var managerKey = "URLSession.ServerTrustPolicyManager"
     }
 
     var serverTrustPolicyManager: ServerTrustPolicyManager? {
         get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.ManagerKey) as? ServerTrustPolicyManager
+            return objc_getAssociatedObject(self, &AssociatedKeys.managerKey) as? ServerTrustPolicyManager
         }
         set (manager) {
-            objc_setAssociatedObject(self, &AssociatedKeys.ManagerKey, manager, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.managerKey, manager, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 }
@@ -87,6 +87,13 @@ extension URLSession {
 ///                             validate the host provided by the challenge. Applications are encouraged to always
 ///                             validate the host in production environments to guarantee the validity of the server's
 ///                             certificate chain.
+///
+/// - performRevokedEvaluation: Uses the default and revoked server trust evaluations allowing you to control whether to
+///                             validate the host provided by the challenge as well as specify the revocation flags for
+///                             testing for revoked certificates. Apple platforms did not start testing for revoked
+///                             certificates automatically until iOS 10.1, macOS 10.12 and tvOS 10.1 which is
+///                             demonstrated in our TLS tests. Applications are encouraged to always validate the host
+///                             in production environments to guarantee the validity of the server's certificate chain.
 ///
 /// - pinCertificates:          Uses the pinned certificates to validate the server trust. The server trust is
 ///                             considered valid if one of the pinned certificates match one of the server certificates.
@@ -107,6 +114,7 @@ extension URLSession {
 /// - customEvaluation:         Uses the associated closure to evaluate the validity of the server trust.
 public enum ServerTrustPolicy {
     case performDefaultEvaluation(validateHost: Bool)
+    case performRevokedEvaluation(validateHost: Bool, revocationFlags: CFOptionFlags)
     case pinCertificates(certificates: [SecCertificate], validateCertificateChain: Bool, validateHost: Bool)
     case pinPublicKeys(publicKeys: [SecKey], validateCertificateChain: Bool, validateHost: Bool)
     case disableEvaluation
@@ -172,6 +180,12 @@ public enum ServerTrustPolicy {
             SecTrustSetPolicies(serverTrust, policy)
 
             serverTrustIsValid = trustIsValid(serverTrust)
+        case let .performRevokedEvaluation(validateHost, revocationFlags):
+            let defaultPolicy = SecPolicyCreateSSL(true, validateHost ? host as CFString : nil)
+            let revokedPolicy = SecPolicyCreateRevocation(revocationFlags)
+            SecTrustSetPolicies(serverTrust, [defaultPolicy, revokedPolicy] as CFTypeRef)
+
+            serverTrustIsValid = trustIsValid(serverTrust)
         case let .pinCertificates(pinnedCertificates, validateCertificateChain, validateHost):
             if validateCertificateChain {
                 let policy = SecPolicyCreateSSL(true, validateHost ? host as CFString : nil)
@@ -234,6 +248,7 @@ public enum ServerTrustPolicy {
         if status == errSecSuccess {
             let unspecified = SecTrustResultType.unspecified
             let proceed = SecTrustResultType.proceed
+
 
             isValid = result == unspecified || result == proceed
         }

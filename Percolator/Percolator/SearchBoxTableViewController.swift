@@ -372,11 +372,11 @@ extension SearchBoxTableViewController {
 // MARK: - MGSwipeTableCellDelegate
 extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
     
-    func swipeTableCell(_ cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
+    func swipeTableCell(_ cell: MGSwipeTableCell, canSwipe direction: MGSwipeDirection) -> Bool {
         return true
     }
     
-    func swipeTableCell(_ cell: MGSwipeTableCell!, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings!, expansionSettings: MGSwipeExpansionSettings!) -> [Any]! {
+    private func swipeTableCell(_ cell: MGSwipeTableCell!, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings!, expansionSettings: MGSwipeExpansionSettings!) -> [Any]! {
         
         guard let cell = cell,
         let indexPath = self.tableView.indexPath(for: cell) else {
@@ -423,14 +423,14 @@ extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
         
         switch direction {
         case .leftToRight:
-            return (subject.isSaved()) ? [collectionButton!] : [saveButton!, collectionButton!]
+            return (subject.isSaved()) ? [collectionButton] : [saveButton, collectionButton]
             
         case .rightToLeft:
-            return (subject.isSaved()) ? [deleteButton!] : []
+            return (subject.isSaved()) ? [deleteButton] : []
         }
     }
     
-    func swipeTableCell(_ cell: MGSwipeTableCell!, didChange state: MGSwipeState, gestureIsActive: Bool) {
+    func swipeTableCell(_ cell: MGSwipeTableCell, didChange state: MGSwipeState, gestureIsActive: Bool) {
         var str = ""
         var active = ""
         switch state {

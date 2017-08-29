@@ -27,6 +27,7 @@ import Foundation
 /// `AFError` is the error type returned by Alamofire. It encompasses a few different types of errors, each with
 /// their own associated reasons.
 ///
+/// - invalidURL:                  Returned when a `URLConvertible` type fails to create a valid `URL`.
 /// - parameterEncodingFailed:     Returned when a parameter encoding object throws an error during the encoding process.
 /// - multipartEncodingFailed:     Returned when some step in the multipart encoding process fails.
 /// - responseValidationFailed:    Returned when a `validate()` call fails.
@@ -37,7 +38,7 @@ public enum AFError: Error {
     /// - missingURL:                 The URL request did not have a URL to encode.
     /// - jsonEncodingFailed:         JSON serialization failed with an underlying system error during the
     ///                               encoding process.
-    /// - propertyListEncodingFailed: Property list serialization failed with an underlying system error during 
+    /// - propertyListEncodingFailed: Property list serialization failed with an underlying system error during
     ///                               encoding process.
     public enum ParameterEncodingFailureReason {
         case missingURL
@@ -124,19 +125,36 @@ public enum AFError: Error {
         case propertyListSerializationFailed(error: Error)
     }
 
+    case invalidURL(url: URLConvertible)
     case parameterEncodingFailed(reason: ParameterEncodingFailureReason)
     case multipartEncodingFailed(reason: MultipartEncodingFailureReason)
     case responseValidationFailed(reason: ResponseValidationFailureReason)
     case responseSerializationFailed(reason: ResponseSerializationFailureReason)
 }
 
+// MARK: - Adapt Error
+
+struct AdaptError: Error {
+    let error: Error
+}
+
+extension Error {
+    var underlyingAdaptError: Error? { return (self as? AdaptError)?.error }
+}
+
 // MARK: - Error Booleans
 
 extension AFError {
-    /// Returns whether the AFError is a parameter encoding error. When `true`, the `underlyingError` property will 
+    /// Returns whether the AFError is an invalid URL error.
+    public var isInvalidURLError: Bool {
+        if case .invalidURL = self { return true }
+        return false
+    }
+
+    /// Returns whether the AFError is a parameter encoding error. When `true`, the `underlyingError` property will
     /// contain the associated value.
     public var isParameterEncodingError: Bool {
-        if case .multipartEncodingFailed = self { return true }
+        if case .parameterEncodingFailed = self { return true }
         return false
     }
 
@@ -165,6 +183,16 @@ extension AFError {
 // MARK: - Convenience Properties
 
 extension AFError {
+    /// The `URLConvertible` associated with the error.
+    public var urlConvertible: URLConvertible? {
+        switch self {
+        case .invalidURL(let url):
+            return url
+        default:
+            return nil
+        }
+    }
+
     /// The `URL` associated with the error.
     public var url: URL? {
         switch self {
@@ -175,7 +203,7 @@ extension AFError {
         }
     }
 
-    /// The `Error` returned by a system framework associated with a `.parameterEncodingFailed`, 
+    /// The `Error` returned by a system framework associated with a `.parameterEncodingFailed`,
     /// `.multipartEncodingFailed` or `.responseSerializationFailed` error.
     public var underlyingError: Error? {
         switch self {
@@ -279,8 +307,8 @@ extension AFError.ResponseValidationFailureReason {
 
     var responseContentType: String? {
         switch self {
-        case .unacceptableContentType(_, let reponseType):
-            return reponseType
+        case .unacceptableContentType(_, let responseType):
+            return responseType
         default:
             return nil
         }
@@ -321,6 +349,8 @@ extension AFError.ResponseSerializationFailureReason {
 extension AFError: LocalizedError {
     public var errorDescription: String? {
         switch self {
+        case .invalidURL(let url):
+            return "URL is not valid: \(url)"
         case .parameterEncodingFailed(let reason):
             return reason.localizedDescription
         case .multipartEncodingFailed(let reason):

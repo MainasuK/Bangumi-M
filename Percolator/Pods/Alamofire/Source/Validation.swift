@@ -162,7 +162,7 @@ extension DataRequest {
     /// - returns: The request.
     @discardableResult
     public func validate(_ validation: @escaping Validation) -> Self {
-        let validationExecution: () -> Void = {
+        let validationExecution: () -> Void = { [unowned self] in
             if
                 let response = self.response,
                 self.delegate.error == nil,
@@ -186,7 +186,7 @@ extension DataRequest {
     /// - returns: The request.
     @discardableResult
     public func validate<S: Sequence>(statusCode acceptableStatusCodes: S) -> Self where S.Iterator.Element == Int {
-        return validate { _, response, _ in
+        return validate { [unowned self] _, response, _ in
             return self.validate(statusCode: acceptableStatusCodes, response: response)
         }
     }
@@ -200,7 +200,7 @@ extension DataRequest {
     /// - returns: The request.
     @discardableResult
     public func validate<S: Sequence>(contentType acceptableContentTypes: S) -> Self where S.Iterator.Element == String {
-        return validate { _, response, data in
+        return validate { [unowned self] _, response, data in
             return self.validate(contentType: acceptableContentTypes, response: response, data: data)
         }
     }
@@ -222,7 +222,12 @@ extension DataRequest {
 extension DownloadRequest {
     /// A closure used to validate a request that takes a URL request, a URL response, a temporary URL and a
     /// destination URL, and returns whether the request was valid.
-    public typealias Validation = (_ request: URLRequest?, _ response: HTTPURLResponse, _ temporary: URL?, _ destination: URL?) -> ValidationResult
+    public typealias Validation = (
+        _ request: URLRequest?,
+        _ response: HTTPURLResponse,
+        _ temporaryURL: URL?,
+        _ destinationURL: URL?)
+        -> ValidationResult
 
     /// Validates the request, using the specified closure.
     ///
@@ -233,7 +238,7 @@ extension DownloadRequest {
     /// - returns: The request.
     @discardableResult
     public func validate(_ validation: @escaping Validation) -> Self {
-        let validationExecution: () -> Void = {
+        let validationExecution: () -> Void = { [unowned self] in
             let request = self.request
             let temporaryURL = self.downloadDelegate.temporaryURL
             let destinationURL = self.downloadDelegate.destinationURL
@@ -261,7 +266,7 @@ extension DownloadRequest {
     /// - returns: The request.
     @discardableResult
     public func validate<S: Sequence>(statusCode acceptableStatusCodes: S) -> Self where S.Iterator.Element == Int {
-        return validate { _, response, _, _ in
+        return validate { [unowned self] _, response, _, _ in
             return self.validate(statusCode: acceptableStatusCodes, response: response)
         }
     }
@@ -275,7 +280,7 @@ extension DownloadRequest {
     /// - returns: The request.
     @discardableResult
     public func validate<S: Sequence>(contentType acceptableContentTypes: S) -> Self where S.Iterator.Element == String {
-        return validate { _, response, _, _ in
+        return validate { [unowned self] _, response, _, _ in
             let fileURL = self.downloadDelegate.fileURL
 
             guard let validFileURL = fileURL else {

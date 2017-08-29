@@ -1,31 +1,16 @@
-// --------------------------------------------------------------------------------
-// The MIT License (MIT)
 //
-// Copyright (c) 2014-2016 Shiny Development
+//  SDStatusBarOverriderPost10_3.m
+//  SimulatorStatusMagic
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+//  Created by Craig Siemens on 2017-03-27.
+//  Copyright © 2017 Shiny Development. All rights reserved.
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-// --------------------------------------------------------------------------------
 
 #import <UIKit/UIKit.h>
-#import "SDStatusBarOverriderPost10_0.h"
+#import "SDStatusBarOverriderPost10_3.h"
 
 typedef NS_ENUM(int, StatusBarItem10_0) {
+  // 0
   DoNotDisturb = 1,
   // 2
   SignalStrengthBars = 3,
@@ -59,6 +44,7 @@ typedef NS_ENUM(int, StatusBarItem10_0) {
   // 31
   // 32
   // 33
+  // 34
 };
 
 typedef NS_ENUM(unsigned int, BatteryState) {
@@ -66,7 +52,7 @@ typedef NS_ENUM(unsigned int, BatteryState) {
 };
 
 typedef struct {
-  _Bool itemIsEnabled[34];
+  bool itemIsEnabled[35];
   char timeString[64];
   int gsmSignalStrengthRaw;
   int gsmSignalStrengthBars;
@@ -83,77 +69,69 @@ typedef struct {
   char batteryDetailString[150];
   int bluetoothBatteryCapacity;
   int thermalColor;
-  unsigned int thermalSunlightMode:1;
-  unsigned int slowActivity:1;
-  unsigned int syncActivity:1;
+  unsigned int thermalSunlightMode : 1;
+  unsigned int slowActivity : 1;
+  unsigned int syncActivity : 1;
   char activityDisplayId[256];
-  unsigned int bluetoothConnected:1;
-  unsigned int displayRawGSMSignal:1;
-  unsigned int displayRawWifiSignal:1;
-  unsigned int locationIconType:1;
-  unsigned int quietModeInactive:1;
+  unsigned int bluetoothConnected : 1;
+  unsigned int displayRawGSMSignal : 1;
+  unsigned int displayRawWifiSignal : 1;
+  unsigned int locationIconType : 1;
+  unsigned int quietModeInactive : 1;
   unsigned int tetheringConnectionCount;
-  unsigned int batterySaverModeActive:1;
-  unsigned int deviceIsRTL:1;
-  unsigned int lock:1;
+  unsigned int batterySaverModeActive : 1;
+  unsigned int deviceIsRTL : 1;
+  unsigned int lock : 1;
   char breadcrumbTitle[256];
   char breadcrumbSecondaryTitle[256];
   char personName[100];
-  char returnToAppBundleIdentifier[100];
-  unsigned int electronicTollCollectionAvailable:1;
-  unsigned int wifiLinkWarning:1;
+// or returnToAppBundleIdentifier
+  unsigned int electronicTollCollectionAvailable : 1;
+  unsigned int wifiLinkWarning : 1;
 } StatusBarRawData;
 
 typedef struct {
-  _Bool overrideItemIsEnabled[34];
-  unsigned int overrideTimeString:1;
-  unsigned int overrideGsmSignalStrengthRaw:1;
-  unsigned int overrideGsmSignalStrengthBars:1;
-  unsigned int overrideServiceString:1;
-  unsigned int overrideServiceImages:2;
-  unsigned int overrideOperatorDirectory:1;
-  unsigned int overrideServiceContentType:1;
-  unsigned int overrideWifiSignalStrengthRaw:1;
-  unsigned int overrideWifiSignalStrengthBars:1;
-  unsigned int overrideDataNetworkType:1;
-  unsigned int disallowsCellularDataNetworkTypes:1;
-  unsigned int overrideBatteryCapacity:1;
-  unsigned int overrideBatteryState:1;
-  unsigned int overrideBatteryDetailString:1;
-  unsigned int overrideBluetoothBatteryCapacity:1;
-  unsigned int overrideThermalColor:1;
-  unsigned int overrideSlowActivity:1;
-  unsigned int overrideActivityDisplayId:1;
-  unsigned int overrideBluetoothConnected:1;
-  unsigned int overrideBreadcrumb:1;
+  bool overrideItemIsEnabled[35];
+  unsigned int overrideTimeString : 1;
+  unsigned int overrideGsmSignalStrengthRaw : 1;
+  unsigned int overrideGsmSignalStrengthBars : 1;
+  unsigned int overrideServiceString : 1;
+  unsigned int overrideServiceImages : 2;
+  unsigned int overrideOperatorDirectory : 1;
+  unsigned int overrideServiceContentType : 1;
+  unsigned int overrideWifiSignalStrengthRaw : 1;
+  unsigned int overrideWifiSignalStrengthBars : 1;
+  unsigned int overrideDataNetworkType : 1;
+  unsigned int disallowsCellularDataNetworkTypes : 1;
+  unsigned int overrideBatteryCapacity : 1;
+  unsigned int overrideBatteryState : 1;
+  unsigned int overrideBatteryDetailString : 1;
+  unsigned int overrideBluetoothBatteryCapacity : 1;
+  unsigned int overrideThermalColor : 1;
+  unsigned int overrideSlowActivity : 1;
+  unsigned int overrideActivityDisplayId : 1;
+  unsigned int overrideBluetoothConnected : 1;
+  unsigned int overrideBreadcrumb : 1;
   unsigned int overrideLock;
-  unsigned int overrideDisplayRawGSMSignal:1;
-  unsigned int overrideDisplayRawWifiSignal:1;
-  unsigned int overridePersonName:1;
-  unsigned int overrideWifiLinkWarning:1;
+  unsigned int overrideDisplayRawGSMSignal : 1;
+  unsigned int overrideDisplayRawWifiSignal : 1;
+  unsigned int overridePersonName : 1;
+  unsigned int overrideWifiLinkWarning : 1;
   StatusBarRawData values;
 } StatusBarOverrideData;
 
 @class UIStatusBarServer;
 
-// http://localhost:10000/protocols/UIStatusBarServerClient.h (commented some methods, and added structs)
-/* Generated by RuntimeBrowser.
- */
-
 @protocol UIStatusBarServerClient
 
 @required
 
+- (void)statusBarServer:(UIStatusBarServer *)arg1 didReceiveDoubleHeightStatusString:(NSString *)arg2 forStyle:(long long)arg3;
+- (void)statusBarServer:(UIStatusBarServer *)arg1 didReceiveGlowAnimationState:(bool)arg2 forStyle:(long long)arg3;
 - (void)statusBarServer:(UIStatusBarServer *)arg1 didReceiveStatusBarData:(const StatusBarRawData *)data withActions:(int)arg3;
 - (void)statusBarServer:(UIStatusBarServer *)arg1 didReceiveStyleOverrides:(int)arg2;
-- (void)statusBarServer:(UIStatusBarServer *)arg1 didReceiveGlowAnimationState:(bool)arg2 forStyle:(long long)arg3;
-- (void)statusBarServer:(UIStatusBarServer *)arg1 didReceiveDoubleHeightStatusString:(NSString *)arg2 forStyle:(long long)arg3;
 
 @end
-
-// http://localhost:10000/classes/UIStatusBarServer.h (commented some methods, and added structs)
-/* Generated by RuntimeBrowser.
- */
 
 @interface UIStatusBarServer : NSObject
 
@@ -166,7 +144,7 @@ typedef struct {
 
 @end
 
-@implementation SDStatusBarOverriderPost10_0
+@implementation SDStatusBarOverriderPost10_3
 
 @synthesize timeString;
 @synthesize carrierName;
@@ -174,14 +152,13 @@ typedef struct {
 @synthesize bluetoothEnabled;
 @synthesize batteryDetailEnabled;
 
-- (void)enableOverrides
-{
+- (void)enableOverrides {
   StatusBarOverrideData *overrides = [UIStatusBarServer getStatusBarOverrideData];
-
+  
   // Set 9:41 time in current localization
   strcpy(overrides->values.timeString, [self.timeString cStringUsingEncoding:NSUTF8StringEncoding]);
   overrides->overrideTimeString = 1;
-
+  
   // Enable 5 bars of mobile (iPhone only)
   if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
     overrides->overrideItemIsEnabled[SignalStrengthBars] = 1;
@@ -189,7 +166,7 @@ typedef struct {
     overrides->overrideGsmSignalStrengthBars = 1;
     overrides->values.gsmSignalStrengthBars = 5;
   }
-
+  
   // Remove carrier text for iPhone, set it to "iPad" for the iPad
   overrides->overrideServiceString = 1;
   NSString *carrierText = self.carrierName;
@@ -197,7 +174,7 @@ typedef struct {
     carrierText = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) ? @"" : @"iPad";
   }
   strcpy(overrides->values.serviceString, [carrierText cStringUsingEncoding:NSUTF8StringEncoding]);
-
+  
   // Battery: 100% and unplugged
   overrides->overrideItemIsEnabled[BatteryDetail] = YES;
   overrides->values.itemIsEnabled[BatteryDetail] = YES;
@@ -206,9 +183,10 @@ typedef struct {
   overrides->overrideBatteryState = YES;
   overrides->values.batteryState = BatteryStateUnplugged;
   overrides->overrideBatteryDetailString = YES;
-  NSString *batteryDetailString = self.batteryDetailEnabled ? [NSString stringWithFormat:@"%@%%", @(overrides->values.batteryCapacity)] : @" "; // Setting this to an empty string will not work, it needs to be a @" "
+  NSString *batteryDetailString = self.batteryDetailEnabled ? [NSString stringWithFormat:@"%@%%", @(overrides->values.batteryCapacity)] : @" ";
+// Setting this to an empty string will not work, it needs to be a @" "
   strcpy(overrides->values.batteryDetailString, [batteryDetailString cStringUsingEncoding:NSUTF8StringEncoding]);
-
+  
   // Bluetooth
   overrides->overrideItemIsEnabled[Bluetooth] = !!self.bluetoothEnabled;
   overrides->values.itemIsEnabled[Bluetooth] = !!self.bluetoothEnabled;
@@ -216,29 +194,28 @@ typedef struct {
     overrides->overrideBluetoothConnected = self.bluetoothConnected;
     overrides->values.bluetoothConnected = self.bluetoothConnected;
   }
-
+  
   // Actually update the status bar
   [UIStatusBarServer postStatusBarOverrideData:overrides];
-
+  
   // Remove the @" " used to trick the battery percentage into not showing, if used
   if (!self.batteryDetailEnabled) {
     batteryDetailString = @"";
     strcpy(overrides->values.batteryDetailString, [batteryDetailString cStringUsingEncoding:NSUTF8StringEncoding]);
     [UIStatusBarServer postStatusBarOverrideData:overrides];
   }
-
+  
   // Lock in the changes, reset simulator will remove this
   [UIStatusBarServer permanentizeStatusBarOverrideData];
 }
 
-- (void)disableOverrides
-{
+- (void)disableOverrides {
   StatusBarOverrideData *overrides = [UIStatusBarServer getStatusBarOverrideData];
-
+  
   // Remove all overrides that use the array of bools
   bzero(overrides->overrideItemIsEnabled, sizeof(overrides->overrideItemIsEnabled));
   bzero(overrides->values.itemIsEnabled, sizeof(overrides->values.itemIsEnabled));
-
+  
   // Remove specific overrides (separate flags)
   overrides->overrideTimeString = 0;
   overrides->overrideGsmSignalStrengthBars = 0;
@@ -246,14 +223,14 @@ typedef struct {
   overrides->overrideBatteryState = 0;
   overrides->overrideBatteryDetailString = 0;
   overrides->overrideBluetoothConnected = 0;
-
+  
   // Carrier text (it's an override to set it back to the default)
   overrides->overrideServiceString = 1;
   strcpy(overrides->values.serviceString, [NSLocalizedString(@"Carrier", @"Carrier") cStringUsingEncoding:NSUTF8StringEncoding]);
-
+  
   // Actually update the status bar
   [UIStatusBarServer postStatusBarOverrideData:overrides];
-
+  
   // Have to call this to remove all the overrides
   [UIStatusBarServer permanentizeStatusBarOverrideData];
 }

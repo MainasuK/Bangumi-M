@@ -43,7 +43,7 @@ extension SubjectCollectionViewController {
         title = "相关条目"
         
         if let barFont = UIFont(name: "PingFangSC-Medium", size: 17.0) {
-            navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName : barFont]
+            navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font : barFont]
         }
         
         collectionView?.backgroundColor = UIColor.myAnimeListBackground

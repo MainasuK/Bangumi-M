@@ -26,7 +26,7 @@ import Foundation
 
 #if os(iOS) || os(tvOS) || os(watchOS)
 import UIKit
-#elseif os(OSX)
+#elseif os(macOS)
 import Cocoa
 #endif
 
@@ -57,8 +57,8 @@ public protocol Sizable {
 extension ImageFilter where Self: Sizable {
     /// The unique idenitifier for an `ImageFilter` conforming to the `Sizable` protocol.
     public var identifier: String {
-        let width = Int64(round(size.width))
-        let height = Int64(round(size.height))
+        let width = Int64(size.width.rounded())
+        let height = Int64(size.height.rounded())
 
         return "\(type(of: self))-size:(\(width)x\(height))"
     }
@@ -75,7 +75,7 @@ public protocol Roundable {
 extension ImageFilter where Self: Roundable {
     /// The unique idenitifier for an `ImageFilter` conforming to the `Roundable` protocol.
     public var identifier: String {
-        let radius = Int64(round(self.radius))
+        let radius = Int64(self.radius.rounded())
         return "\(type(of: self))-radius:(\(radius))"
     }
 }
@@ -262,7 +262,7 @@ public struct RoundedCornersFilter: ImageFilter, Roundable {
 
     /// The unique idenitifier for an `ImageFilter` conforming to the `Roundable` protocol.
     public var identifier: String {
-        let radius = Int64(round(self.radius))
+        let radius = Int64(self.radius.rounded())
         return "\(type(of: self))-radius:(\(radius))-divided:(\(divideRadiusByImageScale))"
     }
 }
@@ -288,10 +288,37 @@ public struct CircleFilter: ImageFilter {
 
 #if os(iOS) || os(tvOS)
 
+/// The `CoreImageFilter` protocol defines `parameters`, `filterName` properties used by CoreImage.
+@available(iOS 9.0, *)
+public protocol CoreImageFilter: ImageFilter {
+    /// The filter name of the CoreImage filter.
+	var filterName: String { get }
+
+    /// The image filter parameters passed to CoreImage.
+    var parameters: [String: Any] { get }
+}
+
+@available(iOS 9.0, *)
+public extension ImageFilter where Self: CoreImageFilter {
+	/// The filter closure used to create the modified representation of the given image.
+	public var filter: (Image) -> Image {
+		return { image in
+            return image.af_imageFiltered(withCoreImageFilter: self.filterName, parameters: self.parameters) ?? image
+		}
+	}
+
+	/// The unique idenitifier for an `ImageFilter` conforming to the `CoreImageFilter` protocol.
+	public var identifier: String { return "\(type(of: self))-parameters:(\(self.parameters))" }
+}
+
 /// Blurs an image using a `CIGaussianBlur` filter with the specified blur radius.
-public struct BlurFilter: ImageFilter {
-    /// The blur radius of the filter.
-    let blurRadius: UInt
+@available(iOS 9.0, *)
+public struct BlurFilter: ImageFilter, CoreImageFilter {
+    /// The filter name.
+    public let filterName = "CIGaussianBlur"
+
+    /// The image filter parameters passed to CoreImage.
+    public let parameters: [String: Any]
 
     /// Initializes the `BlurFilter` instance with the given blur radius.
     ///
@@ -299,15 +326,7 @@ public struct BlurFilter: ImageFilter {
     ///
     /// - returns: The new `BlurFilter` instance.
     public init(blurRadius: UInt = 10) {
-        self.blurRadius = blurRadius
-    }
-
-    /// The filter closure used to create the modified representation of the given image.
-    public var filter: (Image) -> Image {
-        return { image in
-            let parameters: [String: Any] = ["inputRadius": self.blurRadius]
-            return image.af_imageFiltered(withCoreImageFilter: "CIGaussianBlur", parameters: parameters) ?? image
-        }
+        self.parameters = ["inputRadius": blurRadius]
     }
 }
 

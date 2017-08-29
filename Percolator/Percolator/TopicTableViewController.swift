@@ -129,7 +129,7 @@ extension TopicTableViewController {
         title = "相关话题"
         
         if let barFont = UIFont(name: "PingFangSC-Medium", size: 17.0) {
-            navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName : barFont]
+            navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font : barFont]
         }
         
         // Configure tableView appearance
