@@ -91,7 +91,14 @@ extension AnimeListTableViewController {
             let url = URL(string: avatarLargeUrl) {
                 btn.af_setImage(for: .normal, url: url)
             }
+
+            // In iOS 11, bar button item use autolayout but not frame more.
+            let widthConstraint = btn.widthAnchor.constraint(equalToConstant: 30)
+            let heightConstraint = btn.heightAnchor.constraint(equalToConstant: 30)
+
             btn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+            NSLayoutConstraint.activate([heightConstraint, widthConstraint])
+
             btn.imageView?.frame.size = CGSize(width: 30, height: 30)
             btn.addTarget(self, action: #selector(AnimeListTableViewController.avatarButtonPressed), for: .touchUpInside)
             btn.imageView?.layer.cornerRadius = 30 * 0.5
