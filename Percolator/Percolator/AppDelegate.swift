@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set AlamofireImage cache
         UIImageView.af_sharedImageDownloader = ImageDownloader(
             configuration: ImageDownloader.defaultURLSessionConfiguration(),
-            downloadPrioritization: .fifo,
+            downloadPrioritization: .lifo,
             maximumActiveDownloads: 4,
             imageCache: AutoPurgingImageCache()
         )
