@@ -88,6 +88,7 @@
 		DBBB52531D47AE6E008A1617 /* SaveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52521D47AE6E008A1617 /* SaveActivity.swift */; };
 		DBBB52551D47AE7D008A1617 /* DeleteActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52541D47AE7D008A1617 /* DeleteActivity.swift */; };
 		DBBB52581D47B5CA008A1617 /* SubjectWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52571D47B5CA008A1617 /* SubjectWrapper.swift */; };
+		DBC0D4641F579EAD00255FCF /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC0D4631F579EAD00255FCF /* UserDefaults.swift */; };
 		DBC3A19B1D4B42710016346E /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B043D1B85E7860074C80E /* Actor.swift */; };
 		DBC57A8F1D477167002C4DF2 /* CDSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC57A8E1D477167002C4DF2 /* CDSubject.swift */; };
 		DBCD90BD1D37CDC200E7B37C /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD90BC1D37CDC200E7B37C /* UIAlertController.swift */; };
@@ -246,6 +247,7 @@
 		DBBB52521D47AE6E008A1617 /* SaveActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveActivity.swift; sourceTree = "<group>"; };
 		DBBB52541D47AE7D008A1617 /* DeleteActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteActivity.swift; sourceTree = "<group>"; };
 		DBBB52571D47B5CA008A1617 /* SubjectWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectWrapper.swift; sourceTree = "<group>"; };
+		DBC0D4631F579EAD00255FCF /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		DBC57A8E1D477167002C4DF2 /* CDSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDSubject.swift; sourceTree = "<group>"; };
 		DBCD90BC1D37CDC200E7B37C /* UIAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		DBCD90C31D37D02900E7B37C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -604,6 +606,7 @@
 				DB9D24F91D35CCF500269DFE /* UIImage.swift */,
 				DB1AAAFE1D33DE9500EE7727 /* UINavigationController.swift */,
 				DB7A35291D37F14600FADA6C /* UISearchController.swift */,
+				DBC0D4631F579EAD00255FCF /* UserDefaults.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -1109,6 +1112,7 @@
 				DB38795F1D44302E0022AD93 /* TagWriteView.swift in Sources */,
 				DBEF11501D379CD200E7A0D7 /* BangumiRequest+Search.swift in Sources */,
 				DBAD9BCE1D3F6BBE00206ACE /* BangumiRequest+Subject.swift in Sources */,
+				DBC0D4641F579EAD00255FCF /* UserDefaults.swift in Sources */,
 				DBE1C8111D3C7F060086B83D /* SVProgress+Style.swift in Sources */,
 				DB1AAB021D33F92600EE7727 /* User.swift in Sources */,
 				DBD0695D1D36601C0063708C /* ConsolePrint.swift in Sources */,

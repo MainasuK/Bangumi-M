@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import QuartzCore
 import AlamofireImage
-import MJRefresh
 import SVProgressHUD
 
 final class AnimeListTableViewController: UITableViewController {
@@ -18,15 +17,16 @@ final class AnimeListTableViewController: UITableViewController {
     typealias Model = AnimeListTableViewModel
     typealias Cell = AnimeListTableViewCell
 
-    let transition = LoginViewPresentTransition()
-    
-    fileprivate lazy var model: Model = {
+    private let transition = LoginViewPresentTransition()
+
+    private lazy var model: Model = {
         return Model(tableView: self.tableView)
     }()
-    fileprivate var dataSource: TableViewDataSource<Model, Cell>!
-    fileprivate var isFirstRefresh = true
-    fileprivate var hasTriedLogin = false
-    
+    private var dataSource: TableViewDataSource<Model, Cell>!
+    private var titlesStyleObserver: NSKeyValueObservation!
+    private var isFirstRefresh = true
+    private var hasTriedLogin = false
+
     @IBAction func unwindToAnimeListTableViewController(_ segue: UIStoryboardSegue) {
         
     }
@@ -56,6 +56,11 @@ final class AnimeListTableViewController: UITableViewController {
         
         alertController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
         present(alertController, animated: true, completion: nil)
+    }
+
+    deinit {
+        // Root view controller never deinit…
+        titlesStyleObserver.invalidate()
     }
     
 }
@@ -130,21 +135,22 @@ extension AnimeListTableViewController {
         
         // Fix the separator display when 0 rows
         tableView.tableFooterView = UIView()
-        
-        // Set refresh header
-        setupTableViewHeader()
-        
     }
     
-    fileprivate func setupTableViewHeader() {
-        tableView.mj_header = {
-            //  Use unowned because the caller is self. No async
-            let header = MJRefreshNormalHeader { [unowned self] in
-                self.refreshAnimeList()
-            }
-            
-            return header
+    fileprivate func setupRefreshControl() {
+        refreshControl = {
+            let control = UIRefreshControl()
+            control.addTarget(self, action: #selector(AnimeListTableViewController.refreshAnimeList), for: .valueChanged)
+            return control
         }()
+    }
+
+    private func setupObserver() {
+        titlesStyleObserver = UserDefaults.standard.observe(\UserDefaults.prefersLargeTitlesInNaviagtionBar, options: [.initial, .new]) { (_, value) in
+            if #available(iOS 11.0, *) {
+                self.navigationController?.navigationBar.prefersLargeTitles = value.newValue ?? true
+            }
+        }
     }
     
     fileprivate func setupTableViewDataSource() {
@@ -161,6 +167,8 @@ extension AnimeListTableViewController {
         super.viewDidLoad()
 
         setupTableView()
+        setupRefreshControl()
+        setupObserver()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -178,11 +186,13 @@ extension AnimeListTableViewController {
         }
         
         if isFirstRefresh {
-            tableView.mj_header.beginRefreshing()
+            assert(refreshControl != nil)
+            refreshAnimeList()      // Somehow we need call target manual when view first load
+            refreshControl?.beginRefreshing()
         }
         isFirstRefresh = false
     }
-    
+
 }
 
 extension AnimeListTableViewController {
@@ -194,12 +204,12 @@ extension AnimeListTableViewController {
     typealias ModelError = AnimeListTableViewModel.ModelError
 
     // swiftlint:disable function_body_length
-    func refreshAnimeList() {
+    @objc func refreshAnimeList() {
         
         model.refresh { (error: Error?) in
             
             defer {
-                self.tableView.mj_header.endRefreshing()
+                self.refreshControl?.endRefreshing()
             }
             
             do {
@@ -361,7 +371,7 @@ extension AnimeListTableViewController: TransitionDelegate {
     // FIXME: context parameter needed here
     func dissmissViewController(with flag: Bool) {
         if flag {
-            tableView.mj_header.beginRefreshing()
+            refreshControl?.beginRefreshing()
         }
         setupBarButtonItem()
     }

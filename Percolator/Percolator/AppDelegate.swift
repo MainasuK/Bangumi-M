@@ -35,6 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             User.removeInfo()
         }
 
+        if #available(iOS 11.0, *), let font = UIFont(name: "HiraginoSans-W6", size: 30) {
+            UINavigationBar.appearance().largeTitleTextAttributes = [.font : font]
+        }
+
         // Set version info in Setting
         UserDefaults.standard.setValue(UIApplication.appVersion(), forKey: "Percolator.appVersion")
         UserDefaults.standard.setValue(UIApplication.appBuild(), forKey: "Percolator.appBundle")
