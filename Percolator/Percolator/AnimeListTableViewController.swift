@@ -122,16 +122,11 @@ extension AnimeListTableViewController {
         setupTableViewDataSource()
         
         // Configure tableView row height
-//        tableView.estimatedRowHeight = 150
-//        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 0
         tableView.rowHeight = 150
         
         // Set cell conform readable layout margin
         tableView.cellLayoutMarginsFollowReadableWidth = true
-        
-        // Configure tableView appearance
-        tableView.separatorColor = UIColor.clear
-        tableView.backgroundColor = UIColor.myAnimeListBackground
         
         // Fix the separator display when 0 rows
         tableView.tableFooterView = UIView()
@@ -296,48 +291,8 @@ extension AnimeListTableViewController {
         guard let cell = cell as? AnimeListTableViewCell else {
             return
         }
-        
+
         cell.delegate = self
-        
-        // Make sure the shadow path set to right size
-        cell.cardView.setNeedsLayout()
-        cell.cardView.layoutIfNeeded()
-        
-        // Set border of cardView
-        cell.cardView.layer.cornerRadius    = 5
-        cell.cardView.layer.shadowColor     = UIColor.black.cgColor
-        cell.cardView.layer.shadowOffset    = CGSize(width: 0, height: 0)
-        cell.cardView.layer.shadowPath      = UIBezierPath(rect: cell.cardView.bounds).cgPath
-        cell.cardView.layer.shadowRadius    = 3
-        cell.cardView.layer.shadowOpacity   = 0.2
-        
-        // Mask controlView for get two bottom corners
-        cell.controlView.layer.mask = {
-            let maskLayer = CAShapeLayer()
-            let maskPath = UIBezierPath(roundedRect: cell.controlView.bounds,
-                                        byRoundingCorners: [.bottomLeft, .bottomRight],
-                                        cornerRadii: CGSize(width: 5, height: 5))
-            
-            maskLayer.frame = cell.controlView.bounds
-            maskLayer.path  = maskPath.cgPath
-            
-            return maskLayer
-        }()
-        
-        // Mask infolView for get two top corners
-        cell.infoView.layer.mask = {
-            let maskLayer = CAShapeLayer()
-            let maskPath = UIBezierPath(roundedRect: cell.infoView.bounds,
-                                        byRoundingCorners: [.topLeft, .topRight],
-                                        cornerRadii: CGSize(width: 5, height: 5))
-            
-            maskLayer.frame = cell.infoView.bounds
-            maskLayer.path  = maskPath.cgPath
-            
-            return maskLayer
-        }()
-        
-        cell.layoutIfNeeded()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

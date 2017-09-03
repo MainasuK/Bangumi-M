@@ -297,8 +297,10 @@ extension CollectTableViewController {
     }
     
     fileprivate func freshControlItem(with info: CollectInfo) {
-        title = subject.name
-        
+        UIView.animate(withDuration: 1.0) {
+            self.title = self.subject.name
+        }
+
         saveButtonItem.isEnabled = true
         cosmosView.isUserInteractionEnabled = true
         collectSegmentedControl.isEnabled = true

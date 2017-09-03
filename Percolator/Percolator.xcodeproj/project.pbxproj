@@ -82,6 +82,7 @@
 		DBAD79231D39477E00CCB8AE /* ErrorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAD79221D39477E00CCB8AE /* ErrorProtocol.swift */; };
 		DBAD9BCE1D3F6BBE00206ACE /* BangumiRequest+Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAD9BCD1D3F6BBE00206ACE /* BangumiRequest+Subject.swift */; };
 		DBAEE4AE1D44AA97008DE0C6 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB80EFFA1D34FEFC007DEF09 /* Collection.swift */; };
+		DBB039F41F59388A00C42D47 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB039F31F59388A00C42D47 /* UIButton.swift */; };
 		DBB86A151D4504AE00FBB87B /* SubjectCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB86A141D4504AE00FBB87B /* SubjectCollectionViewModel.swift */; };
 		DBBA47CD1B060DEA0004BBA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47CB1B060DEA0004BBA2 /* Main.storyboard */; };
 		DBBA47CF1B060DEA0004BBA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47CE1B060DEA0004BBA2 /* Images.xcassets */; };
@@ -233,6 +234,7 @@
 		DBA4C9111D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewMoreTopicCell.swift; sourceTree = "<group>"; };
 		DBAD79221D39477E00CCB8AE /* ErrorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorProtocol.swift; sourceTree = "<group>"; };
 		DBAD9BCD1D3F6BBE00206ACE /* BangumiRequest+Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BangumiRequest+Subject.swift"; sourceTree = "<group>"; };
+		DBB039F31F59388A00C42D47 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		DBB3FCD01B86F21000FFF8DE /* Staff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Staff.swift; sourceTree = "<group>"; };
 		DBB86A141D4504AE00FBB87B /* SubjectCollectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewModel.swift; sourceTree = "<group>"; };
 		DBBA47C21B060DEA0004BBA2 /* Bangumi M.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bangumi M.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -599,6 +601,7 @@
 				DBA4C90D1D168E8F0043EDED /* CMKCollectButton.swift */,
 				DB4C76601B7E3A8A00B5E921 /* UIApplication.swift */,
 				DBCD90BC1D37CDC200E7B37C /* UIAlertController.swift */,
+				DBB039F31F59388A00C42D47 /* UIButton.swift */,
 				DBFBCB801B63157E001F3CD1 /* UIColor.swift */,
 				DB3C7F131C44B52E0092FD82 /* UIDevice.swift */,
 				DBE1C80A1D3C533A0086B83D /* UILabel.swift */,
@@ -1066,6 +1069,7 @@
 				DBAD79231D39477E00CCB8AE /* ErrorProtocol.swift in Sources */,
 				DB80F0051D35BF44007DEF09 /* Reachability.m in Sources */,
 				DBB86A151D4504AE00FBB87B /* SubjectCollectionViewModel.swift in Sources */,
+				DBB039F41F59388A00C42D47 /* UIButton.swift in Sources */,
 				DB7D13651D192F1D00ACA94B /* SubjectCollectionReusableHeaderView.swift in Sources */,
 				DBBB52581D47B5CA008A1617 /* SubjectWrapper.swift in Sources */,
 				DBE1C80D1D3C691B0086B83D /* UIFont.swift in Sources */,
