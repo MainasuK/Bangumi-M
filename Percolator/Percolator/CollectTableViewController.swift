@@ -141,10 +141,10 @@ extension CollectTableViewController {
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        collectBoxTableViewCell.preservesSuperviewLayoutMargins = true
-        collectBoxTableViewCell.contentView.preservesSuperviewLayoutMargins = true
-        privacyTableViewCell.preservesSuperviewLayoutMargins = true
-        privacyTableViewCell.contentView.preservesSuperviewLayoutMargins = true
+//        collectBoxTableViewCell.preservesSuperviewLayoutMargins = true
+//        collectBoxTableViewCell.contentView.preservesSuperviewLayoutMargins = true
+//        privacyTableViewCell.preservesSuperviewLayoutMargins = true
+//        privacyTableViewCell.contentView.preservesSuperviewLayoutMargins = true
     }
     
     fileprivate func setupControlItem() {
@@ -297,9 +297,7 @@ extension CollectTableViewController {
     }
     
     fileprivate func freshControlItem(with info: CollectInfo) {
-        UIView.animate(withDuration: 1.0) {
-            self.title = self.subject.name
-        }
+        self.title = self.subject.name
 
         saveButtonItem.isEnabled = true
         cosmosView.isUserInteractionEnabled = true
@@ -320,6 +318,18 @@ extension CollectTableViewController {
         commentTextView.text = info.comment
         
         if isNeedComment { commentTextView.becomeFirstResponder() }
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension CollectTableViewController {
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 0:         return 44.0
+        case 3:         return 150.0
+        default:        return UITableViewAutomaticDimension
+        }
     }
 }
 
