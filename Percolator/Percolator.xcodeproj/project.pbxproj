@@ -19,6 +19,7 @@
 		DB0BC8051D1197FE0091ECE0 /* AnimeListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47F21B064CF00004BBA2 /* AnimeListTableViewCell.swift */; };
 		DB0BC8061D11B6450091ECE0 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4C76601B7E3A8A00B5E921 /* UIApplication.swift */; };
 		DB0DA60E1D430EF3005F4E01 /* AnimeListTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0DA60D1D430EF3005F4E01 /* AnimeListTableViewCellDelegate.swift */; };
+		DB15DD121F6047F800472266 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47CB1B060DEA0004BBA2 /* Main.storyboard */; };
 		DB1AAAFD1D33D39100EE7727 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47C91B060DEA0004BBA2 /* LoginViewController.swift */; };
 		DB1AAAFF1D33DE9500EE7727 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1AAAFE1D33DE9500EE7727 /* UINavigationController.swift */; };
 		DB1AAB011D33EEA500EE7727 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1AAB001D33EEA500EE7727 /* Result.swift */; };
@@ -30,7 +31,7 @@
 		DB2C7B251D45AC8500386366 /* ConfigurableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2C7B241D45AC8500386366 /* ConfigurableHeader.swift */; };
 		DB3159711D139C06007B280E /* SearchBoxTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D5771B841DC700EED59A /* SearchBoxTableViewController.swift */; };
 		DB3159721D139CD5007B280E /* SearchBoxTabelViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D5791B843ADE00EED59A /* SearchBoxTabelViewCell.swift */; };
-		DB3159731D13D8DD007B280E /* DetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D57D1B84CE7000EED59A /* DetailTableViewController.swift */; };
+		DB3159731D13D8DD007B280E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D57D1B84CE7000EED59A /* DetailViewController.swift */; };
 		DB38795F1D44302E0022AD93 /* TagWriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB38795E1D44302E0022AD93 /* TagWriteView.swift */; };
 		DB3A232E1D45FB9D00D70DFF /* TopicTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB61BED31D45E8B500D18F2B /* TopicTableViewModel.swift */; };
 		DB3B78921D181BF9001A9AF6 /* TopicTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3B78911D181BF9001A9AF6 /* TopicTableViewHeaderFooterView.swift */; };
@@ -84,7 +85,6 @@
 		DBAEE4AE1D44AA97008DE0C6 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB80EFFA1D34FEFC007DEF09 /* Collection.swift */; };
 		DBB039F41F59388A00C42D47 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB039F31F59388A00C42D47 /* UIButton.swift */; };
 		DBB86A151D4504AE00FBB87B /* SubjectCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB86A141D4504AE00FBB87B /* SubjectCollectionViewModel.swift */; };
-		DBBA47CD1B060DEA0004BBA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47CB1B060DEA0004BBA2 /* Main.storyboard */; };
 		DBBA47CF1B060DEA0004BBA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47CE1B060DEA0004BBA2 /* Images.xcassets */; };
 		DBBB52531D47AE6E008A1617 /* SaveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52521D47AE6E008A1617 /* SaveActivity.swift */; };
 		DBBB52551D47AE7D008A1617 /* DeleteActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52541D47AE7D008A1617 /* DeleteActivity.swift */; };
@@ -262,7 +262,7 @@
 		DBD2D5771B841DC700EED59A /* SearchBoxTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBoxTableViewController.swift; sourceTree = "<group>"; };
 		DBD2D5791B843ADE00EED59A /* SearchBoxTabelViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBoxTabelViewCell.swift; sourceTree = "<group>"; };
 		DBD2D57B1B84AEB300EED59A /* BangumiAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiAPI.swift; sourceTree = "<group>"; };
-		DBD2D57D1B84CE7000EED59A /* DetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
+		DBD2D57D1B84CE7000EED59A /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DBD7A9851D56C80B00BCA329 /* BangumiRequest+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BangumiRequest+URL.swift"; sourceTree = "<group>"; };
 		DBD7A9871D56D08500BCA329 /* PercolatorAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PercolatorAlertController.swift; sourceTree = "<group>"; };
 		DBD91C4A1D44546E007AFA80 /* DetailTableViewBannerCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewBannerCellDelegate.swift; sourceTree = "<group>"; };
@@ -643,7 +643,7 @@
 			children = (
 				DBBA47E71B0617020004BBA2 /* AnimeListTableViewController.swift */,
 				DBD2D5771B841DC700EED59A /* SearchBoxTableViewController.swift */,
-				DBD2D57D1B84CE7000EED59A /* DetailTableViewController.swift */,
+				DBD2D57D1B84CE7000EED59A /* DetailViewController.swift */,
 				DB7D87F51D17894B00885937 /* TopicTableViewController.swift */,
 				DB6B1BCA1D182F390005CAE6 /* SubjectCollectionViewController.swift */,
 				DBFBCB821B633376001F3CD1 /* CollectTableViewController.swift */,
@@ -811,7 +811,7 @@
 				DB3B78941D181C07001A9AF6 /* TopicTableViewHeaderFooterView.xib in Resources */,
 				DB22FE161D16E9E6004A082D /* DetailTableViewEPSHeaderFooterView.xib in Resources */,
 				DBA29F4E1B8ADCB800ADED27 /* Settings.bundle in Resources */,
-				DBBA47CD1B060DEA0004BBA2 /* Main.storyboard in Resources */,
+				DB15DD121F6047F800472266 /* Main.storyboard in Resources */,
 				DBCD90C01D37D02300E7B37C /* Localizable.strings in Resources */,
 				DBBA47CF1B060DEA0004BBA2 /* Images.xcassets in Resources */,
 			);
@@ -1080,7 +1080,7 @@
 				DB6B1BCB1D182F390005CAE6 /* SubjectCollectionViewController.swift in Sources */,
 				DB3159721D139CD5007B280E /* SearchBoxTabelViewCell.swift in Sources */,
 				DB22FE141D16E97C004A082D /* DetailTableViewEPSHeaderFooterView.swift in Sources */,
-				DB3159731D13D8DD007B280E /* DetailTableViewController.swift in Sources */,
+				DB3159731D13D8DD007B280E /* DetailViewController.swift in Sources */,
 				DB9D24FA1D35CCF500269DFE /* UIImage.swift in Sources */,
 				DBA4C9121D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift in Sources */,
 				DB80EFF91D34FC94007DEF09 /* Images.swift in Sources */,

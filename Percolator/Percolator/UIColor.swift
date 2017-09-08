@@ -13,6 +13,10 @@ extension UIColor {
     public class var percolatorPink: UIColor {
         return UIColor(red: 237.0/255.0, green: 150.0/255.0, blue: 159.0/255.0, alpha: 0.5)
     }
+
+    public class var percolatorButtonPink: UIColor {
+        return UIColor(red: 237.0/255.0, green: 150.0/255.0, blue: 159.0/255.0, alpha: 1.0)
+    }
     
     public class var myGreenColor: UIColor {
         return UIColor(red: 84.0/255.0, green: 195.0/255.0, blue: 91.0/255.0, alpha: 0.75)

@@ -142,7 +142,7 @@ extension SubjectCollectionViewController {
             do {
                 let subject = try result.resolve()
                 
-                let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialTableViewControllerKey) as! DetailTableViewController
+                let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialViewControllerKey) as! DetailViewController
                 detailTableViewController.subject = subject
                 SVProgressHUD.dismiss()
                 

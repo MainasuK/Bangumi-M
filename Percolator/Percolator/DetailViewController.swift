@@ -14,33 +14,41 @@ import SVProgressHUD
 // I change tableView contentInset to make some space for tableViewHeaderView,
 // but it stick the section headerView in the middle of screen.
 // So, use a subclass of *tableView* to solve that issue.
-final class DetailTableViewController: UITableViewController {
+final class DetailViewController: UIViewController {
     
     typealias Model = DetailTableViewModel
     typealias Cell = DetailTableViewCell
     
-    fileprivate let kHeaderViewMaxHeight: CGFloat = 500
+    private let kHeaderViewMaxHeight: CGFloat = 500.0
+    private let kTableViewTopMargin: CGFloat  = 64.0
     
     var subject: Subject!
-    fileprivate var headerViewHeight: CGFloat = 0 {
+    private var headerViewHeight: CGFloat = 0 {
         didSet {
             headerViewHeight = min(headerViewHeight, kHeaderViewMaxHeight)
-            headerView.frame.size.height = headerViewHeight
+//            headerView.frame.size.height = headerViewHeight
+            headerViewBottomAnchor.constant = headerViewHeight
+            headerView.layoutIfNeeded()
+
+            consolePrint("headerViewHeight set to: \(headerViewHeight)")
         }
     }
-    fileprivate var headerViewMarginTop: CGFloat = 64
+    lazy var headerViewTopAnchor = headerView.topAnchor.constraint(equalTo: self.detailTableView.topAnchor, constant: self.kTableViewTopMargin)
+    lazy var headerViewBottomAnchor = headerView.bottomAnchor.constraint(equalTo: self.headerView.topAnchor, constant: 0.0)
+
     fileprivate var model: Model!
     fileprivate var dataSource: TableViewDataSource<Model, Cell>!
     
     @IBOutlet var detailTableView: DetailTableView!
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var headerImageView: UIImageView!
-    
+    var headerView: UIView!
+    var headerImageView: UIImageView!
+
     @IBAction func actionBarButtonItemPressed(_ sender: UIBarButtonItem) {
         var objectToShare: [Any] = ["\(subject.name) - \(subject.nameCN)"]
         if let url = URL(string: subject.url) {
             objectToShare.append(url)
         }
+
         if let image = headerImageView.image {
             objectToShare.append(image)
         }
@@ -61,21 +69,21 @@ final class DetailTableViewController: UITableViewController {
     // FIXME: misspell function name
     @IBAction func swipeRestureTrigger(_ sender: UISwipeGestureRecognizer) {
         // Reverse EP section only
-        guard let section = tableView.indexPathForRow(at: sender.location(in: tableView))?.section,
+        guard let section = detailTableView.indexPathForRow(at: sender.location(in: detailTableView))?.section,
         section == 4 else {
             return
         }
         
         model.isReverse = !model.isReverse
-        tableView.reloadData()
+        detailTableView.reloadData()
     }
     
     // FIXME: misspell function name
     @IBAction func longPressGrestureTrigger(_ sender: UILongPressGestureRecognizer) {
         switch sender.state {
         case .began:
-            guard let cellIndexPath = tableView.indexPathForRow(at: sender.location(in: tableView)),
-            let tableViewCell = tableView.cellForRow(at: cellIndexPath) as? DetailTableViewCell_CollectionView,
+            guard let cellIndexPath = detailTableView.indexPathForRow(at: sender.location(in: detailTableView)),
+            let tableViewCell = detailTableView.cellForRow(at: cellIndexPath) as? DetailTableViewCell_CollectionView,
             let collectionIndexPath = tableViewCell.collectionView.indexPathForItem(at: sender.location(in: tableViewCell.collectionView)),
             case let Model.CollectionItem.crt(crt) = (model.collectionItems[tableViewCell.collectionView.tag].1)[collectionIndexPath.row],
             let actorID = crt.actors.first?.id,
@@ -96,47 +104,39 @@ final class DetailTableViewController: UITableViewController {
             headerViewHeight = 0
             return
         }
-        
-        // Set image height to Header with keeping aspect ratio 
+
+        // Set image height to Header with keeping aspect ratio
         // And make sure height not larger than kHeaderViewMaxHeight
-        let height = (((width ?? tableView.bounds.width) / image.size.width) * image.size.height)
+        let height = (((width ?? detailTableView.bounds.width) / image.size.width) * image.size.height)
         headerViewHeight = (height > image.size.height) ? image.size.height : height
     }
-    
-    fileprivate func updateHeaderView(with width: CGFloat? = nil) {
-        var headerRect = CGRect(x: 0.0, y: -headerViewHeight, width: width ?? tableView.bounds.width, height: headerViewHeight)
-        let y = tableView.contentOffset.y + headerViewMarginTop
-        
-        if y <= -headerViewHeight {
-            headerRect.origin.y = y
-            headerRect.size.height = -y     // Stretch view height without change headerViewHeight
-        }
-        
-        headerView.frame = headerRect
+
+    private func updateHeaderViewHeight(for width: CGFloat? = nil) {
+        // Change header height via set bottom anchor when tableView scroll
+        let headerHeightWhenScroll = -detailTableView.contentOffset.y - kTableViewTopMargin
+        headerViewBottomAnchor.constant = max(headerHeightWhenScroll, headerViewHeight)
+
+        // Set header origin via set top anchor when header needs scroll with tableView
+        let headerOffsetWhenScroll = min(kTableViewTopMargin, headerHeightWhenScroll - headerViewHeight + kTableViewTopMargin)
+        headerViewTopAnchor.constant = headerOffsetWhenScroll
     }
-    
+
 }
 
-extension DetailTableViewController {
+extension DetailViewController {
     
     fileprivate func setupTableView() {
         
         title = subject.name
         
         // Configure tableView appearance
-        tableView.tableFooterView = UIView()
-        self.clearsSelectionOnViewWillAppear = true
-        
-        // Configure headerView
-        headerView = tableView.tableHeaderView
-        tableView.tableHeaderView = nil
-        tableView.addSubview(headerView)
-        headerViewMarginTop = (navigationController?.navigationBar.bounds.height ?? 44) + UIApplication.shared.statusBarFrame.size.height
-        tableView.scrollIndicatorInsets.top = headerViewMarginTop
-        
-        // Remove placeholder iamge
-        headerImageView.image = nil
-        
+        detailTableView.tableFooterView = UIView()
+
+        // Setup scroll indicator insets
+//        detailTableView.scrollIndicatorInsets.top = headerViewMarginTop
+
+        detailTableView.delegate = self
+
         // Setup dataSource and link model
         setupTableViewDataSource()
         setupHeaderViewImage()
@@ -144,12 +144,42 @@ extension DetailTableViewController {
     }
     
     private func setupHeaderViewImage() {
+
+        // Configure headerView
+        headerView = UIView(frame: .zero)
+        headerView.isUserInteractionEnabled = false
+
+        headerImageView = UIImageView(frame: .zero)
+        headerImageView.contentMode = .scaleAspectFit
+
+        headerView.addSubview(headerImageView)
+        view.addSubview(headerView)
+
+        view.bringSubview(toFront: detailTableView)
+
+        headerImageView.translatesAutoresizingMaskIntoConstraints                          = false
+        headerImageView.leftAnchor.constraint(equalTo: headerView.leftAnchor).isActive     = true
+        headerImageView.rightAnchor.constraint(equalTo: headerView.rightAnchor).isActive   = true
+        headerImageView.topAnchor.constraint(equalTo: headerView.topAnchor).isActive       = true
+        headerImageView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
+
+        headerView.translatesAutoresizingMaskIntoConstraints                             = false
+        headerView.leftAnchor.constraint(equalTo: detailTableView.leftAnchor).isActive   = true
+        headerView.rightAnchor.constraint(equalTo: detailTableView.rightAnchor).isActive = true
+        headerViewTopAnchor.isActive                                                     = true
+        headerViewBottomAnchor.isActive                                                  = true
+
+        // Remove placeholder iamge
+        headerImageView.image = nil
+
         if let urlVal = self.subject.images.largeUrl,
             let url = URL(string: urlVal) {
             // Oops… Reset headerView height when aysn callback finish
-            self.headerImageView.af_setImage(withURL: url, imageTransition: .custom(duration: 0.5, animationOptions: [.allowUserInteraction], animations: {
-                $0.image = $1
-                self.resetHeaderViewHeight()
+            self.headerImageView.af_setImage(withURL: url, imageTransition: .custom(duration: 0.5, animationOptions: [.allowUserInteraction], animations: { imageView, image in
+                UIView.performWithoutAnimation {
+                    imageView.image = image
+                    self.resetHeaderViewHeight()
+                }
                 self.setupTableViewInsetAndOffset()
                 }, completion: nil), runImageTransitionIfCached: false)
         } else {
@@ -163,19 +193,16 @@ extension DetailTableViewController {
         detailTableView.dataSource = dataSource
     }
     
-    fileprivate func setupTableViewInsetAndOffset() {
-        tableView.contentOffset = CGPoint(x: 0.0, y: -headerViewHeight - headerViewMarginTop)
-        tableView.contentInset = UIEdgeInsets(top: headerViewHeight + headerViewMarginTop, left: 0, bottom: 0, right: 0)
-        
-        // Cast to DetailTableView and set inset
-        if let tableView = tableView as? DetailTableView {
-            tableView.setHeaderView(UIEdgeInsets(top: -headerViewHeight, left: 0, bottom: 0, right: 0))
-        }
+    private func setupTableViewInsetAndOffset() {
+        detailTableView.contentOffset = CGPoint(x: 0.0, y: -headerViewHeight - kTableViewTopMargin)
+        detailTableView.contentInset = UIEdgeInsets(top: headerViewHeight, left: 0, bottom: 0, right: 0)
+        detailTableView.setHeaderView(UIEdgeInsets(top: -headerViewHeight + kTableViewTopMargin, left: 0, bottom: 0, right: 0))
     }
+
 }
 
 // MARK: - View Life Cycle
-extension DetailTableViewController {
+extension DetailViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -184,42 +211,54 @@ extension DetailTableViewController {
         
         resetHeaderViewHeight()
         setupTableViewInsetAndOffset()
-        
+
         // Configure cell row height
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
+        detailTableView.estimatedRowHeight = 100
+        detailTableView.rowHeight = UITableViewAutomaticDimension
         
         // Configure cell margin
-        tableView.cellLayoutMarginsFollowReadableWidth = true
+        detailTableView.cellLayoutMarginsFollowReadableWidth = true
         
         // Register section header view
         let nib = UINib(nibName: StoryboardKey.DetailTableViewEPSHeaderFooterView, bundle: nil)
-        tableView.register(nib, forHeaderFooterViewReuseIdentifier: StoryboardKey.DetailTableViewEPSHeaderFooterView)
+        detailTableView.register(nib, forHeaderFooterViewReuseIdentifier: StoryboardKey.DetailTableViewEPSHeaderFooterView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         model.refetch(with: subject)
+
+        if let indexPath = detailTableView.indexPathForSelectedRow {
+            detailTableView.deselectRow(at: indexPath, animated: true)
+        }
     }
 
 }
 
 // MARK: - UIContentContainer
-extension DetailTableViewController {
-    
+extension DetailViewController {
+
+    override func viewSafeAreaInsetsDidChange() {
+        if #available(iOS 11.0, *) {
+            consolePrint(view.safeAreaInsets)
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
         coordinator.animate(alongsideTransition: { _ in
             self.resetHeaderViewHeight(with: size.width)
-            self.updateHeaderView(with: size.width)
+//            self.updateHeaderViewHeight(for: size.width)
         }, completion: nil)
     }
     
 }
 
-extension DetailTableViewController {
+extension DetailViewController {
     
     typealias RequestError = BangumiRequest.RequestError
     typealias ProgressError = BangumiRequest.ProgressError
@@ -233,7 +272,7 @@ extension DetailTableViewController {
         guard let item = try? model.item(at: indexPath).resolve(),
         let episode = item~>^=^ else { return }
         
-        let alertController = UIAlertController(title: "\(episode.typeString)\(episode.sortString) \(episode.name)", message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "\(episode.typeString)\(episode.sortString)\n\(episode.name)", message: nil, preferredStyle: .actionSheet)
         
         let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel) { _ in
             // ...
@@ -267,9 +306,9 @@ extension DetailTableViewController {
 
         // Configure the alert controller's popover presentation controller if it has one
         if let popoverPresentationController = alertController.popoverPresentationController,
-        let cell = tableView.cellForRow(at: indexPath) {
+        let cell = detailTableView.cellForRow(at: indexPath) {
             popoverPresentationController.sourceRect = cell.frame
-            popoverPresentationController.sourceView = self.view
+            popoverPresentationController.sourceView = detailTableView
             popoverPresentationController.permittedArrowDirections = .any
         }
         
@@ -304,7 +343,6 @@ extension DetailTableViewController {
         } catch NetworkError.timeout {
             let status = NSLocalizedString("time out", comment: "")
             SVProgressHUD.showInfo(withStatus: status)
-            self.tableView.mj_footer.resetNoMoreData()
             consolePrint("Time out")
             
         } catch NetworkError.notConnectedToInternet {
@@ -327,13 +365,13 @@ extension DetailTableViewController {
 }
 
 // MARK: - UITableViewDelegate
-extension DetailTableViewController {
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+extension DetailViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard section >= 4 && section <= 7 else {
             return 0
         }
-        
+
         guard model.numberOfItems(in: section) > 0 else {
             return 0
         }
@@ -341,7 +379,7 @@ extension DetailTableViewController {
         return 30
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 1:
             return 159.0
@@ -357,7 +395,7 @@ extension DetailTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section >= 4 && section <= 7 else {
             return UIView()
         }
@@ -367,7 +405,7 @@ extension DetailTableViewController {
         }
         
         // Dequeue with the reuse identifier
-        let sectionHeaderView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: StoryboardKey.DetailTableViewEPSHeaderFooterView) as! DetailTableViewEPSHeaderFooterView
+        let sectionHeaderView = detailTableView.dequeueReusableHeaderFooterView(withIdentifier: StoryboardKey.DetailTableViewEPSHeaderFooterView) as! DetailTableViewEPSHeaderFooterView
     
         switch section {
         case 4:     sectionHeaderView.typeLabel.text = "EP"
@@ -379,7 +417,7 @@ extension DetailTableViewController {
         return sectionHeaderView
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
             break
@@ -409,7 +447,7 @@ extension DetailTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let epsCell = cell as? DetailTableViewEPSCell {
             epsCell.delegate = self
         }
@@ -421,7 +459,7 @@ extension DetailTableViewController {
 }
 
 // MARK: - DetailTableViewEPSCellDelegate
-extension DetailTableViewController: DetailTableViewEPSCellDelegate {
+extension DetailViewController: DetailTableViewEPSCellDelegate {
 
     func commentButtonPressed(_ sender: UIButton) {
         let tag = sender.tag
@@ -435,7 +473,7 @@ extension DetailTableViewController: DetailTableViewEPSCellDelegate {
 }
 
 // MARK: - DetailTableViewBannerCellDelegate
-extension DetailTableViewController: DetailTableViewBannerCellDelegate {
+extension DetailViewController: DetailTableViewBannerCellDelegate {
     
     func collectButtonPressed(_ sender: UIButton) {
         let navigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.CollectNavigationController) as! UINavigationController
@@ -448,14 +486,14 @@ extension DetailTableViewController: DetailTableViewBannerCellDelegate {
 }
 
 // MARK: - UIScrollViweDelegate
-extension DetailTableViewController {
-    
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+extension DetailViewController: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView is UITableView {
-            self.updateHeaderView()
+            self.updateHeaderViewHeight()
         }
     }
-    
+
     // Align item to eage
     // Ref: Design Teardowns
 //    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -477,7 +515,7 @@ extension DetailTableViewController {
 }
 
 // MARK: - UICollectionViewDelegate
-extension DetailTableViewController: UICollectionViewDelegate {
+extension DetailViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         

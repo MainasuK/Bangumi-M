@@ -38,7 +38,7 @@ public struct StoryboardKey {
     
     static let DetailNavigationVC                   = "DetailTableViewControllerNaviVC"
     static let DetailTableViewEPSHeaderFooterView   = "DetailTableViewEPSHeaderFooterView"
-    static let DetialTableViewControllerKey         = "DetailTableViewController"
+    static let DetialViewControllerKey              = "DetialViewController"
     static let DetailTableViewBannerCellKey         = "DetailTableViewBannerCell"
     static let DetailTableViewMoreTopicCellKey      = "DetailTableViewMoreTopicCellKey"
     static let DetailTableViewMoreSubjectCellKey    = "DetailTableViewMoreSubjectCellKey"

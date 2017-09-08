@@ -270,7 +270,7 @@ extension AnimeListTableViewCell {
         animeImageView.layer.borderColor = UIColor.percolatorLightGray.withAlphaComponent(0.8).cgColor
         animeImageView.layer.borderWidth = 0.5  // 1px
         
-        watchedButton.setTitleColor(UIColor.percolatorPink, for: UIControlState.highlighted)
+        watchedButton.setTitleColor(UIColor.percolatorButtonPink, for: UIControlState.highlighted)
         indicatorView.backgroundColor = UIColor.percolatorGray
     }
     

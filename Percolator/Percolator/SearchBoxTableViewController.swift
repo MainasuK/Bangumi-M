@@ -225,7 +225,7 @@ extension SearchBoxTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
-        let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialTableViewControllerKey) as! DetailTableViewController
+        let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialViewControllerKey) as! DetailViewController
         detailTableViewController.subject = model.item(at: indexPath).0
         navigationController?.pushViewController(detailTableViewController, animated: true)
     }

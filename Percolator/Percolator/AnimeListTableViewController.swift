@@ -296,7 +296,7 @@ extension AnimeListTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialTableViewControllerKey) as! DetailTableViewController
+        let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialViewControllerKey) as! DetailViewController
         let subject = model.item(at: indexPath).0
         detailTableViewController.subject = subject
         
@@ -343,18 +343,18 @@ extension AnimeListTableViewController: AnimeListTableViewCellDelegate {
                 do {
                     try error?.throwMyself()
                     
-                    SVProgressHUD.showSuccess(withStatus: "EP.\(ep.sortString) \(ep.name) 标记成功")
+                    SVProgressHUD.showSuccess(withStatus: "EP.\(ep.sortString) \(ep.name)\n标记成功")
                     
                 } catch ModelError.mark {
                     let title = NSLocalizedString("mark error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "未能标注 EP.\(ep.sortString) \(ep.nameCN)")
+                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "未能标注\nEP.\(ep.sortString) \(ep.name)")
                     self.present(alertController, animated: true, completion: nil)
                     
                 } catch NetworkError.notConnectedToInternet {
                     self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
                     
                 } catch NetworkError.timeout {
-                    self.present(PercolatorAlertController.timeout(withDescription: "未能标注 EP.\(ep.sortString) \(ep.nameCN)"), animated: true, completion: nil)
+                    self.present(PercolatorAlertController.timeout(withDescription: "未能标注\nEP.\(ep.sortString) \(ep.name)"), animated: true, completion: nil)
                     
                 } catch UnknownError.alamofire(let error) {
                     self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)
