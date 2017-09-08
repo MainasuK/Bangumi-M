@@ -29,8 +29,6 @@ final class DetailViewController: UIViewController {
 //            headerView.frame.size.height = headerViewHeight
             headerViewBottomAnchor.constant = headerViewHeight
             headerView.layoutIfNeeded()
-
-            consolePrint("headerViewHeight set to: \(headerViewHeight)")
         }
     }
     lazy var headerViewTopAnchor = headerView.topAnchor.constraint(equalTo: self.detailTableView.topAnchor, constant: self.kTableViewTopMargin)
@@ -57,6 +55,12 @@ final class DetailViewController: UIViewController {
         let saveActivity = SaveActivity()
         let deleteActivity = DeleteActivity()
         let activityViewController = UIActivityViewController(activityItems: objectToShare, applicationActivities: [saveActivity, deleteActivity])
+        activityViewController.completionWithItemsHandler = { (type: UIActivityType?, completed: Bool, _, _) in
+            if type == .saveToCameraRoll && completed {
+                SVProgressHUD.showSuccess(withStatus: NSLocalizedString("save success", comment: ""))
+            }
+        }
+
         let poc = activityViewController.popoverPresentationController
         poc?.barButtonItem = sender
         

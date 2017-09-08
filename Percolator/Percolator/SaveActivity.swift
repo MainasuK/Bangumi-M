@@ -45,11 +45,11 @@ final class SaveActivity: UIActivity {
     
     override func perform() {
         guard subject?.saveToCoreData() == true else {
-            SVProgressHUD.showInfo(withStatus: "保存失败")
+            SVProgressHUD.showInfo(withStatus: NSLocalizedString("save fail", comment: ""))
             return
         }
         
-        SVProgressHUD.showSuccess(withStatus: "保存成功")
+        SVProgressHUD.showSuccess(withStatus: NSLocalizedString("save success", comment: ""))
     }
 
     override var activityImage: UIImage? {

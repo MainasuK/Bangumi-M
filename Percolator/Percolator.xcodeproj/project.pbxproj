@@ -82,6 +82,7 @@
 		DBA4C9121D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA4C9111D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift */; };
 		DBAD79231D39477E00CCB8AE /* ErrorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAD79221D39477E00CCB8AE /* ErrorProtocol.swift */; };
 		DBAD9BCE1D3F6BBE00206ACE /* BangumiRequest+Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAD9BCD1D3F6BBE00206ACE /* BangumiRequest+Subject.swift */; };
+		DBADFA351F622C7800BF93C2 /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBADFA371F622C7800BF93C2 /* infoPlist.strings */; };
 		DBAEE4AE1D44AA97008DE0C6 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB80EFFA1D34FEFC007DEF09 /* Collection.swift */; };
 		DBB039F41F59388A00C42D47 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB039F31F59388A00C42D47 /* UIButton.swift */; };
 		DBB86A151D4504AE00FBB87B /* SubjectCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB86A141D4504AE00FBB87B /* SubjectCollectionViewModel.swift */; };
@@ -234,6 +235,9 @@
 		DBA4C9111D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewMoreTopicCell.swift; sourceTree = "<group>"; };
 		DBAD79221D39477E00CCB8AE /* ErrorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorProtocol.swift; sourceTree = "<group>"; };
 		DBAD9BCD1D3F6BBE00206ACE /* BangumiRequest+Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BangumiRequest+Subject.swift"; sourceTree = "<group>"; };
+		DBADFA361F622C7800BF93C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/infoPlist.strings; sourceTree = "<group>"; };
+		DBADFA381F622C7C00BF93C2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/infoPlist.strings"; sourceTree = "<group>"; };
+		DBADFA391F622C8700BF93C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/infoPlist.strings; sourceTree = "<group>"; };
 		DBB039F31F59388A00C42D47 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		DBB3FCD01B86F21000FFF8DE /* Staff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Staff.swift; sourceTree = "<group>"; };
 		DBB86A141D4504AE00FBB87B /* SubjectCollectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewModel.swift; sourceTree = "<group>"; };
@@ -500,6 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				DB1AAAFB1D33CECA00EE7727 /* Info.plist */,
+				DBADFA371F622C7800BF93C2 /* infoPlist.strings */,
 				DB7E28861D3BA46E00B529CA /* Bangumi M.entitlements */,
 				DBBA47CE1B060DEA0004BBA2 /* Images.xcassets */,
 				DBBA47C71B060DEA0004BBA2 /* AppDelegate.swift */,
@@ -811,6 +816,7 @@
 				DB3B78941D181C07001A9AF6 /* TopicTableViewHeaderFooterView.xib in Resources */,
 				DB22FE161D16E9E6004A082D /* DetailTableViewEPSHeaderFooterView.xib in Resources */,
 				DBA29F4E1B8ADCB800ADED27 /* Settings.bundle in Resources */,
+				DBADFA351F622C7800BF93C2 /* infoPlist.strings in Resources */,
 				DB15DD121F6047F800472266 /* Main.storyboard in Resources */,
 				DBCD90C01D37D02300E7B37C /* Localizable.strings in Resources */,
 				DBBA47CF1B060DEA0004BBA2 /* Images.xcassets in Resources */,
@@ -1175,6 +1181,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		DBADFA371F622C7800BF93C2 /* infoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DBADFA361F622C7800BF93C2 /* en */,
+				DBADFA381F622C7C00BF93C2 /* zh-Hans */,
+				DBADFA391F622C8700BF93C2 /* Base */,
+			);
+			name = infoPlist.strings;
+			sourceTree = "<group>";
+		};
 		DBBA47CB1B060DEA0004BBA2 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

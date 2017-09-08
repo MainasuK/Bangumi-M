@@ -1,0 +1,9 @@
+/* 
+  infoPlist.strings
+  Percolator
+
+  Created by Cirno MainasuK on 2017-9-8.
+  Copyright © 2017年 Cirno MainasuK. All rights reserved.
+*/
+
+"NSPhotoLibraryAddUsageDescription" = "需要相册的写入权限";
