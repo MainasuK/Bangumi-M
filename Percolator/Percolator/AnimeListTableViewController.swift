@@ -198,7 +198,6 @@ extension AnimeListTableViewController {
     typealias NetworkError = BangumiRequest.NetworkError
     typealias ModelError = AnimeListTableViewModel.ModelError
 
-    // swiftlint:disable function_body_length
     @objc func refreshAnimeList() {
         
         model.refresh { (error: Error?) in

@@ -163,7 +163,6 @@ extension AnimeListTableViewCell {
     }
     
     // TL; DR
-    // swiftlint:disable function_body_length
     fileprivate func configureButton(with result: History, _ subject: Subject) {
         guard subject.responseGroup == .large else {
             isSpinnning = true

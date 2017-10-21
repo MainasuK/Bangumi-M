@@ -10,7 +10,6 @@ import UIKit
 import Foundation
 import QuartzCore
 
-// swiftlint:disable file_length
 public class TagWriteView: UIView {
     
     // MARK: Public Properties
