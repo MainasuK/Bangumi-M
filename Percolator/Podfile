@@ -14,6 +14,7 @@ target 'Bangumi M' do
     pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git', :commit => 'ba369a1'
     pod 'Canvas', '~> 0.1.2'
     pod 'KeychainAccess', '~> 3.0.2'
+    pod 'IGListKit', '~> 3.0'
 
     # pod 'ReachabilitySwift'
     # pod 'TagWriteView'
