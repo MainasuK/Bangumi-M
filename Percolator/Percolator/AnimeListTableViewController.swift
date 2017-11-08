@@ -328,6 +328,7 @@ extension AnimeListTableViewController: TransitionDelegate {
     func dissmissViewController(with flag: Bool) {
         if flag {
             refreshControl?.beginRefreshing()
+            refreshAnimeList()      // Somehow we need call target manual when first refreshing
         }
         setupBarButtonItem()
     }
