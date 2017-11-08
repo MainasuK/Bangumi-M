@@ -20,7 +20,7 @@ final class DetailViewController: UIViewController {
     typealias Cell = DetailTableViewCell
     
     private let kHeaderViewMaxHeight: CGFloat = 500.0
-    private let kTableViewTopMargin: CGFloat  = 64.0
+    private let kTableViewTopMargin: CGFloat  = 0.0
     
     var subject: Subject!
     private var headerViewHeight: CGFloat = 0 {

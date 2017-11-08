@@ -135,6 +135,7 @@ extension AnimeListTableViewController {
     fileprivate func setupRefreshControl() {
         refreshControl = {
             let control = UIRefreshControl()
+            control.endRefreshing()
             control.addTarget(self, action: #selector(AnimeListTableViewController.refreshAnimeList), for: .valueChanged)
             return control
         }()
@@ -182,10 +183,10 @@ extension AnimeListTableViewController {
         
         if isFirstRefresh {
             assert(refreshControl != nil)
-            refreshAnimeList()      // Somehow we need call target manual when view first load
+
             refreshControl?.beginRefreshing()
+            refreshAnimeList()      // Somehow we need call target manual when view first load
         }
-        isFirstRefresh = false
     }
 
 }
@@ -203,6 +204,7 @@ extension AnimeListTableViewController {
         model.refresh { (error: Error?) in
             
             defer {
+                self.isFirstRefresh = false
                 self.refreshControl?.endRefreshing()
             }
             

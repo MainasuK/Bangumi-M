@@ -46,6 +46,9 @@
 		DB6B1BCB1D182F390005CAE6 /* SubjectCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B1BCA1D182F390005CAE6 /* SubjectCollectionViewController.swift */; };
 		DB6B1BCD1D182F570005CAE6 /* SubjectCollectionViewBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B1BCC1D182F570005CAE6 /* SubjectCollectionViewBookCell.swift */; };
 		DB6B1BCF1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B1BCE1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift */; };
+		DB7015171FB299CC00B3D9B3 /* SubjectCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7015161FB299CB00B3D9B3 /* SubjectCollectionViewModel.swift */; };
+		DB70151D1FB2C2B300B3D9B3 /* SubjectCollectionViewBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB70151C1FB2C2B300B3D9B3 /* SubjectCollectionViewBookCell.xib */; };
+		DB70151F1FB2D7B100B3D9B3 /* SubjectCollectionViewNotBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB70151E1FB2D7B100B3D9B3 /* SubjectCollectionViewNotBookCell.xib */; };
 		DB7560961D4B1086005A5046 /* DetailTableViewCell+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7560951D4B1086005A5046 /* DetailTableViewCell+CollectionView.swift */; };
 		DB7560971D4B1805005A5046 /* Crt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B043A1B85E6F40074C80E /* Crt.swift */; };
 		DB7560981D4B1843005A5046 /* Staff.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB3FCD01B86F21000FFF8DE /* Staff.swift */; };
@@ -85,7 +88,6 @@
 		DBADFA351F622C7800BF93C2 /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBADFA371F622C7800BF93C2 /* infoPlist.strings */; };
 		DBAEE4AE1D44AA97008DE0C6 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB80EFFA1D34FEFC007DEF09 /* Collection.swift */; };
 		DBB039F41F59388A00C42D47 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB039F31F59388A00C42D47 /* UIButton.swift */; };
-		DBB86A151D4504AE00FBB87B /* SubjectCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB86A141D4504AE00FBB87B /* SubjectCollectionViewModel.swift */; };
 		DBBA47CF1B060DEA0004BBA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47CE1B060DEA0004BBA2 /* Images.xcassets */; };
 		DBBB52531D47AE6E008A1617 /* SaveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52521D47AE6E008A1617 /* SaveActivity.swift */; };
 		DBBB52551D47AE7D008A1617 /* DeleteActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52541D47AE7D008A1617 /* DeleteActivity.swift */; };
@@ -196,6 +198,9 @@
 		DB6B1BCA1D182F390005CAE6 /* SubjectCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewController.swift; sourceTree = "<group>"; };
 		DB6B1BCC1D182F570005CAE6 /* SubjectCollectionViewBookCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewBookCell.swift; sourceTree = "<group>"; };
 		DB6B1BCE1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewNotBookCell.swift; sourceTree = "<group>"; };
+		DB7015161FB299CB00B3D9B3 /* SubjectCollectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewModel.swift; sourceTree = "<group>"; };
+		DB70151C1FB2C2B300B3D9B3 /* SubjectCollectionViewBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectCollectionViewBookCell.xib; sourceTree = "<group>"; };
+		DB70151E1FB2D7B100B3D9B3 /* SubjectCollectionViewNotBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectCollectionViewNotBookCell.xib; sourceTree = "<group>"; };
 		DB7560951D4B1086005A5046 /* DetailTableViewCell+CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailTableViewCell+CollectionView.swift"; sourceTree = "<group>"; };
 		DB7A35291D37F14600FADA6C /* UISearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UISearchController.swift; sourceTree = "<group>"; };
 		DB7C24AC1D42F98D00A1A9BC /* DetailTableViewEPSCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewEPSCellDelegate.swift; sourceTree = "<group>"; };
@@ -240,7 +245,6 @@
 		DBADFA391F622C8700BF93C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/infoPlist.strings; sourceTree = "<group>"; };
 		DBB039F31F59388A00C42D47 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		DBB3FCD01B86F21000FFF8DE /* Staff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Staff.swift; sourceTree = "<group>"; };
-		DBB86A141D4504AE00FBB87B /* SubjectCollectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewModel.swift; sourceTree = "<group>"; };
 		DBBA47C21B060DEA0004BBA2 /* Bangumi M.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bangumi M.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBBA47C71B060DEA0004BBA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DBBA47C91B060DEA0004BBA2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -403,7 +407,9 @@
 				DB7D13601D18E96D00ACA94B /* SubjectCollectionReusableView.swift */,
 				DBA480D41D451181004AAF6E /* SubjectCollectionViewCell.swift */,
 				DB6B1BCC1D182F570005CAE6 /* SubjectCollectionViewBookCell.swift */,
+				DB70151C1FB2C2B300B3D9B3 /* SubjectCollectionViewBookCell.xib */,
 				DB6B1BCE1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift */,
+				DB70151E1FB2D7B100B3D9B3 /* SubjectCollectionViewNotBookCell.xib */,
 			);
 			name = SubjectCollectionView;
 			sourceTree = "<group>";
@@ -521,8 +527,8 @@
 				DBEF11471D37866800E7A0D7 /* SearchBoxTableViewModel.swift */,
 				DB7E287B1D3B68F500B529CA /* AnimeListTableViewModel.swift */,
 				DB88206B1D3F19CC009031AE /* DetailTableViewModel.swift */,
+				DB7015161FB299CB00B3D9B3 /* SubjectCollectionViewModel.swift */,
 				DB61BED31D45E8B500D18F2B /* TopicTableViewModel.swift */,
-				DBB86A141D4504AE00FBB87B /* SubjectCollectionViewModel.swift */,
 				DB37BFF61D39D98C00F48436 /* Helper */,
 			);
 			name = Model;
@@ -813,6 +819,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB70151F1FB2D7B100B3D9B3 /* SubjectCollectionViewNotBookCell.xib in Resources */,
+				DB70151D1FB2C2B300B3D9B3 /* SubjectCollectionViewBookCell.xib in Resources */,
 				DB3B78941D181C07001A9AF6 /* TopicTableViewHeaderFooterView.xib in Resources */,
 				DB22FE161D16E9E6004A082D /* DetailTableViewEPSHeaderFooterView.xib in Resources */,
 				DBA29F4E1B8ADCB800ADED27 /* Settings.bundle in Resources */,
@@ -912,6 +920,7 @@
 				"${BUILT_PRODUCTS_DIR}/Canvas/Canvas.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/EUMTouchPointView/EUMTouchPointView.framework",
+				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Kanna/Kanna.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/MGSwipeTableCell/MGSwipeTableCell.framework",
@@ -928,6 +937,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Canvas.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EUMTouchPointView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kanna.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MGSwipeTableCell.framework",
@@ -1074,7 +1084,6 @@
 				DB7E288C1D3BC98B00B529CA /* BangumiRequest+Collection.swift in Sources */,
 				DBAD79231D39477E00CCB8AE /* ErrorProtocol.swift in Sources */,
 				DB80F0051D35BF44007DEF09 /* Reachability.m in Sources */,
-				DBB86A151D4504AE00FBB87B /* SubjectCollectionViewModel.swift in Sources */,
 				DBB039F41F59388A00C42D47 /* UIButton.swift in Sources */,
 				DB7D13651D192F1D00ACA94B /* SubjectCollectionReusableHeaderView.swift in Sources */,
 				DBBB52581D47B5CA008A1617 /* SubjectWrapper.swift in Sources */,
@@ -1124,6 +1133,7 @@
 				DBAD9BCE1D3F6BBE00206ACE /* BangumiRequest+Subject.swift in Sources */,
 				DBC0D4641F579EAD00255FCF /* UserDefaults.swift in Sources */,
 				DBE1C8111D3C7F060086B83D /* SVProgress+Style.swift in Sources */,
+				DB7015171FB299CC00B3D9B3 /* SubjectCollectionViewModel.swift in Sources */,
 				DB1AAB021D33F92600EE7727 /* User.swift in Sources */,
 				DBD0695D1D36601C0063708C /* ConsolePrint.swift in Sources */,
 				DBEF11461D377A8400E7A0D7 /* CollectionViewDataSource.swift in Sources */,

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+        <array key="HiraginoMincho.ttc">
+            <string>HiraMinProN-W6</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="3FE-a3-bFq" customClass="SubjectCollectionViewBookCell" customModule="Bangumi_M" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rKI-jg-oee" userLabel="cardView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="25B-QV-i4Y">
+                                <rect key="frame" x="8" y="8" width="320" height="50"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="751" verticalHuggingPriority="751" image="cyaika" translatesAutoresizingMaskIntoConstraints="NO" id="VrW-Wu-72u" userLabel="bookCover">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="TaF-Lq-4Xf"/>
+                                            <constraint firstAttribute="height" constant="50" id="pka-rC-Npf"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="UL0-Lk-43V">
+                                        <rect key="frame" x="58" y="0.0" width="320" height="18"/>
+                                        <subviews>
+                                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="棺姫のチャイカ / 棺姬嘉依卡" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EbZ-Yu-DUr">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="0.0"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" name="HiraMinProN-W6" family="Hiragino Mincho ProN" pointSize="16"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="在读" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RaP-xN-eQf">
+                                                <rect key="frame" x="0.0" y="4" width="320" height="14"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="25B-QV-i4Y" firstAttribute="leading" secondItem="rKI-jg-oee" secondAttribute="leading" constant="8" id="Gxr-JO-0Fe"/>
+                            <constraint firstAttribute="trailing" secondItem="25B-QV-i4Y" secondAttribute="trailing" constant="8" id="aI0-vA-Dqt"/>
+                            <constraint firstItem="25B-QV-i4Y" firstAttribute="top" secondItem="rKI-jg-oee" secondAttribute="top" constant="8" id="c5A-Ef-8DR"/>
+                            <constraint firstAttribute="bottom" secondItem="25B-QV-i4Y" secondAttribute="bottom" constant="8" id="d1n-1l-OPJ"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="rKI-jg-oee" secondAttribute="bottom" id="0L3-NH-7dZ"/>
+                <constraint firstAttribute="trailing" secondItem="rKI-jg-oee" secondAttribute="trailing" id="1gW-BY-ibM"/>
+                <constraint firstItem="rKI-jg-oee" firstAttribute="leading" secondItem="3FE-a3-bFq" secondAttribute="leading" id="4lu-F6-VDO"/>
+                <constraint firstItem="rKI-jg-oee" firstAttribute="top" secondItem="3FE-a3-bFq" secondAttribute="top" id="OWW-Zu-NfH"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="pjn-f8-4CC"/>
+            <size key="customSize" width="443" height="58"/>
+            <connections>
+                <outlet property="bookCover" destination="VrW-Wu-72u" id="eQS-LH-TvL"/>
+                <outlet property="bookNameLabel" destination="EbZ-Yu-DUr" id="01k-LB-9EI"/>
+                <outlet property="cardView" destination="rKI-jg-oee" id="cQn-VG-jpg"/>
+                <outlet property="indicatorLabel" destination="RaP-xN-eQf" id="hqr-1M-aTj"/>
+            </connections>
+            <point key="canvasLocation" x="103.5" y="44"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="cyaika" width="150" height="210"/>
+    </resources>
+</document>
