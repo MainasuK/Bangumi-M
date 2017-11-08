@@ -693,139 +693,7 @@
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SubjectCollectionViewBookCellKey" id="wpF-qq-7N1" customClass="SubjectCollectionViewBookCell" customModule="Bangumi_M" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="111" width="288" height="66"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="288" height="66"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eMO-dN-Idl" userLabel="cardView">
-                                            <rect key="frame" x="-8" y="0.0" width="288" height="66"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3fb-wJ-AgN">
-                                                    <rect key="frame" x="8" y="0.0" width="288" height="66"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="751" verticalHuggingPriority="751" image="cyaika" translatesAutoresizingMaskIntoConstraints="NO" id="Ahh-fM-xC9" userLabel="bookCover">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="50" id="Hs2-Cp-XR8"/>
-                                                                <constraint firstAttribute="height" constant="50" id="vM9-hi-pvc"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="EtR-Qx-6AU">
-                                                            <rect key="frame" x="58" y="0.0" width="288" height="18"/>
-                                                            <subviews>
-                                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="棺姫のチャイカ / 棺姬嘉依卡" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSG-Lx-UQC">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="288" height="0.0"/>
-                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                    <fontDescription key="fontDescription" name="HiraMinProN-W6" family="Hiragino Mincho ProN" pointSize="16"/>
-                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="在读" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBt-FC-3YO">
-                                                                    <rect key="frame" x="0.0" y="4" width="288" height="14"/>
-                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                        </stackView>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstItem="3fb-wJ-AgN" firstAttribute="top" secondItem="eMO-dN-Idl" secondAttribute="top" id="HXu-fA-om9"/>
-                                                <constraint firstAttribute="trailing" secondItem="3fb-wJ-AgN" secondAttribute="trailing" constant="8" id="PBU-u9-cyQ"/>
-                                                <constraint firstAttribute="bottom" secondItem="3fb-wJ-AgN" secondAttribute="bottom" id="XfK-xq-xb1"/>
-                                                <constraint firstItem="3fb-wJ-AgN" firstAttribute="leading" secondItem="eMO-dN-Idl" secondAttribute="leading" constant="8" id="yJa-BB-QEg"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                </view>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="eMO-dN-Idl" secondAttribute="bottom" id="0pY-ly-0wL"/>
-                                    <constraint firstItem="eMO-dN-Idl" firstAttribute="top" secondItem="wpF-qq-7N1" secondAttribute="top" id="1Su-9r-PnB"/>
-                                    <constraint firstAttribute="trailing" secondItem="eMO-dN-Idl" secondAttribute="trailing" id="eWE-AX-ddj"/>
-                                    <constraint firstItem="eMO-dN-Idl" firstAttribute="leading" secondItem="wpF-qq-7N1" secondAttribute="leading" id="ydQ-Dt-w61"/>
-                                </constraints>
-                                <size key="customSize" width="288" height="66"/>
-                                <connections>
-                                    <outlet property="bookCover" destination="Ahh-fM-xC9" id="3kI-4y-o30"/>
-                                    <outlet property="bookNameLabel" destination="MSG-Lx-UQC" id="HZz-LS-eXZ"/>
-                                    <outlet property="cardView" destination="eMO-dN-Idl" id="FQs-1V-6qd"/>
-                                    <outlet property="indicatorLabel" destination="GBt-FC-3YO" id="z2M-PD-Tm9"/>
-                                </connections>
-                            </collectionViewCell>
-                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SubjectCollectionViewNotBookCellKey" id="Maa-Vr-lQ5" customClass="SubjectCollectionViewNotBookCell" customModule="Bangumi_M" customModuleProvider="target">
-                                <rect key="frame" x="288" y="44" width="96" height="200"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="96" height="200"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hY8-Iz-6zf" userLabel="cardView">
-                                            <rect key="frame" x="8" y="0.0" width="80" height="200"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="rrC-AZ-sLs">
-                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="138"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="751" verticalHuggingPriority="751" image="cyaika" translatesAutoresizingMaskIntoConstraints="NO" id="ki1-3l-Nef" userLabel="cover">
-                                                            <rect key="frame" x="0.0" y="0.0" width="80" height="112"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="80" id="JWt-gC-YDO"/>
-                                                                <constraint firstAttribute="height" constant="112" id="aUp-NQ-gTt"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="SQx-CZ-CbY">
-                                                            <rect key="frame" x="0.0" y="116" width="80" height="22"/>
-                                                            <subviews>
-                                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="751" text="棺姫のチャイカ" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vcb-LK-daj">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="10"/>
-                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                    <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="10"/>
-                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="棺姬嘉依卡" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Zcv-ew-fEX">
-                                                                    <rect key="frame" x="0.0" y="12" width="80" height="10"/>
-                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                    <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="10"/>
-                                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                        </stackView>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="rrC-AZ-sLs" secondAttribute="trailing" id="2zC-Si-uwE"/>
-                                                <constraint firstItem="rrC-AZ-sLs" firstAttribute="leading" secondItem="hY8-Iz-6zf" secondAttribute="leading" id="8rc-8S-sYM"/>
-                                                <constraint firstItem="rrC-AZ-sLs" firstAttribute="top" secondItem="hY8-Iz-6zf" secondAttribute="top" id="9aP-p5-OWS"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rrC-AZ-sLs" secondAttribute="bottom" id="nkq-bt-ePY"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                </view>
-                                <constraints>
-                                    <constraint firstItem="hY8-Iz-6zf" firstAttribute="leading" secondItem="Maa-Vr-lQ5" secondAttribute="leading" constant="8" id="03n-Lx-KIU"/>
-                                    <constraint firstItem="hY8-Iz-6zf" firstAttribute="top" secondItem="Maa-Vr-lQ5" secondAttribute="top" id="9om-ks-Fjt"/>
-                                    <constraint firstAttribute="trailing" secondItem="hY8-Iz-6zf" secondAttribute="trailing" constant="8" id="daB-9L-amP"/>
-                                    <constraint firstAttribute="bottom" secondItem="hY8-Iz-6zf" secondAttribute="bottom" id="iaM-oB-SL7"/>
-                                </constraints>
-                                <size key="customSize" width="96" height="200"/>
-                                <connections>
-                                    <outlet property="coverImageView" destination="ki1-3l-Nef" id="xGU-tE-l85"/>
-                                    <outlet property="nameCNLabel" destination="Zcv-ew-fEX" id="DRb-FW-QTu"/>
-                                    <outlet property="nameLabel" destination="Vcb-LK-daj" id="LcD-aB-du3"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
+                        <cells/>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SubjectCollectionReusableHeaderView" id="hd5-lg-WPz" customClass="SubjectCollectionReusableHeaderView" customModule="Bangumi_M" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask"/>
@@ -1634,7 +1502,6 @@
         <image name="404" width="347" height="347"/>
         <image name="SavedArrow" width="44" height="44"/>
         <image name="arrow_8_bottom" width="8" height="8"/>
-        <image name="cyaika" width="150" height="210"/>
         <image name="hyouka" width="294" height="413"/>
         <image name="saenai" width="500" height="686"/>
     </resources>
