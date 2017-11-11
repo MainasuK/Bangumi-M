@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import QuartzCore
 import AlamofireImage
-import MJRefresh
 import SVProgressHUD
 
 final class AnimeListTableViewController: UITableViewController {
@@ -18,15 +17,16 @@ final class AnimeListTableViewController: UITableViewController {
     typealias Model = AnimeListTableViewModel
     typealias Cell = AnimeListTableViewCell
 
-    let transition = LoginViewPresentTransition()
-    
-    fileprivate lazy var model: Model = {
+    private let transition = LoginViewPresentTransition()
+
+    private lazy var model: Model = {
         return Model(tableView: self.tableView)
     }()
-    fileprivate var dataSource: TableViewDataSource<Model, Cell>!
-    fileprivate var isFirstRefresh = true
-    fileprivate var hasTriedLogin = false
-    
+    private var dataSource: TableViewDataSource<Model, Cell>!
+    private var titlesStyleObserver: NSKeyValueObservation!
+    private var isFirstRefresh = true
+    private var hasTriedLogin = false
+
     @IBAction func unwindToAnimeListTableViewController(_ segue: UIStoryboardSegue) {
         
     }
@@ -56,6 +56,11 @@ final class AnimeListTableViewController: UITableViewController {
         
         alertController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
         present(alertController, animated: true, completion: nil)
+    }
+
+    deinit {
+        // Root view controller never deinit…
+        titlesStyleObserver.invalidate()
     }
     
 }
@@ -91,7 +96,14 @@ extension AnimeListTableViewController {
             let url = URL(string: avatarLargeUrl) {
                 btn.af_setImage(for: .normal, url: url)
             }
+
+            // In iOS 11, bar button item use autolayout but not frame more.
+            let widthConstraint = btn.widthAnchor.constraint(equalToConstant: 30)
+            let heightConstraint = btn.heightAnchor.constraint(equalToConstant: 30)
+
             btn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+            NSLayoutConstraint.activate([heightConstraint, widthConstraint])
+
             btn.imageView?.frame.size = CGSize(width: 30, height: 30)
             btn.addTarget(self, action: #selector(AnimeListTableViewController.avatarButtonPressed), for: .touchUpInside)
             btn.imageView?.layer.cornerRadius = 30 * 0.5
@@ -110,34 +122,31 @@ extension AnimeListTableViewController {
         setupTableViewDataSource()
         
         // Configure tableView row height
-//        tableView.estimatedRowHeight = 150
-//        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 0
         tableView.rowHeight = 150
         
         // Set cell conform readable layout margin
         tableView.cellLayoutMarginsFollowReadableWidth = true
         
-        // Configure tableView appearance
-        tableView.separatorColor = UIColor.clear
-        tableView.backgroundColor = UIColor.myAnimeListBackground
-        
         // Fix the separator display when 0 rows
         tableView.tableFooterView = UIView()
-        
-        // Set refresh header
-        setupTableViewHeader()
-        
     }
     
-    fileprivate func setupTableViewHeader() {
-        tableView.mj_header = {
-            //  Use unowned because the caller is self. No async
-            let header = MJRefreshNormalHeader { [unowned self] in
-                self.refreshAnimeList()
-            }
-            
-            return header
+    fileprivate func setupRefreshControl() {
+        refreshControl = {
+            let control = UIRefreshControl()
+            control.endRefreshing()
+            control.addTarget(self, action: #selector(AnimeListTableViewController.refreshAnimeList), for: .valueChanged)
+            return control
         }()
+    }
+
+    private func setupObserver() {
+        titlesStyleObserver = UserDefaults.standard.observe(\UserDefaults.prefersLargeTitlesInNaviagtionBar, options: [.initial, .new]) { (_, value) in
+            if #available(iOS 11.0, *) {
+                self.navigationController?.navigationBar.prefersLargeTitles = value.newValue ?? true
+            }
+        }
     }
     
     fileprivate func setupTableViewDataSource() {
@@ -154,6 +163,8 @@ extension AnimeListTableViewController {
         super.viewDidLoad()
 
         setupTableView()
+        setupRefreshControl()
+        setupObserver()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -171,11 +182,21 @@ extension AnimeListTableViewController {
         }
         
         if isFirstRefresh {
-            tableView.mj_header.beginRefreshing()
+            assert(refreshControl != nil)
+
+            // FIXME: refresh control issue
+            if #available(iOS 11, *) {
+                // You got perfect refresh control
+            } else {
+                // But not display first time in iOS 10…
+                title = "少女祈祷中"
+            }
+
+            refreshControl?.beginRefreshing()
+            refreshAnimeList()      // Somehow we need call target manually
         }
-        isFirstRefresh = false
     }
-    
+
 }
 
 extension AnimeListTableViewController {
@@ -186,13 +207,14 @@ extension AnimeListTableViewController {
     typealias NetworkError = BangumiRequest.NetworkError
     typealias ModelError = AnimeListTableViewModel.ModelError
 
-    // swiftlint:disable function_body_length
-    func refreshAnimeList() {
+    @objc func refreshAnimeList() {
         
         model.refresh { (error: Error?) in
             
             defer {
-                self.tableView.mj_header.endRefreshing()
+                self.title = "进度管理"
+                self.isFirstRefresh = false
+                self.refreshControl?.endRefreshing()
             }
             
             do {
@@ -279,52 +301,12 @@ extension AnimeListTableViewController {
         guard let cell = cell as? AnimeListTableViewCell else {
             return
         }
-        
+
         cell.delegate = self
-        
-        // Make sure the shadow path set to right size
-        cell.cardView.setNeedsLayout()
-        cell.cardView.layoutIfNeeded()
-        
-        // Set border of cardView
-        cell.cardView.layer.cornerRadius    = 5
-        cell.cardView.layer.shadowColor     = UIColor.black.cgColor
-        cell.cardView.layer.shadowOffset    = CGSize(width: 0, height: 0)
-        cell.cardView.layer.shadowPath      = UIBezierPath(rect: cell.cardView.bounds).cgPath
-        cell.cardView.layer.shadowRadius    = 3
-        cell.cardView.layer.shadowOpacity   = 0.2
-        
-        // Mask controlView for get two bottom corners
-        cell.controlView.layer.mask = {
-            let maskLayer = CAShapeLayer()
-            let maskPath = UIBezierPath(roundedRect: cell.controlView.bounds,
-                                        byRoundingCorners: [.bottomLeft, .bottomRight],
-                                        cornerRadii: CGSize(width: 5, height: 5))
-            
-            maskLayer.frame = cell.controlView.bounds
-            maskLayer.path  = maskPath.cgPath
-            
-            return maskLayer
-        }()
-        
-        // Mask infolView for get two top corners
-        cell.infoView.layer.mask = {
-            let maskLayer = CAShapeLayer()
-            let maskPath = UIBezierPath(roundedRect: cell.infoView.bounds,
-                                        byRoundingCorners: [.topLeft, .topRight],
-                                        cornerRadii: CGSize(width: 5, height: 5))
-            
-            maskLayer.frame = cell.infoView.bounds
-            maskLayer.path  = maskPath.cgPath
-            
-            return maskLayer
-        }()
-        
-        cell.layoutIfNeeded()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialTableViewControllerKey) as! DetailTableViewController
+        let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialViewControllerKey) as! DetailViewController
         let subject = model.item(at: indexPath).0
         detailTableViewController.subject = subject
         
@@ -354,7 +336,8 @@ extension AnimeListTableViewController: TransitionDelegate {
     // FIXME: context parameter needed here
     func dissmissViewController(with flag: Bool) {
         if flag {
-            tableView.mj_header.beginRefreshing()
+            refreshControl?.beginRefreshing()
+            refreshAnimeList()      // Somehow we need call target manually
         }
         setupBarButtonItem()
     }
@@ -371,18 +354,18 @@ extension AnimeListTableViewController: AnimeListTableViewCellDelegate {
                 do {
                     try error?.throwMyself()
                     
-                    SVProgressHUD.showSuccess(withStatus: "EP.\(ep.sortString) \(ep.name) 标记成功")
+                    SVProgressHUD.showSuccess(withStatus: "EP.\(ep.sortString) \(ep.name)\n标记成功")
                     
                 } catch ModelError.mark {
                     let title = NSLocalizedString("mark error", comment: "")
-                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "未能标注 EP.\(ep.sortString) \(ep.nameCN)")
+                    let alertController = UIAlertController.simpleErrorAlert(with: title, description: "未能标注\nEP.\(ep.sortString) \(ep.name)")
                     self.present(alertController, animated: true, completion: nil)
                     
                 } catch NetworkError.notConnectedToInternet {
                     self.present(PercolatorAlertController.notConnectedToInternet(), animated: true, completion: nil)
                     
                 } catch NetworkError.timeout {
-                    self.present(PercolatorAlertController.timeout(withDescription: "未能标注 EP.\(ep.sortString) \(ep.nameCN)"), animated: true, completion: nil)
+                    self.present(PercolatorAlertController.timeout(withDescription: "未能标注\nEP.\(ep.sortString) \(ep.name)"), animated: true, completion: nil)
                     
                 } catch UnknownError.alamofire(let error) {
                     self.present(PercolatorAlertController.unknown(error), animated: true, completion: nil)

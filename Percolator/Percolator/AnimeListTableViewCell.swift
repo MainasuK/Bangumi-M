@@ -65,6 +65,52 @@ class AnimeListTableViewCell: UITableViewCell {
         animeImageView.layer.removeAllAnimations()
         animeImageView.image = nil
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        cardView.setNeedsLayout()
+        controlView.setNeedsLayout()
+
+        cardView.layoutIfNeeded()
+        controlView.layoutIfNeeded()
+
+        // Set corner & shadow of cardView
+        cardView.layer.cornerRadius    = 5
+        cardView.layer.shadowColor     = UIColor.black.cgColor
+        cardView.layer.shadowOffset    = CGSize(width: 0, height: 0)
+        cardView.layer.shadowPath      = UIBezierPath(rect: cardView.bounds).cgPath
+        cardView.layer.shadowRadius    = 3
+        cardView.layer.shadowOpacity   = 0.2
+
+        // Mask controlView for get two bottom corners
+        controlView.layer.mask = {
+            let maskLayer = CAShapeLayer()
+            let maskPath = UIBezierPath(roundedRect: controlView.bounds,
+                                        byRoundingCorners: [.bottomLeft, .bottomRight],
+                                        cornerRadii: CGSize(width: 5, height: 5))
+
+            maskLayer.frame = controlView.bounds
+            maskLayer.path  = maskPath.cgPath
+
+            return maskLayer
+        }()
+
+        // Mask infolView for get two top corners
+        infoView.layer.mask = {
+            let maskLayer = CAShapeLayer()
+            let maskPath = UIBezierPath(roundedRect: infoView.bounds,
+                                        byRoundingCorners: [.topLeft, .topRight],
+                                        cornerRadii: CGSize(width: 5, height: 5))
+
+            maskLayer.frame = infoView.bounds
+            maskLayer.path  = maskPath.cgPath
+
+            return maskLayer
+        }()
+
+        layoutIfNeeded()
+    }
 }
 
 extension AnimeListTableViewCell: ConfigurableCell {
@@ -76,14 +122,15 @@ extension AnimeListTableViewCell: ConfigurableCell {
     func configure(with item: ItemType) {
         let (subject, history) = item
         mark = .none
-        
+
         configureLabel(with: subject)
         configureIamge(with: subject.images)
         configureButton(with: history, subject)
-        
-        layer.shouldRasterize = true
-        layer.rasterizationScale = UIScreen.main.scale
+
 //        setupLabelStyle()
+
+        cardView.layer.shouldRasterize = true
+        cardView.layer.rasterizationScale = UIScreen.main.scale
     }
 }
 
@@ -116,7 +163,6 @@ extension AnimeListTableViewCell {
     }
     
     // TL; DR
-    // swiftlint:disable function_body_length
     fileprivate func configureButton(with result: History, _ subject: Subject) {
         guard subject.responseGroup == .large else {
             isSpinnning = true
@@ -125,11 +171,11 @@ extension AnimeListTableViewCell {
         
         do {
             let history = try result.resolve()
-            
-            watchedSpinner.stopAnimating()
-            watchedButton.isEnabled = true
-            watchedButton.isHidden = false
-            
+
+            defer {
+                isSpinnning = false
+            }
+
             if let lastEpisode = history.lastEpisode {
                 let epName = [lastEpisode.name, lastEpisode.nameCN].filter { $0 != "" }.first ?? ""
                 watchedToLabel.text = "看到："
@@ -143,17 +189,17 @@ extension AnimeListTableViewCell {
                 let epName = [nextEpisode.name, nextEpisode.nameCN].filter { $0 != "" }.first ?? ""
                 switch nextEpisode.status {
                 case .air:
-                    watchedButton.setTitle("EP.\(nextEpisode.sortString) \(epName)", for: .normal)
+                    watchedButton.setTitleWithoutAnimation("EP.\(nextEpisode.sortString) \(epName)", for: .normal)
                     mark = AnimeMark.episode(nextEpisode, subject)
                     indicatorView.backgroundColor = UIColor.percolatorPink
                     
                 case .notAir:
                     let weekArr: [String] = ["有空", "周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-                    watchedButton.setTitle("EP.\(nextEpisode.sortString) 未放送 \(weekArr[subject.airWeekday])再来吧", for: .normal)
+                    watchedButton.setTitleWithoutAnimation("EP.\(nextEpisode.sortString) 未放送 \(weekArr[subject.airWeekday])再来吧", for: .normal)
                     indicatorView.backgroundColor = UIColor.myRedColor
                 
                 case .today:
-                    watchedButton.setTitle("EP.\(nextEpisode.sortString) \(epName)", for: .normal)
+                    watchedButton.setTitleWithoutAnimation("EP.\(nextEpisode.sortString) \(epName)", for: .normal)
                     mark = AnimeMark.episode(nextEpisode, subject)
                     indicatorView.backgroundColor = UIColor.myGreenColor
                 }
@@ -164,15 +210,15 @@ extension AnimeListTableViewCell {
             } else {
                 if subject.epTable.count == 0 {
                     watchedButton.isEnabled = false
-                    watchedButton.setTitle("未收录章节信息", for: .normal)
+                    watchedButton.setTitleWithoutAnimation("未收录章节信息", for: .normal)
                     indicatorView.backgroundColor = UIColor.myRedColor
                 } else if subject.epTable.last?.id == history.lastEpisode?.id {
-                    watchedButton.setTitle("看完了 我要吐槽", for: .normal)
+                    watchedButton.setTitleWithoutAnimation("看完了 我要吐槽", for: .normal)
                     mark = AnimeMark.subject(subject)
                     indicatorView.backgroundColor = UIColor.myPurpleColor
                 } else {
                     watchedButton.isEnabled = false
-                    watchedButton.setTitle("喵帕斯～出错了？为什么什么也找不到", for: .normal)
+                    watchedButton.setTitleWithoutAnimation("喵帕斯～出错了？为什么什么也找不到", for: .normal)
                     indicatorView.backgroundColor = UIColor.myRedColor
                 }
             }
@@ -180,7 +226,7 @@ extension AnimeListTableViewCell {
         } catch ProgressesStatus.none {
             isSpinnning = false
             watchedButton.isEnabled = false
-            watchedButton.setTitle("喵帕斯～出错了？找不到章节信息", for: .normal)
+            watchedButton.setTitleWithoutAnimation("喵帕斯～出错了？找不到章节信息", for: .normal)
             indicatorView.backgroundColor = UIColor.myRedColor
             
         } catch ProgressesStatus.fetching {
@@ -189,18 +235,18 @@ extension AnimeListTableViewCell {
         } catch ProgressesStatus.timeout {
             isSpinnning = false
             watchedButton.isEnabled = false
-            watchedButton.setTitle("获取章节信息出错，请刷新重试", for: .normal)
+            watchedButton.setTitleWithoutAnimation("获取章节信息出错，请刷新重试", for: .normal)
             indicatorView.backgroundColor = UIColor.myRedColor
             
         } catch ProgressesStatus.unknownError {
             isSpinnning = false
             watchedButton.isEnabled = false
-            watchedButton.setTitle("喵帕斯～出错了？未知错误", for: .normal)
+            watchedButton.setTitleWithoutAnimation("喵帕斯～出错了？未知错误", for: .normal)
             indicatorView.backgroundColor = UIColor.myRedColor
         } catch {
             isSpinnning = false
             watchedButton.isEnabled = false
-            watchedButton.setTitle("喵帕斯～出错了？未知错误", for: .normal)
+            watchedButton.setTitleWithoutAnimation("喵帕斯～出错了？未知错误", for: .normal)
             indicatorView.backgroundColor = UIColor.myRedColor
         }
     
@@ -223,7 +269,7 @@ extension AnimeListTableViewCell {
         animeImageView.layer.borderColor = UIColor.percolatorLightGray.withAlphaComponent(0.8).cgColor
         animeImageView.layer.borderWidth = 0.5  // 1px
         
-        watchedButton.setTitleColor(UIColor.percolatorPink, for: UIControlState.highlighted)
+        watchedButton.setTitleColor(UIColor.percolatorButtonPink, for: UIControlState.highlighted)
         indicatorView.backgroundColor = UIColor.percolatorGray
     }
     

@@ -29,6 +29,8 @@
 #import "SDStatusBarOverriderPost9_0.h"
 #import "SDStatusBarOverriderPost9_3.h"
 #import "SDStatusBarOverriderPost10_0.h"
+#import "SDStatusBarOverriderPost10_3.h"
+#import "SDStatusBarOverriderPost11_0.h"
 
 static NSString * const SDStatusBarManagerUsingOverridesKey = @"using_overrides";
 static NSString * const SDStatusBarManagerBluetoothStateKey = @"bluetooth_state";
@@ -43,6 +45,16 @@ static NSString * const SDStatusBarManagerTimeStringKey = @"time_string";
 
 @implementation SDStatusBarManager
 
+- (instancetype)init
+{
+  self = [super init];
+  if (self) {
+    // Set any defaults for the status bar
+    self.batteryDetailEnabled = YES;
+  }
+  return self;
+}
+
 - (void)enableOverrides
 {
   self.usingOverrides = YES;
@@ -51,6 +63,7 @@ static NSString * const SDStatusBarManagerTimeStringKey = @"time_string";
   self.overrider.carrierName = self.carrierName;
   self.overrider.bluetoothEnabled = self.bluetoothState != SDStatusBarManagerBluetoothHidden;
   self.overrider.bluetoothConnected = self.bluetoothState == SDStatusBarManagerBluetoothVisibleConnected;
+  self.overrider.batteryDetailEnabled = self.batteryDetailEnabled;
 
   [self.overrider enableOverrides];
 }
@@ -80,7 +93,6 @@ static NSString * const SDStatusBarManagerTimeStringKey = @"time_string";
   [self.userDefaults setValue:@(bluetoothState) forKey:SDStatusBarManagerBluetoothStateKey];
 
   if (self.usingOverrides) {
-    // Refresh the active status bar
     [self enableOverrides];
   }
 }
@@ -97,7 +109,6 @@ static NSString * const SDStatusBarManagerTimeStringKey = @"time_string";
   [self.userDefaults setObject:timeString forKey:SDStatusBarManagerTimeStringKey];
 
   if (self.usingOverrides) {
-    // Refresh the active status bar
     [self enableOverrides];
   }
 }
@@ -119,7 +130,11 @@ static NSString * const SDStatusBarManagerTimeStringKey = @"time_string";
 {
   id<SDStatusBarOverrider> overrider = nil;
   NSProcessInfo *pi = [NSProcessInfo processInfo];
-  if ([pi isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){ 10, 0, 0 }]) {
+  if ([pi isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){ 11, 0, 0 }]) {
+    overrider = [SDStatusBarOverriderPost11_0 new];
+  } else if ([pi isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){ 10, 3, 0 }]) {
+    overrider = [SDStatusBarOverriderPost10_3 new];
+  } else if ([pi isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){ 10, 0, 0 }]) {
     overrider = [SDStatusBarOverriderPost10_0 new];
   } else if ([pi isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){ 9, 3, 0 }]) {
     overrider = [SDStatusBarOverriderPost9_3 new];

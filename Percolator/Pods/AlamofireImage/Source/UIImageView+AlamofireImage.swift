@@ -24,6 +24,9 @@
 
 import Alamofire
 import Foundation
+
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
 extension UIImageView {
@@ -169,7 +172,7 @@ extension UIImageView {
     /// Asynchronously downloads an image from the specified URL, applies the specified image filter to the downloaded
     /// image and sets it once finished while executing the image transition.
     ///
-    /// If the image is cached locally, the image is set immediately. Otherwise the specified placehoder image will be
+    /// If the image is cached locally, the image is set immediately. Otherwise the specified placeholder image will be
     /// set immediately, and then the remote image will be set once the image request is finished.
     ///
     /// The `completion` closure is called after the image download and filtering are complete, but before the start of
@@ -222,7 +225,7 @@ extension UIImageView {
     /// Asynchronously downloads an image from the specified URL Request, applies the specified image filter to the downloaded
     /// image and sets it once finished while executing the image transition.
     ///
-    /// If the image is cached locally, the image is set immediately. Otherwise the specified placehoder image will be
+    /// If the image is cached locally, the image is set immediately. Otherwise the specified placeholder image will be
     /// set immediately, and then the remote image will be set once the image request is finished.
     ///
     /// The `completion` closure is called after the image download and filtering are complete, but before the start of
@@ -260,7 +263,14 @@ extension UIImageView {
         runImageTransitionIfCached: Bool = false,
         completion: ((DataResponse<UIImage>) -> Void)? = nil)
     {
-        guard !isURLRequestURLEqualToActiveRequestURL(urlRequest) else { return }
+        guard !isURLRequestURLEqualToActiveRequestURL(urlRequest) else {
+            let error = AFIError.requestCancelled
+            let response = DataResponse<UIImage>(request: nil, response: nil, data: nil, result: .failure(error))
+
+            completion?(response)
+
+            return
+        }
 
         af_cancelImageRequest()
 
@@ -268,15 +278,11 @@ extension UIImageView {
         let imageCache = imageDownloader.imageCache
 
         // Use the image from the image cache if it exists
-        if let image = imageCache?.image(for: urlRequest.urlRequest, withIdentifier: filter?.identifier) {
-            let response = DataResponse<UIImage>(
-                request: urlRequest.urlRequest,
-                response: nil,
-                data: nil,
-                result: .success(image)
-            )
-
-            completion?(response)
+        if
+            let request = urlRequest.urlRequest,
+            let image = imageCache?.image(for: request, withIdentifier: filter?.identifier)
+        {
+            let response = DataResponse<UIImage>(request: request, response: nil, data: nil, result: .success(image))
 
             if runImageTransitionIfCached {
                 let tinyDelay = DispatchTime.now() + Double(Int64(0.001 * Float(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
@@ -284,9 +290,11 @@ extension UIImageView {
                 // Need to let the runloop cycle for the placeholder image to take affect
                 DispatchQueue.main.asyncAfter(deadline: tinyDelay) {
                     self.run(imageTransition, with: image)
+                    completion?(response)
                 }
             } else {
                 self.image = image
+                completion?(response)
             }
 
             return
@@ -306,14 +314,12 @@ extension UIImageView {
             progress: progress,
             progressQueue: progressQueue,
             completion: { [weak self] response in
-                guard let strongSelf = self else { return }
-
-                completion?(response)
-
                 guard
+                    let strongSelf = self,
                     strongSelf.isURLRequestURLEqualToActiveRequestURL(response.request) &&
                     strongSelf.af_activeRequestReceipt?.receiptID == downloadID
                 else {
+                    completion?(response)
                     return
                 }
 
@@ -322,6 +328,8 @@ extension UIImageView {
                 }
 
                 strongSelf.af_activeRequestReceipt = nil
+
+                completion?(response)
             }
         )
 
@@ -351,9 +359,7 @@ extension UIImageView {
             with: self,
             duration: imageTransition.duration,
             options: imageTransition.animationOptions,
-            animations: {
-                imageTransition.animations(self, image)
-            },
+            animations: { imageTransition.animations(self, image) },
             completion: imageTransition.completion
         )
     }
@@ -372,8 +378,9 @@ extension UIImageView {
 
     private func isURLRequestURLEqualToActiveRequestURL(_ urlRequest: URLRequestConvertible?) -> Bool {
         if
-            let currentRequest = af_activeRequestReceipt?.request.task.originalRequest,
-            currentRequest.urlString == urlRequest?.urlRequest.urlString
+            let currentRequestURL = af_activeRequestReceipt?.request.task?.originalRequest?.url,
+            let requestURL = urlRequest?.urlRequest?.url,
+            currentRequestURL == requestURL
         {
             return true
         }
@@ -381,3 +388,5 @@ extension UIImageView {
         return false
     }
 }
+
+#endif

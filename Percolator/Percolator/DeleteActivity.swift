@@ -45,11 +45,11 @@ final class DeleteActivity: UIActivity {
     
     override func perform() {
         guard subject?.deleteFromCoreData() == true else {
-            SVProgressHUD.showInfo(withStatus: "删除失败")
+            SVProgressHUD.showInfo(withStatus: NSLocalizedString("delete fail", comment: ""))
             return
         }
         
-        SVProgressHUD.showSuccess(withStatus: "删除成功")
+        SVProgressHUD.showSuccess(withStatus: NSLocalizedString("delete success", comment: ""))
     }
     
     override var activityImage: UIImage? {

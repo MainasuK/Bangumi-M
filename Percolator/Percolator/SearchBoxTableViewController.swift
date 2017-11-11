@@ -36,8 +36,12 @@ final class SearchBoxTableViewController: UITableViewController {
         // Note: Override UISearchController preferredStatusBarStyle() method return .lightContent
         // And it's not work in iOS 10. Manually set statusBarStyle to make sure appearance correct.
         
-        controller.searchBar.barTintColor = UIColor.navigationBarBlue
-        controller.searchBar.tintColor = UIColor.white
+        controller.searchBar.barTintColor = .navigationBarBlue
+        if #available(iOS 11, *) {
+            controller.searchBar.tintColor = .navigationBarBlue
+        } else {
+            controller.searchBar.tintColor = .white
+        }
         controller.searchBar.placeholder = "条目搜索"
         controller.searchBar.setSearchFieldBackgroundImage(#imageLiteral(resourceName: "searchBarTextFieldBackgroundImage"), for: .normal)
 
@@ -143,10 +147,13 @@ extension SearchBoxTableViewController {
     }
     
     fileprivate func changeStatusBarStyle(to style: UIStatusBarStyle) {
-        statusBarStyle = style
-        
-        UIView.animate(withDuration: 0.2) {
-            self.setNeedsStatusBarAppearanceUpdate()
+        if #available(iOS 11, *) {
+            // Do nothing because search bar tint color not customized
+        } else {
+            statusBarStyle = style
+            UIView.animate(withDuration: 0.2) {
+                self.setNeedsStatusBarAppearanceUpdate()
+            }
         }
     }
     
@@ -202,8 +209,18 @@ extension SearchBoxTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupTableView()
+        if #available(iOS 11.0, *) {
+            searchButton.isEnabled = false
+            searchButton.tintColor = .clear
+
+            definesPresentationContext = true
+            navigationItem.hidesSearchBarWhenScrolling = false
+            navigationItem.searchController = searchController
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -225,7 +242,7 @@ extension SearchBoxTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
-        let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialTableViewControllerKey) as! DetailTableViewController
+        let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialViewControllerKey) as! DetailViewController
         detailTableViewController.subject = model.item(at: indexPath).0
         navigationController?.pushViewController(detailTableViewController, animated: true)
     }
@@ -240,9 +257,8 @@ extension SearchBoxTableViewController {
 
 // MARK: - UISearchBarDelegate
 extension SearchBoxTableViewController: UISearchBarDelegate {
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         defer {
             changeStatusBarStyle(to: .default)
             searchController.dismiss(animated: true, completion: nil)
@@ -372,14 +388,13 @@ extension SearchBoxTableViewController {
 // MARK: - MGSwipeTableCellDelegate
 extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
     
-    func swipeTableCell(_ cell: MGSwipeTableCell!, canSwipe direction: MGSwipeDirection) -> Bool {
+    func swipeTableCell(_ cell: MGSwipeTableCell, canSwipe direction: MGSwipeDirection) -> Bool {
         return true
     }
-    
-    func swipeTableCell(_ cell: MGSwipeTableCell!, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings!, expansionSettings: MGSwipeExpansionSettings!) -> [Any]! {
+
+    func swipeTableCell(_ cell: MGSwipeTableCell, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings, expansionSettings: MGSwipeExpansionSettings) -> [UIView]? {
         
-        guard let cell = cell,
-        let indexPath = self.tableView.indexPath(for: cell) else {
+        guard let indexPath = self.tableView.indexPath(for: cell) else {
             return []
         }
         
@@ -423,14 +438,14 @@ extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
         
         switch direction {
         case .leftToRight:
-            return (subject.isSaved()) ? [collectionButton!] : [saveButton!, collectionButton!]
+            return (subject.isSaved()) ? [collectionButton] : [saveButton, collectionButton]
             
         case .rightToLeft:
-            return (subject.isSaved()) ? [deleteButton!] : []
+            return (subject.isSaved()) ? [deleteButton] : []
         }
     }
     
-    func swipeTableCell(_ cell: MGSwipeTableCell!, didChange state: MGSwipeState, gestureIsActive: Bool) {
+    func swipeTableCell(_ cell: MGSwipeTableCell, didChange state: MGSwipeState, gestureIsActive: Bool) {
         var str = ""
         var active = ""
         switch state {
