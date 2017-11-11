@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.5.0)
+  - Alamofire (4.5.1)
   - AlamofireImage (3.2.0):
     - Alamofire (~> 4.1)
   - Canvas (0.1.2)
@@ -12,8 +12,8 @@ PODS:
   - IGListKit/Diffing (3.1.1)
   - Kanna (2.1.1)
   - KeychainAccess (3.0.2)
-  - MGSwipeTableCell (1.6.0)
-  - MJRefresh (3.1.12)
+  - MGSwipeTableCell (1.6.2)
+  - MJRefresh (3.1.15)
   - OHHTTPStubs (6.0.0):
     - OHHTTPStubs/Default (= 6.0.0)
   - OHHTTPStubs/Core (6.0.0)
@@ -28,7 +28,7 @@ PODS:
     - OHHTTPStubs/Core
   - OHHTTPStubs/OHPathHelpers (6.0.0)
   - PPCopiableLabel (1.0.1)
-  - SimulatorStatusMagic (1.9.5)
+  - SimulatorStatusMagic (2.0)
   - SVProgressHUD (2.0.3)
   - SwiftyJSON (3.1.4)
   - UITextField+Shake (1.2.0)
@@ -68,7 +68,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/SVProgressHUD/SVProgressHUD.git
 
 SPEC CHECKSUMS:
-  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   AlamofireImage: 0ff319da83d6abb78a661d7296e742e7f65e15f5
   Canvas: eb861e3b555d032648146c8ffda1a5dea40059ca
   Cosmos: eb506859929f4add2d2aec822a27efb2f718a95d
@@ -76,11 +76,11 @@ SPEC CHECKSUMS:
   IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
   Kanna: 9b4b086c218703f2b94f5b21a466217dd2f9332e
   KeychainAccess: a986406022dfc7c634c691ad3bec670cc6a32002
-  MGSwipeTableCell: 6e1994f1eb31c76e76f70a8bc39de3c42cf5cd38
-  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  MGSwipeTableCell: 256fba20014be3e061de9657be7794ca593365c0
+  MJRefresh: 9af70f5f9327a2cf87f0fb5929f35fcc2fa638ea
   OHHTTPStubs: 752f9b11fd810a15162d50f11c06ff94f8e012eb
   PPCopiableLabel: 4835065e5bfa853b3f7311972c214640d10b38ee
-  SimulatorStatusMagic: b3b4c5c49a07e8b1c452cc0327275e267a865fea
+  SimulatorStatusMagic: c8e958d70e0e0cd2d7cf33bb95014a222ddecf0a
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   UITextField+Shake: 3e86d67700b9db1915df965e677cec8b8cfda225

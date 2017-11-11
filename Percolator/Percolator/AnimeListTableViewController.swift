@@ -184,8 +184,16 @@ extension AnimeListTableViewController {
         if isFirstRefresh {
             assert(refreshControl != nil)
 
+            // FIXME: refresh control issue
+            if #available(iOS 11, *) {
+                // You got perfect refresh control
+            } else {
+                // But not display first time in iOS 10…
+                title = "少女祈祷中"
+            }
+
             refreshControl?.beginRefreshing()
-            refreshAnimeList()      // Somehow we need call target manual when view first load
+            refreshAnimeList()      // Somehow we need call target manually
         }
     }
 
@@ -204,6 +212,7 @@ extension AnimeListTableViewController {
         model.refresh { (error: Error?) in
             
             defer {
+                self.title = "进度管理"
                 self.isFirstRefresh = false
                 self.refreshControl?.endRefreshing()
             }
@@ -328,7 +337,7 @@ extension AnimeListTableViewController: TransitionDelegate {
     func dissmissViewController(with flag: Bool) {
         if flag {
             refreshControl?.beginRefreshing()
-            refreshAnimeList()      // Somehow we need call target manual when first refreshing
+            refreshAnimeList()      // Somehow we need call target manually
         }
         setupBarButtonItem()
     }

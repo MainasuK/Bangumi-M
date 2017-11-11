@@ -26,7 +26,7 @@ final class SubjectCollectionViewModel: NSObject {
 
     private var bookSectionItem: ListDiffable {
         let title = bookSubjectItems.count != 0 ? "单行本" : ""
-        return SectionItem(of: bookSubjectItems, type: .book, headerTitle: title)
+        return SectionItem(of: bookSubjectItems, type: .book, headerTitle: title, collectDict: collectDict)
     }
     private var notBookSectionItems: [ListDiffable] {
         var items = [ListDiffable]()
@@ -77,7 +77,7 @@ extension SubjectCollectionViewModel {
 
                 self.adapter.performUpdates(animated: true, completion: nil)
 
-                self.fetchCollectInfo(for: self.bookSubjectItems.flatMap { $0.urlPath.components(separatedBy: "/").last }.flatMap { Int($0) })
+                self.fetchCollectInfo(for: self.bookSubjectItems.flatMap { $0.id })
                 
                 if self.bookSubjectItems.isEmpty && self.otherSubjectItems.isEmpty {
                     handler(ModelError.noItem)
@@ -94,9 +94,9 @@ extension SubjectCollectionViewModel {
 }
 
 extension SubjectCollectionViewModel {
-    
+
     typealias CollectionError = BangumiRequest.CollectionError
-    
+
     fileprivate func fetchCollectInfo(for subjectIDs: [SubjectID]) {
         request.collection(of: subjectIDs) { (result: Result<CollectDict>) in
             assert(Thread.isMainThread, "Request callback should be main thread")
@@ -107,8 +107,8 @@ extension SubjectCollectionViewModel {
                     self.collectDict[key] = value
                 }
                 
-                self.collectionView?.reloadData()
-                
+                self.adapter.performUpdates(animated: false, completion: nil)
+
             } catch CollectionError.noCollection {
                 consolePrint("No collect info")
             } catch {
@@ -136,6 +136,10 @@ extension SubjectCollectionViewModel {
         let subtitle: String
         let urlPath: String
         let coverUrlPath: String
+
+        var id: SubjectID? {
+            return urlPath.components(separatedBy: "/").last.flatMap { Int($0) }
+        }
     }
 
     final class SectionItem: NSObject, ListDiffable {
@@ -147,11 +151,13 @@ extension SubjectCollectionViewModel {
         let items: [SubjectItem]
         let type: SubjectType
         let headerTitle: String
+        let collectDict: CollectDict
 
-        init(of items: [SubjectItem], type: SubjectType, headerTitle: String) {
-            self.items = items
-            self.type  = type
+        init(of items: [SubjectItem], type: SubjectType, headerTitle: String, collectDict: CollectDict = [:]) {
+            self.items       = items
+            self.type        = type
             self.headerTitle = headerTitle
+            self.collectDict = collectDict
         }
 
         func diffIdentifier() -> NSObjectProtocol {
@@ -305,10 +311,11 @@ extension SubjectCollectionViewModel: ListAdapterDataSource {
 // MARK: - SubjectCollectionViewBookSectionController
 final class SubjectCollectionViewBookSectionController: ListSectionController {
 
-    typealias ModelError   = SubjectCollectionViewModel.ModelError
-    typealias NetworkError = BangumiRequest.NetworkError
-    typealias HTMLError    = BangumiRequest.HTMLError
-    typealias UnknownError = BangumiRequest.Unknown
+    typealias ModelError      = SubjectCollectionViewModel.ModelError
+    typealias CollectionError = BangumiRequest.CollectionError
+    typealias NetworkError    = BangumiRequest.NetworkError
+    typealias HTMLError       = BangumiRequest.HTMLError
+    typealias UnknownError    = BangumiRequest.Unknown
 
     private var item: SubjectCollectionViewModel.SectionItem?
 
@@ -335,8 +342,15 @@ final class SubjectCollectionViewBookSectionController: ListSectionController {
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         let cell = collectionContext?.dequeueReusableCell(withNibName: "SubjectCollectionViewBookCell", bundle: nil, for: self, at: index) as! SubjectCollectionViewBookCell
 
-        let subject = item?.items[index]
-        cell.configure(with: (subject!, Result.failure(ModelError.noItem)))
+        guard let subject = item?.items[index] else {
+            return cell
+        }
+
+        if let collectInfo = (subject.id.flatMap { item?.collectDict[$0] }) {
+            cell.configure(with: (subject, .success(collectInfo)))
+        } else {
+            cell.configure(with: (subject, .failure(CollectionError.noCollection)))
+        }
 
         return cell
     }
