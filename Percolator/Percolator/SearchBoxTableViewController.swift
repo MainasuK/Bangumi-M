@@ -67,7 +67,15 @@ final class SearchBoxTableViewController: UITableViewController {
         
         // Present the view controller
         changeStatusBarStyle(to: .lightContent)
-        present(searchController, animated: true, completion: nil)
+        if #available(iOS 11, *) {
+            searchController.isActive = true
+            // Fix responder can not reponse issue
+            delay(0.4) {
+                self.searchController.searchBar.becomeFirstResponder()
+            }
+        } else {
+            present(searchController, animated: true)
+        }
     }
     
     @IBAction func longPressTrigger(_ sender: UILongPressGestureRecognizer) {
@@ -226,7 +234,9 @@ extension SearchBoxTableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if model.isEmpty { searchButtonClicked(nil) }
+        if model.isEmpty {
+            searchButtonClicked(nil)
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
