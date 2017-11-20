@@ -41,7 +41,7 @@ final class SubjectCollectionViewModel: NSObject {
     fileprivate var collectDict: CollectDict = [:]
     
     private weak var collectionView: UICollectionView?
-    private let adapter: ListAdapter
+    private weak var adapter: ListAdapter?
     private let subject: Subject
     
     init(collectionView: UICollectionView, of adapter: ListAdapter, with subject: Subject) {
