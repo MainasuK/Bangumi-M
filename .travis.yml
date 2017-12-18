@@ -7,7 +7,7 @@ xcode_sdk: iphonesimulator
 before_install:
   - gem install xcpretty 
   - travis_wait pod repo update
-  - openssl aes-256-cbc -K $encrypted_16b939be673a_key -iv $encrypted_16b939be673a_iv -in BangumiAPI.swift.enc -out BangumiAPI.swift -d
+  - openssl aes-256-cbc -K $encrypted_6928815ff473_key -iv $encrypted_6928815ff473_iv -in BangumiAPI.swift.enc -out ./Percolator/BangumiAPI.swift -d
 
 cache:
   - bundler
