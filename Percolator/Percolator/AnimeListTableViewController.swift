@@ -214,7 +214,9 @@ extension AnimeListTableViewController {
             defer {
                 self.title = "进度管理"
                 self.isFirstRefresh = false
-                self.refreshControl?.endRefreshing()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.refreshControl?.endRefreshing()
+                }
             }
             
             do {

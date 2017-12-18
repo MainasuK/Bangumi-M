@@ -75,7 +75,7 @@ extension SubjectCollectionViewModel {
                 self.parseBook(with: bodyNode)
                 self.parseOther(with: bodyNode)
 
-                self.adapter.performUpdates(animated: true, completion: nil)
+                self.adapter?.performUpdates(animated: true, completion: nil)
 
                 self.fetchCollectInfo(for: self.bookSubjectItems.flatMap { $0.id })
                 
@@ -107,7 +107,7 @@ extension SubjectCollectionViewModel {
                     self.collectDict[key] = value
                 }
                 
-                self.adapter.performUpdates(animated: false, completion: nil)
+                self.adapter?.performUpdates(animated: false, completion: nil)
 
             } catch CollectionError.noCollection {
                 consolePrint("No collect info")
