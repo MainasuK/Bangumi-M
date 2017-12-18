@@ -89,23 +89,24 @@ extension AnimeListTableViewController {
     
     fileprivate func setupBarButtonItem() {
         let button: UIButton = {
-            let btn = UIButton()
+            let btn = UIButton(type: .custom)
 
             btn.setImage(UIImage.fromColor(.placeholder, size: CGSize(width: 30, height: 30)), for: .normal)
-            
-            // In iOS 11, bar button item use autolayout but not frame more.
-            btn.widthAnchor.constraint(equalToConstant: 30).isActive = true
-            btn.heightAnchor.constraint(equalToConstant: 30).isActive = true
-
             if let avatarLargeUrl = BangumiRequest.shared.user?.avatar.largeUrl,
-            let url = URL(string: avatarLargeUrl) {
+                let url = URL(string: avatarLargeUrl) {
                 let filter = AspectScaledToFillSizeFilter(size: CGSize(width: 30, height: 30))
                 btn.af_setImage(for: .normal, url: url, placeholderImage: nil, filter: filter)
-//                btn.af_setImage(for: .normal, url: url)
             }
 
-            btn.contentMode = .scaleAspectFill
-            btn.imageView?.contentMode = .scaleAspectFill
+            // In iOS 11, bar button item use autolayout but not frame more.
+            if #available(iOS 11, *) {
+                btn.widthAnchor.constraint(equalToConstant: 30).isActive = true
+                btn.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            } else {
+                btn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+            }
+
+            btn.imageView?.frame.size = CGSize(width: 30, height: 30)
             btn.imageView?.layer.cornerRadius = 30 * 0.5
             btn.imageView?.layer.borderColor = UIColor.percolatorLightGray.cgColor
             btn.imageView?.layer.borderWidth = 0.5   // 1px
