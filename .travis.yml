@@ -12,4 +12,6 @@ cache:
   - bundler
   - cocoapods
 
+before_script: cd Percolator
+
 script: xcodebuild -workspace Percolator.xcworkspace -scheme 'Bangumi M' -sdk iphonesimulator -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty -c
