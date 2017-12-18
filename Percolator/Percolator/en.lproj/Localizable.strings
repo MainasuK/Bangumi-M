@@ -32,3 +32,9 @@
 
 "save to search box" = "Save to Search Box";
 "delete from search box" = "Delete from Search Box";
+
+"save success" = "Success";
+"save fail" = "Fail";
+
+"delete success" = "Deleted";
+"delete fail" = "Fail";

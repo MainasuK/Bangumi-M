@@ -13,13 +13,13 @@ class TopicTableViewCell: UITableViewCell, ConfigurableCell {
     typealias ItemType = TopicTableViewModel.ItemType
     
     static let SFAlternativesFormFont: UIFont = {
-        let descriptor = UIFont.systemFont(ofSize: 11.0, weight: UIFontWeightLight).fontDescriptor
+        let descriptor = UIFont.systemFont(ofSize: 11.0, weight: UIFont.Weight.light).fontDescriptor
         let adjusted = descriptor.addingAttributes(
             [
-                UIFontDescriptorFeatureSettingsAttribute: [
+                UIFontDescriptor.AttributeName.featureSettings: [
                     [
-                        UIFontFeatureTypeIdentifierKey: kStylisticAlternativesType,
-                        UIFontFeatureSelectorIdentifierKey: kStylisticAltOneOnSelector
+                        UIFontDescriptor.FeatureKey.featureIdentifier: kStylisticAlternativesType,
+                        UIFontDescriptor.FeatureKey.typeIdentifier: kStylisticAltOneOnSelector
                     ]
                 ]
             ]

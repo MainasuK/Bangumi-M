@@ -63,7 +63,6 @@ extension UILabel {
                     DispatchQueue.main.async { [weak self] in
                         self?.font = font
                     }
-                    break
                     
                 case .willBeginQuerying: // called once before talking to the server.  Skipped if not necessary.
                     //consolePrint("Will begin querying…")

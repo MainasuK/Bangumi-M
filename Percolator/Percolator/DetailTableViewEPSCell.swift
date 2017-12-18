@@ -14,13 +14,13 @@ class DetailTableViewEPSCell: DetailTableViewCell {
     
     // Ref: WWDC 15 - Session 803
     static let SFAlternativesFormFont: UIFont = {
-        let descriptor = UIFont.systemFont(ofSize: 11.0, weight: UIFontWeightLight).fontDescriptor
+        let descriptor = UIFont.systemFont(ofSize: 11.0, weight: UIFont.Weight.light).fontDescriptor
         let adjusted = descriptor.addingAttributes(
             [
-                UIFontDescriptorFeatureSettingsAttribute: [
+                UIFontDescriptor.AttributeName.featureSettings: [
                     [
-                        UIFontFeatureTypeIdentifierKey: kStylisticAlternativesType,
-                        UIFontFeatureSelectorIdentifierKey: kStylisticAltOneOnSelector
+                        UIFontDescriptor.FeatureKey.featureIdentifier: kStylisticAlternativesType,
+                        UIFontDescriptor.FeatureKey.typeIdentifier: kStylisticAltOneOnSelector
                     ]
                 ]
             ]
@@ -29,13 +29,13 @@ class DetailTableViewEPSCell: DetailTableViewCell {
     }()
     
     static let SFAlternativesFormRegularFont: UIFont = {
-        let descriptor = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightRegular).fontDescriptor
+        let descriptor = UIFont.systemFont(ofSize: 17.0, weight: UIFont.Weight.regular).fontDescriptor
         let adjusted = descriptor.addingAttributes(
             [
-                UIFontDescriptorFeatureSettingsAttribute: [
+                UIFontDescriptor.AttributeName.featureSettings: [
                     [
-                        UIFontFeatureTypeIdentifierKey: kStylisticAlternativesType,
-                        UIFontFeatureSelectorIdentifierKey: kStylisticAltOneOnSelector
+                        UIFontDescriptor.FeatureKey.featureIdentifier: kStylisticAlternativesType,
+                        UIFontDescriptor.FeatureKey.typeIdentifier: kStylisticAltOneOnSelector
                     ]
                 ]
             ]
@@ -101,8 +101,8 @@ extension DetailTableViewEPSCell {
     fileprivate func configureLabel(with episode: Episode) {
         
         let attributedText: NSMutableAttributedString = {
-            let sortAttributes = [NSFontAttributeName : type(of: self).SFAlternativesFormRegularFont]
-            let nameAttributes = [NSFontAttributeName : UIFont(name: "HiraginoSans-W3", size: 16.0) ?? type(of: self).SFAlternativesFormRegularFont]
+            let sortAttributes = [NSAttributedStringKey.font : type(of: self).SFAlternativesFormRegularFont]
+            let nameAttributes = [NSAttributedStringKey.font : UIFont(name: "HiraginoSans-W3", size: 16.0) ?? type(of: self).SFAlternativesFormRegularFont]
             
             let string = NSMutableAttributedString()
             string.append(NSAttributedString(string: episode.sortString, attributes: sortAttributes))

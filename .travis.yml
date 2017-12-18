@@ -1,0 +1,18 @@
+language: objective-c
+osx_image: xcode9.2
+xcode_workspace: Percolator.xcworkspace
+xcode_scheme: Bangumi M
+xcode_sdk: iphonesimulator
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_3e8d49d80ae4_key -iv $encrypted_3e8d49d80ae4_iv -in BangumiAPI.swift.enc -out ./Percolator/Percolator/BangumiAPI.swift -d
+  - gem install xcpretty 
+  - travis_wait pod repo update
+
+cache:
+  - bundler
+  - cocoapods
+
+before_script: cd Percolator
+
+script: xcodebuild -workspace Percolator.xcworkspace -scheme 'Bangumi M' -sdk iphonesimulator -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty && exit ${PIPESTATUS[0]}

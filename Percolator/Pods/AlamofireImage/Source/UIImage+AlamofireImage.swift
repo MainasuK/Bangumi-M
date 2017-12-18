@@ -1,7 +1,7 @@
 //
 //  UIImage+AlamofireImage.swift
 //
-//  Copyright (c) 2015-2016 Alamofire Software Foundation (http://alamofire.org/)
+//  Copyright (c) 2015-2017 Alamofire Software Foundation (http://alamofire.org/)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,11 @@
 //  THE SOFTWARE.
 //
 
+#if os(iOS) || os(tvOS) || os(watchOS)
+
 import CoreGraphics
 import Foundation
 import UIKit
-
-#if os(iOS) || os(tvOS)
-import CoreImage
-#endif
 
 // MARK: Initialization
 
@@ -134,13 +132,15 @@ extension UIImage {
     ///
     /// - returns: A new image object.
     public func af_imageScaled(to size: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(size, af_isOpaque, 0.0)
-        draw(in: CGRect(origin: CGPoint.zero, size: size))
+        assert(size.width > 0 && size.height > 0, "You cannot safely scale an image to a zero width or height")
 
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsBeginImageContextWithOptions(size, af_isOpaque, 0.0)
+        draw(in: CGRect(origin: .zero, size: size))
+
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext() ?? self
         UIGraphicsEndImageContext()
 
-        return scaledImage!
+        return scaledImage
     }
 
     /// Returns a new version of the image scaled from the center while maintaining the aspect ratio to fit within
@@ -155,6 +155,8 @@ extension UIImage {
     ///
     /// - returns: A new image object.
     public func af_imageAspectScaled(toFit size: CGSize) -> UIImage {
+        assert(size.width > 0 && size.height > 0, "You cannot safely scale an image to a zero width or height")
+
         let imageAspectRatio = self.size.width / self.size.height
         let canvasAspectRatio = size.width / size.height
 
@@ -172,10 +174,10 @@ extension UIImage {
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
         draw(in: CGRect(origin: origin, size: scaledSize))
 
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext() ?? self
         UIGraphicsEndImageContext()
 
-        return scaledImage!
+        return scaledImage
     }
 
     /// Returns a new version of the image scaled from the center while maintaining the aspect ratio to fill a
@@ -185,6 +187,8 @@ extension UIImage {
     ///
     /// - returns: A new image object.
     public func af_imageAspectScaled(toFill size: CGSize) -> UIImage {
+        assert(size.width > 0 && size.height > 0, "You cannot safely scale an image to a zero width or height")
+
         let imageAspectRatio = self.size.width / self.size.height
         let canvasAspectRatio = size.width / size.height
 
@@ -202,10 +206,10 @@ extension UIImage {
         UIGraphicsBeginImageContextWithOptions(size, af_isOpaque, 0.0)
         draw(in: CGRect(origin: origin, size: scaledSize))
 
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext() ?? self
         UIGraphicsEndImageContext()
 
-        return scaledImage!
+        return scaledImage
     }
 }
 
@@ -232,10 +236,10 @@ extension UIImage {
 
         draw(in: CGRect(origin: CGPoint.zero, size: size))
 
-        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
 
-        return roundedImage!
+        return roundedImage
     }
 
     /// Returns a new version of the image rounded into a circle.
@@ -262,17 +266,22 @@ extension UIImage {
 
         squareImage.draw(in: CGRect(origin: CGPoint.zero, size: squareImage.size))
 
-        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
 
-        return roundedImage!
+        return roundedImage
     }
 }
 
+#endif
+
 #if os(iOS) || os(tvOS)
+
+import CoreImage
 
 // MARK: - Core Image Filters
 
+@available(iOS 9.0, *)
 extension UIImage {
     /// Returns a new version of the image using a CoreImage filter with the specified name and parameters.
     ///

@@ -1,7 +1,7 @@
 //
 //  Request.swift
 //
-//  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
+//  Copyright (c) 2014-2017 Alamofire Software Foundation (http://alamofire.org/)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,8 +30,10 @@ public protocol RequestAdapter {
     ///
     /// - parameter urlRequest: The URL request to adapt.
     ///
+    /// - throws: An `Error` if the adaptation encounters an error.
+    ///
     /// - returns: The adapted `URLRequest`.
-    func adapt(_ urlRequest: URLRequest) -> URLRequest
+    func adapt(_ urlRequest: URLRequest) throws -> URLRequest
 }
 
 // MARK: -
@@ -44,7 +46,7 @@ public typealias RequestRetryCompletion = (_ shouldRetry: Bool, _ timeDelay: Tim
 public protocol RequestRetrier {
     /// Determines whether the `Request` should be retried by calling the `completion` closure.
     ///
-    /// This operation is fully asychronous. Any amount of time can be taken to determine whether the request needs
+    /// This operation is fully asynchronous. Any amount of time can be taken to determine whether the request needs
     /// to be retried. The one requirement is that the completion closure is called to ensure the request is properly
     /// cleaned up after.
     ///
@@ -52,28 +54,35 @@ public protocol RequestRetrier {
     /// - parameter request:    The request that failed due to the encountered error.
     /// - parameter error:      The error encountered when executing the request.
     /// - parameter completion: The completion closure to be executed when retry decision has been determined.
-    func should(_ manager: SessionManager, retry request: Request, with error: Error, completion: RequestRetryCompletion)
+    func should(_ manager: SessionManager, retry request: Request, with error: Error, completion: @escaping RequestRetryCompletion)
 }
 
 // MARK: -
 
 protocol TaskConvertible {
-    func task(session: URLSession, adapter: RequestAdapter?, queue: DispatchQueue) -> URLSessionTask
+    func task(session: URLSession, adapter: RequestAdapter?, queue: DispatchQueue) throws -> URLSessionTask
 }
+
+/// A dictionary of headers to apply to a `URLRequest`.
+public typealias HTTPHeaders = [String: String]
 
 // MARK: -
 
 /// Responsible for sending a request and receiving the response and associated data from the server, as well as
 /// managing its underlying `URLSessionTask`.
 open class Request {
+
+    // MARK: Helper Types
+
     /// A closure executed when monitoring upload or download progress of a request.
     public typealias ProgressHandler = (Progress) -> Void
 
-    /// A closure executed when monitoring the download progress of a request.
-    public typealias DownloadProgressHandler = (_ bytesReceived: Int64, _ totalBytesReceived: Int64, _ totalBytesExpectedToReceive: Int64) -> Void
-
-    /// A closure executed when monitoring the upload progress of a request.
-    public typealias UploadProgressHandler = (_ bytesSent: Int64, _ totalBytesSent: Int64, _ totalBytesExpectedToSend: Int64) -> Void
+    enum RequestTask {
+        case data(TaskConvertible?, URLSessionTask?)
+        case download(TaskConvertible?, URLSessionTask?)
+        case upload(TaskConvertible?, URLSessionTask?)
+        case stream(TaskConvertible?, URLSessionTask?)
+    }
 
     // MARK: Properties
 
@@ -90,16 +99,19 @@ open class Request {
     }
 
     /// The underlying task.
-    open var task: URLSessionTask { return delegate.task }
+    open var task: URLSessionTask? { return delegate.task }
 
     /// The session belonging to the underlying task.
     open let session: URLSession
 
     /// The request sent or to be sent to the server.
-    open var request: URLRequest? { return task.originalRequest }
+    open var request: URLRequest? { return task?.originalRequest }
 
     /// The response received from the server, if any.
-    open var response: HTTPURLResponse? { return task.response as? HTTPURLResponse }
+    open var response: HTTPURLResponse? { return task?.response as? HTTPURLResponse }
+
+    /// The number of times the request has been retried.
+    open internal(set) var retryCount: UInt = 0
 
     let originalTask: TaskConvertible?
 
@@ -113,21 +125,25 @@ open class Request {
 
     // MARK: Lifecycle
 
-    init(session: URLSession, task: URLSessionTask, originalTask: TaskConvertible?) {
+    init(session: URLSession, requestTask: RequestTask, error: Error? = nil) {
         self.session = session
-        self.originalTask = originalTask
 
-        switch task {
-        case is URLSessionUploadTask:
-            taskDelegate = UploadTaskDelegate(task: task)
-        case is URLSessionDataTask:
+        switch requestTask {
+        case .data(let originalTask, let task):
             taskDelegate = DataTaskDelegate(task: task)
-        case is URLSessionDownloadTask:
+            self.originalTask = originalTask
+        case .download(let originalTask, let task):
             taskDelegate = DownloadTaskDelegate(task: task)
-        default:
+            self.originalTask = originalTask
+        case .upload(let originalTask, let task):
+            taskDelegate = UploadTaskDelegate(task: task)
+            self.originalTask = originalTask
+        case .stream(let originalTask, let task):
             taskDelegate = TaskDelegate(task: task)
+            self.originalTask = originalTask
         }
 
+        delegate.error = error
         delegate.queue.addOperation { self.endTime = CFAbsoluteTimeGetCurrent() }
     }
 
@@ -180,6 +196,8 @@ open class Request {
 
     /// Resumes the request.
     open func resume() {
+        guard let task = task else { delegate.queue.isSuspended = false ; return }
+
         if startTime == nil { startTime = CFAbsoluteTimeGetCurrent() }
 
         task.resume()
@@ -193,6 +211,8 @@ open class Request {
 
     /// Suspends the request.
     open func suspend() {
+        guard let task = task else { return }
+
         task.suspend()
 
         NotificationCenter.default.post(
@@ -204,6 +224,8 @@ open class Request {
 
     /// Cancels the request.
     open func cancel() {
+        guard let task = task else { return }
+
         task.cancel()
 
         NotificationCenter.default.post(
@@ -247,7 +269,7 @@ extension Request: CustomDebugStringConvertible {
     }
 
     func cURLRepresentation() -> String {
-        var components = ["$ curl -i"]
+        var components = ["$ curl -v"]
 
         guard let request = self.request,
               let url = request.url,
@@ -271,11 +293,12 @@ extension Request: CustomDebugStringConvertible {
 
             if let credentials = credentialStorage.credentials(for: protectionSpace)?.values {
                 for credential in credentials {
-                    components.append("-u \(credential.user!):\(credential.password!)")
+                    guard let user = credential.user, let password = credential.password else { continue }
+                    components.append("-u \(user):\(password)")
                 }
             } else {
-                if let credential = delegate.credential {
-                    components.append("-u \(credential.user!):\(credential.password!)")
+                if let credential = delegate.credential, let user = credential.user, let password = credential.password {
+                    components.append("-u \(user):\(password)")
                 }
             }
         }
@@ -286,7 +309,12 @@ extension Request: CustomDebugStringConvertible {
                 let cookies = cookieStorage.cookies(for: url), !cookies.isEmpty
             {
                 let string = cookies.reduce("") { $0 + "\($1.name)=\($1.value);" }
+
+            #if swift(>=3.2)
+                components.append("-b \"\(string[..<string.index(before: string.endIndex)])\"")
+            #else
                 components.append("-b \"\(string.substring(to: string.characters.index(before: string.endIndex)))\"")
+            #endif
             }
         }
 
@@ -308,10 +336,7 @@ extension Request: CustomDebugStringConvertible {
             components.append("-H \"\(field): \(value)\"")
         }
 
-        if
-            let httpBodyData = request.httpBody,
-            let httpBody = String(data: httpBodyData, encoding: String.Encoding.utf8)
-        {
+        if let httpBodyData = request.httpBody, let httpBody = String(data: httpBodyData, encoding: .utf8) {
             var escapedBody = httpBody.replacingOccurrences(of: "\\\"", with: "\\\\\"")
             escapedBody = escapedBody.replacingOccurrences(of: "\"", with: "\\\"")
 
@@ -334,13 +359,25 @@ open class DataRequest: Request {
     struct Requestable: TaskConvertible {
         let urlRequest: URLRequest
 
-        func task(session: URLSession, adapter: RequestAdapter?, queue: DispatchQueue) -> URLSessionTask {
-            let urlRequest = self.urlRequest.adapt(using: adapter)
-            return queue.syncResult { session.dataTask(with: urlRequest) }
+        func task(session: URLSession, adapter: RequestAdapter?, queue: DispatchQueue) throws -> URLSessionTask {
+            do {
+                let urlRequest = try self.urlRequest.adapt(using: adapter)
+                return queue.sync { session.dataTask(with: urlRequest) }
+            } catch {
+                throw AdaptError(error: error)
+            }
         }
     }
 
     // MARK: Properties
+
+    /// The request sent or to be sent to the server.
+    open override var request: URLRequest? {
+        if let request = super.request { return request }
+        if let requestable = originalTask as? Requestable { return requestable.urlRequest }
+
+        return nil
+    }
 
     /// The progress of fetching the response data from the server for the request.
     open var progress: Progress { return dataDelegate.progress }
@@ -375,18 +412,6 @@ open class DataRequest: Request {
     @discardableResult
     open func downloadProgress(queue: DispatchQueue = DispatchQueue.main, closure: @escaping ProgressHandler) -> Self {
         dataDelegate.progressHandler = (closure, queue)
-        return self
-    }
-
-    /// Sets a closure to be called periodically during the lifecycle of the `Request` as data is read from the server.
-    ///
-    /// - parameter queue:   The dispatch queue to execute the closure on.
-    /// - parameter closure: The code to be executed periodically as data is read from the server.
-    ///
-    /// - returns: The request.
-    @discardableResult
-    open func downloadProgress(queue: DispatchQueue = DispatchQueue.main, closure: @escaping DownloadProgressHandler) -> Self {
-        dataDelegate.progressDebugHandler = (closure, queue)
         return self
     }
 }
@@ -433,22 +458,37 @@ open class DownloadRequest: Request {
         case request(URLRequest)
         case resumeData(Data)
 
-        func task(session: URLSession, adapter: RequestAdapter?, queue: DispatchQueue) -> URLSessionTask {
-            let task: URLSessionTask
+        func task(session: URLSession, adapter: RequestAdapter?, queue: DispatchQueue) throws -> URLSessionTask {
+            do {
+                let task: URLSessionTask
 
-            switch self {
-            case let .request(urlRequest):
-                let urlRequest = urlRequest.adapt(using: adapter)
-                task = queue.syncResult { session.downloadTask(with: urlRequest) }
-            case let .resumeData(resumeData):
-                task = queue.syncResult { session.downloadTask(withResumeData: resumeData) }
+                switch self {
+                case let .request(urlRequest):
+                    let urlRequest = try urlRequest.adapt(using: adapter)
+                    task = queue.sync { session.downloadTask(with: urlRequest) }
+                case let .resumeData(resumeData):
+                    task = queue.sync { session.downloadTask(withResumeData: resumeData) }
+                }
+
+                return task
+            } catch {
+                throw AdaptError(error: error)
             }
-
-            return task
         }
     }
 
     // MARK: Properties
+
+    /// The request sent or to be sent to the server.
+    open override var request: URLRequest? {
+        if let request = super.request { return request }
+
+        if let downloadable = originalTask as? Downloadable, case let .request(urlRequest) = downloadable {
+            return urlRequest
+        }
+
+        return nil
+    }
 
     /// The resume data of the underlying download task if available after a failure.
     open var resumeData: Data? { return downloadDelegate.resumeData }
@@ -467,7 +507,7 @@ open class DownloadRequest: Request {
         NotificationCenter.default.post(
             name: Notification.Name.Task.DidCancel,
             object: self,
-            userInfo: [Notification.Key.Task: task]
+            userInfo: [Notification.Key.Task: task as Any]
         )
     }
 
@@ -482,18 +522,6 @@ open class DownloadRequest: Request {
     @discardableResult
     open func downloadProgress(queue: DispatchQueue = DispatchQueue.main, closure: @escaping ProgressHandler) -> Self {
         downloadDelegate.progressHandler = (closure, queue)
-        return self
-    }
-
-    /// Sets a closure to be called periodically during the lifecycle of the `Request` as data is read from the server.
-    ///
-    /// - parameter queue:   The dispatch queue to execute the closure on.
-    /// - parameter closure: The code to be executed periodically as data is read from the server.
-    ///
-    /// - returns: The request.
-    @discardableResult
-    open func downloadProgress(queue: DispatchQueue = DispatchQueue.main, closure: @escaping DownloadProgressHandler) -> Self {
-        downloadDelegate.progressDebugHandler = (closure, queue)
         return self
     }
 
@@ -535,26 +563,42 @@ open class UploadRequest: DataRequest {
         case file(URL, URLRequest)
         case stream(InputStream, URLRequest)
 
-        func task(session: URLSession, adapter: RequestAdapter?, queue: DispatchQueue) -> URLSessionTask {
-            let task: URLSessionTask
+        func task(session: URLSession, adapter: RequestAdapter?, queue: DispatchQueue) throws -> URLSessionTask {
+            do {
+                let task: URLSessionTask
 
-            switch self {
-            case let .data(data, urlRequest):
-                let urlRequest = urlRequest.adapt(using: adapter)
-                task = queue.syncResult { session.uploadTask(with: urlRequest, from: data) }
-            case let .file(url, urlRequest):
-                let urlRequest = urlRequest.adapt(using: adapter)
-                task = queue.syncResult { session.uploadTask(with: urlRequest, fromFile: url) }
-            case let .stream(_, urlRequest):
-                let urlRequest = urlRequest.adapt(using: adapter)
-                task = queue.syncResult { session.uploadTask(withStreamedRequest: urlRequest) }
+                switch self {
+                case let .data(data, urlRequest):
+                    let urlRequest = try urlRequest.adapt(using: adapter)
+                    task = queue.sync { session.uploadTask(with: urlRequest, from: data) }
+                case let .file(url, urlRequest):
+                    let urlRequest = try urlRequest.adapt(using: adapter)
+                    task = queue.sync { session.uploadTask(with: urlRequest, fromFile: url) }
+                case let .stream(_, urlRequest):
+                    let urlRequest = try urlRequest.adapt(using: adapter)
+                    task = queue.sync { session.uploadTask(withStreamedRequest: urlRequest) }
+                }
+
+                return task
+            } catch {
+                throw AdaptError(error: error)
             }
-
-            return task
         }
     }
 
     // MARK: Properties
+
+    /// The request sent or to be sent to the server.
+    open override var request: URLRequest? {
+        if let request = super.request { return request }
+
+        guard let uploadable = originalTask as? Uploadable else { return nil }
+
+        switch uploadable {
+        case .data(_, let urlRequest), .file(_, let urlRequest), .stream(_, let urlRequest):
+            return urlRequest
+        }
+    }
 
     /// The progress of uploading the payload to the server for the upload request.
     open var uploadProgress: Progress { return uploadDelegate.uploadProgress }
@@ -578,22 +622,6 @@ open class UploadRequest: DataRequest {
         uploadDelegate.uploadProgressHandler = (closure, queue)
         return self
     }
-
-    /// Sets a closure to be called periodically during the lifecycle of the `UploadRequest` as data is sent to
-    /// the server.
-    ///
-    /// After the data is sent to the server, the `progress(queue:closure:)` APIs can be used to monitor the progress
-    /// of data being read from the server.
-    ///
-    /// - parameter queue:   The dispatch queue to execute the closure on.
-    /// - parameter closure: The code to be executed periodically as data is sent to the server.
-    ///
-    /// - returns: The request.
-    @discardableResult
-    open func uploadProgress(queue: DispatchQueue = DispatchQueue.main, closure: @escaping UploadProgressHandler) -> Self {
-        uploadDelegate.uploadProgressDebugHandler = (closure, queue)
-        return self
-    }
 }
 
 // MARK: -
@@ -601,19 +629,20 @@ open class UploadRequest: DataRequest {
 #if !os(watchOS)
 
 /// Specific type of `Request` that manages an underlying `URLSessionStreamTask`.
+@available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
 open class StreamRequest: Request {
     enum Streamable: TaskConvertible {
         case stream(hostName: String, port: Int)
         case netService(NetService)
 
-        func task(session: URLSession, adapter: RequestAdapter?, queue: DispatchQueue) -> URLSessionTask {
+        func task(session: URLSession, adapter: RequestAdapter?, queue: DispatchQueue) throws -> URLSessionTask {
             let task: URLSessionTask
 
             switch self {
             case let .stream(hostName, port):
-                task = queue.syncResult { session.streamTask(withHostName: hostName, port: port) }
+                task = queue.sync { session.streamTask(withHostName: hostName, port: port) }
             case let .netService(netService):
-                task = queue.syncResult { session.streamTask(with: netService) }
+                task = queue.sync { session.streamTask(with: netService) }
             }
 
             return task

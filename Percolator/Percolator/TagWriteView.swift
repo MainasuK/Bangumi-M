@@ -10,7 +10,6 @@ import UIKit
 import Foundation
 import QuartzCore
 
-// swiftlint:disable file_length
 public class TagWriteView: UIView {
     
     // MARK: Public Properties
@@ -194,7 +193,7 @@ public class TagWriteView: UIView {
     }
     
     // MARK: UI Actions
-    func tagButtonDidPushed(sender: UIButton) {
+    @objc func tagButtonDidPushed(sender: UIButton) {
         let btn = sender
         
         if deleteButton.isHidden == false && btn.tag == deleteButton.tag {
@@ -213,7 +212,7 @@ public class TagWriteView: UIView {
         }
     }
     
-    func deleteButtonDidPush(sender: Any) {
+    @objc func deleteButtonDidPush(sender: Any) {
         if tagsMade.count <= deleteButton.tag {
             return
         }
@@ -228,12 +227,12 @@ public class TagWriteView: UIView {
     // MARK: Internals
     private func initControls() {
         scrollView = UIScrollView(frame: self.bounds)
-        scrollView.contentInset.left = 10
         scrollView.backgroundColor = UIColor.clear
         scrollView.scrollsToTop = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
+        scrollView.clipsToBounds = false
         addSubview(scrollView)
         scrollView.applyMarginConstraint(margin: UIEdgeInsets.zero)
         
@@ -302,7 +301,7 @@ public class TagWriteView: UIView {
         btnFrame.origin.x = posx
         
         let temp = tag as NSString
-        btnFrame.size.width = temp.size(attributes: [NSFontAttributeName:font]).width + (tagButton.layer.cornerRadius * 2.0) + 20.0
+        btnFrame.size.width = temp.size(withAttributes: [NSAttributedStringKey.font:font]).width + (tagButton.layer.cornerRadius * 2.0) + 20.0
         //        btnFrame.size.height = self.frame.size.height - 13.0
         
         tagButton.layer.cornerRadius = btnFrame.size.height * 0.5
@@ -423,7 +422,7 @@ public class TagWriteView: UIView {
     
     fileprivate func widthForInputView(tagString tag: String) -> CGFloat {
         let temp = tag as NSString
-        return max(50.0, temp.size(attributes: [NSFontAttributeName:font]).width + 25.0)
+        return max(50.0, temp.size(withAttributes: [NSAttributedStringKey.font:font]).width + 25.0)
     }
     
 }
@@ -457,7 +456,7 @@ extension TagWriteView: UITextViewDelegate {
                 let loc = textCount - range.length
                 let startIndex = t.startIndex
                 let endIndex = t.index(t.startIndex, offsetBy: loc)
-                newText = t[startIndex...endIndex]
+                newText = String(t[startIndex...endIndex])
             } else {
                 deleteBackspace()
                 return false

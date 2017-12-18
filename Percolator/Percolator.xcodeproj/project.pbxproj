@@ -19,6 +19,7 @@
 		DB0BC8051D1197FE0091ECE0 /* AnimeListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47F21B064CF00004BBA2 /* AnimeListTableViewCell.swift */; };
 		DB0BC8061D11B6450091ECE0 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4C76601B7E3A8A00B5E921 /* UIApplication.swift */; };
 		DB0DA60E1D430EF3005F4E01 /* AnimeListTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0DA60D1D430EF3005F4E01 /* AnimeListTableViewCellDelegate.swift */; };
+		DB15DD121F6047F800472266 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47CB1B060DEA0004BBA2 /* Main.storyboard */; };
 		DB1AAAFD1D33D39100EE7727 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA47C91B060DEA0004BBA2 /* LoginViewController.swift */; };
 		DB1AAAFF1D33DE9500EE7727 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1AAAFE1D33DE9500EE7727 /* UINavigationController.swift */; };
 		DB1AAB011D33EEA500EE7727 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1AAB001D33EEA500EE7727 /* Result.swift */; };
@@ -30,7 +31,7 @@
 		DB2C7B251D45AC8500386366 /* ConfigurableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2C7B241D45AC8500386366 /* ConfigurableHeader.swift */; };
 		DB3159711D139C06007B280E /* SearchBoxTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D5771B841DC700EED59A /* SearchBoxTableViewController.swift */; };
 		DB3159721D139CD5007B280E /* SearchBoxTabelViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D5791B843ADE00EED59A /* SearchBoxTabelViewCell.swift */; };
-		DB3159731D13D8DD007B280E /* DetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D57D1B84CE7000EED59A /* DetailTableViewController.swift */; };
+		DB3159731D13D8DD007B280E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2D57D1B84CE7000EED59A /* DetailViewController.swift */; };
 		DB38795F1D44302E0022AD93 /* TagWriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB38795E1D44302E0022AD93 /* TagWriteView.swift */; };
 		DB3A232E1D45FB9D00D70DFF /* TopicTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB61BED31D45E8B500D18F2B /* TopicTableViewModel.swift */; };
 		DB3B78921D181BF9001A9AF6 /* TopicTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3B78911D181BF9001A9AF6 /* TopicTableViewHeaderFooterView.swift */; };
@@ -45,6 +46,9 @@
 		DB6B1BCB1D182F390005CAE6 /* SubjectCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B1BCA1D182F390005CAE6 /* SubjectCollectionViewController.swift */; };
 		DB6B1BCD1D182F570005CAE6 /* SubjectCollectionViewBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B1BCC1D182F570005CAE6 /* SubjectCollectionViewBookCell.swift */; };
 		DB6B1BCF1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B1BCE1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift */; };
+		DB7015171FB299CC00B3D9B3 /* SubjectCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7015161FB299CB00B3D9B3 /* SubjectCollectionViewModel.swift */; };
+		DB70151D1FB2C2B300B3D9B3 /* SubjectCollectionViewBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB70151C1FB2C2B300B3D9B3 /* SubjectCollectionViewBookCell.xib */; };
+		DB70151F1FB2D7B100B3D9B3 /* SubjectCollectionViewNotBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB70151E1FB2D7B100B3D9B3 /* SubjectCollectionViewNotBookCell.xib */; };
 		DB7560961D4B1086005A5046 /* DetailTableViewCell+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7560951D4B1086005A5046 /* DetailTableViewCell+CollectionView.swift */; };
 		DB7560971D4B1805005A5046 /* Crt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B043A1B85E6F40074C80E /* Crt.swift */; };
 		DB7560981D4B1843005A5046 /* Staff.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB3FCD01B86F21000FFF8DE /* Staff.swift */; };
@@ -81,13 +85,14 @@
 		DBA4C9121D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA4C9111D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift */; };
 		DBAD79231D39477E00CCB8AE /* ErrorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAD79221D39477E00CCB8AE /* ErrorProtocol.swift */; };
 		DBAD9BCE1D3F6BBE00206ACE /* BangumiRequest+Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAD9BCD1D3F6BBE00206ACE /* BangumiRequest+Subject.swift */; };
+		DBADFA351F622C7800BF93C2 /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBADFA371F622C7800BF93C2 /* infoPlist.strings */; };
 		DBAEE4AE1D44AA97008DE0C6 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB80EFFA1D34FEFC007DEF09 /* Collection.swift */; };
-		DBB86A151D4504AE00FBB87B /* SubjectCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB86A141D4504AE00FBB87B /* SubjectCollectionViewModel.swift */; };
-		DBBA47CD1B060DEA0004BBA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47CB1B060DEA0004BBA2 /* Main.storyboard */; };
+		DBB039F41F59388A00C42D47 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB039F31F59388A00C42D47 /* UIButton.swift */; };
 		DBBA47CF1B060DEA0004BBA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBBA47CE1B060DEA0004BBA2 /* Images.xcassets */; };
 		DBBB52531D47AE6E008A1617 /* SaveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52521D47AE6E008A1617 /* SaveActivity.swift */; };
 		DBBB52551D47AE7D008A1617 /* DeleteActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52541D47AE7D008A1617 /* DeleteActivity.swift */; };
 		DBBB52581D47B5CA008A1617 /* SubjectWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBB52571D47B5CA008A1617 /* SubjectWrapper.swift */; };
+		DBC0D4641F579EAD00255FCF /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC0D4631F579EAD00255FCF /* UserDefaults.swift */; };
 		DBC3A19B1D4B42710016346E /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5B043D1B85E7860074C80E /* Actor.swift */; };
 		DBC57A8F1D477167002C4DF2 /* CDSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC57A8E1D477167002C4DF2 /* CDSubject.swift */; };
 		DBCD90BD1D37CDC200E7B37C /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD90BC1D37CDC200E7B37C /* UIAlertController.swift */; };
@@ -193,6 +198,9 @@
 		DB6B1BCA1D182F390005CAE6 /* SubjectCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewController.swift; sourceTree = "<group>"; };
 		DB6B1BCC1D182F570005CAE6 /* SubjectCollectionViewBookCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewBookCell.swift; sourceTree = "<group>"; };
 		DB6B1BCE1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewNotBookCell.swift; sourceTree = "<group>"; };
+		DB7015161FB299CB00B3D9B3 /* SubjectCollectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewModel.swift; sourceTree = "<group>"; };
+		DB70151C1FB2C2B300B3D9B3 /* SubjectCollectionViewBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectCollectionViewBookCell.xib; sourceTree = "<group>"; };
+		DB70151E1FB2D7B100B3D9B3 /* SubjectCollectionViewNotBookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectCollectionViewNotBookCell.xib; sourceTree = "<group>"; };
 		DB7560951D4B1086005A5046 /* DetailTableViewCell+CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailTableViewCell+CollectionView.swift"; sourceTree = "<group>"; };
 		DB7A35291D37F14600FADA6C /* UISearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UISearchController.swift; sourceTree = "<group>"; };
 		DB7C24AC1D42F98D00A1A9BC /* DetailTableViewEPSCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewEPSCellDelegate.swift; sourceTree = "<group>"; };
@@ -232,8 +240,11 @@
 		DBA4C9111D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewMoreTopicCell.swift; sourceTree = "<group>"; };
 		DBAD79221D39477E00CCB8AE /* ErrorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorProtocol.swift; sourceTree = "<group>"; };
 		DBAD9BCD1D3F6BBE00206ACE /* BangumiRequest+Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BangumiRequest+Subject.swift"; sourceTree = "<group>"; };
+		DBADFA361F622C7800BF93C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/infoPlist.strings; sourceTree = "<group>"; };
+		DBADFA381F622C7C00BF93C2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/infoPlist.strings"; sourceTree = "<group>"; };
+		DBADFA391F622C8700BF93C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/infoPlist.strings; sourceTree = "<group>"; };
+		DBB039F31F59388A00C42D47 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		DBB3FCD01B86F21000FFF8DE /* Staff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Staff.swift; sourceTree = "<group>"; };
-		DBB86A141D4504AE00FBB87B /* SubjectCollectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewModel.swift; sourceTree = "<group>"; };
 		DBBA47C21B060DEA0004BBA2 /* Bangumi M.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bangumi M.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBBA47C71B060DEA0004BBA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DBBA47C91B060DEA0004BBA2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -246,6 +257,7 @@
 		DBBB52521D47AE6E008A1617 /* SaveActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveActivity.swift; sourceTree = "<group>"; };
 		DBBB52541D47AE7D008A1617 /* DeleteActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteActivity.swift; sourceTree = "<group>"; };
 		DBBB52571D47B5CA008A1617 /* SubjectWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectWrapper.swift; sourceTree = "<group>"; };
+		DBC0D4631F579EAD00255FCF /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		DBC57A8E1D477167002C4DF2 /* CDSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDSubject.swift; sourceTree = "<group>"; };
 		DBCD90BC1D37CDC200E7B37C /* UIAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		DBCD90C31D37D02900E7B37C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -258,7 +270,7 @@
 		DBD2D5771B841DC700EED59A /* SearchBoxTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBoxTableViewController.swift; sourceTree = "<group>"; };
 		DBD2D5791B843ADE00EED59A /* SearchBoxTabelViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBoxTabelViewCell.swift; sourceTree = "<group>"; };
 		DBD2D57B1B84AEB300EED59A /* BangumiAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BangumiAPI.swift; sourceTree = "<group>"; };
-		DBD2D57D1B84CE7000EED59A /* DetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
+		DBD2D57D1B84CE7000EED59A /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DBD7A9851D56C80B00BCA329 /* BangumiRequest+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BangumiRequest+URL.swift"; sourceTree = "<group>"; };
 		DBD7A9871D56D08500BCA329 /* PercolatorAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PercolatorAlertController.swift; sourceTree = "<group>"; };
 		DBD91C4A1D44546E007AFA80 /* DetailTableViewBannerCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewBannerCellDelegate.swift; sourceTree = "<group>"; };
@@ -395,7 +407,9 @@
 				DB7D13601D18E96D00ACA94B /* SubjectCollectionReusableView.swift */,
 				DBA480D41D451181004AAF6E /* SubjectCollectionViewCell.swift */,
 				DB6B1BCC1D182F570005CAE6 /* SubjectCollectionViewBookCell.swift */,
+				DB70151C1FB2C2B300B3D9B3 /* SubjectCollectionViewBookCell.xib */,
 				DB6B1BCE1D182F6F0005CAE6 /* SubjectCollectionViewNotBookCell.swift */,
+				DB70151E1FB2D7B100B3D9B3 /* SubjectCollectionViewNotBookCell.xib */,
 			);
 			name = SubjectCollectionView;
 			sourceTree = "<group>";
@@ -496,6 +510,7 @@
 			isa = PBXGroup;
 			children = (
 				DB1AAAFB1D33CECA00EE7727 /* Info.plist */,
+				DBADFA371F622C7800BF93C2 /* infoPlist.strings */,
 				DB7E28861D3BA46E00B529CA /* Bangumi M.entitlements */,
 				DBBA47CE1B060DEA0004BBA2 /* Images.xcassets */,
 				DBBA47C71B060DEA0004BBA2 /* AppDelegate.swift */,
@@ -512,8 +527,8 @@
 				DBEF11471D37866800E7A0D7 /* SearchBoxTableViewModel.swift */,
 				DB7E287B1D3B68F500B529CA /* AnimeListTableViewModel.swift */,
 				DB88206B1D3F19CC009031AE /* DetailTableViewModel.swift */,
+				DB7015161FB299CB00B3D9B3 /* SubjectCollectionViewModel.swift */,
 				DB61BED31D45E8B500D18F2B /* TopicTableViewModel.swift */,
-				DBB86A141D4504AE00FBB87B /* SubjectCollectionViewModel.swift */,
 				DB37BFF61D39D98C00F48436 /* Helper */,
 			);
 			name = Model;
@@ -597,6 +612,7 @@
 				DBA4C90D1D168E8F0043EDED /* CMKCollectButton.swift */,
 				DB4C76601B7E3A8A00B5E921 /* UIApplication.swift */,
 				DBCD90BC1D37CDC200E7B37C /* UIAlertController.swift */,
+				DBB039F31F59388A00C42D47 /* UIButton.swift */,
 				DBFBCB801B63157E001F3CD1 /* UIColor.swift */,
 				DB3C7F131C44B52E0092FD82 /* UIDevice.swift */,
 				DBE1C80A1D3C533A0086B83D /* UILabel.swift */,
@@ -604,6 +620,7 @@
 				DB9D24F91D35CCF500269DFE /* UIImage.swift */,
 				DB1AAAFE1D33DE9500EE7727 /* UINavigationController.swift */,
 				DB7A35291D37F14600FADA6C /* UISearchController.swift */,
+				DBC0D4631F579EAD00255FCF /* UserDefaults.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -637,7 +654,7 @@
 			children = (
 				DBBA47E71B0617020004BBA2 /* AnimeListTableViewController.swift */,
 				DBD2D5771B841DC700EED59A /* SearchBoxTableViewController.swift */,
-				DBD2D57D1B84CE7000EED59A /* DetailTableViewController.swift */,
+				DBD2D57D1B84CE7000EED59A /* DetailViewController.swift */,
 				DB7D87F51D17894B00885937 /* TopicTableViewController.swift */,
 				DB6B1BCA1D182F390005CAE6 /* SubjectCollectionViewController.swift */,
 				DBFBCB821B633376001F3CD1 /* CollectTableViewController.swift */,
@@ -735,12 +752,11 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Cirno MainasuK";
 				TargetAttributes = {
 					DB9E92DB1D50524100C150C4 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = Z68BDSMP42;
 						DevelopmentTeamName = "xu hao";
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
@@ -749,7 +765,7 @@
 					DBBA47C11B060DEA0004BBA2 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = Z68BDSMP42;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -803,10 +819,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB70151F1FB2D7B100B3D9B3 /* SubjectCollectionViewNotBookCell.xib in Resources */,
+				DB70151D1FB2C2B300B3D9B3 /* SubjectCollectionViewBookCell.xib in Resources */,
 				DB3B78941D181C07001A9AF6 /* TopicTableViewHeaderFooterView.xib in Resources */,
 				DB22FE161D16E9E6004A082D /* DetailTableViewEPSHeaderFooterView.xib in Resources */,
 				DBA29F4E1B8ADCB800ADED27 /* Settings.bundle in Resources */,
-				DBBA47CD1B060DEA0004BBA2 /* Main.storyboard in Resources */,
+				DBADFA351F622C7800BF93C2 /* infoPlist.strings in Resources */,
+				DB15DD121F6047F800472266 /* Main.storyboard in Resources */,
 				DBCD90C01D37D02300E7B37C /* Localizable.strings in Resources */,
 				DBBA47CF1B060DEA0004BBA2 /* Images.xcassets in Resources */,
 			);
@@ -844,9 +863,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M Tests/Pods-Bangumi M Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs/OHHTTPStubs.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -874,13 +896,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Bangumi M-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8368E1EDA903B48C27AB5445 /* [CP] Embed Pods Frameworks */ = {
@@ -889,9 +914,38 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M/Pods-Bangumi M-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Canvas/Canvas.framework",
+				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
+				"${BUILT_PRODUCTS_DIR}/EUMTouchPointView/EUMTouchPointView.framework",
+				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Kanna/Kanna.framework",
+				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
+				"${BUILT_PRODUCTS_DIR}/MGSwipeTableCell/MGSwipeTableCell.framework",
+				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
+				"${BUILT_PRODUCTS_DIR}/PPCopiableLabel/PPCopiableLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/UITextField+Shake/UITextField_Shake.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Canvas.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EUMTouchPointView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kanna.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MGSwipeTableCell.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PPCopiableLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextField_Shake.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -904,13 +958,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Bangumi M Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B82D4450F1EF0B08BFC8CD9D /* [CP] Check Pods Manifest.lock */ = {
@@ -919,13 +976,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Bangumi M UITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C4D770453744952AA9C24EEF /* [CP] Copy Pods Resources */ = {
@@ -949,9 +1009,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M UITests/Pods-Bangumi M UITests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SimulatorStatusMagic/SimulatorStatusMagic.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimulatorStatusMagic.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1021,7 +1084,7 @@
 				DB7E288C1D3BC98B00B529CA /* BangumiRequest+Collection.swift in Sources */,
 				DBAD79231D39477E00CCB8AE /* ErrorProtocol.swift in Sources */,
 				DB80F0051D35BF44007DEF09 /* Reachability.m in Sources */,
-				DBB86A151D4504AE00FBB87B /* SubjectCollectionViewModel.swift in Sources */,
+				DBB039F41F59388A00C42D47 /* UIButton.swift in Sources */,
 				DB7D13651D192F1D00ACA94B /* SubjectCollectionReusableHeaderView.swift in Sources */,
 				DBBB52581D47B5CA008A1617 /* SubjectWrapper.swift in Sources */,
 				DBE1C80D1D3C691B0086B83D /* UIFont.swift in Sources */,
@@ -1032,7 +1095,7 @@
 				DB6B1BCB1D182F390005CAE6 /* SubjectCollectionViewController.swift in Sources */,
 				DB3159721D139CD5007B280E /* SearchBoxTabelViewCell.swift in Sources */,
 				DB22FE141D16E97C004A082D /* DetailTableViewEPSHeaderFooterView.swift in Sources */,
-				DB3159731D13D8DD007B280E /* DetailTableViewController.swift in Sources */,
+				DB3159731D13D8DD007B280E /* DetailViewController.swift in Sources */,
 				DB9D24FA1D35CCF500269DFE /* UIImage.swift in Sources */,
 				DBA4C9121D16A41C0043EDED /* DetailTableViewMoreTopicCell.swift in Sources */,
 				DB80EFF91D34FC94007DEF09 /* Images.swift in Sources */,
@@ -1068,7 +1131,9 @@
 				DB38795F1D44302E0022AD93 /* TagWriteView.swift in Sources */,
 				DBEF11501D379CD200E7A0D7 /* BangumiRequest+Search.swift in Sources */,
 				DBAD9BCE1D3F6BBE00206ACE /* BangumiRequest+Subject.swift in Sources */,
+				DBC0D4641F579EAD00255FCF /* UserDefaults.swift in Sources */,
 				DBE1C8111D3C7F060086B83D /* SVProgress+Style.swift in Sources */,
+				DB7015171FB299CC00B3D9B3 /* SubjectCollectionViewModel.swift in Sources */,
 				DB1AAB021D33F92600EE7727 /* User.swift in Sources */,
 				DBD0695D1D36601C0063708C /* ConsolePrint.swift in Sources */,
 				DBEF11461D377A8400E7A0D7 /* CollectionViewDataSource.swift in Sources */,
@@ -1126,6 +1191,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		DBADFA371F622C7800BF93C2 /* infoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DBADFA361F622C7800BF93C2 /* en */,
+				DBADFA381F622C7C00BF93C2 /* zh-Hans */,
+				DBADFA391F622C8700BF93C2 /* Base */,
+			);
+			name = infoPlist.strings;
+			sourceTree = "<group>";
+		};
 		DBBA47CB1B060DEA0004BBA2 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1152,12 +1227,16 @@
 			baseConfigurationReference = 1B559F211ADB84B5BE2FF9DA /* Pods-Bangumi M UITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Bangumi M UITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = "Bangumi M";
 			};
 			name = Debug;
@@ -1167,11 +1246,15 @@
 			baseConfigurationReference = 132D057987CE247875843067 /* Pods-Bangumi M UITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Bangumi M UITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = "Bangumi M";
 			};
 			name = Release;
@@ -1186,14 +1269,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1221,6 +1310,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1238,14 +1328,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1264,6 +1360,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 3.0;
@@ -1283,7 +1380,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = Z68BDSMP42;
 				INFOPLIST_FILE = Percolator/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "$(inherited) \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1293,7 +1390,7 @@
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Percolator/Percolator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1311,7 +1408,7 @@
 				DEVELOPMENT_TEAM = Z68BDSMP42;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Percolator/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1320,7 +1417,7 @@
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Percolator/Percolator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1330,12 +1427,14 @@
 			baseConfigurationReference = 2F25F777FF922D757C69B782 /* Pods-Bangumi M Tests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "Bangumi M Tests/Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Percolator/Percolator-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bangumi M.app/Bangumi M";
 			};
 			name = Debug;
@@ -1345,11 +1444,13 @@
 			baseConfigurationReference = F9E323AA3257E0E29659EF8E /* Pods-Bangumi M Tests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "Bangumi M Tests/Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Percolator/Percolator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bangumi M.app/Bangumi M";
 			};
 			name = Release;

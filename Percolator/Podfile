@@ -4,20 +4,22 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'Bangumi M' do
-    pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :branch => 'swift3'
-    pod 'AlamofireImage', :git => 'https://github.com/calmcom/AlamofireImage.git', :branch => 'swift3'
-    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'swift3'
-    # pod 'TagWriteView'
-    pod 'MJRefresh'
-    pod 'Cosmos', '~> 3.0'
-    pod 'Kanna', :git => 'https://github.com/tid-kijyun/Kanna', :branch => 'swift3.0'
-    # pod 'ReachabilitySwift'
+    pod 'Alamofire', '~> 4.5'
+    pod 'AlamofireImage', '~> 3.3'
+    pod 'SwiftyJSON', '~> 3.1.4'
+    pod 'MJRefresh', '~> 3.1.12'
+    pod 'Cosmos', '~> 11.0'
+    pod 'Kanna', '~> 2.1.0'
     pod 'UITextField+Shake', '~> 1.1'
-    pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'
-    pod 'Canvas'
-    pod 'KeychainAccess', :git => 'https://github.com/kishikawakatsumi/KeychainAccess.git', :branch => 'swift-3.0'
+    pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git', :commit => 'ba369a1'
+    pod 'Canvas', '~> 0.1.2'
+    pod 'KeychainAccess', '~> 3.0.2'
+    pod 'IGListKit', '~> 3.0'
+
+    # pod 'ReachabilitySwift'
+    # pod 'TagWriteView'
     pod 'MGSwipeTableCell'
-    pod "EUMTouchPointView"
+    pod 'EUMTouchPointView'
     pod 'PPCopiableLabel'
 
     target 'Bangumi M Tests' do

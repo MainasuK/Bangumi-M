@@ -213,7 +213,7 @@ extension LoginViewController: UITextFieldDelegate {
 // Ref: https://www.sitepoint.com/using-uikit-dynamics-swift-animate-apps/
 extension LoginViewController {
     
-    func pan(from sender: UIPanGestureRecognizer) {
+    @objc func pan(from sender: UIPanGestureRecognizer) {
         
         let panLocationInView = sender.location(in: view)
         let panLocationInPopView = sender.location(in: loginView)
@@ -323,7 +323,7 @@ extension LoginViewController {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
 
-    func keyboardDidShow(notification: Notification) {
+    @objc func keyboardDidShow(notification: Notification) {
         guard let userInfo = notification.userInfo,
         let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
             return
@@ -339,7 +339,7 @@ extension LoginViewController {
         }
     }
     
-    func keyboardDidDismiss(notification: Notification) {
+    @objc func keyboardDidDismiss(notification: Notification) {
         
         UIView.animate(withDuration: 0.5) {
             self.stackViewToTopLayoutGuideLine.constant = self.kStackViewToTopConstant

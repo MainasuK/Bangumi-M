@@ -14,18 +14,6 @@ class DetailTableViewCell: UITableViewCell, ConfigurableCell {
     
     var isLast: Bool = false
     
-    func configure(with item: DetailTableViewCell.ItemType) {
-        setupCellStyle()
-    }
-
-}
-
-extension DetailTableViewCell {
-    
-    fileprivate func setupCellStyle() {
-        // Make cell get readable margin guideline
-        preservesSuperviewLayoutMargins = true
-        contentView.preservesSuperviewLayoutMargins = true
-    }
+    func configure(with item: DetailTableViewCell.ItemType) { }
 
 }

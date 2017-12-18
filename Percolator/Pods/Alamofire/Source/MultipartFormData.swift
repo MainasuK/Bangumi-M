@@ -1,7 +1,7 @@
 //
 //  MultipartFormData.swift
 //
-//  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
+//  Copyright (c) 2014-2017 Alamofire Software Foundation (http://alamofire.org/)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ import Foundation
 
 #if os(iOS) || os(watchOS) || os(tvOS)
 import MobileCoreServices
-#elseif os(OSX)
+#elseif os(macOS)
 import CoreServices
 #endif
 
@@ -76,13 +76,13 @@ open class MultipartFormData {
     }
 
     class BodyPart {
-        let headers: [String: String]
+        let headers: HTTPHeaders
         let bodyStream: InputStream
         let bodyContentLength: UInt64
         var hasInitialBoundary = false
         var hasFinalBoundary = false
 
-        init(headers: [String: String], bodyStream: InputStream, bodyContentLength: UInt64) {
+        init(headers: HTTPHeaders, bodyStream: InputStream, bodyContentLength: UInt64) {
             self.headers = headers
             self.bodyStream = bodyStream
             self.bodyContentLength = bodyContentLength
@@ -92,7 +92,7 @@ open class MultipartFormData {
     // MARK: - Properties
 
     /// The `Content-Type` header value containing the boundary used to generate the `multipart/form-data`.
-    open var contentType: String { return "multipart/form-data; boundary=\(boundary)" }
+    open lazy var contentType: String = "multipart/form-data; boundary=\(self.boundary)"
 
     /// The content length of all body parts used to generate the `multipart/form-data` not including the boundaries.
     public var contentLength: UInt64 { return bodyParts.reduce(0) { $0 + $1.bodyContentLength } }
@@ -257,8 +257,7 @@ open class MultipartFormData {
         var isDirectory: ObjCBool = false
         let path = fileURL.path
 
-        guard FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory) && !isDirectory.boolValue else
-        {
+        guard FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory) && !isDirectory.boolValue else {
             setBodyPartError(withReason: .bodyPartFileIsDirectory(at: fileURL))
             return
         }
@@ -330,7 +329,7 @@ open class MultipartFormData {
     /// - parameter stream:  The input stream to encode in the multipart form data.
     /// - parameter length:  The content length of the stream.
     /// - parameter headers: The HTTP headers for the body part.
-    public func append(_ stream: InputStream, withLength length: UInt64, headers: [String: String]) {
+    public func append(_ stream: InputStream, withLength length: UInt64, headers: HTTPHeaders) {
         let bodyPart = BodyPart(headers: headers, bodyStream: stream, bodyContentLength: length)
         bodyParts.append(bodyPart)
     }

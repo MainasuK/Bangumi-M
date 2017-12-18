@@ -1,7 +1,7 @@
 //
 //  ParameterEncoding.swift
 //
-//  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
+//  Copyright (c) 2014-2017 Alamofire Software Foundation (http://alamofire.org/)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -64,17 +64,17 @@ public protocol ParameterEncoding {
 /// the HTTP body depends on the destination of the encoding.
 ///
 /// The `Content-Type` HTTP header field of an encoded request with HTTP body is set to
-/// `application/x-www-form-urlencoded; charset=utf-8`. Since there is no published specification for how to encode 
+/// `application/x-www-form-urlencoded; charset=utf-8`. Since there is no published specification for how to encode
 /// collection types, the convention of appending `[]` to the key for array values (`foo[]=1&foo[]=2`), and appending
 /// the key surrounded by square brackets for nested dictionary values (`foo[bar]=baz`).
 public struct URLEncoding: ParameterEncoding {
 
     // MARK: Helper Types
 
-    /// Defines whether the url-encoded query string is applied to the existing query string or HTTP body of the 
+    /// Defines whether the url-encoded query string is applied to the existing query string or HTTP body of the
     /// resulting URL request.
     ///
-    /// - methodDependent: Applies encoded query string result to existing query string for `GET`, `HEAD` and `DELETE` 
+    /// - methodDependent: Applies encoded query string result to existing query string for `GET`, `HEAD` and `DELETE`
     ///                    requests and sets as the HTTP body for requests with any other HTTP method.
     /// - queryString:     Sets or appends encoded query string result to existing query string.
     /// - httpBody:        Sets encoded query string result as the HTTP body of the URL request.
@@ -117,11 +117,11 @@ public struct URLEncoding: ParameterEncoding {
     /// - parameter urlRequest: The request to have parameters applied.
     /// - parameter parameters: The parameters to apply.
     ///
-    /// - throws: An `AFError.parameterEncodingFailed` error if encoding fails.
+    /// - throws: An `Error` if the encoding process encounters an error.
     ///
     /// - returns: The encoded request.
     public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
-        var urlRequest = urlRequest.urlRequest
+        var urlRequest = try urlRequest.asURLRequest()
 
         guard let parameters = parameters else { return urlRequest }
 
@@ -163,6 +163,12 @@ public struct URLEncoding: ParameterEncoding {
             for value in array {
                 components += queryComponents(fromKey: "\(key)[]", value: value)
             }
+        } else if let value = value as? NSNumber {
+            if value.isBool {
+                components.append((escape(key), escape((value.boolValue ? "1" : "0"))))
+            } else {
+                components.append((escape(key), escape("\(value)")))
+            }
         } else if let bool = value as? Bool {
             components.append((escape(key), escape((bool ? "1" : "0"))))
         } else {
@@ -193,7 +199,39 @@ public struct URLEncoding: ParameterEncoding {
         var allowedCharacterSet = CharacterSet.urlQueryAllowed
         allowedCharacterSet.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
 
-        return string.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? string
+        var escaped = ""
+
+        //==========================================================================================================
+        //
+        //  Batching is required for escaping due to an internal bug in iOS 8.1 and 8.2. Encoding more than a few
+        //  hundred Chinese characters causes various malloc error crashes. To avoid this issue until iOS 8 is no
+        //  longer supported, batching MUST be used for encoding. This introduces roughly a 20% overhead. For more
+        //  info, please refer to:
+        //
+        //      - https://github.com/Alamofire/Alamofire/issues/206
+        //
+        //==========================================================================================================
+
+        if #available(iOS 8.3, *) {
+            escaped = string.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? string
+        } else {
+            let batchSize = 50
+            var index = string.startIndex
+
+            while index != string.endIndex {
+                let startIndex = index
+                let endIndex = string.index(index, offsetBy: batchSize, limitedBy: string.endIndex) ?? string.endIndex
+                let range = startIndex..<endIndex
+
+                let substring = string[range]
+
+                escaped += substring.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? String(substring)
+
+                index = endIndex
+            }
+        }
+
+        return escaped
     }
 
     private func query(_ parameters: [String: Any]) -> String {
@@ -203,7 +241,6 @@ public struct URLEncoding: ParameterEncoding {
             let value = parameters[key]!
             components += queryComponents(fromKey: key, value: value)
         }
-
         return components.map { "\($0)=\($1)" }.joined(separator: "&")
     }
 
@@ -261,11 +298,11 @@ public struct JSONEncoding: ParameterEncoding {
     /// - parameter urlRequest: The request to have parameters applied.
     /// - parameter parameters: The parameters to apply.
     ///
-    /// - throws: An `AFError.parameterEncodingFailed` error if encoding fails.
+    /// - throws: An `Error` if the encoding process encounters an error.
     ///
     /// - returns: The encoded request.
     public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
-        var urlRequest = urlRequest.urlRequest
+        var urlRequest = try urlRequest.asURLRequest()
 
         guard let parameters = parameters else { return urlRequest }
 
@@ -283,12 +320,40 @@ public struct JSONEncoding: ParameterEncoding {
 
         return urlRequest
     }
+
+    /// Creates a URL request by encoding the JSON object and setting the resulting data on the HTTP body.
+    ///
+    /// - parameter urlRequest: The request to apply the JSON object to.
+    /// - parameter jsonObject: The JSON object to apply to the request.
+    ///
+    /// - throws: An `Error` if the encoding process encounters an error.
+    ///
+    /// - returns: The encoded request.
+    public func encode(_ urlRequest: URLRequestConvertible, withJSONObject jsonObject: Any? = nil) throws -> URLRequest {
+        var urlRequest = try urlRequest.asURLRequest()
+
+        guard let jsonObject = jsonObject else { return urlRequest }
+
+        do {
+            let data = try JSONSerialization.data(withJSONObject: jsonObject, options: options)
+
+            if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
+                urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            }
+
+            urlRequest.httpBody = data
+        } catch {
+            throw AFError.parameterEncodingFailed(reason: .jsonEncodingFailed(error: error))
+        }
+
+        return urlRequest
+    }
 }
 
 // MARK: -
 
-/// Uses `PropertyListSerialization` to create a plist representation of the parameters object, according to the 
-/// associated format and write options values, which is set as the body of the request. The `Content-Type` HTTP header 
+/// Uses `PropertyListSerialization` to create a plist representation of the parameters object, according to the
+/// associated format and write options values, which is set as the body of the request. The `Content-Type` HTTP header
 /// field of an encoded request is set to `application/x-plist`.
 public struct PropertyListEncoding: ParameterEncoding {
 
@@ -332,11 +397,11 @@ public struct PropertyListEncoding: ParameterEncoding {
     /// - parameter urlRequest: The request to have parameters applied.
     /// - parameter parameters: The parameters to apply.
     ///
-    /// - throws: An `AFError.parameterEncodingFailed` error if encoding fails.
+    /// - throws: An `Error` if the encoding process encounters an error.
     ///
     /// - returns: The encoded request.
     public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
-        var urlRequest = urlRequest.urlRequest
+        var urlRequest = try urlRequest.asURLRequest()
 
         guard let parameters = parameters else { return urlRequest }
 
@@ -355,7 +420,13 @@ public struct PropertyListEncoding: ParameterEncoding {
         } catch {
             throw AFError.parameterEncodingFailed(reason: .propertyListEncodingFailed(error: error))
         }
-        
+
         return urlRequest
     }
+}
+
+// MARK: -
+
+extension NSNumber {
+    fileprivate var isBool: Bool { return CFBooleanGetTypeID() == CFGetTypeID(self) }
 }

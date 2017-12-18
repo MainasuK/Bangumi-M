@@ -49,6 +49,8 @@ class DetailTableViewBannerCell: DetailTableViewCell {
         typeLabel.layer.masksToBounds = true
         ratingCountLabel.layer.masksToBounds = true
         summaryLabel.layer.masksToBounds = true
+
+        nameLabel.numberOfLines = 0
     }
     
     override func configure(with item: DetailTableViewCell.ItemType) {
