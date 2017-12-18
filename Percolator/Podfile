@@ -4,8 +4,8 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'Bangumi M' do
-    pod 'Alamofire', '~> 4.4'
-    pod 'AlamofireImage', :git => 'git@github.com:Alamofire/AlamofireImage.git', :commit => 'a1e44d9'
+    pod 'Alamofire', '~> 4.5'
+    pod 'AlamofireImage', '~> 3.3'
     pod 'SwiftyJSON', '~> 3.1.4'
     pod 'MJRefresh', '~> 3.1.12'
     pod 'Cosmos', '~> 11.0'

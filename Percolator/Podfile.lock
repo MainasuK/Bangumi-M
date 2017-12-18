@@ -1,7 +1,7 @@
 PODS:
-  - Alamofire (4.5.1)
-  - AlamofireImage (3.2.0):
-    - Alamofire (~> 4.1)
+  - Alamofire (4.6.0)
+  - AlamofireImage (3.3.0):
+    - Alamofire (~> 4.5)
   - Canvas (0.1.2)
   - Cosmos (11.0.3)
   - EUMTouchPointView (0.1.0)
@@ -34,8 +34,8 @@ PODS:
   - UITextField+Shake (1.2.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.4)
-  - AlamofireImage (from `git@github.com:Alamofire/AlamofireImage.git`, commit `a1e44d9`)
+  - Alamofire (~> 4.5)
+  - AlamofireImage (~> 3.3)
   - Canvas (~> 0.1.2)
   - Cosmos (~> 11.0)
   - EUMTouchPointView
@@ -52,24 +52,18 @@ DEPENDENCIES:
   - UITextField+Shake (~> 1.1)
 
 EXTERNAL SOURCES:
-  AlamofireImage:
-    :commit: a1e44d9
-    :git: git@github.com:Alamofire/AlamofireImage.git
   SVProgressHUD:
     :commit: ba369a1
     :git: https://github.com/SVProgressHUD/SVProgressHUD.git
 
 CHECKOUT OPTIONS:
-  AlamofireImage:
-    :commit: a1e44d9
-    :git: git@github.com:Alamofire/AlamofireImage.git
   SVProgressHUD:
     :commit: ba369a1
     :git: https://github.com/SVProgressHUD/SVProgressHUD.git
 
 SPEC CHECKSUMS:
-  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
-  AlamofireImage: 0ff319da83d6abb78a661d7296e742e7f65e15f5
+  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
   Canvas: eb861e3b555d032648146c8ffda1a5dea40059ca
   Cosmos: eb506859929f4add2d2aec822a27efb2f718a95d
   EUMTouchPointView: 1c78c09726d22577b933444b42447ecfc636148b
@@ -85,6 +79,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   UITextField+Shake: 3e86d67700b9db1915df965e677cec8b8cfda225
 
-PODFILE CHECKSUM: 13d477fd935b7becd832371fe35edb7da05a6967
+PODFILE CHECKSUM: c7a2d75a9ac4430218d659dc6b21397bbe1fa463
 
 COCOAPODS: 1.3.1

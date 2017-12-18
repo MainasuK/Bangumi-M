@@ -89,27 +89,29 @@ extension AnimeListTableViewController {
     
     fileprivate func setupBarButtonItem() {
         let button: UIButton = {
-            let btn = UIButton(type: .custom)
-            
+            let btn = UIButton()
+
             btn.setImage(UIImage.fromColor(.placeholder, size: CGSize(width: 30, height: 30)), for: .normal)
+            
+            // In iOS 11, bar button item use autolayout but not frame more.
+            btn.widthAnchor.constraint(equalToConstant: 30).isActive = true
+            btn.heightAnchor.constraint(equalToConstant: 30).isActive = true
+
             if let avatarLargeUrl = BangumiRequest.shared.user?.avatar.largeUrl,
             let url = URL(string: avatarLargeUrl) {
-                btn.af_setImage(for: .normal, url: url)
+                let filter = AspectScaledToFillSizeFilter(size: CGSize(width: 30, height: 30))
+                btn.af_setImage(for: .normal, url: url, placeholderImage: nil, filter: filter)
+//                btn.af_setImage(for: .normal, url: url)
             }
 
-            // In iOS 11, bar button item use autolayout but not frame more.
-            let widthConstraint = btn.widthAnchor.constraint(equalToConstant: 30)
-            let heightConstraint = btn.heightAnchor.constraint(equalToConstant: 30)
-
-            btn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-            NSLayoutConstraint.activate([heightConstraint, widthConstraint])
-
-            btn.imageView?.frame.size = CGSize(width: 30, height: 30)
-            btn.addTarget(self, action: #selector(AnimeListTableViewController.avatarButtonPressed), for: .touchUpInside)
+            btn.contentMode = .scaleAspectFill
+            btn.imageView?.contentMode = .scaleAspectFill
             btn.imageView?.layer.cornerRadius = 30 * 0.5
             btn.imageView?.layer.borderColor = UIColor.percolatorLightGray.cgColor
             btn.imageView?.layer.borderWidth = 0.5   // 1px
-            
+
+            btn.addTarget(self, action: #selector(AnimeListTableViewController.avatarButtonPressed), for: .touchUpInside)
+
             return btn
         }()
         
