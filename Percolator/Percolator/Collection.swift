@@ -17,11 +17,11 @@ struct Collection {
     let dropped: Int
     
     init(json: [String : JSON]) {
-        wish = json[BangumiKey.wish]!.int!
-        collect = json[BangumiKey.collect]!.int!
-        doing = json[BangumiKey.doing]!.int!
-        onHold = json[BangumiKey.onHold]!.int!
-        dropped = json[BangumiKey.dropped]!.int!
+        wish = json[BangumiKey.wish]?.intValue ?? 0
+        collect = json[BangumiKey.collect]?.intValue ?? 0
+        doing = json[BangumiKey.doing]?.intValue ?? 0
+        onHold = json[BangumiKey.onHold]?.intValue ?? 0
+        dropped = json[BangumiKey.dropped]?.intValue ?? 0
     }
     
     init(from cdCollection: CDCollection?) {
