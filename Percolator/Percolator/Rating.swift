@@ -17,14 +17,15 @@ struct Rating {
     
     init(json: [String : JSON]) {
         var tempCount = [String : Int]()
-        let countDict = json[BangumiKey.count]!.dictionaryValue
-        for (index, subJSON) in countDict {
-            tempCount[index] = subJSON.intValue
+        if let countDict = json[BangumiKey.count]?.dictionaryValue {
+            for (index, subJSON) in countDict {
+                tempCount[index] = subJSON.intValue
+            }
         }
+
         count = tempCount
-        
-        score = json[BangumiKey.score]!.doubleValue
-        total = json[BangumiKey.total]!.intValue
+        score = json[BangumiKey.score]?.doubleValue ?? 0.0
+        total = json[BangumiKey.total]?.intValue ?? 0
     }
     
     init(from cdRating: CDRating?) {
