@@ -60,7 +60,7 @@ struct Subject {
         airDate = json[BangumiKey.airDate].stringValue.replacingOccurrences(of: "0000-00-00", with: "")
         airWeekday = json[BangumiKey.airWeekday].int!
         
-        rank = json[BangumiKey.rank].int!
+        rank = json[BangumiKey.rank].intValue
         
         let imageDict = json[BangumiKey.subjectImages].dictionaryValue
         images = Images(json: imageDict)
