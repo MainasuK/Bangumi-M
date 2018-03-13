@@ -36,8 +36,8 @@ class AnimeListTableViewCell: UITableViewCell {
     @IBOutlet weak var animeImageView: UIImageView!
 
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var watchedLabel: UILabel!
     @IBOutlet weak var watchedToLabel: UILabel!
+    @IBOutlet weak var watchedLabel: UILabel!
 
     @IBOutlet weak var watchedButton: UIButton!
     
