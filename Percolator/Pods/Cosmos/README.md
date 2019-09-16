@@ -7,7 +7,7 @@
 
 <img src='https://github.com/evgenyneu/Cosmos/raw/master/graphics/Screenshots/cosmos_star_rating_control_for_ios_swift_space.png' alt='Cosmos, star rating control for iOS / Swift' width='350'>
 
-This is a UI control for iOS and tvOS written in Swift. It shows a star rating and takes rating input from the user. Cosmos is a subclass of a UIView that will allow your users post those inescapable 1-star reviews!
+This is a UI control for iOS and tvOS written in Swift. It shows a star rating and takes rating input from the user. Cosmos is a subclass of a UIView that will allow your users to post those inescapable 1-star reviews!
 
 * Shows star rating with an optional text label.
 * Can be used as a rating input control (iOS only).
@@ -22,6 +22,12 @@ This is a UI control for iOS and tvOS written in Swift. It shows a star rating a
 
 *Picture of binary star system of Sirius A and Sirius B by [NASA](http://www.nasa.gov), [ESA](http://www.esa.int/ESA) and G. Bacon ([STScI](http://www.stsci.edu/portal/)). Source: [spacetelescope.org](http://www.spacetelescope.org/images/heic0516b/).*
 
+## Video tutorial
+
+Thanks to Alex Nagy from [rebeloper.com](https://rebeloper.com/) for creating this amazing [video tutorial](https://www.youtube.com/watch?v=Y4A_y29cy7Q) that shows how to use and customize Cosmos from code.
+
+<a href="https://www.youtube.com/watch?v=Y4A_y29cy7Q" target="_blank"><img src='https://raw.githubusercontent.com/evgenyneu/Cosmos/master/graphics/Youtube/rebel_developer/rebel_developer_cosmos_2.jpg' width='450' alt='Cosmos rating video tutorial for Swift 4.2 (Xcode10)'></a>
+
 
 ## Setup
 
@@ -33,7 +39,7 @@ Simply add [CosmosDistrib.swift](https://github.com/evgenyneu/Cosmos/blob/master
 
 #### Setup with Carthage (iOS 8+)
 
-Alternatively, add `github "evgenyneu/Cosmos" ~> 11.0` to your Cartfile and run `carthage update`.
+Alternatively, add `github "evgenyneu/Cosmos" ~> 19.0` to your Cartfile and run `carthage update`.
 
 #### Setup with CocoaPods (iOS 8+)
 
@@ -41,15 +47,7 @@ If you are using CocoaPods add this text to your Podfile and run `pod install`.
 
     use_frameworks!
     target 'Your target name'
-    pod 'Cosmos', '~> 11.0'
-
-#### Swift 4.0 / Xcode 9.0 beta version
-
-*Branch:* swift-4.0
-
-* *File:* [CosmosDistrib.swift](https://github.com/evgenyneu/Cosmos/blob/swift-4.0/Distrib/CosmosDistrib.swift)
-* *Carthage:* `github "evgenyneu/Cosmos" "swift-4.0"`
-* *CocoaPods:* `pod 'Cosmos', :git => 'https://github.com/evgenyneu/Cosmos.git', :branch => 'swift-4.0'`
+    pod 'Cosmos', '~> 19.0'
 
 
 #### Legacy Swift versions
@@ -79,8 +77,10 @@ Setup a [previous version](https://github.com/evgenyneu/Cosmos/wiki/Legacy-Swift
 
 <img src='https://raw.githubusercontent.com/evgenyneu/Cosmos/master/graphics/Screenshots/cosmos_customize_in_storyboard_2.png' width='502' alt='Customize cosmos appearance in the attributes inspector in Xcode.'>
 
-*Note*: Carthage setup method does not allow to customize Cosmos view from the storyboard, please do it from code instead.
 
+## Positioning the Cosmos view
+
+One can position the Cosmos view using Auto Layout constaints. The width and height of the view is determined automatically based on the size of its content - stars and text. Therefore, there is no need to set width/height constaints on the Cosmos view.
 
 ## Using Cosmos in code
 
@@ -154,11 +154,11 @@ cosmosView.settings.filledImage = UIImage(named: "GoldStarFilled")
 // Set image for the empty star
 cosmosView.settings.emptyImage = UIImage(named: "GoldStarEmpty")
 ```
-
+Note: you need to have the images for the filled and empty star in your project for this code to work.
 
 #### Download star image files
 
-Images for the golden star used in the demo app are available in [Sketch and PNG formats](https://github.com/evgenyneu/Cosmos/tree/master/graphics/Stars/GoldStar). Contributions for other star images are very welcome: add vector images to `/graphics/Stars/` directory and submit a pull request.
+Images for the golden star used in the demo app are available in [here](https://github.com/evgenyneu/Cosmos/tree/master/graphics/Stars/GoldStar). Contributions for other star images are very welcome: add vector images to `/graphics/Stars/` directory and submit a pull request.
 
 
 ## Using Cosmos in a scroll/table view
@@ -168,6 +168,7 @@ Images for the golden star used in the demo app are available in [Sketch and PNG
 ## Using Cosmos settings from Objective-C
 
 [This manual](https://github.com/evgenyneu/Cosmos/wiki/Using-Cosmos-settings-in-Objective-C) describes how to set/read Cosmos settings in Objective-C apps.
+
 
 ## Demo app
 
@@ -198,6 +199,7 @@ Here are some other star rating controls for iOS:
 
 We would like to thank the following people for their valuable contributions.
 
+* [jsahoo](https://github.com/jsahoo) for additing ability to customize the Cosmos view from the interface builder with Carthage setup method.
 * [0x7fffffff](https://github.com/0x7fffffff) for changing `public` access-level modifiers to `open`.
 * [ali-zahedi](https://github.com/ali-zahedi) for updating to the latest version of Swift 3.0.
 * [augmentedworks](https://github.com/augmentedworks) for adding borders to filled stars.
@@ -207,6 +209,12 @@ We would like to thank the following people for their valuable contributions.
 * [staticdreams](https://github.com/staticdreams) for bringing tvOS support.
 * [wagnersouz4](https://github.com/wagnersouz4) for Swift 3.1 update.
 * [paoloq](https://github.com/paoloq) for reporting the CosmoView frame size issue when the view is used without Auto Layout.
+* [danshevluk](https://github.com/danshevluk) for adding ability to reuse settings in multiple cosmos views.
+* [xrayman](https://github.com/xrayman) for reporting a table view reusability bug and improving the table view screen of the demo app.
+* [chlumik](https://github.com/chlumik) for updating to Swift 4.2.
+* [rebeloper](https://github.com/rebeloper) for creating a [video tutorial](https://www.youtube.com/watch?v=Y4A_y29cy7Q).
+* [yuravake](https://github.com/yuravake) for adding `passTouchesToSuperview` setting.
+
 
 
 ## License

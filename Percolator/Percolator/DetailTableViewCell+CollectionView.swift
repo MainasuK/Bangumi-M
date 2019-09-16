@@ -63,11 +63,17 @@ class DetailTableViewCell_CollectionView: DetailTableViewCell {
 class CMKCollectionView: UICollectionView {
     
     lazy var gradientLayer: CAGradientLayer = {
+        let color = UIColor { trait -> UIColor in
+            switch trait.userInterfaceStyle {
+            case .dark:     return .black
+            default:        return .white
+            }
+        }
         let layer = CAGradientLayer()
-        layer.colors = [UIColor.white.withAlphaComponent(1).cgColor,
-                        UIColor.white.withAlphaComponent(0).cgColor,
-                        UIColor.white.withAlphaComponent(0).cgColor,
-                        UIColor.white.withAlphaComponent(1).cgColor]
+        layer.colors = [color.withAlphaComponent(1).cgColor,
+                        color.withAlphaComponent(0).cgColor,
+                        color.withAlphaComponent(0).cgColor,
+                        color.withAlphaComponent(1).cgColor]
         layer.locations = [0.0, 0.02, 0.98, 1.0]
         layer.startPoint = CGPoint(x: 0.0, y: 0.5)
         layer.endPoint = CGPoint(x: 1.0, y: 0.5)
@@ -172,8 +178,14 @@ class CMKCollectionViewCell: UICollectionViewCell, ConfigurableCell {
 extension CMKCollectionViewCell {
     
     fileprivate func setupCellStyle() {
+        let borderColor = UIColor { trait -> UIColor in
+            switch trait.userInterfaceStyle {
+            case .dark:     return .black
+            default:        return UIColor.percolatorLightGray.withAlphaComponent(0.8)
+            }
+        }
         itemImageView.layer.cornerRadius = 5
-        itemImageView.layer.borderColor = UIColor.percolatorLightGray.withAlphaComponent(0.8).cgColor
+        itemImageView.layer.borderColor = borderColor.cgColor
         itemImageView.layer.borderWidth = 0.5  // 1px
     }
     

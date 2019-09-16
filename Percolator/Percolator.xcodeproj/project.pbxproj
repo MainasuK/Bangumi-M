@@ -687,7 +687,6 @@
 				DB9E92D81D50524100C150C4 /* Sources */,
 				DB9E92D91D50524100C150C4 /* Frameworks */,
 				DB9E92DA1D50524100C150C4 /* Resources */,
-				C4D770453744952AA9C24EEF /* [CP] Copy Pods Resources */,
 				DBFB286D1D50D3BB00C43E75 /* ShellScript */,
 				C8C97043CA577AE0E9DEA8F1 /* [CP] Embed Pods Frameworks */,
 			);
@@ -710,7 +709,6 @@
 				DBBA47BF1B060DEA0004BBA2 /* Frameworks */,
 				DBBA47C01B060DEA0004BBA2 /* Resources */,
 				8368E1EDA903B48C27AB5445 /* [CP] Embed Pods Frameworks */,
-				70AA7802892F2C61E825F20F /* [CP] Copy Pods Resources */,
 				DB3FC1BD1D33A6950045C339 /* Embed Frameworks */,
 				DB657D9F1E74575A009486CB /* ShellScript */,
 			);
@@ -732,7 +730,6 @@
 				DBD0695F1D3676740063708C /* Frameworks */,
 				DBD069601D3676740063708C /* Resources */,
 				33C6DB310740B867A1E02B9A /* [CP] Embed Pods Frameworks */,
-				05A6CA4C855B22C5A3BF13A9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -791,6 +788,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				"zh-Hans",
@@ -842,28 +840,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		05A6CA4C855B22C5A3BF13A9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M Tests/Pods-Bangumi M Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		33C6DB310740B867A1E02B9A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M Tests/Pods-Bangumi M Tests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Bangumi M Tests/Pods-Bangumi M Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs/OHHTTPStubs.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -872,22 +855,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M Tests/Pods-Bangumi M Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		70AA7802892F2C61E825F20F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M/Pods-Bangumi M-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bangumi M Tests/Pods-Bangumi M Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7C7B9871262317553919C227 /* [CP] Check Pods Manifest.lock */ = {
@@ -914,7 +882,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M/Pods-Bangumi M-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Bangumi M/Pods-Bangumi M-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Canvas/Canvas.framework",
@@ -949,7 +917,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M/Pods-Bangumi M-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bangumi M/Pods-Bangumi M-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B75833326FA33E9F3FFCD341 /* [CP] Check Pods Manifest.lock */ = {
@@ -988,28 +956,13 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C4D770453744952AA9C24EEF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M UITests/Pods-Bangumi M UITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C8C97043CA577AE0E9DEA8F1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M UITests/Pods-Bangumi M UITests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Bangumi M UITests/Pods-Bangumi M UITests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SimulatorStatusMagic/SimulatorStatusMagic.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1018,7 +971,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bangumi M UITests/Pods-Bangumi M UITests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bangumi M UITests/Pods-Bangumi M UITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DB657D9F1E74575A009486CB /* ShellScript */ = {
@@ -1306,7 +1259,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "";
@@ -1358,7 +1311,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "";
@@ -1380,7 +1333,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = Z68BDSMP42;
 				INFOPLIST_FILE = Percolator/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "$(inherited) \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1408,7 +1361,7 @@
 				DEVELOPMENT_TEAM = Z68BDSMP42;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Percolator/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -42,7 +42,7 @@ extension TopicTableViewModel {
             
             do {
                 let html = try result.resolve()
-                guard let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8),
+                guard let doc = try? Kanna.HTML(html: html, encoding: String.Encoding.utf8),
                     let bodyNode = doc.body else {
                         handler(ModelError.parse)
                         return

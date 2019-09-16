@@ -259,7 +259,7 @@ extension AnimeListTableViewCell {
         watchedToLabel.layer.masksToBounds = true
         
         // Configure the appearance of the cell
-        backgroundColor = UIColor.myAnimeListBackground
+        // backgroundColor = UIColor.myAnimeListBackground
         
         // Make cell get readable margin guideline
         preservesSuperviewLayoutMargins = true

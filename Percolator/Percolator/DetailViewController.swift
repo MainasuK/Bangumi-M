@@ -244,11 +244,7 @@ extension DetailViewController {
 extension DetailViewController {
 
     override func viewSafeAreaInsetsDidChange() {
-        if #available(iOS 11.0, *) {
-            consolePrint(view.safeAreaInsets)
-        } else {
-            // Fallback on earlier versions
-        }
+        consolePrint(view.safeAreaInsets)
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -302,10 +298,10 @@ extension DetailViewController {
         
         let status = item~>^*^
         // swiftlint:disable opening_brace
-        if status != .watched                   { alertController.addAction(watched) }
-        if status != .queue                     { alertController.addAction(queue)   }
-        if status != .drop                      { alertController.addAction(drop)    }
-        if status != .none && status != nil     { alertController.addAction(remove)  }
+        if status != .watched                       { alertController.addAction(watched) }
+        if status != .queue                         { alertController.addAction(queue)   }
+        if status != .drop                          { alertController.addAction(drop)    }
+        if status != Status.none && status != nil   { alertController.addAction(remove)  }
         // swiftlint:enable opening_brace
 
         // Configure the alert controller's popover presentation controller if it has one
