@@ -291,7 +291,7 @@ extension LoginViewController {
     }
     
     func setupBlurView() {
-        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffect = UIBlurEffect(style: .systemThinMaterial)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.view.bounds
         blurEffectView.autoresizingMask = [.flexibleHeight, .flexibleWidth]

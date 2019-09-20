@@ -95,11 +95,12 @@ extension SearchBoxTableViewCell {
         
         let size = CGSize(width: 1, height: 1)
         
+        animeImageView.backgroundColor = .systemFill
         if let urlVal = imageURLValue,
         let url = URL(string: urlVal) {
-            animeImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
+            animeImageView.af_setImage(withURL: url, placeholderImage: UIImage(), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
         } else {
-            animeImageView.image = UIImage.fromColor(.placeholder, size: size)
+            animeImageView.image = nil
         }
     }
     

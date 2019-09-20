@@ -19,11 +19,13 @@ extension UIColor {
     }
     
     public class var myGreenColor: UIColor {
-        return UIColor(red: 84.0/255.0, green: 195.0/255.0, blue: 91.0/255.0, alpha: 0.75)
+        return .systemGreen
+        // return UIColor(red: 84.0/255.0, green: 195.0/255.0, blue: 91.0/255.0, alpha: 0.75)
     }
     
     public class var myRedColor: UIColor {
-        return UIColor(red: 227.0/255.0, green: 63.0/255.0, blue: 64.0/255.0, alpha: 0.5)
+        return .systemRed
+        // return UIColor(red: 227.0/255.0, green: 63.0/255.0, blue: 64.0/255.0, alpha: 0.5)
     }
     
     public class var myPurpleColor: UIColor {
@@ -35,7 +37,8 @@ extension UIColor {
     }
     
     public class var percolatorGray: UIColor {
-        return UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
+        return .systemGray2
+        // return UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
     }
     
     public class var percolatorLightGray: UIColor {

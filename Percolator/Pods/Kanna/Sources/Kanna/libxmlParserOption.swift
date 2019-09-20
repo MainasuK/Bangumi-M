@@ -24,11 +24,7 @@ SOFTWARE.
 */
 import Foundation
 
-#if SWIFT_PACKAGE
-import SwiftClibxml2
-#else
-import libxml2
-#endif
+import libxmlKanna
 
 /*
 Libxml2HTMLParserOptions

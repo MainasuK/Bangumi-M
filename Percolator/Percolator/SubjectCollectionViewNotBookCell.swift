@@ -35,16 +35,19 @@ class SubjectCollectionViewNotBookCell: SubjectCollectionViewCell {
         nameLabel.text = subjectItem.title
         nameCNLabel.text = subjectItem.subtitle
         
+        coverImageView.backgroundColor = .systemFill
         let size = CGSize(width: 1, height: 1)
         if let url = URL(string: subjectItem.coverUrlPath) {
-            coverImageView.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
+            coverImageView.af_setImage(withURL: url, placeholderImage: UIImage(), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
         } else {
-            coverImageView.image = UIImage.fromColor(.placeholder, size: size)
+            coverImageView.image = nil
         }
         
         // Set iamge view corner
         coverImageView.layer.borderColor = UIColor.percolatorGray.cgColor
         coverImageView.layer.borderWidth = 0.5
+        
+        backgroundColor = .secondarySystemGroupedBackground
     }
     
 }

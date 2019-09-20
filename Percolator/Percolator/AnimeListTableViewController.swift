@@ -91,7 +91,7 @@ extension AnimeListTableViewController {
         let button: UIButton = {
             let btn = UIButton(type: .custom)
 
-            btn.setImage(UIImage.fromColor(.placeholder, size: CGSize(width: 30, height: 30)), for: .normal)
+            btn.setImage(UIImage.fromColor(.secondarySystemBackground, size: CGSize(width: 30, height: 30)), for: .normal)
             if let avatarLargeUrl = BangumiRequest.shared.user?.avatar.largeUrl,
                 let url = URL(string: avatarLargeUrl) {
                 let filter = AspectScaledToFillSizeFilter(size: CGSize(width: 30, height: 30))
@@ -108,7 +108,7 @@ extension AnimeListTableViewController {
 
             btn.imageView?.frame.size = CGSize(width: 30, height: 30)
             btn.imageView?.layer.cornerRadius = 30 * 0.5
-            btn.imageView?.layer.borderColor = UIColor.percolatorLightGray.cgColor
+            btn.imageView?.layer.borderColor = UIColor.systemGray.cgColor
             btn.imageView?.layer.borderWidth = 0.5   // 1px
 
             btn.addTarget(self, action: #selector(AnimeListTableViewController.avatarButtonPressed), for: .touchUpInside)
@@ -198,6 +198,12 @@ extension AnimeListTableViewController {
             refreshControl?.beginRefreshing()
             refreshAnimeList()      // Somehow we need call target manually
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        setupBarButtonItem()
     }
 
 }
