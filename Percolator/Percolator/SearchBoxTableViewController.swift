@@ -32,18 +32,11 @@ final class SearchBoxTableViewController: UITableViewController {
         controller.dimsBackgroundDuringPresentation = true
         controller.hidesNavigationBarDuringPresentation = false
         controller.searchBar.enablesReturnKeyAutomatically = false
-        
-        // Note: Override UISearchController preferredStatusBarStyle() method return .lightContent
-        // And it's not work in iOS 10. Manually set statusBarStyle to make sure appearance correct.
-        
-        controller.searchBar.barTintColor = .navigationBarBlue
-        if #available(iOS 11, *) {
-            controller.searchBar.tintColor = .navigationBarBlue
-        } else {
-            controller.searchBar.tintColor = .white
-        }
+                
+//        controller.searchBar.barTintColor = .navigationBarBlue
+//        controller.searchBar.tintColor = .navigationBarBlue
         controller.searchBar.placeholder = "条目搜索"
-        controller.searchBar.setSearchFieldBackgroundImage(#imageLiteral(resourceName: "searchBarTextFieldBackgroundImage"), for: .normal)
+//        controller.searchBar.setSearchFieldBackgroundImage(#imageLiteral(resourceName: "searchBarTextFieldBackgroundImage"), for: .normal)
 
         return controller
     }()
@@ -115,6 +108,7 @@ final class SearchBoxTableViewController: UITableViewController {
             let collectTableViewController = navigationController.childViewControllers.first as! CollectTableViewController
             collectTableViewController.subject = subject
             
+            navigationController.isModalInPresentation = true
             navigationController.modalPresentationStyle = .formSheet
             
             DispatchQueue.main.async {
@@ -188,7 +182,7 @@ extension SearchBoxTableViewController {
         tableView.cellLayoutMarginsFollowReadableWidth = true
         
         // Configure tableView appearance
-        tableView.backgroundColor = UIColor.myAnimeListBackground
+        tableView.backgroundColor = .systemBackground
         
         // Set Refresh footer
         setupTableViewFooter()
@@ -200,6 +194,7 @@ extension SearchBoxTableViewController {
             let footer = MJRefreshAutoNormalFooter { [unowned self] in
                 self.search(for: self.searchKeyword, type: self.searchScopeIndex)
             }
+            footer?.activityIndicatorViewStyle = .medium
             footer?.isHidden = true // Appeare after search
             
             return footer
@@ -251,7 +246,6 @@ extension SearchBoxTableViewController {
 extension SearchBoxTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
         let detailTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: StoryboardKey.DetialViewControllerKey) as! DetailViewController
         detailTableViewController.subject = model.item(at: indexPath).0
         navigationController?.pushViewController(detailTableViewController, animated: true)
@@ -434,6 +428,8 @@ extension SearchBoxTableViewController: MGSwipeTableCellDelegate {
             collectTableViewController.subject = subject
             
             navigationController.modalPresentationStyle = .formSheet
+            navigationController.isModalInPresentation = true
+            
             self?.present(navigationController, animated: true, completion: nil)
             self?.tableView.reloadRows(at: [indexPath], with: .right)
             

@@ -754,6 +754,7 @@
 				TargetAttributes = {
 					DB9E92DB1D50524100C150C4 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = A8K92XFF77;
 						DevelopmentTeamName = "xu hao";
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
@@ -761,7 +762,7 @@
 					};
 					DBBA47C11B060DEA0004BBA2 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = Z68BDSMP42;
+						DevelopmentTeam = A8K92XFF77;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -775,7 +776,7 @@
 					};
 					DBD069611D3676740063708C = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = Z68BDSMP42;
+						DevelopmentTeam = A8K92XFF77;
 						DevelopmentTeamName = "xu hao";
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
@@ -1183,7 +1184,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = A8K92XFF77;
 				INFOPLIST_FILE = "Bangumi M UITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1201,7 +1202,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = A8K92XFF77;
 				INFOPLIST_FILE = "Bangumi M UITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1331,10 +1332,12 @@
 				CODE_SIGN_ENTITLEMENTS = "Bangumi M.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z68BDSMP42;
+				CURRENT_PROJECT_VERSION = 921;
+				DEVELOPMENT_TEAM = A8K92XFF77;
 				INFOPLIST_FILE = Percolator/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.2.0;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "$(inherited) \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1358,11 +1361,13 @@
 				CODE_SIGN_ENTITLEMENTS = "Bangumi M.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z68BDSMP42;
+				CURRENT_PROJECT_VERSION = 921;
+				DEVELOPMENT_TEAM = A8K92XFF77;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Percolator/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mainasuk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1382,6 +1387,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = A8K92XFF77;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "Bangumi M Tests/Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1398,6 +1404,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = A8K92XFF77;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "Bangumi M Tests/Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";

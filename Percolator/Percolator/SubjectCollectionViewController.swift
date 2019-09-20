@@ -48,7 +48,7 @@ extension SubjectCollectionViewController {
             navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font : barFont]
         }
         
-        collectionView?.backgroundColor = UIColor.myAnimeListBackground
+        collectionView?.backgroundColor = .systemGroupedBackground
     }
     
     override func viewDidAppear(_ animated: Bool) {

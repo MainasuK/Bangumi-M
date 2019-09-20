@@ -480,6 +480,7 @@ extension DetailViewController: DetailTableViewBannerCellDelegate {
         let collectTableViewController = navigationController.childViewControllers.first as! CollectTableViewController
         
         collectTableViewController.subject = self.subject
+        navigationController.isModalInPresentation = true
         
         present(navigationController, animated: true, completion: nil)
     }

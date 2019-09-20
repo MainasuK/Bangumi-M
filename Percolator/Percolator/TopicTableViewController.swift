@@ -134,7 +134,7 @@ extension TopicTableViewController {
         
         // Configure tableView appearance
         tableView.tableFooterView = UIView()
-        tableView.backgroundColor = UIColor.myAnimeListBackground
+        tableView.backgroundColor = .systemBackground
         
         // Configure cell row height
         tableView.estimatedRowHeight = 100

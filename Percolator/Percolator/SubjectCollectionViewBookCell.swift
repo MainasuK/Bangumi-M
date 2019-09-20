@@ -41,11 +41,12 @@ class SubjectCollectionViewBookCell: SubjectCollectionViewCell {
         
         configureIndicator(with: item.1)
         
+        bookCover.backgroundColor = .systemFill
         let size = CGSize(width: 1, height: 1)
         if let url = URL(string: subjectItem.coverUrlPath) {
-            bookCover.af_setImage(withURL: url, placeholderImage: UIImage.fromColor(.placeholder, size: size), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
+            bookCover.af_setImage(withURL: url, placeholderImage: UIImage(), progressQueue: DispatchQueue.global(qos: .userInitiated), imageTransition: .crossDissolve(0.2))
         } else {
-            bookCover.image = UIImage.fromColor(.placeholder, size: size)
+            bookCover.image = nil
         }
         
         // Set iamge view corner
@@ -53,7 +54,7 @@ class SubjectCollectionViewBookCell: SubjectCollectionViewCell {
         bookCover.layer.borderWidth = 0.5
         
         // Set background color
-        backgroundColor = UIColor.white
+        backgroundColor = .secondarySystemGroupedBackground
     }
     
 }

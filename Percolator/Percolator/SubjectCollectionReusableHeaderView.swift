@@ -16,12 +16,6 @@ class SubjectCollectionReusableHeaderView: UICollectionReusableView, Configurabl
     
     func configure(with item: SubjectCollectionReusableHeaderView.ItemType) {
         typeLabel.text = item
-        
-        if item != "" {
-            backgroundColor = UIColor.white.withAlphaComponent(0.6)
-        } else {
-            backgroundColor = UIColor.myAnimeListBackground
-        }
     }
         
 }

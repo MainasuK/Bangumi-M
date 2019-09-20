@@ -34,9 +34,9 @@ class SubjectCollectionViewLayout: UICollectionViewFlowLayout {
                 
                 // Set the color(s)
                 if attr.indexPath.section == 0 {  // Book section
-                    decorationAttributes.color = UIColor.myAnimeListBackground
+                    decorationAttributes.color = .secondarySystemGroupedBackground
                 } else {                            // Not book section
-                    decorationAttributes.color = UIColor.white
+                    decorationAttributes.color = .secondarySystemGroupedBackground
                 }
                 
                 // Make the decoration view span the entire row
