@@ -48,10 +48,10 @@ struct Episode {
     }
     
     var mobileURL: String {
-        return "http://bangumi.tv/m/topic/subject/\(id)"
+        return "https://bgm.tv/m/topic/subject/\(id)"
     }
     var webURL: String {
-        return "http://bangumi.tv/ep/\(id)"
+        return "https://bgm.tv/ep/\(id)"
     }
     
     init(from json: JSON) {

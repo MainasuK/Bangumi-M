@@ -91,7 +91,7 @@ final class DetailViewController: UIViewController {
             let collectionIndexPath = tableViewCell.collectionView.indexPathForItem(at: sender.location(in: tableViewCell.collectionView)),
             case let Model.CollectionItem.crt(crt) = (model.collectionItems[tableViewCell.collectionView.tag].1)[collectionIndexPath.row],
             let actorID = crt.actors.first?.id,
-            let url = URL(string: "http://bangumi.tv/m/topic/prsn/\(actorID)") else {
+            let url = URL(string: "https://bgm.tv/m/topic/prsn/\(actorID)") else {
                 return
             }
             
@@ -463,7 +463,7 @@ extension DetailViewController: DetailTableViewEPSCellDelegate {
 
     func commentButtonPressed(_ sender: UIButton) {
         let tag = sender.tag
-        guard tag != 0, let url = URL(string: "http://bangumi.tv/m/topic/ep/\(tag)") else {
+        guard tag != 0, let url = URL(string: "https://bgm.tv/m/topic/ep/\(tag)") else {
             return
         }
 
@@ -525,9 +525,9 @@ extension DetailViewController: UICollectionViewDelegate {
         
         switch item {
         case .crt(let crt):
-            urlPath = "http://bangumi.tv/m/topic/crt/\(crt.id)"
+            urlPath = "https://bgm.tv/m/topic/crt/\(crt.id)"
         case .staff(let staff):
-            urlPath = "http://bangumi.tv/m/topic/prsn/\(staff.id)"
+            urlPath = "https://bgm.tv/m/topic/prsn/\(staff.id)"
         }
         
         guard let url = URL(string: urlPath) else {
