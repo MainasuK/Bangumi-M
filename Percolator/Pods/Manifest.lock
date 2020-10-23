@@ -52,7 +52,7 @@ DEPENDENCIES:
   - "UITextField+Shake (~> 1.1)"
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Alamofire
     - AlamofireImage
     - Canvas
@@ -99,4 +99,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 56c6d4fc1f41c818d18868f887bc437c276c56eb
 
-COCOAPODS: 1.7.3
+COCOAPODS: 1.9.3
