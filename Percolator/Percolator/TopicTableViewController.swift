@@ -151,7 +151,7 @@ extension TopicTableViewController {
         
         let urlPath = model.item(at: indexPath).urlPath
         guard let lastSplit = urlPath.components(separatedBy: "/").last,
-        let url = URL(string: "http://bangumi.tv/m/topic/subject/\(lastSplit)") else {
+        let url = URL(string: "https://bgm.tv/m/topic/subject/\(lastSplit)") else {
             return
         }
         
